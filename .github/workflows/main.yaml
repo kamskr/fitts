@@ -1,4 +1,4 @@
-name: lou_bank
+name: pr_fit
 
 on: [pull_request, push]
 
