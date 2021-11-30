@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "926326329",
+    "project_id": "pr-fit-b9725",
+    "storage_bucket": "pr-fit-b9725.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926326329:android:63e3b0ffe987b1a11937e8",
+        "android_client_info": {
+          "package_name": "com.kamilsikora.prit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926326329-md1vl7s3v4sahni2g3davvmkk2u0mkvn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kamilsikora.prit",
+            "certificate_hash": "09b4bf45865fe58cfd5a5405258e2b78f36676e1"
+          }
+        },
+        {
+          "client_id": "926326329-64artqe0morvjt81ufe1g9vub7ktcof6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnD0_Bf92T941TgYBTAx_QAfL4-E475a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926326329-64artqe0morvjt81ufe1g9vub7ktcof6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "926326329-vr3n0081u6aeb7v10gnu247ij83ks3nk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kamilsikora.prfit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
