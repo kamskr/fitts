@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:926326329:android:63e3b0ffe987b1a11937e8",
         "android_client_info": {
-          "package_name": "com.kamilsikora.prit"
+          "package_name": "com.kamilsikora.prfit"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "926326329-md1vl7s3v4sahni2g3davvmkk2u0mkvn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.kamilsikora.prit",
+            "package_name": "com.kamilsikora.prfit",
             "certificate_hash": "09b4bf45865fe58cfd5a5405258e2b78f36676e1"
           }
         },
