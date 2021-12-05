@@ -44,6 +44,26 @@ class AuthenticationRepository {
       return user;
     });
   }
+
+  /// Returns the current cached user.
+  /// Defaults to [User.empty] if there is no cached user.
+  User get currentUser {
+    return _cache.read<User>(key: userCacheKey) ?? User.empty;
+  }
+
+  /// Creates a new user with the provided [email] and [password].
+  ///
+  /// Throws a [SignUpWithEmailAndPasswordFailure] if an exception occurs.
+  Future<void> signUp({required String email, required String password}) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
+    } catch (_) {
+      throw const SignUpWithEmailAndPasswordFailure();
+    }
+  }
 }
 
 extension on firebase_auth.User {
