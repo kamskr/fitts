@@ -9,8 +9,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mocktail/mocktail.dart';
 
-const _mockFirebaseUserUid = 'mock-uid';
-const _mockFirebaseUserEmail = 'mock-email';
+// const _mockFirebaseUserUid = 'mock-uid';
+// const _mockFirebaseUserEmail = 'mock-email';
 
 mixin LegacyEquality {
   @override
@@ -76,10 +76,10 @@ void main() {
 
   const email = 'test@gmail.com';
   const password = 'qeqwefqwefgr';
-  const user = User(
-    id: _mockFirebaseUserUid,
-    email: _mockFirebaseUserEmail,
-  );
+  // const user = User(
+  //   id: _mockFirebaseUserUid,
+  //   email: _mockFirebaseUserEmail,
+  // );
 
   group('AuthenticationRepository', () {
     late CacheClient cache;
@@ -105,6 +105,49 @@ void main() {
 
     test('creates FirebaseaAuth instance internally when not injected', () {
       expect(() => AuthenticationRepository(), isNot(throwsException));
+    });
+
+    group('signUp', () {
+      setUp(() {
+        when(
+          () => firebaseAuth.createUserWithEmailAndPassword(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenAnswer((_) => Future.value(MockUserCredential()));
+      });
+
+      test('calls createUserWithEmailAndPassword', () async {
+        await authenticationRepository.signUp(email: email, password: password);
+        verify(
+          () => firebaseAuth.createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          ),
+        ).called(1);
+      });
+
+      test('succeeds when createUserWithEmailAndPassword succeeds', () async {
+        expect(
+          authenticationRepository.signUp(email: email, password: password),
+          completes,
+        );
+      });
+      test(
+          'throws SignUpWithEmailAndPasswordFailure '
+          'when createUserWithEmailAndPassword fails', () async {
+        when(
+          () => firebaseAuth.createUserWithEmailAndPassword(
+            email: any(named: 'email'),
+            password: any(named: 'password'),
+          ),
+        ).thenThrow(Exception());
+
+        expect(
+          authenticationRepository.signUp(email: email, password: password),
+          throwsA(isA<SignUpWithEmailAndPasswordFailure>()),
+        );
+      });
     });
   });
 }
