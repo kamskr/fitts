@@ -3,3 +3,4 @@ linter:
   rules:
     public_member_api_docs: false
     always_use_package_imports: false
+    use_key_in_widget_constructors: false

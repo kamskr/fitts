@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'list_screen.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
             'Gallery',
           ),
         ),
-        body: const Text('Gallery'),
+        body: const ListScreen(),
       ),
     );
   }
