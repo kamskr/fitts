@@ -1,7 +1,8 @@
 /// {@template sign_up_with_email_and_password_failure}
-/// Thrown during the sign up with email and password process if a failure occurs.
+/// Thrown during the sign up process if a failure occurs.
 /// {@endtemplate}
 class SignUpWithEmailAndPasswordFailure implements Exception {
+  /// {@macro sign_up_with_email_and_password_failure}
   const SignUpWithEmailAndPasswordFailure([
     this.message = 'An unknown exception occurred.',
   ]);

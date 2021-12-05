@@ -8,6 +8,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 
+/// {@template authentication_repository}
+/// Repository which manages user authentication.
+/// {@endtemplate}
 class AuthenticationRepository {
   /// {@macro authentication_repository}
   AuthenticationRepository({
