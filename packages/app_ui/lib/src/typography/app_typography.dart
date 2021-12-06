@@ -1,73 +1,68 @@
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppTypography {
   static const _baseTextStyle = TextStyle(
-    fontWeight: AppFontWeight.medium,
-    height: 1.25,
-    package: 'App_bank_ui',
-    fontFamily: 'Roboto',
-    color: AppColors.white,
-  );
-
-  /// Headlines
-  static final TextStyle headlineBold = _baseTextStyle.copyWith(
-    fontSize: 25,
-    fontWeight: AppFontWeight.bold,
-  );
-  static final TextStyle headlineSemibold = _baseTextStyle.copyWith(
-    fontSize: 21,
-    fontWeight: AppFontWeight.semibold,
-  );
-  static final TextStyle headlineRegular = _baseTextStyle.copyWith(
-    fontSize: 21,
     fontWeight: AppFontWeight.regular,
+    package: 'app_ui',
+    fontFamily: 'Rubik',
   );
 
-  /// Body
-  static final TextStyle textBold = _baseTextStyle.copyWith(
-    fontSize: 17,
-    fontWeight: AppFontWeight.bold,
+  static final TextStyle title1 = _baseTextStyle.copyWith(
+    fontSize: 50,
+    fontFamily: 'Questrial',
   );
-  static final TextStyle textMedium = _baseTextStyle.copyWith(
-    fontSize: 16,
+
+  static final TextStyle title2 = _baseTextStyle.copyWith(
+    fontSize: 34,
+    fontWeight: AppFontWeight.light,
+  );
+
+  static final TextStyle title3 = _baseTextStyle.copyWith(
+    fontSize: 29,
+    fontFamily: 'Questrial',
+  );
+
+  static final TextStyle title4 = _baseTextStyle.copyWith(
+    fontSize: 24,
+  );
+
+  static final TextStyle title5 = _baseTextStyle.copyWith(
+    fontSize: 18,
     fontWeight: AppFontWeight.medium,
   );
-  static final TextStyle textRegular = _baseTextStyle.copyWith(
-    fontSize: 16,
-    fontWeight: AppFontWeight.regular,
-  );
-  static final TextStyle textSmallSemibold = _baseTextStyle.copyWith(
-    fontSize: 15,
-    fontWeight: AppFontWeight.semibold,
-  );
-  static final TextStyle textSmall = _baseTextStyle.copyWith(
-    fontSize: 15,
-    fontWeight: AppFontWeight.regular,
+
+  static final TextStyle headline = _baseTextStyle.copyWith(
+    fontSize: 30,
+    fontWeight: AppFontWeight.medium,
   );
 
-  /// Caption
-  static final TextStyle caption = _baseTextStyle.copyWith(
+  static final TextStyle body = _baseTextStyle.copyWith(
+    fontSize: 15,
+  );
+
+  static final TextStyle subhead = _baseTextStyle.copyWith(
+    fontSize: 13,
+  );
+
+  static final TextStyle footnote = _baseTextStyle.copyWith(
     fontSize: 14,
-    fontWeight: AppFontWeight.regular,
+    fontWeight: AppFontWeight.light,
   );
-  static final TextStyle captionSmall = _baseTextStyle.copyWith(
+
+  static final TextStyle caption1 = _baseTextStyle.copyWith(
+    fontSize: 13,
+  );
+
+  static final TextStyle caption2 = _baseTextStyle.copyWith(
     fontSize: 12,
-    fontWeight: AppFontWeight.regular,
-  );
-  static final TextStyle captionSmaller = _baseTextStyle.copyWith(
-    fontSize: 11,
-    fontWeight: AppFontWeight.medium,
-  );
-  static final TextStyle captionTiny = _baseTextStyle.copyWith(
-    fontSize: 10,
-    fontWeight: AppFontWeight.medium,
+    fontFamily: 'Questrial',
   );
 }
 
 abstract class AppFontWeight {
+  static const FontWeight light = FontWeight.w300;
   static const FontWeight regular = FontWeight.w400;
   static const FontWeight medium = FontWeight.w500;
-  static const FontWeight semibold = FontWeight.w600;
-  static const FontWeight bold = FontWeight.w700;
+  static const FontWeight bold = FontWeight.w600;
+  static const FontWeight black = FontWeight.w900;
 }
