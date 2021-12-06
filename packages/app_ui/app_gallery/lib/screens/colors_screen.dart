@@ -102,6 +102,49 @@ class ColorsScreen extends StatelessWidget {
               color: AppColors.black[900],
             ),
           ),
+          const ColorTitle('gradients'),
+          const ColorDisplay(
+            title: 'AppColors.primaryGradient1',
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient1,
+            ),
+          ),
+          const ColorDisplay(
+            title: 'AppColors.primaryGradient2',
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient2,
+            ),
+          ),
+          const ColorDisplay(
+            title: 'AppColors.primaryGradient3',
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient3,
+            ),
+          ),
+          const ColorDisplay(
+            title: 'AppColors.primaryGradient4',
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient4,
+            ),
+          ),
+          const ColorDisplay(
+            title: 'AppColors.primaryGradient5',
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient5,
+            ),
+          ),
+          ColorDisplay(
+            title: 'AppColors.accentGradient',
+            decoration: BoxDecoration(
+              gradient: AppColors.accentGradient,
+            ),
+          ),
+          ColorDisplay(
+            title: 'AppColors.secondaryAccentGradient',
+            decoration: BoxDecoration(
+              gradient: AppColors.secondaryAccentGradient,
+            ),
+          ),
         ],
       ),
     );
