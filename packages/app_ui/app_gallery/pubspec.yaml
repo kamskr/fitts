@@ -11,9 +11,11 @@ environment:
 dependencies:
   app_ui:
     path: ../
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
   very_good_analysis: ^2.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
