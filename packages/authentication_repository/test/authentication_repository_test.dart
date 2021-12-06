@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:cache/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,8 +18,6 @@ mixin LegacyEquality {
   @override
   int get hashCode => 0;
 }
-
-class MockCacheClient extends Mock implements CacheClient {}
 
 class MockFirebaseAuth extends Mock implements firebase_auth.FirebaseAuth {}
 
@@ -82,7 +79,6 @@ void main() {
   );
 
   group('AuthenticationRepository', () {
-    late CacheClient cache;
     late firebase_auth.FirebaseAuth firebaseAuth;
     late GoogleSignIn googleSignIn;
     late AuthenticationRepository authenticationRepository;
@@ -93,11 +89,9 @@ void main() {
     });
 
     setUp(() {
-      cache = MockCacheClient();
       firebaseAuth = MockFirebaseAuth();
       googleSignIn = MockGoogleSignIn();
       authenticationRepository = AuthenticationRepository(
-        cache: cache,
         firebaseAuth: firebaseAuth,
         googleSignIn: googleSignIn,
       );
@@ -311,31 +305,6 @@ void main() {
           authenticationRepository.user,
           emitsInOrder(const <User>[user]),
         );
-        verify(
-          () => cache.write(
-            key: AuthenticationRepository.userCacheKey,
-            value: user,
-          ),
-        ).called(1);
-      });
-    });
-
-    group('currentUser', () {
-      test('returns User.empty when cached user is null', () {
-        when(
-          () => cache.read(key: AuthenticationRepository.userCacheKey),
-        ).thenReturn(null);
-        expect(
-          authenticationRepository.currentUser,
-          equals(User.empty),
-        );
-      });
-
-      test('returns User when cached user is not null', () async {
-        when(
-          () => cache.read(key: AuthenticationRepository.userCacheKey),
-        ).thenReturn(user);
-        expect(authenticationRepository.currentUser, equals(user));
       });
     });
   });
