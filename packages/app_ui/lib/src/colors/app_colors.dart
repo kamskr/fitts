@@ -32,38 +32,59 @@ abstract class AppColors {
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
     colors: <Color>[AppColors.black, AppColors.primary],
-    tileMode: TileMode.repeated,
   );
 
   static const primaryGradient2 = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: <Color>[AppColors.primary, AppColors.black],
-    tileMode: TileMode.repeated,
   );
 
   static const primaryGradient3 = LinearGradient(
     stops: [
-      0,
-      0.25,
+      -2.2,
+      0.90,
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: <Color>[AppColors.primary, AppColors.black],
-    tileMode: TileMode.repeated,
+    colors: <Color>[
+      AppColors.primary,
+      AppColors.black,
+    ],
   );
 
   static const primaryGradient4 = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
-    colors: <Color>[AppColors.black, AppColors.primary],
-    tileMode: TileMode.repeated,
+    colors: <Color>[
+      AppColors.black,
+      AppColors.primary,
+    ],
   );
 
   static const primaryGradient5 = LinearGradient(
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
-    colors: <Color>[AppColors.black, AppColors.primary],
-    tileMode: TileMode.repeated,
+    colors: <Color>[
+      AppColors.primary,
+      AppColors.black,
+    ],
+  );
+
+  static final accentGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: <Color>[
+      AppColors.accent,
+      AppColors.accent[900]!,
+    ],
+  );
+  static final secondaryAccentGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: <Color>[
+      AppColors.secondaryAccent[400]!,
+      AppColors.secondaryAccent,
+    ],
   );
 }
