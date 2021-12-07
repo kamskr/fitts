@@ -24,6 +24,7 @@ abstract class AppTheme {
   static final _appBarTheme = AppBarTheme(
     titleTextStyle: AppTypography.headline3.copyWith(
       color: AppColors.black,
+      fontSize: 18,
     ),
     toolbarTextStyle: AppTypography.body1.copyWith(
       color: AppColors.primary,
