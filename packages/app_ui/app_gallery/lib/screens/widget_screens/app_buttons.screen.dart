@@ -17,7 +17,7 @@ class AppButtonsScreen extends StatelessWidget {
             AppPrimaryButton(
               text: 'AppPrimaryButton',
               onPressed: () {},
-            )
+            ),
           ],
         ),
       ),
