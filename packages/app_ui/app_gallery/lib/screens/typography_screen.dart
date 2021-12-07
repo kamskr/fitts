@@ -10,56 +10,61 @@ class TypographyScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('AppTypography'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
-          children: [
-            Text(
-              'title1',
-              style: AppTypography.title1,
-            ),
-            Text(
-              'title2',
-              style: AppTypography.title2,
-            ),
-            Text(
-              'title3',
-              style: AppTypography.title3,
-            ),
-            Text(
-              'title4',
-              style: AppTypography.title4,
-            ),
-            Text(
-              'title5',
-              style: AppTypography.title5,
-            ),
-            Text(
-              'headline',
-              style: AppTypography.headline,
-            ),
-            Text(
-              'body',
-              style: AppTypography.body,
-            ),
-            Text(
-              'subhead',
-              style: AppTypography.subhead,
-            ),
-            Text(
-              'footnote',
-              style: AppTypography.footnote,
-            ),
-            Text(
-              'caption1',
-              style: AppTypography.caption1,
-            ),
-            Text(
-              'caption2',
-              style: AppTypography.caption2,
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          Text(
+            'headline1',
+            style: AppTypography.headline1,
+          ),
+          Text(
+            'headline2',
+            style: AppTypography.headline2,
+          ),
+          Text(
+            'headline3',
+            style: AppTypography.headline3,
+          ),
+          Text(
+            'headline4',
+            style: AppTypography.headline4,
+          ),
+          Text(
+            'headline5',
+            style: AppTypography.headline5,
+          ),
+          Text(
+            'headline6',
+            style: AppTypography.headline6,
+          ),
+          Text(
+            'subtitle1',
+            style: AppTypography.subtitle1,
+          ),
+          Text(
+            'subtitle2',
+            style: AppTypography.subtitle2,
+          ),
+          Text(
+            'body1',
+            style: AppTypography.body1,
+          ),
+          Text(
+            'body2',
+            style: AppTypography.body2,
+          ),
+          Text(
+            'button',
+            style: AppTypography.button,
+          ),
+          Text(
+            'caption',
+            style: AppTypography.caption,
+          ),
+          Text(
+            'overline',
+            style: AppTypography.overline,
+          ),
+        ],
       ),
     );
   }
