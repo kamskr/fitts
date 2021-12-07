@@ -45,9 +45,6 @@ class _AppBottomNavigationBarScreenState
           });
         },
       ),
-      body: ListView(children: const [
-        Text('Widgets'),
-      ]),
     );
   }
 }
