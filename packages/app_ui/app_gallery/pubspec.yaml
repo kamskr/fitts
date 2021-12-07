@@ -1,4 +1,4 @@
-name: prfit
+name: app_gallery
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -6,27 +6,27 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
 
 dependencies:
+  app_ui:
+    path: ../
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-
   very_good_analysis: ^2.4.0
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
 
+include: package:very_good_analysis/analysis_options.yaml
 
 flutter:
-  uses-material-design: true
-  # To add assets to your application, add an assets section, like this:
+  # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
   # fonts:
   #   - family: Schyler
   #     fonts:
@@ -38,6 +38,3 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
