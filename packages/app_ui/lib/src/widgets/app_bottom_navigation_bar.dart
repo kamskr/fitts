@@ -1,6 +1,16 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
+class AppMenuItem {
+  const AppMenuItem({
+    required this.icon,
+    required this.label,
+  });
+
+  final Icon icon;
+  final String label;
+}
+
 class AppBottomNavigationBar extends StatelessWidget {
   const AppBottomNavigationBar({
     required this.menuItems,
@@ -9,7 +19,7 @@ class AppBottomNavigationBar extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final List<String> menuItems;
+  final List<AppMenuItem> menuItems;
   final int currentIndex;
   final Function(int) onTap;
 
@@ -20,8 +30,8 @@ class AppBottomNavigationBar extends StatelessWidget {
       showUnselectedLabels: false,
       items: menuItems
           .map((menuItem) => BottomNavigationBarItem(
-                icon: const Icon(Icons.ac_unit),
-                label: menuItem,
+                icon: menuItem.icon,
+                label: menuItem.label,
               ))
           .toList(),
       selectedItemColor: AppColors.black,

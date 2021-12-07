@@ -16,7 +16,24 @@ class _WidgetsScreenState extends State<WidgetsScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Widgets')),
       bottomNavigationBar: AppBottomNavigationBar(
-        menuItems: const ['Test', 'Test2'],
+        menuItems: const [
+          AppMenuItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          AppMenuItem(
+            icon: Icon(Icons.query_stats),
+            label: 'Stats',
+          ),
+          AppMenuItem(
+            icon: Icon(Icons.calendar_today),
+            label: 'Calendar',
+          ),
+          AppMenuItem(
+            icon: Icon(Icons.note_add_outlined),
+            label: 'Notes',
+          ),
+        ],
         currentIndex: currentIndex,
         onTap: (int index) {
           setState(() {
