@@ -7,53 +7,61 @@ abstract class AppTypography {
     fontFamily: 'Rubik',
   );
 
-  static final TextStyle title1 = _baseTextStyle.copyWith(
+  static final TextStyle headline1 = _baseTextStyle.copyWith(
     fontSize: 50,
     fontFamily: 'Questrial',
   );
 
-  static final TextStyle title2 = _baseTextStyle.copyWith(
+  static final TextStyle headline2 = _baseTextStyle.copyWith(
     fontSize: 34,
     fontWeight: AppFontWeight.light,
   );
 
-  static final TextStyle title3 = _baseTextStyle.copyWith(
-    fontSize: 29,
-    fontFamily: 'Questrial',
-  );
-
-  static final TextStyle title4 = _baseTextStyle.copyWith(
-    fontSize: 24,
-  );
-
-  static final TextStyle title5 = _baseTextStyle.copyWith(
-    fontSize: 18,
-    fontWeight: AppFontWeight.medium,
-  );
-
-  static final TextStyle headline = _baseTextStyle.copyWith(
+  static final TextStyle headline3 = _baseTextStyle.copyWith(
     fontSize: 30,
     fontWeight: AppFontWeight.medium,
   );
 
-  static final TextStyle body = _baseTextStyle.copyWith(
-    fontSize: 15,
+  static final TextStyle headline4 = _baseTextStyle.copyWith(
+    fontSize: 29,
+    fontFamily: 'Questrial',
   );
 
-  static final TextStyle subhead = _baseTextStyle.copyWith(
+  static final TextStyle headline5 = _baseTextStyle.copyWith(
+    fontSize: 24,
+  );
+
+  static final TextStyle headline6 = _baseTextStyle.copyWith(
+    fontSize: 18,
+    fontWeight: AppFontWeight.medium,
+  );
+
+  static final TextStyle subtitle1 = _baseTextStyle.copyWith(
+    fontSize: 16,
+  );
+
+  static final TextStyle subtitle2 = _baseTextStyle.copyWith(
     fontSize: 13,
   );
 
-  static final TextStyle footnote = _baseTextStyle.copyWith(
+  static final TextStyle body1 = _baseTextStyle.copyWith(
+    fontSize: 16,
+  );
+
+  static final TextStyle body2 = _baseTextStyle.copyWith(
     fontSize: 14,
-    fontWeight: AppFontWeight.light,
   );
 
-  static final TextStyle caption1 = _baseTextStyle.copyWith(
+  static final TextStyle button = _baseTextStyle.copyWith(
+    fontSize: 14,
+    fontWeight: AppFontWeight.medium,
+  );
+
+  static final TextStyle caption = _baseTextStyle.copyWith(
     fontSize: 13,
   );
 
-  static final TextStyle caption2 = _baseTextStyle.copyWith(
+  static final TextStyle overline = _baseTextStyle.copyWith(
     fontSize: 12,
     fontFamily: 'Questrial',
   );
