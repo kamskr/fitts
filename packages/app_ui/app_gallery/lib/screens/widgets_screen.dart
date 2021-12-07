@@ -15,6 +15,7 @@ class _WidgetsScreenState extends State<WidgetsScreen> {
 
   static const Map<String, Widget> _tileTitles = {
     'AppBottomNavigationBar': AppBottomNavigationBarScreen(),
+    'App Buttons': AppButtonsScreen(),
   };
 
   @override
