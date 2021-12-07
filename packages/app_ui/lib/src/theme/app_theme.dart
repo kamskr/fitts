@@ -3,27 +3,25 @@ import 'package:flutter/material.dart';
 
 abstract class AppTheme {
   static final ThemeData lightTheme = ThemeData(
-    brightness: Brightness.light,
-    fontFamily: 'Roboto',
-    primaryColor: AppColors.primary,
-    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: AppColors.accent),
-    canvasColor: _backgroundColor,
-    backgroundColor: _backgroundColor,
-    scaffoldBackgroundColor: _backgroundColor,
+    fontFamily: 'Rubik',
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      primary: AppColors.primary,
+      secondary: AppColors.accent,
+      background: AppColors.black[50],
+      surface: AppColors.white,
+      brightness: Brightness.light,
+    ),
     iconTheme: _iconTheme,
     appBarTheme: _appBarTheme,
     textTheme: _textTheme,
-    splashColor: AppColors.white,
-    snackBarTheme: _snackBarTheme,
   );
-
-  static const _backgroundColor = AppColors.white;
 
   static const _iconTheme = IconThemeData(color: AppColors.primary);
 
   static final _appBarTheme = AppBarTheme(
     titleTextStyle: AppTypography.headline3.copyWith(
       color: AppColors.black,
+      fontSize: 18,
     ),
     toolbarTextStyle: AppTypography.body1.copyWith(
       color: AppColors.primary,
@@ -31,16 +29,6 @@ abstract class AppTheme {
     color: AppColors.white,
     iconTheme: const IconThemeData(color: AppColors.primary),
     elevation: 0,
-  );
-
-  static final _snackBarTheme = SnackBarThemeData(
-    contentTextStyle: AppTypography.body1.copyWith(
-      color: AppColors.white,
-    ),
-    actionTextColor: AppColors.accent,
-    backgroundColor: AppColors.white,
-    elevation: 4,
-    behavior: SnackBarBehavior.floating,
   );
 
   static final _textTheme = TextTheme(
