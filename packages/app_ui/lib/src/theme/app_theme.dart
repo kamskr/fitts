@@ -22,10 +22,10 @@ abstract class AppTheme {
   static const _iconTheme = IconThemeData(color: AppColors.primary);
 
   static final _appBarTheme = AppBarTheme(
-    titleTextStyle: AppTypography.headline.copyWith(
+    titleTextStyle: AppTypography.headline3.copyWith(
       color: AppColors.black,
     ),
-    toolbarTextStyle: AppTypography.body.copyWith(
+    toolbarTextStyle: AppTypography.body1.copyWith(
       color: AppColors.primary,
     ),
     color: AppColors.white,
@@ -34,7 +34,7 @@ abstract class AppTheme {
   );
 
   static final _snackBarTheme = SnackBarThemeData(
-    contentTextStyle: AppTypography.body.copyWith(
+    contentTextStyle: AppTypography.body1.copyWith(
       color: AppColors.white,
     ),
     actionTextColor: AppColors.accent,
@@ -44,18 +44,18 @@ abstract class AppTheme {
   );
 
   static final _textTheme = TextTheme(
-    headline1: AppTypography.title1,
-    headline2: AppTypography.title2,
-    headline3: AppTypography.title3,
-    headline4: AppTypography.title4,
-    headline5: AppTypography.title5,
-    headline6: AppTypography.headline,
-    subtitle1: AppTypography.subhead,
-    subtitle2: AppTypography.subhead,
-    bodyText1: AppTypography.body,
-    bodyText2: AppTypography.body,
-    button: AppTypography.body,
-    caption: AppTypography.footnote,
-    overline: AppTypography.caption2,
+    headline1: AppTypography.headline1,
+    headline2: AppTypography.headline2,
+    headline3: AppTypography.headline3,
+    headline4: AppTypography.headline4,
+    headline5: AppTypography.headline5,
+    headline6: AppTypography.headline6,
+    subtitle1: AppTypography.subtitle1,
+    subtitle2: AppTypography.subtitle2,
+    bodyText1: AppTypography.body1,
+    bodyText2: AppTypography.body2,
+    button: AppTypography.button,
+    caption: AppTypography.caption,
+    overline: AppTypography.overline,
   );
 }
