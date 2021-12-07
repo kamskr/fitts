@@ -13,48 +13,56 @@ class TypographyScreen extends StatelessWidget {
       body: ListView(
         children: [
           Text(
-            'title1',
-            style: AppTypography.title1,
+            'headline1',
+            style: AppTypography.headline1,
           ),
           Text(
-            'title2',
-            style: AppTypography.title2,
+            'headline2',
+            style: AppTypography.headline2,
           ),
           Text(
-            'title3',
-            style: AppTypography.title3,
+            'headline3',
+            style: AppTypography.headline3,
           ),
           Text(
-            'title4',
-            style: AppTypography.title4,
+            'headline4',
+            style: AppTypography.headline4,
           ),
           Text(
-            'title5',
-            style: AppTypography.title5,
+            'headline5',
+            style: AppTypography.headline5,
           ),
           Text(
-            'headline',
-            style: AppTypography.headline,
+            'headline6',
+            style: AppTypography.headline6,
           ),
           Text(
-            'body',
-            style: AppTypography.body,
+            'subtitle1',
+            style: AppTypography.subtitle1,
           ),
           Text(
-            'subhead',
-            style: AppTypography.subhead,
+            'subtitle2',
+            style: AppTypography.subtitle2,
           ),
           Text(
-            'footnote',
-            style: AppTypography.footnote,
+            'body1',
+            style: AppTypography.body1,
           ),
           Text(
-            'caption1',
-            style: AppTypography.caption1,
+            'body2',
+            style: AppTypography.body2,
           ),
           Text(
-            'caption2',
-            style: AppTypography.caption2,
+            'button',
+            style: AppTypography.button,
+          ),
+          Text(
+            'caption',
+            style: AppTypography.caption,
+          ),
+          Text(
+            'overline',
+            style: AppTypography.overline,
           ),
         ],
       ),
