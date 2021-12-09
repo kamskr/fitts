@@ -15,8 +15,8 @@ class AppButtonsScreen extends StatelessWidget {
         child: ListView(
           children: [
             AppButton(
-              text: 'AppButton',
               onPressed: () {},
+              child: const Text('AppButton.primary()'),
             ),
           ],
         ),

@@ -1,27 +1,65 @@
-// import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
+/// {@template app_button}
+/// Button with text displayed in the application.
+/// {@endtemplate}
 class AppButton extends StatelessWidget {
-  const AppButton({
-    required this.text,
-    required this.onPressed,
+  /// {@macro app_button}
+  AppButton({
     Key? key,
-  }) : super(key: key);
+    this.onPressed,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    BorderSide? borderSide,
+    TextStyle? textStyle,
+    double? height,
+    required this.child,
+  })  : _backgroundColor = backgroundColor ?? AppColors.primary,
+        _foregroundColor = foregroundColor ?? AppColors.white,
+        _borderSide = borderSide,
+        _textStyle = textStyle ?? AppTypography.button,
+        _height = height ?? 42,
+        super(key: key);
 
-  final String text;
-  final VoidCallback onPressed;
-  // final Color color;
+  /// [VoidCallback] called when button is pressed.
+  /// Button is disabled when null.
+  final VoidCallback? onPressed;
+
+  /// A background [Color] of the button.
+  final Color _backgroundColor;
+
+  /// [Color] of the text, icons etc.
+  final Color _foregroundColor;
+
+  /// A border of the button.
+  final BorderSide? _borderSide;
+
+  /// [TextStyle] of the button text.
+  final TextStyle _textStyle;
+
+  /// [double] A height of the button.
+  final double _height;
+
+  /// [Widget] displayed on the button.
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        shape: const RoundedRectangleBorder(),
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(
+          const RoundedRectangleBorder(),
+        ),
+        textStyle: MaterialStateProperty.all(_textStyle),
+        backgroundColor: MaterialStateProperty.all(_backgroundColor),
+        foregroundColor: MaterialStateProperty.all(_foregroundColor),
+        side: MaterialStateProperty.all(_borderSide),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(13),
-        child: Text(text),
+      child: SizedBox(
+        height: _height,
+        child: Center(child: child),
       ),
     );
   }
