@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 /// {@endtemplate}
 class AppButton extends StatelessWidget {
   /// {@macro app_button}
-  AppButton({
+  const AppButton._({
     Key? key,
     this.onPressed,
     Color? backgroundColor,
@@ -18,9 +18,22 @@ class AppButton extends StatelessWidget {
   })  : _backgroundColor = backgroundColor ?? AppColors.primary,
         _foregroundColor = foregroundColor ?? AppColors.white,
         _borderSide = borderSide,
-        _textStyle = textStyle ?? AppTypography.button,
+        _textStyle = textStyle,
         _height = height ?? 42,
         super(key: key);
+
+  /// Filled primary button.
+  const AppButton.primary({
+    Key? key,
+    VoidCallback? onPressed,
+    TextStyle? textStyle,
+    required Widget child,
+  }) : this._(
+          key: key,
+          child: child,
+          onPressed: onPressed,
+          textStyle: textStyle,
+        );
 
   /// [VoidCallback] called when button is pressed.
   /// Button is disabled when null.
@@ -36,7 +49,7 @@ class AppButton extends StatelessWidget {
   final BorderSide? _borderSide;
 
   /// [TextStyle] of the button text.
-  final TextStyle _textStyle;
+  final TextStyle? _textStyle;
 
   /// [double] A height of the button.
   final double _height;
@@ -46,20 +59,23 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all(
-          const RoundedRectangleBorder(),
+    return Opacity(
+      opacity: onPressed != null ? 1 : 0.6,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            const RoundedRectangleBorder(),
+          ),
+          textStyle: MaterialStateProperty.all(_textStyle),
+          backgroundColor: MaterialStateProperty.all(_backgroundColor),
+          foregroundColor: MaterialStateProperty.all(_foregroundColor),
+          side: MaterialStateProperty.all(_borderSide),
         ),
-        textStyle: MaterialStateProperty.all(_textStyle),
-        backgroundColor: MaterialStateProperty.all(_backgroundColor),
-        foregroundColor: MaterialStateProperty.all(_foregroundColor),
-        side: MaterialStateProperty.all(_borderSide),
-      ),
-      child: SizedBox(
-        height: _height,
-        child: Center(child: child),
+        child: SizedBox(
+          height: _height,
+          child: Center(child: child),
+        ),
       ),
     );
   }

@@ -14,7 +14,7 @@ class AppButtonsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
-            AppButton(
+            AppButton.primary(
               onPressed: () {},
               child: const Text('AppButton.primary()'),
             ),
