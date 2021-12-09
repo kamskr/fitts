@@ -14,25 +14,54 @@ class AppButton extends StatelessWidget {
     BorderSide? borderSide,
     TextStyle? textStyle,
     double? height,
+    LinearGradient? linearGradient,
     required this.child,
   })  : _backgroundColor = backgroundColor ?? AppColors.primary,
         _foregroundColor = foregroundColor ?? AppColors.white,
         _borderSide = borderSide,
         _textStyle = textStyle,
         _height = height ?? 42,
+        _linearGradient = linearGradient,
         super(key: key);
 
   /// Filled primary button.
   const AppButton.primary({
     Key? key,
     VoidCallback? onPressed,
-    TextStyle? textStyle,
     required Widget child,
   }) : this._(
           key: key,
           child: child,
           onPressed: onPressed,
-          textStyle: textStyle,
+        );
+
+  /// Outlined accent button.
+  const AppButton.outlined({
+    Key? key,
+    VoidCallback? onPressed,
+    required Widget child,
+  }) : this._(
+          key: key,
+          child: child,
+          onPressed: onPressed,
+          backgroundColor: AppColors.white,
+          foregroundColor: AppColors.primary,
+          borderSide: const BorderSide(color: AppColors.primary),
+          height: 64,
+        );
+
+  /// Gradient accent button.
+  const AppButton.gradient({
+    Key? key,
+    VoidCallback? onPressed,
+    required Widget child,
+  }) : this._(
+          key: key,
+          child: child,
+          onPressed: onPressed,
+          backgroundColor: AppColors.accent,
+          height: 64,
+          linearGradient: AppColors.primaryGradient1,
         );
 
   /// [VoidCallback] called when button is pressed.
@@ -54,13 +83,27 @@ class AppButton extends StatelessWidget {
   /// [double] A height of the button.
   final double _height;
 
+  /// [LinearGradient] of the button.
+  final LinearGradient? _linearGradient;
+
   /// [Widget] displayed on the button.
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    var currentChild = child;
+
+    if (_linearGradient != null) {
+      currentChild = Ink(
+        decoration: BoxDecoration(
+          gradient: _linearGradient,
+        ),
+        child: Center(child: child),
+      );
+    }
+
     return Opacity(
-      opacity: onPressed != null ? 1 : 0.6,
+      opacity: onPressed != null ? 1 : 0.5,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
@@ -71,10 +114,13 @@ class AppButton extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all(_backgroundColor),
           foregroundColor: MaterialStateProperty.all(_foregroundColor),
           side: MaterialStateProperty.all(_borderSide),
+          padding: MaterialStateProperty.all(EdgeInsets.zero),
         ),
         child: SizedBox(
           height: _height,
-          child: Center(child: child),
+          child: Align(
+            child: currentChild,
+          ),
         ),
       ),
     );

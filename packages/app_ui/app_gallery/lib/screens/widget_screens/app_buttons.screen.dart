@@ -18,6 +18,29 @@ class AppButtonsScreen extends StatelessWidget {
               onPressed: () {},
               child: const Text('AppButton.primary()'),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            const AppButton.primary(
+              child: Text('AppButton.primary() - disabled'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            AppButton.outlined(
+              onPressed: () {},
+              child: const Text('AppButton.outlined()'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            AppButton.gradient(
+              onPressed: () {},
+              child: const Text('AppButton.gradient()'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
