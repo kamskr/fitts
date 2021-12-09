@@ -1,13 +1,20 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'list_screen.dart';
+import 'screens/screens.dart';
+import 'widgets/list_screen.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  static const Map<String, Widget> _tileTitles = {
+    'Colors': ColorsScreen(),
+    'Typography': TypographyScreen(),
+    'Widgets': WidgetsScreen(),
+  };
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +26,9 @@ class MyApp extends StatelessWidget {
             'Gallery',
           ),
         ),
-        body: const ListScreen(),
+        body: const ListScreen(
+          tileTitles: _tileTitles,
+        ),
       ),
     );
   }

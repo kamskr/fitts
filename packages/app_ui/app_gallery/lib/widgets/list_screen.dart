@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'screens/screens.dart';
-
 class ListScreen extends StatelessWidget {
-  const ListScreen({Key? key}) : super(key: key);
+  const ListScreen({required this.tileTitles, Key? key}) : super(key: key);
 
-  static const Map<String, Widget> _tileTitles = {
-    'Colors': ColorsScreen(),
-    'Typography': TypographyScreen(),
-  };
+  final Map<String, Widget> tileTitles;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: ListView(
-        children: _tileTitles.entries
+        children: tileTitles.entries
             .map(
               (entry) => ListTile(
                 onTap: () => Navigator.of(context).push<MaterialPageRoute>(
