@@ -15,6 +15,7 @@ class AppButton extends StatelessWidget {
     TextStyle? textStyle,
     double? height,
     LinearGradient? linearGradient,
+    BorderRadius? borderRadius,
     required this.child,
   })  : _backgroundColor = backgroundColor ?? AppColors.primary,
         _foregroundColor = foregroundColor ?? AppColors.white,
@@ -22,6 +23,7 @@ class AppButton extends StatelessWidget {
         _textStyle = textStyle,
         _height = height ?? 42,
         _linearGradient = linearGradient,
+        _borderRadius = borderRadius ?? BorderRadius.zero,
         super(key: key);
 
   /// Filled primary button.
@@ -50,7 +52,7 @@ class AppButton extends StatelessWidget {
           height: 64,
         );
 
-  /// Gradient accent button.
+  /// Gradient primary button.
   const AppButton.gradient({
     Key? key,
     VoidCallback? onPressed,
@@ -59,9 +61,24 @@ class AppButton extends StatelessWidget {
           key: key,
           child: child,
           onPressed: onPressed,
-          backgroundColor: AppColors.accent,
           height: 64,
           linearGradient: AppColors.primaryGradient1,
+        );
+
+  /// Gradient accent button.
+  AppButton.accentGradient({
+    Key? key,
+    VoidCallback? onPressed,
+    required Widget child,
+  }) : this._(
+          key: key,
+          child: child,
+          onPressed: onPressed,
+          height: 52,
+          linearGradient: AppColors.secondaryAccentGradient,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(2),
+          ),
         );
 
   /// [VoidCallback] called when button is pressed.
@@ -86,6 +103,9 @@ class AppButton extends StatelessWidget {
   /// [LinearGradient] of the button.
   final LinearGradient? _linearGradient;
 
+  /// [BorderRadius] of the button.
+  final BorderRadius _borderRadius;
+
   /// [Widget] displayed on the button.
   final Widget child;
 
@@ -97,6 +117,7 @@ class AppButton extends StatelessWidget {
       currentChild = Ink(
         decoration: BoxDecoration(
           gradient: _linearGradient,
+          borderRadius: _borderRadius,
         ),
         child: Center(child: child),
       );
@@ -108,7 +129,9 @@ class AppButton extends StatelessWidget {
         onPressed: onPressed,
         style: ButtonStyle(
           shape: MaterialStateProperty.all(
-            const RoundedRectangleBorder(),
+            RoundedRectangleBorder(
+              borderRadius: _borderRadius,
+            ),
           ),
           textStyle: MaterialStateProperty.all(_textStyle),
           backgroundColor: MaterialStateProperty.all(_backgroundColor),
