@@ -1,3 +1,6 @@
+# fvm
+.fvm/flutter_sdk
+
 # Miscellaneous
 *.class
 *.lock
@@ -47,6 +50,10 @@ flutter_*.png
 linked_*.ds
 unlinked.ds
 unlinked_spec.ds
+
+# Submodules
+!pubspec.lock
+packages/**/pubspec.lock
 
 # Android related
 **/android/**/gradle-wrapper.jar
