@@ -23,7 +23,7 @@ jobs:
         run: flutter packages get
 
       - name: Install Gallery Dependencies
-        working-directory: packages/app_ui/gallery
+        working-directory: packages/app_ui/app_gallery
         run: flutter packages get
 
       - name: Format
