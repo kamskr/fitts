@@ -1,6 +1,13 @@
-name: pr_fit
+name: prfit
 
-on: [pull_request, push]
+on:
+  pull_request:
+    paths:
+      - "lib/**"
+      - "test/**"
+      - "packages/**"
+      - "pubspec.yaml"
+      - ".github/workflows/main.yaml"
 
 jobs:
   build:
@@ -13,6 +20,10 @@ jobs:
           channel: "stable"
 
       - name: Install Dependencies
+        run: flutter packages get
+
+      - name: Install Gallery Dependencies
+        working-directory: packages/app_ui/gallery
         run: flutter packages get
 
       - name: Format
