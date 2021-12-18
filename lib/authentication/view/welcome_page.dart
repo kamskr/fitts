@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
-  static Route route() =>
-      MaterialPageRoute<void>(builder: (_) => const WelcomePage());
+  static Page page() {
+    return const MaterialPage<void>(child: WelcomePage());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,13 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Welcome'));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Welcome page'),
+      ),
+      body: const Center(
+        child: Text('Welcome'),
+      ),
+    );
   }
 }
