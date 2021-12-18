@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:authentication_repository/authentication_client.dart';
+import 'package:authentication_client/authentication_client.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 
-/// {@template authentication_repository}
+/// {@template authentication_client}
 /// Repository which manages user authentication.
 /// {@endtemplate}
-class AuthenticationRepository {
-  /// {@macro authentication_repository}
-  AuthenticationRepository({
+class AuthenticationClient {
+  /// {@macro authentication_client}
+  AuthenticationClient({
     firebase_auth.FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
   })  : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,

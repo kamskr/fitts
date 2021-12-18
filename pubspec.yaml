@@ -11,8 +11,8 @@ environment:
 dependencies:
   app_ui:
     path: packages/app_ui
-  authentication_repository:
-    path: packages/authentication_repository
+  authentication_client:
+    path: packages/authentication_client
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
