@@ -1,6 +1,6 @@
-import 'package:app_gallery/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/widgets.dart';
 import 'widget_screens/widget_screens.dart';
 
 class WidgetsScreen extends StatelessWidget {

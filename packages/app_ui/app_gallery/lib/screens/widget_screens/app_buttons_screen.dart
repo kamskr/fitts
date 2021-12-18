@@ -8,7 +8,7 @@ class AppButtonsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('App buttons'),
+        title: const Text('App Buttons'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

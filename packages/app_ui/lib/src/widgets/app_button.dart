@@ -123,7 +123,8 @@ class AppButton extends StatelessWidget {
       );
     }
 
-    return Opacity(
+    return AnimatedOpacity(
+      duration: kThemeAnimationDuration,
       opacity: onPressed != null ? 1 : 0.5,
       child: ElevatedButton(
         onPressed: onPressed,

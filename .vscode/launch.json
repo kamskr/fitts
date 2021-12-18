@@ -5,41 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "pr_fit",
+            "name": "App",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "pr_fit (profile mode)",
+            "name": "App UI Gallery",
+            "cwd": "packages/app_ui/app_gallery",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
         },
-        {
-            "name": "authentication_repository",
-            "cwd": "packages/authentication_repository",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "authentication_repository (profile mode)",
-            "cwd": "packages/authentication_repository",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "pr_fit_ui",
-            "cwd": "packages/pr_fit_ui",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "pr_fit_ui (profile mode)",
-            "cwd": "packages/pr_fit_ui",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        }
     ]
 }
