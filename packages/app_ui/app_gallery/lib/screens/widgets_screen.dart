@@ -1,20 +1,14 @@
-import 'package:app_gallery/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/widgets.dart';
 import 'widget_screens/widget_screens.dart';
 
-class WidgetsScreen extends StatefulWidget {
+class WidgetsScreen extends StatelessWidget {
   const WidgetsScreen({Key? key}) : super(key: key);
-
-  @override
-  State<WidgetsScreen> createState() => _WidgetsScreenState();
-}
-
-class _WidgetsScreenState extends State<WidgetsScreen> {
-  int currentIndex = 0;
 
   static const Map<String, Widget> _tileTitles = {
     'AppBottomNavigationBar': AppBottomNavigationBarScreen(),
+    'App Buttons': AppButtonsScreen(),
   };
 
   @override

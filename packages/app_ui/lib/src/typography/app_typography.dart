@@ -53,8 +53,9 @@ abstract class AppTypography {
   );
 
   static final TextStyle button = _baseTextStyle.copyWith(
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: AppFontWeight.medium,
+    letterSpacing: 2,
   );
 
   static final TextStyle caption = _baseTextStyle.copyWith(

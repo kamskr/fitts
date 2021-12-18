@@ -11,7 +11,7 @@ class AppBottomNavigationBarScreen extends StatefulWidget {
 
 class _AppBottomNavigationBarScreenState
     extends State<AppBottomNavigationBarScreen> {
-  int currentIndex = 0;
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,10 @@ class _AppBottomNavigationBarScreenState
             label: 'Notes',
           ),
         ],
-        currentIndex: currentIndex,
+        currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
-            currentIndex = index;
+            _currentIndex = index;
           });
         },
       ),
