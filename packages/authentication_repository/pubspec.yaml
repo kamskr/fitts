@@ -5,6 +5,7 @@ publish_to: none
 
 environment:
   sdk: ">=2.13.0 <3.0.0"
+  flutter: 2.8.0
 
 dependencies:
   equatable: ^2.0.3
