@@ -5,7 +5,14 @@ import 'package:equatable/equatable.dart';
 /// {@endtemplate}
 class User extends Equatable {
   /// {@macro user}
-  const User({required this.id, this.email, this.name, this.photo});
+  const User({
+    required this.id,
+    this.email,
+    this.name,
+    this.photo,
+    this.isNewUser = true,
+    this.isAnonymous = true,
+  });
 
   /// The current user's email address.
   final String? email;
@@ -27,6 +34,12 @@ class User extends Equatable {
 
   /// Convenience getter to determine whether the current user is not empty.
   bool get isNotEmpty => this != User.empty;
+
+  /// Whether the current user is a first time user.
+  final bool isNewUser;
+
+  /// Wether the current user is anonymous.
+  final bool isAnonymous;
 
   @override
   List<Object?> get props => [email, id, name, photo];

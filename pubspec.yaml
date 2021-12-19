@@ -13,12 +13,14 @@ dependencies:
     path: packages/app_ui
   authentication_client:
     path: packages/authentication_client
+  bloc_test: ^9.0.1
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
   flow_builder: ^0.0.6
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0
+  mocktail: ^0.2.0
   very_good_analysis: ^2.4.0
 
 dev_dependencies:
