@@ -32,9 +32,7 @@ class App extends StatelessWidget {
 }
 
 class AppView extends StatelessWidget {
-  const AppView({
-    Key? key,
-  }) : super(key: key);
+  const AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
