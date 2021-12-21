@@ -5,7 +5,7 @@ import '../helpers/helpers.dart';
 
 void main() {
   group('AppButton.primary()', () {
-    testWidgets('AppButton.primary() is built if no onPressed is provided',
+    testWidgets('is built if no onPressed is provided',
         (WidgetTester tester) async {
       const button = AppButton.primary(child: Text('T'));
       await tester.pumpIt(button);
@@ -13,8 +13,7 @@ void main() {
       expect(titleFinder, findsOneWidget);
     });
 
-    testWidgets('AppButton.primary() has provided child',
-        (WidgetTester tester) async {
+    testWidgets('has provided child', (WidgetTester tester) async {
       final button =
           AppButton.primary(child: const Text('T'), onPressed: () {});
       await tester.pumpIt(button);
@@ -23,7 +22,7 @@ void main() {
     });
 
     testWidgets(
-      'AppButton.primary() fires provided function',
+      'fires provided function',
       (WidgetTester tester) async {
         var testFlag = false;
 
@@ -46,7 +45,7 @@ void main() {
     );
   });
   group('AppButton.outlined()', () {
-    testWidgets('AppButton.outlined() is built if no onPressed is provided',
+    testWidgets('is built if no onPressed is provided',
         (WidgetTester tester) async {
       const button = AppButton.outlined(child: Text('T'));
       await tester.pumpIt(button);
@@ -54,8 +53,7 @@ void main() {
       expect(titleFinder, findsOneWidget);
     });
 
-    testWidgets('AppButton.outlined() has provided child',
-        (WidgetTester tester) async {
+    testWidgets('has provided child', (WidgetTester tester) async {
       final button =
           AppButton.outlined(child: const Text('T'), onPressed: () {});
       await tester.pumpIt(button);
@@ -64,7 +62,7 @@ void main() {
     });
 
     testWidgets(
-      'AppButton.outlined() fires provided function',
+      'fires provided function',
       (WidgetTester tester) async {
         var testFlag = false;
 
@@ -87,7 +85,7 @@ void main() {
     );
   });
   group('AppButton.gradient()', () {
-    testWidgets('AppButton.gradient() is built if no onPressed is provided',
+    testWidgets('is built if no onPressed is provided',
         (WidgetTester tester) async {
       const button = AppButton.gradient(child: Text('T'));
       await tester.pumpIt(button);
@@ -95,8 +93,7 @@ void main() {
       expect(titleFinder, findsOneWidget);
     });
 
-    testWidgets('AppButton.gradient() has provided child',
-        (WidgetTester tester) async {
+    testWidgets('has provided child', (WidgetTester tester) async {
       final button =
           AppButton.gradient(child: const Text('T'), onPressed: () {});
       await tester.pumpIt(button);
@@ -105,7 +102,7 @@ void main() {
     });
 
     testWidgets(
-      'AppButton.gradient() fires provided function',
+      'fires provided function',
       (WidgetTester tester) async {
         var testFlag = false;
 
@@ -137,8 +134,7 @@ void main() {
       expect(titleFinder, findsOneWidget);
     });
 
-    testWidgets('AppButton.accentGradient() has provided child',
-        (WidgetTester tester) async {
+    testWidgets('has provided child', (WidgetTester tester) async {
       final button =
           AppButton.accentGradient(child: const Text('T'), onPressed: () {});
       await tester.pumpIt(button);
@@ -147,7 +143,7 @@ void main() {
     });
 
     testWidgets(
-      'AppButton.accentGradient() fires provided function',
+      'fires provided function',
       (WidgetTester tester) async {
         var testFlag = false;
 
