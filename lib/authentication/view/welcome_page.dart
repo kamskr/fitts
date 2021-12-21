@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prfit/l10n/l10n.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -18,12 +19,14 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome page'),
+        title: Text(l10n.welcomePageTitle),
       ),
-      body: const Center(
-        child: Text('Welcome'),
+      body: Center(
+        child: Text(l10n.welcomePageTitle),
       ),
     );
   }
