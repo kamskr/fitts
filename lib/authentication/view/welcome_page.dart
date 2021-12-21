@@ -159,6 +159,9 @@ class SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Text(l10n.signInButton);
+    return AppTextButton(
+      onPressed: () {},
+      child: Text(l10n.signInButton),
+    );
   }
 }
