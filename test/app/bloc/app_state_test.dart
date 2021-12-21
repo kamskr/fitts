@@ -24,8 +24,8 @@ void main() {
         final state = AppState.authenticated(
           User.empty,
         );
-        expect(state.status, AppStatus.unauthenticated);
-        expect(state.user, null);
+        expect(state.status, AppStatus.authenticated);
+        expect(state.user, User.empty);
       });
     });
   });
