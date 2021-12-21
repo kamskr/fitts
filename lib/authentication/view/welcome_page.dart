@@ -118,7 +118,6 @@ class SignUpButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 48),
       child: AppButton.gradient(
         child: Text(l10n.signUpButton),
-        onPressed: () {},
       ),
     );
   }
@@ -136,7 +135,6 @@ class SignUpWithGoogleButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 48),
       child: AppButton.outlined(
         child: Text(l10n.signUpWithGoogleButton),
-        onPressed: () {},
       ),
     );
   }
@@ -162,7 +160,6 @@ class SignInButton extends StatelessWidget {
     final l10n = context.l10n;
 
     return AppTextButton(
-      onPressed: () {},
       child: Text(l10n.signInButton),
     );
   }
