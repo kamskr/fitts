@@ -31,17 +31,18 @@ class AppTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      duration: kThemeAnimationDuration,
-      opacity: onPressed != null ? 1 : 0.5,
-      child: TextButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          textStyle: MaterialStateProperty.all(_textStyle),
-          foregroundColor: MaterialStateProperty.all(_textColor),
-        ),
-        child: child,
+    return TextButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all(_textStyle),
+        foregroundColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) {
+            return _textColor.withOpacity(0.5);
+          }
+          return _textColor;
+        }),
       ),
+      child: child,
     );
   }
 }
