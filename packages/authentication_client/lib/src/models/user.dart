@@ -11,7 +11,6 @@ class User extends Equatable {
     this.name,
     this.photo,
     this.isNewUser = true,
-    this.isAnonymous = true,
   });
 
   /// The current user's email address.

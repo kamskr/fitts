@@ -21,11 +21,10 @@ void main() {
 
     group('authenticated', () {
       test('has correct status', () {
-        final state = AppState.authenticated(
-          User.empty,
-        );
+        final user = User(id: 'test');
+        final state = AppState.authenticated(user);
         expect(state.status, AppStatus.authenticated);
-        expect(state.user, User.empty);
+        expect(state.user, user);
       });
     });
   });
