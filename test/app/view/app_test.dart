@@ -42,6 +42,8 @@ void main() {
 
   group('AppView', () {
     late AppBloc appBloc;
+    const id = 'mock-id';
+    const email = 'mock-email';
 
     setUp(() {
       appBloc = MockAppBloc();
@@ -61,8 +63,9 @@ void main() {
     });
 
     testWidgets('navigates to HomePage when authenticated', (tester) async {
+      const user = User(email: email, id: id);
       when(() => appBloc.state).thenReturn(
-        const AppState.authenticated(User.empty),
+        const AppState.authenticated(user),
       );
       await tester.pumpApp(
         const AppView(),

@@ -14,18 +14,20 @@ class MockUser extends Mock implements User {}
 
 void main() {
   group('AppBloc', () {
-    final user = MockUser();
     late AuthenticationClient authenticationClient;
+    late User authenticatedUser;
 
     setUp(() {
       authenticationClient = MockAuthenticationClient();
+      authenticatedUser = MockUser();
 
       when(() => authenticationClient.user).thenAnswer(
         (_) => Stream.empty(),
       );
+      when(() => authenticatedUser.isNewUser).thenReturn(false);
     });
 
-    test('initial state is loading', () {
+    test('has initial state `loading`', () {
       expect(
         AppBloc(
           authenticationClient: authenticationClient,
@@ -34,30 +36,18 @@ void main() {
       );
     });
 
-    group('UserChanged', () {
-      late User returningUser;
-      late User newUser;
+    blocTest<AppBloc, AppState>(
+      'emits AppState.unauthenticated() if user is empty',
+      build: () => AppBloc(authenticationClient: authenticationClient),
+      act: (bloc) => bloc.add(AppUserChanged(User.empty)),
+      expect: () => const <AppState>[AppState.unauthenticated()],
+    );
 
-      setUp(() {
-        returningUser = MockUser();
-        newUser = MockUser();
-        when(() => returningUser.isNewUser).thenReturn(false);
-        when(() => newUser.isNewUser).thenReturn(true);
-      });
-
-      blocTest<AppBloc, AppState>(
-        'emits unauthenticated when user is anonymous',
-        setUp: () {
-          when(() => authenticationClient.user).thenAnswer(
-            (_) => Stream.value(User.empty),
-          );
-          when(() => user.isAnonymous).thenReturn(true);
-        },
-        build: () => AppBloc(
-          authenticationClient: authenticationClient,
-        ),
-        expect: () => [AppState.unauthenticated()],
-      );
-    });
+    blocTest<AppBloc, AppState>(
+      'emits AppState.authenticated() if user is not empty',
+      build: () => AppBloc(authenticationClient: authenticationClient),
+      act: (bloc) => bloc.add(AppUserChanged(authenticatedUser)),
+      expect: () => <AppState>[AppState.authenticated(authenticatedUser)],
+    );
   });
 }

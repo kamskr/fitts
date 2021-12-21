@@ -12,10 +12,7 @@ class AppState extends Equatable {
     this.user,
   });
 
-  const AppState.loading()
-      : this._(
-          status: AppStatus.loading,
-        );
+  const AppState.loading() : this._(status: AppStatus.loading);
 
   const AppState.authenticated(User user)
       : this._(
@@ -23,10 +20,7 @@ class AppState extends Equatable {
           user: user,
         );
 
-  const AppState.unauthenticated()
-      : this._(
-          status: AppStatus.unauthenticated,
-        );
+  const AppState.unauthenticated() : this._(status: AppStatus.unauthenticated);
 
   final AppStatus status;
   final User? user;
