@@ -3,8 +3,8 @@ import 'package:authentication_client/authentication_client.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:prfit/app/app.dart';
+import 'package:prfit/l10n/l10n.dart';
 
 class App extends StatelessWidget {
   const App({required AuthenticationClient authenticationClient, Key? key})
@@ -39,16 +39,10 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Workout tracker',
+      title: 'PR Fit',
       theme: AppTheme.lightTheme,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', ''),
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: FlowBuilder<AppStatus>(
         state: context.select((AppBloc bloc) => bloc.state.status),
         onGeneratePages: onGenerateAppViewPages,

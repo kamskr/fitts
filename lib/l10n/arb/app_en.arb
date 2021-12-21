@@ -1,3 +1,5 @@
 {
-  "helloWorld": "Hello World!"
+  "appTitle": "PR Fit",
+  "welcomePageTitle": "Welcome page",
+  "homePageTitle": "Home page"
 }
