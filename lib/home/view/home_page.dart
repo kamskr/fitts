@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prfit/l10n/l10n.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,12 +19,14 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home screen'),
+        title: Text(l10n.homePageTitle),
       ),
-      body: const Center(
-        child: Text('Home view'),
+      body: Center(
+        child: Text(l10n.homePageTitle),
       ),
     );
   }
