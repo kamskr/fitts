@@ -48,6 +48,10 @@ class AppButtonsScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            AppTextButton(
+              onPressed: () {},
+              child: const Text('AppButton.accentGradient()'),
+            ),
           ],
         ),
       ),
