@@ -22,24 +22,26 @@ class WelcomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: const [
-            SizedBox(height: 70),
-            _WelcomeAppLogo(),
-            SizedBox(height: 30),
-            _WelcomeTitle(),
-            SizedBox(height: 4),
-            _WelcomeSubtitle(),
-            Spacer(flex: 2),
-            SignUpButton(),
-            SizedBox(height: 10),
-            SignUpWithGoogleButton(),
-            SizedBox(height: 56),
-            _AlreadyHaveAccountText(),
-            SizedBox(height: 16),
-            SignInButton(),
-            Spacer(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              SizedBox(height: 70),
+              _WelcomeAppLogo(),
+              SizedBox(height: 30),
+              _WelcomeTitle(),
+              SizedBox(height: 4),
+              _WelcomeSubtitle(),
+              SizedBox(height: 120),
+              SignUpButton(),
+              SizedBox(height: 10),
+              SignUpWithGoogleButton(),
+              SizedBox(height: 56),
+              _AlreadyHaveAccountText(),
+              SizedBox(height: 16),
+              SignInButton(),
+            ],
+          ),
         ),
       ),
     );
