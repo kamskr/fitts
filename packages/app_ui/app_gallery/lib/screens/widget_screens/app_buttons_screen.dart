@@ -48,6 +48,13 @@ class AppButtonsScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            AppTextButton(
+              onPressed: () {},
+              child: const Text('AppTextButton()'),
+            ),
+            const AppTextButton(
+              child: Text('disabled AppTextButton()'),
+            ),
           ],
         ),
       ),
