@@ -1,5 +1,5 @@
 // ignore_for_file: must_be_immutable
-import 'package:authentication_repository/authentication_repository.dart';
+import 'package:authentication_client/authentication_client.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -78,10 +78,10 @@ void main() {
     email: _mockFirebaseUserEmail,
   );
 
-  group('AuthenticationRepository', () {
+  group('AuthenticationClient', () {
     late firebase_auth.FirebaseAuth firebaseAuth;
     late GoogleSignIn googleSignIn;
-    late AuthenticationRepository authenticationRepository;
+    late AuthenticationClient authenticationClient;
 
     setUpAll(() {
       registerFallbackValue(FakeAuthCredential());
@@ -91,14 +91,14 @@ void main() {
     setUp(() {
       firebaseAuth = MockFirebaseAuth();
       googleSignIn = MockGoogleSignIn();
-      authenticationRepository = AuthenticationRepository(
+      authenticationClient = AuthenticationClient(
         firebaseAuth: firebaseAuth,
         googleSignIn: googleSignIn,
       );
     });
 
     test('creates FirebaseaAuth instance internally when not injected', () {
-      expect(() => AuthenticationRepository(), isNot(throwsException));
+      expect(() => AuthenticationClient(), isNot(throwsException));
     });
 
     group('signUp', () {
@@ -112,7 +112,7 @@ void main() {
       });
 
       test('calls createUserWithEmailAndPassword', () async {
-        await authenticationRepository.signUp(email: email, password: password);
+        await authenticationClient.signUp(email: email, password: password);
         verify(
           () => firebaseAuth.createUserWithEmailAndPassword(
             email: email,
@@ -123,7 +123,7 @@ void main() {
 
       test('succeeds when createUserWithEmailAndPassword succeeds', () async {
         expect(
-          authenticationRepository.signUp(email: email, password: password),
+          authenticationClient.signUp(email: email, password: password),
           completes,
         );
       });
@@ -138,7 +138,7 @@ void main() {
         ).thenThrow(Exception());
 
         expect(
-          authenticationRepository.signUp(email: email, password: password),
+          authenticationClient.signUp(email: email, password: password),
           throwsA(isA<SignUpWithEmailAndPasswordFailure>()),
         );
       });
@@ -165,7 +165,7 @@ void main() {
       });
 
       test('calls signIn authentication, and signInWithCredential', () async {
-        await authenticationRepository.logInWithGoogle();
+        await authenticationClient.logInWithGoogle();
         verify(() => googleSignIn.signIn()).called(1);
         verify(() => firebaseAuth.signInWithCredential(any())).called(1);
       });
@@ -174,9 +174,9 @@ void main() {
           'throws LogInWithGoogleFailure and calls signIn authentication, and '
           'signInWithPopup when authCredential is null and kIsWeb is true',
           () async {
-        authenticationRepository.isWeb = true;
+        authenticationClient.isWeb = true;
         await expectLater(
-          () => authenticationRepository.logInWithGoogle(),
+          () => authenticationClient.logInWithGoogle(),
           throwsA(isA<LogInWithGoogleFailure>()),
         );
         verifyNever(() => googleSignIn.signIn());
@@ -191,9 +191,9 @@ void main() {
         when(() => firebaseAuth.signInWithPopup(any()))
             .thenAnswer((_) async => credential);
         when(() => credential.credential).thenReturn(FakeAuthCredential());
-        authenticationRepository.isWeb = true;
+        authenticationClient.isWeb = true;
         await expectLater(
-          authenticationRepository.logInWithGoogle(),
+          authenticationClient.logInWithGoogle(),
           completes,
         );
         verifyNever(() => googleSignIn.signIn());
@@ -201,14 +201,14 @@ void main() {
       });
 
       test('succeeds when signIn succeeds', () {
-        expect(authenticationRepository.logInWithGoogle(), completes);
+        expect(authenticationClient.logInWithGoogle(), completes);
       });
 
       test('throws LogInWithGoogleFailure when exception occurs', () async {
         when(() => firebaseAuth.signInWithCredential(any()))
             .thenThrow(Exception());
         expect(
-          authenticationRepository.logInWithGoogle(),
+          authenticationClient.logInWithGoogle(),
           throwsA(isA<LogInWithGoogleFailure>()),
         );
       });
@@ -225,7 +225,7 @@ void main() {
       });
 
       test('calls signInWithEmailAndPassword', () async {
-        await authenticationRepository.logInWithEmailAndPassword(
+        await authenticationClient.logInWithEmailAndPassword(
           email: email,
           password: password,
         );
@@ -239,7 +239,7 @@ void main() {
 
       test('succeeds when signInWithEmailAndPassword succeeds', () async {
         expect(
-          authenticationRepository.logInWithEmailAndPassword(
+          authenticationClient.logInWithEmailAndPassword(
             email: email,
             password: password,
           ),
@@ -257,7 +257,7 @@ void main() {
           ),
         ).thenThrow(Exception());
         expect(
-          authenticationRepository.logInWithEmailAndPassword(
+          authenticationClient.logInWithEmailAndPassword(
             email: email,
             password: password,
           ),
@@ -270,7 +270,7 @@ void main() {
       test('calls signOut', () async {
         when(() => firebaseAuth.signOut()).thenAnswer((_) async {});
         when(() => googleSignIn.signOut()).thenAnswer((_) async {});
-        await authenticationRepository.logOut();
+        await authenticationClient.logOut();
         verify(() => firebaseAuth.signOut()).called(1);
         verify(() => googleSignIn.signOut()).called(1);
       });
@@ -278,7 +278,7 @@ void main() {
       test('throws LogOutFailure when signOut throws', () async {
         when(() => firebaseAuth.signOut()).thenThrow(Exception());
         expect(
-          authenticationRepository.logOut(),
+          authenticationClient.logOut(),
           throwsA(isA<LogOutFailure>()),
         );
       });
@@ -289,7 +289,7 @@ void main() {
         when(() => firebaseAuth.authStateChanges())
             .thenAnswer((_) => Stream.value(null));
         await expectLater(
-          authenticationRepository.user,
+          authenticationClient.user,
           emitsInOrder(const <User>[User.empty]),
         );
       });
@@ -302,7 +302,7 @@ void main() {
         when(() => firebaseAuth.authStateChanges())
             .thenAnswer((_) => Stream.value(firebaseUser));
         await expectLater(
-          authenticationRepository.user,
+          authenticationClient.user,
           emitsInOrder(const <User>[user]),
         );
       });

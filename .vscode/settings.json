@@ -1,6 +1,8 @@
 {
     "dart.flutterSdkPath": ".fvm/flutter_sdk",
     "cSpell.words": [
-        "mocktail"
+        "cupertino",
+        "mocktail",
+        "prfit"
     ]
 }
