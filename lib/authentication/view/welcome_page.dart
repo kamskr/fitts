@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:prfit/authentication/authentication.dart';
 import 'package:prfit/l10n/l10n.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -117,6 +118,7 @@ class SignUpButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 48),
       child: AppButton.gradient(
+        onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
         child: Text(l10n.signUpButton),
       ),
     );

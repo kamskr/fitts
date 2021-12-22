@@ -20,8 +20,11 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Center(
-      child: Text(l10n.signUpPageTitle),
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.signUpPageTitle)),
+      body: Center(
+        child: Text(l10n.signUpPageTitle),
+      ),
     );
   }
 }
