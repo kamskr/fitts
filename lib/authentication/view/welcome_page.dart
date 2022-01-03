@@ -15,6 +15,7 @@ class WelcomePage extends StatelessWidget {
   }
 }
 
+@visibleForTesting
 class WelcomeView extends StatelessWidget {
   const WelcomeView({Key? key}) : super(key: key);
 
@@ -24,7 +25,6 @@ class WelcomeView extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: const [
               SizedBox(height: 70),
@@ -41,6 +41,7 @@ class WelcomeView extends StatelessWidget {
               _AlreadyHaveAccountText(),
               SizedBox(height: AppSpacing.md),
               SignInButton(),
+              SizedBox(height: AppSpacing.md),
             ],
           ),
         ),
