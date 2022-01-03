@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   static const Map<String, Widget> _tileTitles = {
     'Colors': ColorsScreen(),
     'Typography': TypographyScreen(),
+    'Spacings': SpacingsScreen(),
     'Widgets': WidgetsScreen(),
   };
 
