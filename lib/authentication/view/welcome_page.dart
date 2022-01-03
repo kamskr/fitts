@@ -25,6 +25,7 @@ class WelcomeView extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: const [
               SizedBox(height: 70),
               _WelcomeAppLogo(),
@@ -55,12 +56,10 @@ class _WelcomeAppLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 48),
-      child: Align(
+      child: Assets.icons.appLogo.svg(
         alignment: Alignment.centerLeft,
-        child: Assets.icons.appLogo.svg(
-          width: 50,
-          height: 50,
-        ),
+        width: 50,
+        height: 50,
       ),
     );
   }
@@ -75,12 +74,10 @@ class _WelcomeTitle extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 48),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          l10n.welcomePageTitle,
-          style: AppTypography.headline2,
-        ),
+      child: Text(
+        l10n.welcomePageTitle,
+        style: AppTypography.headline2,
+        textAlign: TextAlign.left,
       ),
     );
   }
@@ -95,12 +92,10 @@ class _WelcomeSubtitle extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 48),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          l10n.welcomePageSubtitle,
-          style: AppTypography.subtitle1,
-        ),
+      child: Text(
+        l10n.welcomePageSubtitle,
+        style: AppTypography.subtitle1,
+        textAlign: TextAlign.left,
       ),
     );
   }
@@ -147,7 +142,10 @@ class _AlreadyHaveAccountText extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Text(l10n.alreadyHaveAccountText);
+    return Text(
+      l10n.alreadyHaveAccountText,
+      textAlign: TextAlign.center,
+    );
   }
 }
 
