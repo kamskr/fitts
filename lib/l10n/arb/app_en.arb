@@ -1,5 +1,9 @@
 {
-  "appTitle": "PR Fit",
-  "welcomePageTitle": "Welcome page",
+  "welcomePageTitle": "Welcome to Kenko",
+  "welcomePageSubtitle": "Sign Up to continue",
+  "signUpButton": "SIGN UP",
+  "signUpWithGoogleButton": "SIGN UP WITH GOOGLE",
+  "signInButton": "SIGN IN",
+  "alreadyHaveAccountText": "Already have an account?",
   "homePageTitle": "Home page"
 }

@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:prfit/l10n/l10n.dart';
 
@@ -19,15 +20,145 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: const [
+              SizedBox(height: 70),
+              _WelcomeAppLogo(),
+              SizedBox(height: 30),
+              _WelcomeTitle(),
+              SizedBox(height: 4),
+              _WelcomeSubtitle(),
+              SizedBox(height: 120),
+              SignUpButton(),
+              SizedBox(height: 10),
+              SignUpWithGoogleButton(),
+              SizedBox(height: 56),
+              _AlreadyHaveAccountText(),
+              SizedBox(height: 16),
+              SignInButton(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _WelcomeAppLogo extends StatelessWidget {
+  const _WelcomeAppLogo({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 48),
+      child: Assets.icons.appLogo.svg(
+        alignment: Alignment.centerLeft,
+        width: 50,
+        height: 50,
+      ),
+    );
+  }
+}
+
+class _WelcomeTitle extends StatelessWidget {
+  const _WelcomeTitle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.welcomePageTitle),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 48),
+      child: Text(
+        l10n.welcomePageTitle,
+        style: AppTypography.headline2,
+        textAlign: TextAlign.left,
       ),
-      body: Center(
-        child: Text(l10n.welcomePageTitle),
+    );
+  }
+}
+
+class _WelcomeSubtitle extends StatelessWidget {
+  const _WelcomeSubtitle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 48),
+      child: Text(
+        l10n.welcomePageSubtitle,
+        style: AppTypography.subtitle1,
+        textAlign: TextAlign.left,
       ),
+    );
+  }
+}
+
+@visibleForTesting
+class SignUpButton extends StatelessWidget {
+  const SignUpButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 48),
+      child: AppButton.gradient(
+        child: Text(l10n.signUpButton),
+      ),
+    );
+  }
+}
+
+@visibleForTesting
+class SignUpWithGoogleButton extends StatelessWidget {
+  const SignUpWithGoogleButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 48),
+      child: AppButton.outlined(
+        child: Text(l10n.signUpWithGoogleButton),
+      ),
+    );
+  }
+}
+
+class _AlreadyHaveAccountText extends StatelessWidget {
+  const _AlreadyHaveAccountText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Text(
+      l10n.alreadyHaveAccountText,
+      textAlign: TextAlign.center,
+    );
+  }
+}
+
+@visibleForTesting
+class SignInButton extends StatelessWidget {
+  const SignInButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return AppTextButton(
+      child: Text(l10n.signInButton),
     );
   }
 }
