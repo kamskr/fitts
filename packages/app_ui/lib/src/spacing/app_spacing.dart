@@ -23,8 +23,8 @@ abstract class AppSpacing {
   /// xlg spacing value (32pt)
   static const double xlg = 2 * spaceUnit;
 
-  /// xxlg spacing value (40pt)
-  static const double xxlg = 2.5 * spaceUnit;
+  /// xxlg spacing value (48pt)
+  static const double xxlg = 3 * spaceUnit;
 
   /// xxxlg pacing value (56pt)
   static const double xxxlg = 3.5 * spaceUnit;

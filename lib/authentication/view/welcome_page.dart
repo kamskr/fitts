@@ -29,17 +29,17 @@ class WelcomeView extends StatelessWidget {
             children: const [
               SizedBox(height: 70),
               _WelcomeAppLogo(),
-              SizedBox(height: 30),
+              SizedBox(height: AppSpacing.xlg),
               _WelcomeTitle(),
-              SizedBox(height: 4),
+              SizedBox(height: AppSpacing.xxs),
               _WelcomeSubtitle(),
               SizedBox(height: 120),
               SignUpButton(),
-              SizedBox(height: 10),
+              SizedBox(height: AppSpacing.sm),
               SignUpWithGoogleButton(),
-              SizedBox(height: 56),
+              SizedBox(height: AppSpacing.xxxlg),
               _AlreadyHaveAccountText(),
-              SizedBox(height: 16),
+              SizedBox(height: AppSpacing.md),
               SignInButton(),
             ],
           ),
@@ -55,7 +55,7 @@ class _WelcomeAppLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: Assets.icons.appLogo.svg(
         alignment: Alignment.centerLeft,
         width: 50,
@@ -73,7 +73,7 @@ class _WelcomeTitle extends StatelessWidget {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: Text(
         l10n.welcomePageTitle,
         style: AppTypography.headline2,
@@ -91,7 +91,7 @@ class _WelcomeSubtitle extends StatelessWidget {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: Text(
         l10n.welcomePageSubtitle,
         style: AppTypography.subtitle1,
@@ -110,7 +110,7 @@ class SignUpButton extends StatelessWidget {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: AppButton.gradient(
         child: Text(l10n.signUpButton),
       ),
@@ -127,7 +127,7 @@ class SignUpWithGoogleButton extends StatelessWidget {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: AppButton.outlined(
         child: Text(l10n.signUpWithGoogleButton),
       ),
