@@ -55,12 +55,14 @@ class _WelcomeAppLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const _boxSize = 50.0;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: Assets.icons.appLogo.svg(
         alignment: Alignment.centerLeft,
-        width: 50,
-        height: 50,
+        width: _boxSize,
+        height: _boxSize,
       ),
     );
   }
