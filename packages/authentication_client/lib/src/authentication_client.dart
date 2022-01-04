@@ -60,7 +60,7 @@ class AuthenticationClient {
   /// Signs in with the provided [email] and [password].
   ///
   /// Throws a [LogInWithEmailAndPasswordFailure] if an exception
-  Future<void> logInWithEmailAndPassword({
+  Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -77,7 +77,7 @@ class AuthenticationClient {
   /// Starts the Sign In with Google Flow.
   ///
   /// Throws a [LogInWithGoogleFailure] if an exception occurs.
-  Future<void> logInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     try {
       late final firebase_auth.AuthCredential credential;
       if (isWeb) {
@@ -106,7 +106,7 @@ class AuthenticationClient {
   /// [User.empty] from the [user] Stream.
   ///
   /// Throws a [LogOutFailure] if an exception occurs.
-  Future<void> logOut() async {
+  Future<void> signOut() async {
     try {
       await Future.wait([
         _firebaseAuth.signOut(),

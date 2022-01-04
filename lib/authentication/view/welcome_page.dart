@@ -141,7 +141,7 @@ class SignUpWithGoogleButton extends StatelessWidget {
       child: AppButton.outlined(
         child: Text(l10n.signInWithGoogleButton),
         onPressed: () {
-          context.read<WelcomeCubit>().logInWithGoogle();
+          context.read<WelcomeCubit>().signInWithGoogle();
         },
       ),
     );

@@ -10,10 +10,10 @@ class WelcomeCubit extends Cubit<WelcomeState> {
 
   final AuthenticationClient _authenticationClient;
 
-  Future<void> logInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      await _authenticationClient.logInWithGoogle();
+      await _authenticationClient.signInWithGoogle();
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on LogInWithGoogleFailure catch (e) {
       emit(state.copyWith(
