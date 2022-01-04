@@ -20,7 +20,7 @@ dependencies:
   flow_builder: ^0.0.6
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.0.0
+  flutter_bloc: ^8.0.1
   flutter_gen_runner: ^4.1.3
   flutter_localizations:
     sdk: flutter
