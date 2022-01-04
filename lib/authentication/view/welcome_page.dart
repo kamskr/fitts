@@ -134,7 +134,8 @@ class SignUpWithGoogleButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: AppButton.outlined(
-        child: Text(l10n.signUpWithGoogleButton),
+        child: Text(l10n.signInWithGoogleButton),
+        onPressed: () {},
       ),
     );
   }
