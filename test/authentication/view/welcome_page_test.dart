@@ -1,3 +1,4 @@
+import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,10 @@ import 'package:mocktail/mocktail.dart';
 import 'package:prfit/authentication/authentication.dart';
 
 import '../../helpers/pump_app.dart';
+
+class MockAuthenticationClient extends Mock implements AuthenticationClient {}
+
+class AuthenticationRepository {}
 
 class MockWelcomeCubit extends MockCubit<WelcomeState> implements WelcomeCubit {
 }
@@ -32,15 +37,18 @@ void main() {
     });
 
     testWidgets('is routable.', (tester) async {
-      expect(WelcomePage.page(), isA<Page>());
+      expect(WelcomePage.page(), isA<MaterialPage>());
     });
 
     testWidgets('renders properly.', (tester) async {
       await tester.pumpApp(
-        const WelcomePage(),
+        RepositoryProvider(
+          create: (context) => AuthenticationClient(),
+          child: const WelcomePage(),
+        ),
       );
 
-      expect(find.byType(WelcomeView), findsOneWidget);
+      expect(find.byType(WelcomePage), findsOneWidget);
     });
 
     testWidgets('redirects to SignUpPage on SignUp button pressed.',
