@@ -7,6 +7,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:prfit/app/app.dart';
 import 'package:prfit/l10n/l10n.dart';
 
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
+
 class FakeAppState extends Fake implements AppState {}
 
 class FakeAppEvent extends Fake implements AppEvent {}

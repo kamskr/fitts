@@ -121,6 +121,7 @@ class SignUpButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: AppButton.gradient(
+        key: const Key('welcomePage_signUpButton'),
         onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
         child: Text(l10n.signUpButton),
       ),
@@ -139,6 +140,7 @@ class SignUpWithGoogleButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: AppButton.outlined(
+        key: const Key('welcomePage_signInWithGoogle'),
         child: Text(l10n.signInWithGoogleButton),
         onPressed: () {
           context.read<WelcomeCubit>().signInWithGoogle();
@@ -171,6 +173,7 @@ class SignInButton extends StatelessWidget {
     final l10n = context.l10n;
 
     return AppTextButton(
+      key: const Key('welcomePage_signInButton'),
       child: Text(l10n.signInButton),
       onPressed: () => Navigator.of(context).push<void>(SignInPage.route()),
     );
