@@ -31,13 +31,18 @@ void main() {
       );
     });
 
-    testWidgets('renders properly', (tester) async {
+    testWidgets('is routable.', (tester) async {
+      expect(WelcomePage.page(), isA<Page>());
+    });
+
+    testWidgets('renders properly.', (tester) async {
       await tester.pumpApp(
         const WelcomePage(),
       );
 
       expect(find.byType(WelcomeView), findsOneWidget);
     });
+
     testWidgets('redirects to SignUpPage on SignUp button pressed.',
         (tester) async {
       await tester.pumpApp(
