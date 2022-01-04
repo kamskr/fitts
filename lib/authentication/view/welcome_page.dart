@@ -1,5 +1,7 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:authentication_client/authentication_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prfit/authentication/authentication.dart';
 import 'package:prfit/l10n/l10n.dart';
 
@@ -12,7 +14,10 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const WelcomeView();
+    return BlocProvider(
+      create: (_) => WelcomeCubit(context.read<AuthenticationClient>()),
+      child: const WelcomeView(),
+    );
   }
 }
 
@@ -135,7 +140,9 @@ class SignUpWithGoogleButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
       child: AppButton.outlined(
         child: Text(l10n.signInWithGoogleButton),
-        onPressed: () {},
+        onPressed: () {
+          context.read<WelcomeCubit>().logInWithGoogle();
+        },
       ),
     );
   }
