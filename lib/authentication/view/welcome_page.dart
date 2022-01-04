@@ -172,6 +172,7 @@ class SignInButton extends StatelessWidget {
 
     return AppTextButton(
       child: Text(l10n.signInButton),
+      onPressed: () => Navigator.of(context).push<void>(SignInPage.route()),
     );
   }
 }

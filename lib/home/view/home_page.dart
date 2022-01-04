@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
       ),
       body: Center(
         child: AppButton.primary(
-          child: Text('Sign out'),
+          child: const Text('Sign out'),
           onPressed: () {
             context.read<AuthenticationClient>().signOut();
           },

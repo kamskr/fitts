@@ -6,5 +6,6 @@
   "signInButton": "SIGN IN",
   "alreadyHaveAccountText": "Already have an account?",
   "homePageTitle": "Home page",
-  "signUpPageTitle": "Sign Up"
+  "signUpPageTitle": "Sign Up",
+  "signInPageTitle": "Sign In"
 }
