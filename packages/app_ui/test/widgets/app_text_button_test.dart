@@ -5,7 +5,7 @@ import '../helpers/helpers.dart';
 
 void main() {
   group('AppTextButton', () {
-    testWidgets(' is built f no onPressed is provided',
+    testWidgets(' is built if no onPressed is provided',
         (WidgetTester tester) async {
       const button = AppTextButton(child: Text('T'));
       await tester.pumpIt(button);
