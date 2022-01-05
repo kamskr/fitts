@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prfit/authentication/authentication.dart';
+import 'package:prfit/welcome/welcome.dart';
 
 import '../../helpers/pump_app.dart';
 

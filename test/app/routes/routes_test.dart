@@ -1,11 +1,8 @@
-// Copyright (c) 2021, Very Good Ventures
-// https://verygood.ventures
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prfit/app/app.dart';
-import 'package:prfit/authentication/view/view.dart';
 import 'package:prfit/home/home.dart';
+import 'package:prfit/welcome/view/view.dart';
 
 void main() {
   group('onGenerateAppViewPages', () {
