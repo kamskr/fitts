@@ -2,8 +2,10 @@ import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prfit/authentication/authentication.dart';
 import 'package:prfit/l10n/l10n.dart';
+import 'package:prfit/sign_in/sign_in.dart';
+import 'package:prfit/sign_up/sign_up.dart';
+import 'package:prfit/welcome/welcome.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);

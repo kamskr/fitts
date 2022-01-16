@@ -1,6 +1,3 @@
-// Copyright (c) 2021, Very Good Ventures
-// https://verygood.ventures
-
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 import 'package:authentication_client/authentication_client.dart';
 import 'package:flutter_test/flutter_test.dart';
