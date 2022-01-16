@@ -2,7 +2,10 @@
     "dart.flutterSdkPath": ".fvm/flutter_sdk",
     "cSpell.words": [
         "cupertino",
+        "formz",
+        "genhtml",
         "Kenko",
+        "lcov",
         "mocktail",
         "prfit"
     ]
