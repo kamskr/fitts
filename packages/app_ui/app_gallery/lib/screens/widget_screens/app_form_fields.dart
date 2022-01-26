@@ -14,10 +14,7 @@ class AppFormFields extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
-            AppButton.primary(
-              onPressed: () {},
-              child: const AppTextField(),
-            ),
+            const AppTextField(),
             const SizedBox(
               height: 20,
             ),
