@@ -8,7 +8,6 @@ abstract class AppTheme {
     iconTheme: _iconTheme,
     appBarTheme: _appBarTheme,
     textTheme: _textTheme,
-    inputDecorationTheme: _inputDecorationTheme,
   );
 
   static final _colorScheme = ColorScheme.fromSwatch().copyWith(
@@ -48,18 +47,5 @@ abstract class AppTheme {
     button: AppTypography.button,
     caption: AppTypography.caption,
     overline: AppTypography.overline,
-  );
-
-  static const _inputDecorationTheme = InputDecorationTheme(
-    focusColor: Colors.red,
-    border: OutlineInputBorder(),
-    contentPadding: EdgeInsets.symmetric(
-      vertical: 22,
-      horizontal: 26,
-    ),
-    labelStyle: TextStyle(
-      fontSize: 35,
-      decorationColor: Colors.red,
-    ),
   );
 }

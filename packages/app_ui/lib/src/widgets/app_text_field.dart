@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 /// {@template app_text_field}
@@ -6,25 +7,39 @@ import 'package:flutter/material.dart';
 ///
 /// {@endtemplate}
 class AppTextField extends StatelessWidget {
-  const AppTextField({Key? key}) : super(key: key);
+  const AppTextField({
+    Key? key,
+    this.onChanged,
+    this.labelText,
+    this.initialValue,
+    this.hintText,
+    this.errorText,
+  }) : super(key: key);
+
+  /// Initial value of this field.
+  final String? initialValue;
+
+  /// Text that describes the purpose of this field.
+  final String? labelText;
+
+  /// Text that suggests what sort of values this field accepts.
+  final String? hintText;
+
+  /// Text that appears below the text and indicates error.
+  final String? errorText;
+
+  /// Action that is fired when value of the input changes.
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: const InputDecoration(
-        icon: Icon(Icons.person),
-        hintText: 'What do people call you?',
-        labelText: 'Name *',
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: hintText,
+        border: UnderlineInputBorder(),
       ),
-      onSaved: (String? value) {
-        // This optional block of code can be used to run
-        // code when the user saves the form.
-      },
-      validator: (String? value) {
-        return (value != null && value.contains('@'))
-            ? 'Do not use the @ char.'
-            : null;
-      },
+      onChanged: onChanged,
     );
   }
 }
