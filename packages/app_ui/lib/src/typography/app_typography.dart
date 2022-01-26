@@ -10,7 +10,7 @@ abstract class AppTypography {
 
   static final TextStyle headline1 = _baseTextStyle.copyWith(
     fontSize: 50,
-    fontFamily: 'Questrial',
+    fontFamily: FontFamily.questrial,
   );
 
   static final TextStyle headline2 = _baseTextStyle.copyWith(

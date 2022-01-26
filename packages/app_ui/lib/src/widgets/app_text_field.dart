@@ -36,8 +36,16 @@ class AppTextField extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: AppTypography.body1.copyWith(
+          color: AppColors.white,
+        ),
         hintText: hintText,
-        border: UnderlineInputBorder(),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.primary[50]!,
+            width: 0.2,
+          ),
+        ),
       ),
       onChanged: onChanged,
     );

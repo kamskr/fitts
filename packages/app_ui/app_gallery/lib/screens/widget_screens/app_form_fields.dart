@@ -10,15 +10,21 @@ class AppFormFields extends StatelessWidget {
       appBar: AppBar(
         title: const Text('App Form Fields'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView(
-          children: const [
-            AppTextField(labelText: 'Test'),
-            SizedBox(
-              height: 20,
-            ),
-          ],
+      body: DecoratedBox(
+        // ignore: prefer_const_constructors
+        decoration: BoxDecoration(
+          gradient: AppColors.primaryGradient2,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: ListView(
+            children: const [
+              AppTextField(labelText: 'Test'),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );
