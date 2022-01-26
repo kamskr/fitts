@@ -9,6 +9,7 @@ class WidgetsScreen extends StatelessWidget {
   static const Map<String, Widget> _tileTitles = {
     'AppBottomNavigationBar': AppBottomNavigationBarScreen(),
     'App Buttons': AppButtonsScreen(),
+    'App Form Fields': AppFormFields(),
   };
 
   @override
