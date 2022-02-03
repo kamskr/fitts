@@ -33,21 +33,30 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: AppTypography.body1.copyWith(
-          color: AppColors.white,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.primary[50]!.withOpacity(0.1),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: AppSpacing.sm,
+          horizontal: AppSpacing.xlg,
         ),
-        hintText: hintText,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColors.primary[50]!,
-            width: 0.2,
+        child: TextFormField(
+          decoration: InputDecoration(
+            labelText: labelText,
+            labelStyle: AppTypography.body1.copyWith(
+              color: AppColors.white.withOpacity(0.8),
+            ),
+            hintText: hintText,
+            enabledBorder: InputBorder.none,
+            focusedBorder: InputBorder.none,
           ),
+          cursorColor: AppColors.white,
+          style: const TextStyle(color: AppColors.white),
+          onChanged: onChanged,
         ),
       ),
-      onChanged: onChanged,
     );
   }
 }
