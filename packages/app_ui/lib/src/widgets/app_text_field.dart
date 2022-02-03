@@ -1,12 +1,15 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
+enum AppTextFieldType { text, password }
+
 /// {@template app_text_field}
 /// A text field component based on material [TextFormField] widget with a
 /// label
 ///
 /// {@endtemplate}
 class AppTextField extends StatefulWidget {
+  /// {@macro app_text_field}
   const AppTextField({
     Key? key,
     this.onChanged,
@@ -14,9 +17,9 @@ class AppTextField extends StatefulWidget {
     this.initialValue,
     this.hintText,
     this.errorText,
+    this.inputType = AppTextFieldType.text,
   }) : super(key: key);
 
-  /// Initial value of this field.
   final String? initialValue;
 
   /// Text that describes the purpose of this field.
@@ -27,6 +30,9 @@ class AppTextField extends StatefulWidget {
 
   /// Text that appears below the text and indicates error.
   final String? errorText;
+
+  /// [AppTextFieldType] that defines what kind of input is displayed.
+  final AppTextFieldType? inputType;
 
   /// Action that is fired when value of the input changes.
   final ValueChanged<String>? onChanged;
@@ -90,9 +96,12 @@ class _AppTextFieldState extends State<AppTextField> {
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
           ),
+          obscureText: widget.inputType == AppTextFieldType.password,
+          enableSuggestions: widget.inputType != AppTextFieldType.password,
+          autocorrect: widget.inputType != AppTextFieldType.password,
           focusNode: _focus,
           cursorColor: AppColors.white,
-          style: const TextStyle(color: AppColors.white),
+          style: AppTypography.body1.copyWith(color: AppColors.white),
           onChanged: widget.onChanged,
         ),
       ),
