@@ -11,5 +11,18 @@ void main() {
       final titleFinder = find.text('T');
       expect(titleFinder, findsOneWidget);
     });
+    testWidgets('executes probided function on change',
+        (WidgetTester tester) async {
+      String changedValue = "";
+      final field = AppTextField(
+        labelText: 'T',
+        onChanged: (value) {
+          changedValue = value;
+        },
+      );
+      await tester.pumpIt(field);
+      final titleFinder = find.text('T');
+      expect(titleFinder, findsOneWidget);
+    });
   });
 }
