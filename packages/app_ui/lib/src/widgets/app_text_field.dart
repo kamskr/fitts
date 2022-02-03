@@ -95,6 +95,7 @@ class _AppTextFieldState extends State<AppTextField> {
             hintText: widget.hintText,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
+            errorText: widget.errorText,
           ),
           obscureText: widget.inputType == AppTextFieldType.password,
           enableSuggestions: widget.inputType != AppTextFieldType.password,

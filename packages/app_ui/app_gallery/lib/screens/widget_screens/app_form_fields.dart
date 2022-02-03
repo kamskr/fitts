@@ -29,6 +29,14 @@ class AppFormFields extends StatelessWidget {
                 labelText: 'Password',
                 inputType: AppTextFieldType.password,
               ),
+              SizedBox(
+                height: 20,
+              ),
+              AppTextField(
+                labelText: 'Password',
+                inputType: AppTextFieldType.password,
+                errorText: 'Please enter your password',
+              ),
             ],
           ),
         ),
