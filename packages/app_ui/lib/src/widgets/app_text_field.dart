@@ -100,6 +100,7 @@ class _AppTextFieldState extends State<AppTextField> {
           obscureText: widget.inputType == AppTextFieldType.password,
           enableSuggestions: widget.inputType != AppTextFieldType.password,
           autocorrect: widget.inputType != AppTextFieldType.password,
+          initialValue: widget.initialValue,
           focusNode: _focus,
           cursorColor: AppColors.white,
           style: AppTypography.body1.copyWith(color: AppColors.white),
