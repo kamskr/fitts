@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-enum AppTextFieldType { text, password }
+enum AppTextFieldType { text, name, email, password }
 
 /// {@template app_text_field}
 /// A text field component based on material [TextFormField] widget with a
@@ -67,6 +67,25 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
+    var _obscureText = false;
+    var _enableSuggestions = true;
+    var _autocorrect = true;
+    var _keyboardType = TextInputType.text;
+
+    if (widget.inputType == AppTextFieldType.name) {
+      _keyboardType = TextInputType.name;
+    }
+
+    if (widget.inputType == AppTextFieldType.email) {
+      _keyboardType = TextInputType.emailAddress;
+    }
+
+    if (widget.inputType == AppTextFieldType.password) {
+      _obscureText = true;
+      _enableSuggestions = false;
+      _autocorrect = false;
+    }
+
     return DecoratedBox(
       decoration: BoxDecoration(
         color: _isFocused
@@ -95,12 +114,15 @@ class _AppTextFieldState extends State<AppTextField> {
             hintText: widget.hintText,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
+            errorText: widget.errorText,
           ),
-          obscureText: widget.inputType == AppTextFieldType.password,
-          enableSuggestions: widget.inputType != AppTextFieldType.password,
-          autocorrect: widget.inputType != AppTextFieldType.password,
+          obscureText: _obscureText,
+          enableSuggestions: _enableSuggestions,
+          autocorrect: _autocorrect,
+          initialValue: widget.initialValue,
           focusNode: _focus,
           cursorColor: AppColors.white,
+          keyboardType: _keyboardType,
           style: AppTypography.body1.copyWith(color: AppColors.white),
           onChanged: widget.onChanged,
         ),
