@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 /// label
 ///
 /// {@endtemplate}
-class AppTextField extends StatelessWidget {
+class AppTextField extends StatefulWidget {
   const AppTextField({
     Key? key,
     this.onChanged,
@@ -32,10 +32,48 @@ class AppTextField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
 
   @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  bool _isFocused = false;
+  final FocusNode _focus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(_onFocusChange);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _focus.removeListener(_onFocusChange);
+    // ignore: cascade_invocations
+    _focus.dispose();
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _isFocused = _focus.hasFocus;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.primary[50]!.withOpacity(0.1),
+        color: _isFocused
+            ? AppColors.primary[50]!.withOpacity(0.1)
+            : Colors.transparent,
+        border: !_isFocused
+            ? Border(
+                bottom: BorderSide(
+                  color: AppColors.primary[50]!,
+                  width: 0.2,
+                ),
+              )
+            : const Border(),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -44,17 +82,18 @@ class AppTextField extends StatelessWidget {
         ),
         child: TextFormField(
           decoration: InputDecoration(
-            labelText: labelText,
+            labelText: widget.labelText,
             labelStyle: AppTypography.body1.copyWith(
               color: AppColors.white.withOpacity(0.8),
             ),
-            hintText: hintText,
+            hintText: widget.hintText,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
           ),
+          focusNode: _focus,
           cursorColor: AppColors.white,
           style: const TextStyle(color: AppColors.white),
-          onChanged: onChanged,
+          onChanged: widget.onChanged,
         ),
       ),
     );
