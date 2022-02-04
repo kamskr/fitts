@@ -1,6 +1,5 @@
+import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
-
-import '../form_inputs.dart';
 
 /// Email Form Input Validation Error.
 enum EmailValidationError {
