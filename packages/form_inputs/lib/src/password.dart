@@ -13,12 +13,12 @@ enum PasswordValidationError {
 /// {@template password}
 /// Password form input.
 /// {@endtemplate}
-class Email extends FormzInput<String, PasswordValidationError> {
+class Password extends FormzInput<String, PasswordValidationError> {
   /// {@macro password}
-  const Email.pure() : super.pure('');
+  const Password.pure() : super.pure('');
 
   /// {@macro password}
-  const Email.dirty([String value = '']) : super.dirty(value);
+  const Password.dirty([String value = '']) : super.dirty(value);
 
   @override
   PasswordValidationError? validator(String value) {
@@ -26,7 +26,7 @@ class Email extends FormzInput<String, PasswordValidationError> {
       return PasswordValidationError.empty;
     }
 
-    if (!emailRegex.hasMatch(value)) {
+    if (!passwordRegex.hasMatch(value)) {
       return PasswordValidationError.invalid;
     }
 
