@@ -32,8 +32,10 @@ class SignUpView extends StatelessWidget {
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   _SignUpTitle(),
+                  _UsernameInput(),
                 ],
               ),
             ),
@@ -50,11 +52,28 @@ class _SignUpTitle extends StatelessWidget {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       child: Text(
         l10n.signUpPageTitle,
         style: AppTypography.headline3.copyWith(color: AppColors.white),
         textAlign: TextAlign.left,
+      ),
+    );
+  }
+}
+
+class _UsernameInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.md,
+        horizontal: AppSpacing.md,
+      ),
+      child: AppTextField(
+        labelText: l10n.signUpPageUsernameLabel,
       ),
     );
   }
