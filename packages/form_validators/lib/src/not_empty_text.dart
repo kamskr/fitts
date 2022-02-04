@@ -1,4 +1,4 @@
-import 'package:form_inputs/form_inputs.dart';
+import 'package:form_validators/form_validators.dart';
 import 'package:formz/formz.dart';
 
 /// NotEmptyText Form Input Validation Error.

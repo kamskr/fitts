@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:form_inputs/form_inputs.dart';
+import 'package:form_validators/form_validators.dart';
 import 'package:test/test.dart';
 
 void main() {
