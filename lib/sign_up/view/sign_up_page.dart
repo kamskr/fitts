@@ -19,8 +19,6 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
     return DecoratedBox(
       decoration: const BoxDecoration(gradient: AppColors.primaryGradient3),
       child: Scaffold(
