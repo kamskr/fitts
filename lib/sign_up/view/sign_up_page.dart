@@ -36,6 +36,10 @@ class SignUpView extends StatelessWidget {
                 children: const [
                   _SignUpTitle(),
                   _UsernameInput(),
+                  _EmailInput(),
+                  _PasswordInput(),
+                  _LegalNote(),
+                  _SignUpButton(),
                 ],
               ),
             ),
@@ -52,7 +56,10 @@ class _SignUpTitle extends StatelessWidget {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.lg,
+      ),
       child: Text(
         l10n.signUpPageTitle,
         style: AppTypography.headline3.copyWith(color: AppColors.white),
@@ -63,17 +70,92 @@ class _SignUpTitle extends StatelessWidget {
 }
 
 class _UsernameInput extends StatelessWidget {
+  const _UsernameInput({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.md,
-        horizontal: AppSpacing.md,
+      padding: const EdgeInsets.only(
+        right: AppSpacing.xlg,
       ),
       child: AppTextField(
         labelText: l10n.signUpPageUsernameLabel,
+      ),
+    );
+  }
+}
+
+class _EmailInput extends StatelessWidget {
+  const _EmailInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: AppSpacing.xlg,
+      ),
+      child: AppTextField(
+        labelText: l10n.signUpPageEmailLabel,
+        inputType: AppTextFieldType.email,
+      ),
+    );
+  }
+}
+
+class _PasswordInput extends StatelessWidget {
+  const _PasswordInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: AppSpacing.xlg,
+      ),
+      child: AppTextField(
+        labelText: l10n.signUpPagePasswordLabel,
+        inputType: AppTextFieldType.password,
+      ),
+    );
+  }
+}
+
+class _LegalNote extends StatelessWidget {
+  const _LegalNote({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Text(
+        l10n.signUpPageLegal,
+        style: AppTypography.overline.copyWith(
+          color: AppColors.white.withOpacity(0.8),
+        ),
+      ),
+    );
+  }
+}
+
+class _SignUpButton extends StatelessWidget {
+  const _SignUpButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.xxlg),
+      child: AppButton.gradient(
+        onPressed: () {},
+        child: Text(l10n.signUpPageSignUpButton),
       ),
     );
   }
