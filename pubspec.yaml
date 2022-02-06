@@ -14,8 +14,6 @@ dependencies:
   authentication_client:
     path: packages/authentication_client
   bloc_test: ^9.0.1
-  form_validators:
-    path: packages/form_validators
   build_runner: ^2.1.7
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
@@ -29,6 +27,8 @@ dependencies:
 
   flutter_svg: ^1.0.0
   formz: ^0.4.1
+  form_validators:
+    path: packages/form_validators
   intl: ^0.17.0
   mocktail: ^0.2.0
   very_good_analysis: ^2.4.0
