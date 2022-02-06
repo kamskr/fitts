@@ -13,6 +13,8 @@ dependencies:
     path: packages/app_ui
   authentication_client:
     path: packages/authentication_client
+  form_validators:
+    path: packages/form_validators
   bloc_test: ^9.0.1
   build_runner: ^2.1.7
   cupertino_icons: ^1.0.2
