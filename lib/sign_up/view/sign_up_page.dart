@@ -1,6 +1,10 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:authentication_client/authentication_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:prfit/l10n/l10n.dart';
+import 'package:prfit/sign_up/sign_up.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -10,7 +14,10 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SignUpView();
+    return BlocProvider(
+      create: (context) => SignUpBloc(context.read<AuthenticationClient>()),
+      child: const SignUpView(),
+    );
   }
 }
 
@@ -75,6 +82,7 @@ class _UsernameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final username = context.select((SignUpBloc bloc) => bloc.state.username);
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -82,6 +90,11 @@ class _UsernameInput extends StatelessWidget {
       ),
       child: AppTextField(
         labelText: l10n.signUpPageUsernameLabel,
+        errorText:
+            username.invalid ? l10n.signUpPageUsernameErrorMessage : null,
+        onChanged: (newValue) {
+          context.read<SignUpBloc>().add(SignUpUsernameChanged(newValue));
+        },
       ),
     );
   }
@@ -93,6 +106,7 @@ class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final email = context.select((SignUpBloc bloc) => bloc.state.email);
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -101,6 +115,10 @@ class _EmailInput extends StatelessWidget {
       child: AppTextField(
         labelText: l10n.signUpPageEmailLabel,
         inputType: AppTextFieldType.email,
+        errorText: email.invalid ? l10n.signUpPageEmailErrorMessage : null,
+        onChanged: (newValue) {
+          context.read<SignUpBloc>().add(SignUpEmailChanged(newValue));
+        },
       ),
     );
   }
@@ -112,6 +130,7 @@ class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final password = context.select((SignUpBloc bloc) => bloc.state.password);
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -120,6 +139,11 @@ class _PasswordInput extends StatelessWidget {
       child: AppTextField(
         labelText: l10n.signUpPagePasswordLabel,
         inputType: AppTextFieldType.password,
+        errorText:
+            password.invalid ? l10n.signUpPagePasswordErrorMessage : null,
+        onChanged: (newValue) {
+          context.read<SignUpBloc>().add(SignUpPasswordChanged(newValue));
+        },
       ),
     );
   }
@@ -153,9 +177,17 @@ class _SignUpButton extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.xxlg),
-      child: AppButton.gradient(
-        onPressed: () {},
-        child: Text(l10n.signUpPageSignUpButton),
+      child: BlocBuilder<SignUpBloc, SignUpState>(
+        builder: (context, state) {
+          return AppButton.gradient(
+            onPressed: () {
+              context.read<SignUpBloc>().add(SignUpCredentialsSubmitted());
+            },
+            child: state.status == FormzStatus.submissionInProgress
+                ? const CircularProgressIndicator()
+                : Text(l10n.signUpPageSignUpButton),
+          );
+        },
       ),
     );
   }

@@ -8,8 +8,11 @@
   "homePageTitle": "Home page",
   "signUpPageTitle": "Sign Up",
   "signUpPageUsernameLabel": "Username",
+  "signUpPageUsernameErrorMessage": "This username is invalid",
   "signUpPageEmailLabel": "Email",
+  "signUpPageEmailErrorMessage": "This email is invalid",
   "signUpPagePasswordLabel": "Password",
+  "signUpPagePasswordErrorMessage": "This password is invalid",
   "signInPageTitle": "Sign In",
   "signUpPageLegal": "By signing up you agree to our Terms and PrivacyPolicy",
   "signUpPageSignUpButton": "SIGN UP"

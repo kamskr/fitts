@@ -1,6 +1,6 @@
 /// Regular expression used for validating username input.
 final usernameRegex =
-    RegExp(r'^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$');
+    RegExp(r'^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$');
 
 /// Regular expression used for validating email input.
 final emailRegex = RegExp(

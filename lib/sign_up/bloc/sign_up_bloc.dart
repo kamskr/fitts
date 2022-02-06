@@ -57,12 +57,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     } else {
       try {
         emit(state.copyWith(status: FormzStatus.submissionInProgress));
-        await _authenticationClient.signInWithEmailAndPassword(
+        await _authenticationClient.signUp(
           email: state.email.value,
           password: state.password.value,
         );
         emit(state.copyWith(status: FormzStatus.submissionSuccess));
-      } catch (_) {
+      } catch (e) {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
       }
     }
