@@ -28,7 +28,9 @@ class SignUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return _SignUpBlocListener(
       child: DecoratedBox(
-        decoration: const BoxDecoration(gradient: AppColors.primaryGradient3),
+        decoration: const BoxDecoration(
+          gradient: AppColors.primaryGradient3,
+        ),
         child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
