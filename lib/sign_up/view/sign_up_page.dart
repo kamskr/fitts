@@ -206,9 +206,8 @@ class _SignUpButton extends StatelessWidget {
             onPressed: () {
               context.read<SignUpBloc>().add(SignUpCredentialsSubmitted());
             },
-            child: state.status == FormzStatus.submissionInProgress
-                ? const CircularProgressIndicator()
-                : Text(l10n.signUpPageSignUpButton),
+            isLoading: state.status == FormzStatus.submissionInProgress,
+            child: Text(l10n.signUpPageSignUpButton),
           );
         },
       ),

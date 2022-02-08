@@ -16,6 +16,7 @@ class AppButton extends StatelessWidget {
     double? height,
     LinearGradient? linearGradient,
     BorderRadius? borderRadius,
+    bool? isLoading,
     required this.child,
   })  : _backgroundColor = backgroundColor ?? AppColors.primary,
         _foregroundColor = foregroundColor ?? AppColors.white,
@@ -24,6 +25,7 @@ class AppButton extends StatelessWidget {
         _height = height ?? 42,
         _linearGradient = linearGradient,
         _borderRadius = borderRadius ?? BorderRadius.zero,
+        _isLoading = isLoading ?? false,
         super(key: key);
 
   /// Filled primary button.
@@ -31,10 +33,12 @@ class AppButton extends StatelessWidget {
     Key? key,
     VoidCallback? onPressed,
     required Widget child,
+    bool? isLoading,
   }) : this._(
           key: key,
           child: child,
           onPressed: onPressed,
+          isLoading: isLoading,
         );
 
   /// Outlined accent button.
@@ -42,6 +46,7 @@ class AppButton extends StatelessWidget {
     Key? key,
     VoidCallback? onPressed,
     required Widget child,
+    bool? isLoading,
   }) : this._(
           key: key,
           child: child,
@@ -50,6 +55,7 @@ class AppButton extends StatelessWidget {
           foregroundColor: AppColors.primary,
           borderSide: const BorderSide(color: AppColors.primary),
           height: 64,
+          isLoading: isLoading,
         );
 
   /// Gradient primary button.
@@ -57,12 +63,14 @@ class AppButton extends StatelessWidget {
     Key? key,
     VoidCallback? onPressed,
     required Widget child,
+    bool? isLoading,
   }) : this._(
           key: key,
           child: child,
           onPressed: onPressed,
           height: 64,
           linearGradient: AppColors.primaryGradient1,
+          isLoading: isLoading,
         );
 
   /// Gradient accent button.
@@ -70,6 +78,7 @@ class AppButton extends StatelessWidget {
     Key? key,
     VoidCallback? onPressed,
     required Widget child,
+    bool? isLoading,
   }) : this._(
           key: key,
           child: child,
@@ -79,6 +88,7 @@ class AppButton extends StatelessWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(2),
           ),
+          isLoading: isLoading,
         );
 
   /// [VoidCallback] called when button is pressed.
@@ -106,12 +116,21 @@ class AppButton extends StatelessWidget {
   /// [BorderRadius] of the button.
   final BorderRadius _borderRadius;
 
+  /// Determins if button should be disabled displayed with progress indicator.
+  final bool _isLoading;
+
   /// [Widget] displayed on the button.
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    var currentChild = child;
+    final childWithLoader = _isLoading
+        ? CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(_foregroundColor),
+          )
+        : child;
+
+    var currentChild = childWithLoader;
 
     if (_linearGradient != null) {
       currentChild = Ink(
@@ -119,7 +138,7 @@ class AppButton extends StatelessWidget {
           gradient: _linearGradient,
           borderRadius: _borderRadius,
         ),
-        child: Center(child: child),
+        child: Center(child: childWithLoader),
       );
     }
 
