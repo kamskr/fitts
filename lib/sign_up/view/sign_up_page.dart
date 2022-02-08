@@ -26,31 +26,54 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(gradient: AppColors.primaryGradient3),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
+    return _SignUpBlocListener(
+      child: DecoratedBox(
+        decoration: const BoxDecoration(gradient: AppColors.primaryGradient3),
+        child: Scaffold(
             backgroundColor: Colors.transparent,
-            iconTheme: const IconThemeData(
-              color: AppColors.white, //change your color here
-            ),
-          ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  _SignUpTitle(),
-                  _UsernameInput(),
-                  _EmailInput(),
-                  _PasswordInput(),
-                  _LegalNote(),
-                  _SignUpButton(),
-                ],
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              iconTheme: const IconThemeData(
+                color: AppColors.white, //change your color here
               ),
             ),
-          )),
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    _SignUpTitle(),
+                    _UsernameInput(),
+                    _EmailInput(),
+                    _PasswordInput(),
+                    _LegalNote(),
+                    _SignUpButton(),
+                  ],
+                ),
+              ),
+            )),
+      ),
+    );
+  }
+}
+
+class _SignUpBlocListener extends StatelessWidget {
+  const _SignUpBlocListener({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<SignUpBloc, SignUpState>(
+      listener: (context, state) {
+        if (state.status.isSubmissionSuccess) {
+          Navigator.pop(context);
+        }
+      },
+      child: child,
     );
   }
 }
