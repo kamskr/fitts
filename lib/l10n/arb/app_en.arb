@@ -20,5 +20,5 @@
   "signInPageEmailErrorMessage": "This email is invalid",
   "signInPagePasswordLabel": "Password",
   "signInPagePasswordErrorMessage": "This password is invalid",
-  "signInPageSignUpButton": "SIGN IN"
+  "signInPageSignInButton": "SIGN IN"
 }
