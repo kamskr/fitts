@@ -146,7 +146,7 @@ class AppButton extends StatelessWidget {
       duration: kThemeAnimationDuration,
       opacity: onPressed != null ? 1 : 0.5,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: _isLoading ? null : onPressed,
         style: ButtonStyle(
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
