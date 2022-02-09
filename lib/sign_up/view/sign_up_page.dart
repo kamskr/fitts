@@ -21,6 +21,7 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
+@visibleForTesting
 class SignUpView extends StatelessWidget {
   const SignUpView({Key? key}) : super(key: key);
 
@@ -114,6 +115,7 @@ class _UsernameInput extends StatelessWidget {
         right: AppSpacing.xlg,
       ),
       child: AppTextField(
+        key: const Key('signUpForm_usernameInput_textField'),
         labelText: l10n.signUpPageUsernameLabel,
         errorText:
             username.invalid ? l10n.signUpPageUsernameErrorMessage : null,
@@ -138,6 +140,7 @@ class _EmailInput extends StatelessWidget {
         right: AppSpacing.xlg,
       ),
       child: AppTextField(
+        key: const Key('signUpForm_emailInput_textField'),
         labelText: l10n.signUpPageEmailLabel,
         inputType: AppTextFieldType.email,
         errorText: email.invalid ? l10n.signUpPageEmailErrorMessage : null,
@@ -162,6 +165,7 @@ class _PasswordInput extends StatelessWidget {
         right: AppSpacing.xlg,
       ),
       child: AppTextField(
+        key: const Key('signUpForm_passwordInput_textField'),
         labelText: l10n.signUpPagePasswordLabel,
         inputType: AppTextFieldType.password,
         errorText:
@@ -205,6 +209,7 @@ class _SignUpButton extends StatelessWidget {
       child: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
           return AppButton.gradient(
+            key: const Key('signUpPage_signUpButton'),
             onPressed: () {
               context.read<SignUpBloc>().add(SignUpCredentialsSubmitted());
             },
