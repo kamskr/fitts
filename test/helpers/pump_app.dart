@@ -1,3 +1,4 @@
+import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,27 +22,40 @@ class MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {
   AppState get state => const AppState.unauthenticated();
 }
 
+class MockAuthenticationClient extends Mock implements AuthenticationClient {
+  @override
+  Stream<User> get user => Stream.value(User.empty);
+}
+
 extension AppTester on WidgetTester {
   Future<void> pumpApp(
     Widget widgetUnderTest, {
     AppBloc? appBloc,
+    AuthenticationClient? authenticationClient,
   }) async {
     await pumpWidget(
-      MultiBlocProvider(
+      MultiRepositoryProvider(
         providers: [
-          BlocProvider.value(
-            value: appBloc ?? MockAppBloc(),
+          RepositoryProvider.value(
+            value: authenticationClient ?? MockAuthenticationClient(),
           ),
         ],
-        child: MaterialApp(
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider.value(
+              value: appBloc ?? MockAppBloc(),
+            ),
           ],
-          home: Scaffold(
-            body: widgetUnderTest,
+          child: MaterialApp(
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: Scaffold(
+              body: widgetUnderTest,
+            ),
           ),
         ),
       ),
