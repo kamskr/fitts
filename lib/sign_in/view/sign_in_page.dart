@@ -36,7 +36,7 @@ class SignInView extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               iconTheme: const IconThemeData(
-                color: AppColors.white, //change your color here
+                color: AppColors.white,
               ),
             ),
             body: SafeArea(

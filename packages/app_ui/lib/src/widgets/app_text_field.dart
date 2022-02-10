@@ -105,26 +105,29 @@ class _AppTextFieldState extends State<AppTextField> {
           vertical: AppSpacing.sm,
           horizontal: AppSpacing.xlg,
         ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            labelStyle: AppTypography.body1.copyWith(
-              color: AppColors.white.withOpacity(0.8),
+        child: SizedBox(
+          height: 75,
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: widget.labelText,
+              labelStyle: AppTypography.body1.copyWith(
+                color: AppColors.white.withOpacity(0.8),
+              ),
+              hintText: widget.hintText,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              errorText: widget.errorText,
             ),
-            hintText: widget.hintText,
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            errorText: widget.errorText,
+            obscureText: _obscureText,
+            enableSuggestions: _enableSuggestions,
+            autocorrect: _autocorrect,
+            initialValue: widget.initialValue,
+            focusNode: _focus,
+            cursorColor: AppColors.white,
+            keyboardType: _keyboardType,
+            style: AppTypography.body1.copyWith(color: AppColors.white),
+            onChanged: widget.onChanged,
           ),
-          obscureText: _obscureText,
-          enableSuggestions: _enableSuggestions,
-          autocorrect: _autocorrect,
-          initialValue: widget.initialValue,
-          focusNode: _focus,
-          cursorColor: AppColors.white,
-          keyboardType: _keyboardType,
-          style: AppTypography.body1.copyWith(color: AppColors.white),
-          onChanged: widget.onChanged,
         ),
       ),
     );
