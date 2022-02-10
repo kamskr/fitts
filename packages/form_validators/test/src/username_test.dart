@@ -29,7 +29,7 @@ void main() {
 
       test('returns invalid error when username is malformed', () {
         expect(
-          Username.dirty('test').error,
+          Username.dirty('tes').error,
           UsernameValidationError.invalid,
         );
       });
