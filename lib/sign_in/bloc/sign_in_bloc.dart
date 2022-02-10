@@ -25,7 +25,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   void _onPasswordChanged(
-      SignInPasswordChanged event, Emitter<SignInState> emit) {
+    SignInPasswordChanged event,
+    Emitter<SignInState> emit,
+  ) {
     final password = Password.dirty(event.password);
     emit(state.copyWith(
       password: password,
@@ -51,8 +53,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           password: state.password.value,
         );
         emit(state.copyWith(status: FormzStatus.submissionSuccess));
-      } catch (e) {
+      } catch (e, st) {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
+        addError(e, st);
       }
     }
   }
