@@ -1,4 +1,4 @@
-import 'package:app_ui/src/generated/generated.dart';
+import 'package:app_ui/src/app_ui.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppTypography {
@@ -6,11 +6,12 @@ abstract class AppTypography {
     fontWeight: AppFontWeight.regular,
     package: 'app_ui',
     fontFamily: FontFamily.rubik,
+    color: AppColors.black,
   );
 
   static final TextStyle headline1 = _baseTextStyle.copyWith(
     fontSize: 50,
-    fontFamily: 'Questrial',
+    fontFamily: FontFamily.questrial,
   );
 
   static final TextStyle headline2 = _baseTextStyle.copyWith(

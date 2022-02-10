@@ -7,5 +7,18 @@
   "alreadyHaveAccountText": "Already have an account?",
   "homePageTitle": "Home page",
   "signUpPageTitle": "Sign Up",
-  "signInPageTitle": "Sign In"
+  "signUpPageUsernameLabel": "Username",
+  "signUpPageUsernameErrorMessage": "This username is invalid",
+  "signUpPageEmailLabel": "Email",
+  "signUpPageEmailErrorMessage": "This email is invalid",
+  "signUpPagePasswordLabel": "Password",
+  "signUpPagePasswordErrorMessage": "This password is invalid",
+  "signUpPageLegal": "By signing up you agree to our Terms and PrivacyPolicy",
+  "signUpPageSignUpButton": "SIGN UP",
+  "signInPageTitle": "Sign In",
+  "signInPageEmailLabel": "Email",
+  "signInPageEmailErrorMessage": "This email is invalid",
+  "signInPagePasswordLabel": "Password",
+  "signInPagePasswordErrorMessage": "This password is invalid",
+  "signInPageSignInButton": "SIGN IN"
 }

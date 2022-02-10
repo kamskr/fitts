@@ -4,16 +4,18 @@ import 'package:flutter/material.dart';
 abstract class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Rubik',
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-      primary: AppColors.primary,
-      secondary: AppColors.accent,
-      background: AppColors.black[50],
-      surface: AppColors.white,
-      brightness: Brightness.light,
-    ),
+    colorScheme: _colorScheme,
     iconTheme: _iconTheme,
     appBarTheme: _appBarTheme,
     textTheme: _textTheme,
+  );
+
+  static final _colorScheme = ColorScheme.fromSwatch().copyWith(
+    primary: AppColors.primary,
+    secondary: AppColors.accent,
+    background: AppColors.black[50],
+    surface: AppColors.white,
+    brightness: Brightness.light,
   );
 
   static const _iconTheme = IconThemeData(color: AppColors.primary);
