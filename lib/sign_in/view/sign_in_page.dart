@@ -112,6 +112,7 @@ class _EmailInput extends StatelessWidget {
         right: AppSpacing.xlg,
       ),
       child: AppTextField(
+        key: const Key('signInPage_emailInput_textField'),
         labelText: l10n.signInPageEmailLabel,
         inputType: AppTextFieldType.email,
         errorText: email.invalid ? l10n.signUpPageEmailErrorMessage : null,
@@ -136,6 +137,7 @@ class _PasswordInput extends StatelessWidget {
         right: AppSpacing.xlg,
       ),
       child: AppTextField(
+        key: const Key('signInPage_passwordInput_textField'),
         labelText: l10n.signInPagePasswordLabel,
         inputType: AppTextFieldType.password,
         errorText:
@@ -160,9 +162,14 @@ class _SignInButton extends StatelessWidget {
       child: BlocBuilder<SignInBloc, SignInState>(
         builder: (context, state) {
           return AppButton.gradient(
-            onPressed: () {
-              context.read<SignInBloc>().add(SignInCredentialsSubmitted());
-            },
+            key: const Key('signInPage_signInButton'),
+            onPressed: state.status.isValidated
+                ? () {
+                    context
+                        .read<SignInBloc>()
+                        .add(SignInCredentialsSubmitted());
+                  }
+                : null,
             isLoading: state.status == FormzStatus.submissionInProgress,
             child: Text(l10n.signInPageSignInButton),
           );
