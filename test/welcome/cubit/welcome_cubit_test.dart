@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:fitts/welcome/welcome.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:fitts/welcome/welcome.dart';
 
 class WelcomeStateMockAuthenticationClient extends Mock
     implements AuthenticationClient {}

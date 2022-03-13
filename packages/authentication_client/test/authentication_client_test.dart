@@ -72,7 +72,7 @@ void main() {
   Firebase.initializeApp();
 
   const email = 'test@gmail.com';
-  const password = 'qeqwefqwefgr';
+  const password = 'password';
   const user = User(
     id: _mockFirebaseUserUid,
     email: _mockFirebaseUserEmail,
@@ -97,7 +97,7 @@ void main() {
       );
     });
 
-    test('creates FirebaseaAuth instance internally when not injected', () {
+    test('creates FirebaseAuth instance internally when not injected', () {
       expect(() => AuthenticationClient(), isNot(throwsException));
     });
 
@@ -184,7 +184,7 @@ void main() {
       });
 
       test(
-          'sucessfully calls signIn authentication, and '
+          'successfully calls signIn authentication, and '
           'signInWithPopup when authCredential is not null and kIsWeb is true',
           () async {
         final credential = MockUserCredential();
@@ -269,7 +269,9 @@ void main() {
     group('signOut', () {
       test('calls signOut', () async {
         when(() => firebaseAuth.signOut()).thenAnswer((_) async {});
-        when(() => googleSignIn.signOut()).thenAnswer((_) async {});
+        when(() => googleSignIn.signOut()).thenAnswer((_) async {
+          return null;
+        });
         await authenticationClient.signOut();
         verify(() => firebaseAuth.signOut()).called(1);
         verify(() => googleSignIn.signOut()).called(1);

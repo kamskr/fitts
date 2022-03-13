@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:fitts/sign_up/sign_up.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('SignUpEvent', () {
