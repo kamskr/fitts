@@ -1,10 +1,10 @@
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:fitts/sign_in/sign_in.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:form_validators/form_validators.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:fitts/sign_in/sign_in.dart';
 
 class MockAuthenticationClient extends Mock implements AuthenticationClient {}
 

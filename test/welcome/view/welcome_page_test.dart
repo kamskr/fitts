@@ -1,13 +1,13 @@
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:fitts/sign_in/sign_in.dart';
+import 'package:fitts/sign_up/sign_up.dart';
+import 'package:fitts/welcome/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:fitts/sign_in/sign_in.dart';
-import 'package:fitts/sign_up/sign_up.dart';
-import 'package:fitts/welcome/welcome.dart';
 
 import '../../helpers/pump_app.dart';
 
