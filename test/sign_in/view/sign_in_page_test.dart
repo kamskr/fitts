@@ -114,7 +114,7 @@ void main() {
             const SignInState(
               email: Email.dirty(testEmail),
               password: Password.dirty(testPassword),
-              status: FormzStatus.invalid,
+              status: FormzStatus.valid,
             ),
           ];
 

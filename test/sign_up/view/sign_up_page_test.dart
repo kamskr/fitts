@@ -24,7 +24,7 @@ void main() {
   const emailInputKey = Key('signUpPage_emailInput_textField');
   const passwordInputKey = Key('signUpPage_passwordInput_textField');
 
-  const testUsername = 'testusername';
+  const testUsername = 'test_username';
   const testEmail = 'test@gmail.com';
   const testPassword = 'testP@!ssw0rd1';
 
@@ -144,7 +144,7 @@ void main() {
               username: Username.dirty(testUsername),
               email: Email.dirty(testEmail),
               password: Password.dirty(testPassword),
-              status: FormzStatus.invalid,
+              status: FormzStatus.valid,
             ),
           ];
 

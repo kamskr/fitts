@@ -13,10 +13,11 @@ dependencies:
     path: packages/app_ui
   authentication_client:
     path: packages/authentication_client
-  bloc_test: ^9.0.1
+  bloc_test: ^9.0.3
   build_runner: ^2.1.7
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
+  firebase_core: ^1.13.1
   flow_builder: ^0.0.6
   flutter:
     sdk: flutter
@@ -24,7 +25,6 @@ dependencies:
   flutter_gen_runner: ^4.1.3
   flutter_localizations:
     sdk: flutter
-  firebase_core: ^1.13.1
 
   flutter_svg: ^1.0.0
   form_validators:
