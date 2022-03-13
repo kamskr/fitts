@@ -12,7 +12,6 @@ Future<void> main() async {
 
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
-      name: 'Fitts',
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
