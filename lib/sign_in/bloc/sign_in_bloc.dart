@@ -53,8 +53,17 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           password: state.password.value,
         );
         emit(state.copyWith(status: FormzStatus.submissionSuccess));
+      } on LogInWithEmailAndPasswordFailure catch (e) {
+        emit(
+          state.copyWith(
+            errorMessage: e.message,
+            status: FormzStatus.submissionFailure,
+          ),
+        );
       } catch (e, st) {
-        emit(state.copyWith(status: FormzStatus.submissionFailure));
+        emit(state.copyWith(
+          status: FormzStatus.submissionFailure,
+        ));
         addError(e, st);
       }
     }

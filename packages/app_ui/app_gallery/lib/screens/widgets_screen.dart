@@ -10,6 +10,7 @@ class WidgetsScreen extends StatelessWidget {
     'AppBottomNavigationBar': AppBottomNavigationBarScreen(),
     'App Buttons': AppButtonsScreen(),
     'App Form Fields': AppFormFields(),
+    'App SnackBar': AppSnackBarScreen(),
   };
 
   @override

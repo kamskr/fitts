@@ -75,6 +75,12 @@ class _SignUpBlocListener extends StatelessWidget {
         if (state.status.isSubmissionSuccess) {
           Navigator.pop(context);
         }
+        if (state.status.isSubmissionFailure && state.errorMessage != null) {
+          AppSnackBar.show(
+            context,
+            Text(state.errorMessage ?? 'Authentication Failure'),
+          );
+        }
       },
       child: child,
     );
