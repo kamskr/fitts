@@ -97,5 +97,22 @@
         loadMainDartJs();
       }
     </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <script>
+      var firebaseConfig = {
+        apiKey: 'AIzaSyDKf-M8Rf14W2J3fKxu7zcCrjM4XEphoBw',
+        appId: '1:218415673107:web:207651145219c4011134e6',
+        messagingSenderId: '218415673107',
+        projectId: 'fitts-eceb5',
+        authDomain: 'fitts-eceb5.firebaseapp.com',
+        storageBucket: 'fitts-eceb5.appspot.com',
+        measurementId: 'G-0CHTZDX5LD',
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>
