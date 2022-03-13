@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.kamilsikora.prfit"
+        applicationId "com.kamilsikora.fitts"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()

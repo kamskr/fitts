@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prfit/app/app.dart';
-import 'package:prfit/l10n/l10n.dart';
+import 'package:fitts/app/app.dart';
+import 'package:fitts/l10n/l10n.dart';
 
 class FakeAppState extends Fake implements AppState {}
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prfit/app/app.dart';
-import 'package:prfit/home/home.dart';
-import 'package:prfit/welcome/view/view.dart';
+import 'package:fitts/app/app.dart';
+import 'package:fitts/home/home.dart';
+import 'package:fitts/welcome/view/view.dart';
 
 void main() {
   group('onGenerateAppViewPages', () {

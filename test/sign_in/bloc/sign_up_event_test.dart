@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prfit/sign_in/sign_in.dart';
+import 'package:fitts/sign_in/sign_in.dart';
 
 void main() {
   group('SignInEvent', () {

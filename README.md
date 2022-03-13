@@ -1,4 +1,4 @@
-# prfit
+# Fitts
 
 A new Flutter project.
 
