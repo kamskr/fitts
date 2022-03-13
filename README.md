@@ -22,3 +22,10 @@ fvm flutter test --coverage
 genhtml -o coverage coverage/lcov.info
 open coverage/index.html
 ```
+
+## Deploying app to the Web
+
+```
+fvm flutter build web
+firebase deploy
+```
