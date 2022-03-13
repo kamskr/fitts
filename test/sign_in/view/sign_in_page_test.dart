@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:form_validators/form_validators.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prfit/sign_in/sign_in.dart';
+import 'package:fitts/sign_in/sign_in.dart';
 
 import '../../helpers/pump_app.dart';
 
@@ -114,7 +114,7 @@ void main() {
             const SignInState(
               email: Email.dirty(testEmail),
               password: Password.dirty(testPassword),
-              status: FormzStatus.invalid,
+              status: FormzStatus.valid,
             ),
           ];
 

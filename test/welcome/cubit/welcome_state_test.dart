@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
-import 'package:prfit/welcome/welcome.dart';
+import 'package:fitts/welcome/welcome.dart';
 
 void main() {
   group('WelcomeState', () {

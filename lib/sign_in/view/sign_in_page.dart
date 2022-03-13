@@ -3,8 +3,8 @@ import 'package:authentication_client/authentication_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:prfit/l10n/l10n.dart';
-import 'package:prfit/sign_in/sign_in.dart';
+import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/sign_in/sign_in.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);

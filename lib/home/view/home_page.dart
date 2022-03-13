@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:flutter/material.dart';
-import 'package:prfit/l10n/l10n.dart';
+import 'package:fitts/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {

@@ -1,4 +1,4 @@
-name: prfit
+name: fitts
 description: A new Flutter project.
 publish_to: none
 
@@ -6,17 +6,18 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: 2.8.0
+  flutter: 2.10.3
 
 dependencies:
   app_ui:
     path: packages/app_ui
   authentication_client:
     path: packages/authentication_client
-  bloc_test: ^9.0.1
+  bloc_test: ^9.0.3
   build_runner: ^2.1.7
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
+  firebase_core: ^1.13.1
   flow_builder: ^0.0.6
   flutter:
     sdk: flutter
@@ -30,6 +31,7 @@ dependencies:
     path: packages/form_validators
   formz: ^0.4.1
   intl: ^0.17.0
+  intl_utils: ^2.6.1
   mocktail: ^0.2.0
   very_good_analysis: ^2.4.0
 
@@ -45,3 +47,8 @@ flutter:
 flutter_gen:
   output: lib/generated/
   lineLength: 80
+
+flutter_intl:
+  enabled: true
+  arb_dir: lib/l10n/arb
+  output_dir: lib/l10n/flutter_intl

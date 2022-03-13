@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prfit/app/app.dart';
-import 'package:prfit/home/home.dart';
-import 'package:prfit/welcome/welcome.dart';
+import 'package:fitts/app/app.dart';
+import 'package:fitts/home/home.dart';
+import 'package:fitts/welcome/welcome.dart';
 
 List<Page> onGenerateAppViewPages(AppStatus state, List<Page<dynamic>> pages) {
   switch (state) {

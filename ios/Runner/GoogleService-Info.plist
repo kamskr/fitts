@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.kamilsikora.prfit</string>
+	<string>com.kamilsikora.fitts</string>
 	<key>PROJECT_ID</key>
 	<string>pr-fit-b9725</string>
 	<key>STORAGE_BUCKET</key>
