@@ -1,4 +1,11 @@
 include: package:very_good_analysis/analysis_options.2.3.0.yaml
+analyzer:
+  exclude:
+    - "*/generated/**"
+    - "*/**/intl/**"
+    - "*/**/flutter_intl/**"
+    - "*/**/*.g.dart"
+    - "*/**/*.freezed.dart"
 linter:
   rules:
     public_member_api_docs: false
