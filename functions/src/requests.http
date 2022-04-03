@@ -1,0 +1,2 @@
+### Test
+GET {{apiRoot}}/testRoute
