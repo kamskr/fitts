@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
+import 'package:fitts/app/bloc/app_bloc.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,14 +29,31 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: Text(l10n.homePageTitle),
       ),
-      body: Center(
-        child: AppButton.primary(
-          child: const Text('Sign out'),
-          onPressed: () {
-            context.read<AuthenticationClient>().signOut();
-          },
+      body: const HomeBody(),
+    );
+  }
+}
+
+class HomeBody extends StatelessWidget {
+  const HomeBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final user = context.select((AppBloc bloc) => bloc.state.user);
+
+    return Column(
+      children: [
+        const SizedBox(height: 100),
+        Text(user?.name ?? 'No user'),
+        Center(
+          child: AppButton.primary(
+            child: const Text('Sign out'),
+            onPressed: () {
+              context.read<AuthenticationClient>().signOut();
+            },
+          ),
         ),
-      ),
+      ],
     );
   }
 }

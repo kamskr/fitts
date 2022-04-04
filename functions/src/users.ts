@@ -17,11 +17,19 @@ export const createProfile = (
   userRecord: UserRecord,
   context: EventContext
 ) => {
-  const { email, phoneNumber, uid } = userRecord;
+  const { email, phoneNumber, uid, emailVerified, displayName, profileURL } =
+    userRecord;
 
   return db
-    .collection("users")
+    .collection("profiles")
     .doc(email || uid)
-    .set({ email, phoneNumber })
+    .set({
+      email,
+      phoneNumber,
+      emailVerified,
+      displayName,
+      profileURL,
+      isNewUser: true,
+    })
     .catch(console.error);
 };

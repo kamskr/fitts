@@ -71,6 +71,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
 
+  const displayName = 'displayName';
   const email = 'test@gmail.com';
   const password = 'password';
   const user = User(
@@ -112,7 +113,11 @@ void main() {
       });
 
       test('calls createUserWithEmailAndPassword', () async {
-        await authenticationClient.signUp(email: email, password: password);
+        await authenticationClient.signUp(
+          displayName: displayName,
+          email: email,
+          password: password,
+        );
         verify(
           () => firebaseAuth.createUserWithEmailAndPassword(
             email: email,
@@ -123,7 +128,11 @@ void main() {
 
       test('succeeds when createUserWithEmailAndPassword succeeds', () async {
         expect(
-          authenticationClient.signUp(email: email, password: password),
+          authenticationClient.signUp(
+            displayName: displayName,
+            email: email,
+            password: password,
+          ),
           completes,
         );
       });
@@ -138,7 +147,11 @@ void main() {
         ).thenThrow(Exception());
 
         expect(
-          authenticationClient.signUp(email: email, password: password),
+          authenticationClient.signUp(
+            displayName: displayName,
+            email: email,
+            password: password,
+          ),
           throwsA(isA<SignUpWithEmailAndPasswordFailure>()),
         );
       });

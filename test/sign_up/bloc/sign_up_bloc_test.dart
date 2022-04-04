@@ -34,6 +34,7 @@ void main() {
       authenticationRepository = MockAuthenticationClient();
       when(
         () => authenticationRepository.signUp(
+          displayName: any(named: 'displayName'),
           email: any(named: 'email'),
           password: any(named: 'password'),
         ),
