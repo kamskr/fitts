@@ -13,10 +13,7 @@ const db = admin.firestore();
  * @param {Object} userRecord Contains the auth, uid and displayName info.
  * @param {Object} context Details about the event.
  */
-export const createProfile = (
-  userRecord: UserRecord,
-  context: EventContext
-) => {
+export const createProfile = (userRecord: UserRecord, _: EventContext) => {
   const { email, uid, displayName, photoURL } = userRecord;
 
   return db
