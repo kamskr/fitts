@@ -42,27 +42,35 @@ class UserProfile extends Equatable {
   Map<String, dynamic> toJson() => _$UserProfileToJson(this);
 
   /// The email of the user.
+  @JsonKey(name: 'email')
   final String email;
 
   /// The photo url of the user.
+  @JsonKey(name: 'photoUrl')
   final String photoUrl;
 
   /// The display name of the user.
+  @JsonKey(name: 'displayName')
   final String displayName;
 
   /// Current goal of this user (loose weight, gain weight, etc).
+  @JsonKey(name: 'goal')
   final String goal;
 
   /// Gender of the user.
+  @JsonKey(name: 'gender')
   final Gender gender;
 
   /// Birth date of the user.
+  @JsonKey(name: 'dateOfBirth')
   final DateTime dateOfBirth;
 
   /// Height of the user.
+  @JsonKey(name: 'height')
   final int height;
 
   /// Weight if the user.
+  @JsonKey(name: 'weight')
   final double weight;
 
   /// An empty [UserProfile] object.
