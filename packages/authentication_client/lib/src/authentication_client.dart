@@ -46,10 +46,22 @@ class AuthenticationClient {
   /// Creates a new user with the provided [email] and [password].
   ///
   /// Throws a [SignUpWithEmailAndPasswordFailure] if an exception occurs.
-  Future<void> signUp({required String email, required String password}) async {
+  Future<void> signUp({
+    required String displayName,
+    required String email,
+    required String password,
+  }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
+
+      final user = firebase_auth.FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        await user.updateDisplayName(displayName);
+      }
     } on FirebaseAuthException catch (e) {
       throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (e) {
@@ -80,6 +92,7 @@ class AuthenticationClient {
   Future<void> signInWithGoogle() async {
     try {
       late final firebase_auth.AuthCredential credential;
+
       if (isWeb) {
         final googleProvider = firebase_auth.GoogleAuthProvider();
         final userCredential = await _firebaseAuth.signInWithPopup(
@@ -124,7 +137,7 @@ extension on firebase_auth.User {
       id: uid,
       email: email,
       name: displayName,
-      photo: photoURL,
+      photoURL: photoURL,
     );
   }
 }

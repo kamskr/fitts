@@ -1,0 +1,26 @@
+name: user_profile_repository
+description: A new Flutter package project.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  api_client:
+    path: ../api_client
+  api_models:
+    path: ../api_models
+  authentication_client:
+    path: ../authentication_client
+  clock: ^1.1.0
+  flutter:
+    sdk: flutter
+  rxdart: ^0.27.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: 0.2.0
+  very_good_analysis: ^2.3.0
