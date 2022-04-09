@@ -9,16 +9,16 @@ part 'user_profile_update_payload.g.dart';
 @JsonSerializable()
 class UserProfileUpdatePayload extends Equatable {
   /// {@macro user_profile_update_payload}
-  const UserProfileUpdatePayload(
-    this.email,
-    this.photoUrl,
-    this.displayName,
-    this.goal,
-    this.gender,
-    this.dateOfBirth,
-    this.height,
-    this.weight,
-  );
+  const UserProfileUpdatePayload({
+    required this.email,
+    required this.photoUrl,
+    required this.displayName,
+    required this.goal,
+    required this.gender,
+    required this.dateOfBirth,
+    required this.height,
+    required this.weight,
+  });
 
   /// Factory which converts a [Map] into a [UserProfileUpdatePayload].
   factory UserProfileUpdatePayload.fromJson(Map<String, dynamic> json) =>
@@ -61,14 +61,14 @@ class UserProfileUpdatePayload extends Equatable {
 
   /// An empty [UserProfileUpdatePayload] object.
   static UserProfileUpdatePayload empty = UserProfileUpdatePayload(
-    '',
-    '',
-    '',
-    '',
-    '',
-    DateTime.now(),
-    0,
-    0,
+    email: '',
+    photoUrl: '',
+    displayName: '',
+    goal: '',
+    gender: '',
+    dateOfBirth: DateTime.now(),
+    height: 0,
+    weight: 0,
   );
 
   /// Creates a copy of [UserProfileUpdatePayload].
@@ -83,14 +83,14 @@ class UserProfileUpdatePayload extends Equatable {
     double? weight,
   }) {
     return UserProfileUpdatePayload(
-      email ?? this.email,
-      photoUrl ?? this.photoUrl,
-      displayName ?? this.displayName,
-      goal ?? this.goal,
-      gender ?? this.gender,
-      dateOfBirth ?? this.dateOfBirth,
-      height ?? this.height,
-      weight ?? this.weight,
+      email: email ?? this.email,
+      photoUrl: photoUrl ?? this.photoUrl,
+      displayName: displayName ?? this.displayName,
+      goal: goal ?? this.goal,
+      gender: gender ?? this.gender,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
     );
   }
 

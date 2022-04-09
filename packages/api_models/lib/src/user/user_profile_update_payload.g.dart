@@ -9,14 +9,14 @@ part of 'user_profile_update_payload.dart';
 UserProfileUpdatePayload _$UserProfileUpdatePayloadFromJson(
         Map<String, dynamic> json) =>
     UserProfileUpdatePayload(
-      json['email'] as String,
-      json['photoUrl'] as String,
-      json['displayName'] as String,
-      json['goal'] as String,
-      json['gender'] as String,
-      DateTime.parse(json['dateOfBirth'] as String),
-      json['height'] as int,
-      (json['weight'] as num).toDouble(),
+      email: json['email'] as String,
+      photoUrl: json['photoUrl'] as String,
+      displayName: json['displayName'] as String,
+      goal: json['goal'] as String,
+      gender: json['gender'] as String,
+      dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
+      height: json['height'] as int,
+      weight: (json['weight'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$UserProfileUpdatePayloadToJson(

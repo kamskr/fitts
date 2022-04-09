@@ -60,6 +60,16 @@ void main() {
       height: 180,
       weight: 85.5,
     );
+    final userProfilePayload = UserProfileUpdatePayload(
+      email: 'test@email.com',
+      photoUrl: 'www.test-url.te',
+      displayName: 'displayName',
+      goal: 'goal',
+      gender: 'male',
+      dateOfBirth: DateTime.parse('1974-03-20 00:00:00.000'),
+      height: 180,
+      weight: 85.5,
+    );
 
     setUp(() {
       firebaseFirestore = MockFirebaseFirestore();
@@ -115,6 +125,16 @@ void main() {
         expectLater(
           userProfileResource.userProfile(userProfileId),
           emitsError(isA<DeserializationException>()),
+        );
+      });
+    });
+
+    group('updateUserProfile', () {
+      test("doesn't throw error when user profile updated", () async {
+        expect(
+          () => userProfileResource.updateUserProfile(
+              payload: userProfilePayload),
+          isNot(isException),
         );
       });
     });
