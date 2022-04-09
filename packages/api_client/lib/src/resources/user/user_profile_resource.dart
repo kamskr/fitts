@@ -1,4 +1,4 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// {@template user_profile_resource}
 /// Resource which exposes APIs related to user.
@@ -6,8 +6,8 @@ import 'package:firebase_database/firebase_database.dart';
 class UserProfileResource {
   /// {@macro user_profile_resource}
   const UserProfileResource({
-    required FirebaseDatabase primaryDatabase,
-  }) : _primaryDatabase = primaryDatabase;
+    required FirebaseFirestore firebaseFirestore,
+  }) : _firebaseFirestore = firebaseFirestore;
 
-  final FirebaseDatabase _primaryDatabase;
+  final FirebaseFirestore _firebaseFirestore;
 }
