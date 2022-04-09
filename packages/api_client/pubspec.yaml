@@ -1,0 +1,25 @@
+name: api_client
+description: A new Flutter package project.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  api_models:
+    path: ../api_models
+  cloud_firestore: ^3.1.11
+  firebase_database: ^9.0.10
+  flutter:
+    sdk: flutter
+  intl: ^0.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  json_serializable: ^5.0.0
+  mocktail: ^0.1.4
+  test: ^1.17.0
+  very_good_analysis: ^2.3.0

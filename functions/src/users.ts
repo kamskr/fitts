@@ -8,7 +8,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 /**
- * Creates a document with ID -> uid in the `Users` collection.
+ * Creates a document with ID -> uid in the `profiles` collection.
  *
  * @param {Object} userRecord Contains the auth, uid and displayName info.
  * @param {Object} context Details about the event.
@@ -17,7 +17,7 @@ export const createProfile = (
   userRecord: UserRecord,
   context: EventContext
 ) => {
-  const { email, phoneNumber, uid, emailVerified, displayName, profileURL } =
+  const { email, phoneNumber, uid, emailVerified, displayName, photoURL } =
     userRecord;
 
   return db
@@ -28,7 +28,7 @@ export const createProfile = (
       phoneNumber,
       emailVerified,
       displayName,
-      profileURL,
+      photoURL,
       isNewUser: true,
     })
     .catch(console.error);

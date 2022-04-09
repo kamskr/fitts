@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:authentication_client/authentication_client.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'app/view/app.dart';
 import 'firebase_options.dart';
 
@@ -16,6 +18,8 @@ Future<void> main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
+
+  FirebaseFirestore.instance;
 
   final _authenticationClient = AuthenticationClient();
 
