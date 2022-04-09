@@ -109,11 +109,6 @@ void main() {
       test(
           'emits DeserializationException '
           'when malformed user profile is emitted by the database', () {
-        // final event = MockEvent();
-        // final DataSnapshot snapshot = MockDataSnapshot();
-
-        // when(() => event.snapshot).thenReturn(snapshot);
-        // when(() => snapshot.exists).thenReturn(true);
         when(() => documentSnapshot.data())
             .thenReturn(userProfileDataMalformed);
 
