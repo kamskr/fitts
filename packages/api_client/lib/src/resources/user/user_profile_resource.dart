@@ -7,12 +7,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// {@endtemplate}
 class UserProfileResource {
   /// {@macro user_profile_resource}
-  UserProfileResource({
-    required FirebaseFirestore firebaseFirestore,
-  }) : _userProfilesCollectionReference =
-            firebaseFirestore.collection('UserProfiles');
+  UserProfileResource(FirebaseFirestore firebaseFirestore)
+      : _firebaseFirestore = firebaseFirestore;
 
-  final CollectionReference _userProfilesCollectionReference;
+  final FirebaseFirestore _firebaseFirestore;
+  static const collectionName = 'UserProfiles';
 
   /// Returns a stream of user profile updates for given [userProfileId].
   ///
@@ -24,7 +23,8 @@ class UserProfileResource {
   ///
   /// It emits a [DeserializationException] when deserialization fails.
   Stream<UserProfile> userProfile(String userProfileId) {
-    return _userProfilesCollectionReference
+    return _firebaseFirestore
+        .collection(collectionName)
         .doc(userProfileId)
         .snapshots()
         .map(_mapSnapshotToUserProfile);
@@ -32,9 +32,19 @@ class UserProfileResource {
 
   UserProfile _mapSnapshotToUserProfile(DocumentSnapshot snapshot) {
     if (snapshot.exists) {
-      final data = Map<String, dynamic>.from(snapshot as Map);
+      // final data = {
+      //   'photoUrl': 'www.test-url.te',
+      //   'displayName': 'displayName',
+      //   'goal': 'goal',
+      //   'gender': 'male',
+      //   'dateOfBirth': DateTime.now(),
+      //   'height': 180,
+      //   'weight': 85.5
+      // };
+      final data = snapshot.data() as Map<String, dynamic>?;
+      print(data);
       try {
-        return UserProfile.fromJson(data);
+        return UserProfile.fromJson(data!);
       } catch (error, stackTrace) {
         throw DeserializationException(error, stackTrace);
       }
@@ -52,7 +62,8 @@ class UserProfileResource {
     required UserProfileUpdatePayload payload,
   }) async {
     try {
-      await _userProfilesCollectionReference
+      await _firebaseFirestore
+          .collection(collectionName)
           .doc(payload.email)
           .set(payload.toJson());
     } catch (error, stackTrace) {
