@@ -30,8 +30,9 @@ dependencies:
     path: packages/form_validators
   formz: ^0.4.1
   intl: ^0.17.0
-  intl_utils: ^2.6.1
   mocktail: ^0.2.0
+  user_profile_repository:
+    path: packages/user_profile_repository
   very_good_analysis: ^2.4.0
 
 dev_dependencies:

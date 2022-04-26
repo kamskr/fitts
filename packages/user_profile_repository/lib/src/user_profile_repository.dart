@@ -7,6 +7,8 @@ import 'package:api_models/api_models.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:user_profile_repository/src/exceptions.dart';
 
+export 'package:user_profile_repository/src/exceptions.dart';
+
 /// {@template user_profile_repository}
 /// Repository which exposes user profile resource.
 /// {@endtemplate}
