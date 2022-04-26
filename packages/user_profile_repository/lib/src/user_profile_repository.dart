@@ -5,8 +5,7 @@ import 'dart:async';
 import 'package:api_client/api_client.dart';
 import 'package:api_models/api_models.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'exceptions.dart';
+import 'package:user_profile_repository/src/exceptions.dart';
 
 /// {@template user_profile_repository}
 /// Repository which exposes user profile resource.
