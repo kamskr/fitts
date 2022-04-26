@@ -1,14 +1,21 @@
+import 'package:api_models/api_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:form_validators/form_validators.dart';
 import 'package:formz/formz.dart';
+import 'package:user_profile_repository/user_profile_repository.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  SignUpBloc(this._authenticationClient) : super(const SignUpState()) {
+  SignUpBloc({
+    required AuthenticationClient authenticationClient,
+    required UserProfileRepository userProfileRepository,
+  })  : _authenticationClient = authenticationClient,
+        _userProfileRepository = userProfileRepository,
+        super(const SignUpState()) {
     on<SignUpUsernameChanged>(_onUsernameChanged);
     on<SignUpEmailChanged>(_onEmailChanged);
     on<SignUpPasswordChanged>(_onPasswordChanged);
@@ -16,6 +23,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   final AuthenticationClient _authenticationClient;
+  final UserProfileRepository _userProfileRepository;
 
   void _onUsernameChanged(
       SignUpUsernameChanged event, Emitter<SignUpState> emit) {
@@ -69,6 +77,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           displayName: state.username.value,
           email: state.email.value,
           password: state.password.value,
+        );
+
+        await _userProfileRepository.updateUserProfile(
+          payload: UserProfileUpdatePayload.empty.copyWith(
+            email: state.email.value,
+            displayName: state.username.value,
+          ),
         );
 
         emit(state.copyWith(status: FormzStatus.submissionSuccess));

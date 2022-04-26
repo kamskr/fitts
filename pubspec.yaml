@@ -9,6 +9,10 @@ environment:
   flutter: 2.10.3
 
 dependencies:
+  api_client:
+    path: packages/api_client
+  api_models:
+    path: packages/api_models
   app_ui:
     path: packages/app_ui
   authentication_client:
@@ -29,7 +33,7 @@ dependencies:
   form_validators:
     path: packages/form_validators
   formz: ^0.4.1
-  intl: ^0.17.0
+
   mocktail: ^0.2.0
   user_profile_repository:
     path: packages/user_profile_repository
