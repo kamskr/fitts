@@ -14,10 +14,10 @@ dependencies:
   authentication_client:
     path: packages/authentication_client
   bloc_test: ^9.0.3
-  cloud_firestore: ^3.1.11
+  cloud_firestore: ^3.1.13
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
-  firebase_core: ^1.13.1
+  firebase_core: ^1.15.0
   flow_builder: ^0.0.6
   flutter:
     sdk: flutter
