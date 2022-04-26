@@ -110,6 +110,15 @@ class UserProfileUpdatePayload extends Equatable {
 
   @override
   String toString() {
-    return 'UserProfileUpdatePayload(email: $email, photoUrl: $photoUrl, displayName: $displayName, goal: $goal, gender: $gender, dateOfBirth: $dateOfBirth, height: $height, weight: $weight)';
+    return 'UserProfileUpdatePayload('
+        'email: $email, '
+        'photoUrl: $photoUrl, '
+        'displayName: $displayName, '
+        'goal: $goal, '
+        'gender: $gender, '
+        'dateOfBirth: $dateOfBirth, '
+        'height: $height, '
+        'weight: $weight'
+        ')';
   }
 }

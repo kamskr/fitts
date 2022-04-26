@@ -11,7 +11,8 @@ class UserProfileResource {
       : _firebaseFirestore = firebaseFirestore;
 
   final FirebaseFirestore _firebaseFirestore;
-  static const collectionName = 'UserProfiles';
+
+  static const _collectionName = 'UserProfiles';
 
   /// Returns a stream of user profile updates for given [userProfileId].
   ///
@@ -24,7 +25,7 @@ class UserProfileResource {
   /// It emits a [DeserializationException] when deserialization fails.
   Stream<UserProfile> userProfile(String userProfileId) {
     return _firebaseFirestore
-        .collection(collectionName)
+        .collection(_collectionName)
         .doc(userProfileId)
         .snapshots()
         .map(_mapSnapshotToUserProfile);
@@ -32,17 +33,7 @@ class UserProfileResource {
 
   UserProfile _mapSnapshotToUserProfile(DocumentSnapshot snapshot) {
     if (snapshot.exists) {
-      // final data = {
-      //   'photoUrl': 'www.test-url.te',
-      //   'displayName': 'displayName',
-      //   'goal': 'goal',
-      //   'gender': 'male',
-      //   'dateOfBirth': DateTime.now(),
-      //   'height': 180,
-      //   'weight': 85.5
-      // };
       final data = snapshot.data() as Map<String, dynamic>?;
-      print(data);
       try {
         return UserProfile.fromJson(data!);
       } catch (error, stackTrace) {
@@ -63,7 +54,7 @@ class UserProfileResource {
   }) async {
     try {
       await _firebaseFirestore
-          .collection(collectionName)
+          .collection(_collectionName)
           .doc(payload.email)
           .set(payload.toJson());
     } catch (error, stackTrace) {
