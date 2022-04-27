@@ -65,7 +65,10 @@ void main() {
     testWidgets('navigates to HomePage when authenticated', (tester) async {
       const user = User(email: email, id: id);
       when(() => appBloc.state).thenReturn(
-        const AppState.authenticated(user),
+        const AppState.authenticated(
+          user,
+          false,
+        ),
       );
       await tester.pumpApp(
         const AppView(),

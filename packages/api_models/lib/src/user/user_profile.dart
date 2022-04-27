@@ -32,6 +32,7 @@ class UserProfile extends Equatable {
     required this.dateOfBirth,
     required this.height,
     required this.weight,
+    required this.isNewUser,
   });
 
   /// Factory which converts a [Map] into a [UserProfile].
@@ -73,6 +74,10 @@ class UserProfile extends Equatable {
   @JsonKey(name: 'weight')
   final double weight;
 
+  /// If user is new - require profile setup.
+  @JsonKey(name: 'isNewUser')
+  final bool isNewUser;
+
   /// An empty [UserProfile] object.
   static UserProfile empty = UserProfile(
     email: '',
@@ -83,6 +88,7 @@ class UserProfile extends Equatable {
     dateOfBirth: DateTime.now(),
     height: 0,
     weight: 0,
+    isNewUser: true,
   );
 
   /// Creates a copy of [UserProfile].
@@ -95,6 +101,7 @@ class UserProfile extends Equatable {
     DateTime? dateOfBirth,
     int? height,
     double? weight,
+    bool? isNewUser,
   }) {
     return UserProfile(
       email: email ?? this.email,
@@ -105,6 +112,7 @@ class UserProfile extends Equatable {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       height: height ?? this.height,
       weight: weight ?? this.weight,
+      isNewUser: isNewUser ?? this.isNewUser,
     );
   }
 
@@ -119,6 +127,7 @@ class UserProfile extends Equatable {
       dateOfBirth,
       height,
       weight,
+      isNewUser,
     ];
   }
 
@@ -132,7 +141,8 @@ class UserProfile extends Equatable {
         'gender: $gender, '
         'dateOfBirth: $dateOfBirth, '
         'height: $height, '
-        'weight: $weight'
+        'weight: $weight, '
+        'isNewUser: $isNewUser '
         ')';
   }
 }

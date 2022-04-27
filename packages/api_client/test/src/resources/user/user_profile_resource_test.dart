@@ -58,6 +58,7 @@ void main() {
       dateOfBirth: DateTime.parse('1974-03-20 00:00:00.000'),
       height: 180,
       weight: 85.5,
+      isNewUser: true,
     );
     final userProfilePayload = UserProfileUpdatePayload(
       email: 'test@email.com',
@@ -68,6 +69,7 @@ void main() {
       dateOfBirth: DateTime.parse('1974-03-20 00:00:00.000'),
       height: 180,
       weight: 85.5,
+      isNewUser: true,
     );
 
     setUp(() {

@@ -1,3 +1,4 @@
+import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/welcome/view/view.dart';
@@ -8,7 +9,7 @@ void main() {
   group('onGenerateAppViewPages', () {
     test('returns [WelcomePage] when not authenticated', () {
       expect(
-        onGenerateAppViewPages(AppStatus.unauthenticated, []),
+        onGenerateAppViewPages(const AppState.unauthenticated(), []),
         [
           isA<MaterialPage>().having(
             (p) => p.child,
@@ -21,7 +22,12 @@ void main() {
 
     test('returns [HomePage] when authenticated', () {
       expect(
-        onGenerateAppViewPages(AppStatus.authenticated, []),
+        onGenerateAppViewPages(
+            const AppState.authenticated(
+              User.empty,
+              true,
+            ),
+            []),
         [
           isA<MaterialPage>().having(
             (p) => p.child,

@@ -41,10 +41,14 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = context.select((AppBloc bloc) => bloc.state.user);
 
+    if (user == null) {
+      return const Text('no user');
+    }
+
     return Column(
       children: [
         const SizedBox(height: 100),
-        Text(user?.name ?? 'No user'),
+        Text(user.isNewUser ? 'New user' : 'Existing user'),
         Center(
           child: AppButton.primary(
             child: const Text('Sign out'),

@@ -5,6 +5,7 @@ import 'package:fitts/l10n/l10n.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_profile_repository/user_profile_repository.dart';
 
 class App extends StatelessWidget {
   @override
@@ -12,6 +13,7 @@ class App extends StatelessWidget {
     return BlocProvider(
       create: (_) => AppBloc(
         authenticationClient: context.read<AuthenticationClient>(),
+        userProfileRepository: context.read<UserProfileRepository>(),
       ),
       child: const AppView(),
     );
@@ -28,8 +30,8 @@ class AppView extends StatelessWidget {
       theme: AppTheme.lightTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: FlowBuilder<AppStatus>(
-        state: context.select((AppBloc bloc) => bloc.state.status),
+      home: FlowBuilder<AppState>(
+        state: context.select((AppBloc bloc) => bloc.state),
         onGeneratePages: onGenerateAppViewPages,
       ),
     );

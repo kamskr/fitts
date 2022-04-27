@@ -19,7 +19,7 @@ void main() {
     group('authenticated', () {
       test('has correct status', () {
         final user = User(id: 'test');
-        final state = AppState.authenticated(user);
+        final state = AppState.authenticated(user, false);
         expect(state.status, AppStatus.authenticated);
         expect(state.user, user);
       });

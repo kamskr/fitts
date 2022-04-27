@@ -17,6 +17,7 @@ UserProfileUpdatePayload _$UserProfileUpdatePayloadFromJson(
       dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
       height: json['height'] as int,
       weight: (json['weight'] as num).toDouble(),
+      isNewUser: json['isNewUser'] as bool,
     );
 
 Map<String, dynamic> _$UserProfileUpdatePayloadToJson(
@@ -30,4 +31,5 @@ Map<String, dynamic> _$UserProfileUpdatePayloadToJson(
       'dateOfBirth': instance.dateOfBirth.toIso8601String(),
       'height': instance.height,
       'weight': instance.weight,
+      'isNewUser': instance.isNewUser,
     };

@@ -28,6 +28,7 @@ void main() {
       dateOfBirth: DateTime(1990),
       gender: Gender.male,
       photoUrl: 'photoUrl',
+      isNewUser: false,
     );
 
     final userProfile2 = UserProfile(
@@ -39,6 +40,7 @@ void main() {
       dateOfBirth: DateTime(1990),
       gender: Gender.female,
       photoUrl: 'photoUrl',
+      isNewUser: false,
     );
 
     setUp(() {
@@ -136,6 +138,7 @@ void main() {
         dateOfBirth: DateTime(1990),
         gender: 'female',
         photoUrl: 'photoUrl',
+        isNewUser: false,
       );
 
       test('Calls appointmentsResource.updateUserProfile with proper payload',
