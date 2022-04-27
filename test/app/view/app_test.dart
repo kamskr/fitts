@@ -3,7 +3,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/welcome/welcome.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -29,11 +28,9 @@ void main() {
     });
 
     testWidgets('renders AppView', (tester) async {
-      await tester.pumpWidget(
-        RepositoryProvider.value(
-          value: authenticationClient,
-          child: App(),
-        ),
+      await tester.pumpApp(
+        App(),
+        authenticationClient: authenticationClient,
       );
       await tester.pump();
       expect(find.byType(AppView), findsOneWidget);

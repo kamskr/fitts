@@ -37,6 +37,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       return emit(const AppState.unauthenticated());
     }
 
+    /// There should not be a situation where user's email is null.
+    /// If it is the case, it means that the user model from firebase
+    /// may be broken.
+    if (event.user.email == null) {
+      return emit(AppState.authenticated(event.user, true));
+    }
+
     final userProfile =
         await _userProfileRepository.userProfile(event.user.email!).first;
 

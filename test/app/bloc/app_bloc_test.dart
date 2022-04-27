@@ -46,7 +46,10 @@ void main() {
         userProfileRepository: userProfileRepository,
       ),
       act: (bloc) => bloc.add(AppUserChanged(User.empty)),
-      expect: () => const <AppState>[AppState.unauthenticated()],
+      expect: () => const <AppState>[
+        AppState.loading(),
+        AppState.unauthenticated(),
+      ],
     );
 
     blocTest<AppBloc, AppState>(
@@ -56,8 +59,10 @@ void main() {
         userProfileRepository: userProfileRepository,
       ),
       act: (bloc) => bloc.add(AppUserChanged(authenticatedUser)),
-      expect: () =>
-          <AppState>[AppState.authenticated(authenticatedUser, false)],
+      expect: () => <AppState>[
+        AppState.loading(),
+        AppState.authenticated(authenticatedUser, true),
+      ],
     );
   });
 }

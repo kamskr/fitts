@@ -35,7 +35,8 @@ void main() {
       'gender': 'male',
       'dateOfBirth': '1974-03-20 00:00:00.000',
       'height': 180,
-      'weight': 85.5
+      'weight': 85.5,
+      'isNewUser': true,
     };
 
     final userProfileDataMalformed = {
@@ -46,7 +47,8 @@ void main() {
       'gender': 'not-male',
       'dateOfBirth': 'data',
       'height': '180',
-      'weight': '85.5'
+      'weight': '85.5',
+      'isNewUser': true,
     };
 
     final userProfile = UserProfile(
