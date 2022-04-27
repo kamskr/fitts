@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:user_profile_repository/user_profile_repository.dart';
 
 class FakeAppState extends Fake implements AppState {}
 
@@ -27,17 +28,23 @@ class MockAuthenticationClient extends Mock implements AuthenticationClient {
   Stream<User> get user => Stream.value(User.empty);
 }
 
+class MockUserProfileRepository extends Mock implements UserProfileRepository {}
+
 extension AppTester on WidgetTester {
   Future<void> pumpApp(
     Widget widgetUnderTest, {
     AppBloc? appBloc,
     AuthenticationClient? authenticationClient,
+    UserProfileRepository? userProfileRepository,
   }) async {
     await pumpWidget(
       MultiRepositoryProvider(
         providers: [
           RepositoryProvider.value(
             value: authenticationClient ?? MockAuthenticationClient(),
+          ),
+          RepositoryProvider.value(
+            value: userProfileRepository ?? MockUserProfileRepository(),
           ),
         ],
         child: MultiBlocProvider(

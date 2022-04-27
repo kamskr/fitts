@@ -3,6 +3,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/welcome/welcome.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -18,6 +19,7 @@ class MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {}
 void main() {
   group('App', () {
     late AuthenticationClient authenticationClient;
+
     setUp(() {
       authenticationClient = MockAuthenticationClient();
 
@@ -28,8 +30,9 @@ void main() {
 
     testWidgets('renders AppView', (tester) async {
       await tester.pumpWidget(
-        App(
-          authenticationClient: authenticationClient,
+        RepositoryProvider.value(
+          value: authenticationClient,
+          child: App(),
         ),
       );
       await tester.pump();

@@ -1,3 +1,4 @@
+import 'package:api_models/api_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/sign_up/sign_up.dart';
@@ -5,8 +6,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:form_validators/form_validators.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:user_profile_repository/user_profile_repository.dart';
 
 class MockAuthenticationClient extends Mock implements AuthenticationClient {}
+
+class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 
 void main() {
   const invalidUsernameString = 't';
@@ -28,15 +32,27 @@ void main() {
   const validPassword = Password.dirty(validPasswordString);
 
   group('SignUpBloc', () {
-    late AuthenticationClient authenticationRepository;
+    late AuthenticationClient authenticationClient;
+    late UserProfileRepository userProfileRepository;
 
     setUp(() {
-      authenticationRepository = MockAuthenticationClient();
+      authenticationClient = MockAuthenticationClient();
+      userProfileRepository = MockUserProfileRepository();
+
       when(
-        () => authenticationRepository.signUp(
+        () => authenticationClient.signUp(
           displayName: any(named: 'displayName'),
           email: any(named: 'email'),
           password: any(named: 'password'),
+        ),
+      ).thenAnswer((_) async {});
+
+      when(
+        () => userProfileRepository.updateUserProfile(
+          payload: UserProfileUpdatePayload.empty.copyWith(
+            displayName: validUsernameString,
+            email: validEmailString,
+          ),
         ),
       ).thenAnswer((_) async {});
     });
@@ -44,7 +60,10 @@ void main() {
     group('username changed', () {
       blocTest<SignUpBloc, SignUpState>(
         'emits [invalid] when username/email/password are invalid',
-        build: () => SignUpBloc(authenticationRepository),
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
         act: (bloc) => bloc.add(
           const SignUpUsernameChanged(invalidUsernameString),
         ),
@@ -55,7 +74,10 @@ void main() {
 
       blocTest<SignUpBloc, SignUpState>(
         'emits [valid] when email/password/confirmedPassword are valid',
-        build: () => SignUpBloc(authenticationRepository),
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
         seed: () => const SignUpState(
           email: validEmail,
           password: validPassword,
@@ -76,7 +98,10 @@ void main() {
     group('email changed', () {
       blocTest<SignUpBloc, SignUpState>(
         'emits [invalid] when username/email/password are invalid',
-        build: () => SignUpBloc(authenticationRepository),
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
         act: (bloc) => bloc.add(
           const SignUpEmailChanged(invalidEmailString),
         ),
@@ -87,7 +112,10 @@ void main() {
 
       blocTest<SignUpBloc, SignUpState>(
         'emits [valid] when email/password/confirmedPassword are valid',
-        build: () => SignUpBloc(authenticationRepository),
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
         seed: () => const SignUpState(
           username: validUsername,
           password: validPassword,
@@ -107,7 +135,10 @@ void main() {
     group('password changed', () {
       blocTest<SignUpBloc, SignUpState>(
         'emits [invalid] when username/email/password are invalid',
-        build: () => SignUpBloc(authenticationRepository),
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
         act: (bloc) => bloc.add(
           const SignUpPasswordChanged(invalidPasswordString),
         ),
@@ -118,7 +149,10 @@ void main() {
 
       blocTest<SignUpBloc, SignUpState>(
         'emits [valid] when email/password/confirmedPassword are valid',
-        build: () => SignUpBloc(authenticationRepository),
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
         seed: () => const SignUpState(
           email: validEmail,
           username: validUsername,
