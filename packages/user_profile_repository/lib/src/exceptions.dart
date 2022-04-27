@@ -29,18 +29,3 @@ class UpdateUserProfileFailure extends UserProfileFailure {
   const UpdateUserProfileFailure(Object error, StackTrace stackTrace)
       : super(error, stackTrace);
 }
-
-/// {@template update_user_profile_action_failure}
-/// Thrown when updating user profile fails.
-/// {@endtemplate}
-class UpdateUserProfileActionFailure extends UserProfileFailure {
-  /// {@macro update_user_profile_action_failure}
-  const UpdateUserProfileActionFailure(
-    Object error,
-    StackTrace stackTrace, {
-    required this.message,
-  }) : super(error, stackTrace);
-
-  /// A message associated with the failed action.
-  final String? message;
-}

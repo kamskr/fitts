@@ -19,7 +19,6 @@ class MockDocumentSnapshot extends Mock
 
 void main() {
   group('UserProfileResource', () {
-    final dateTimeNow = DateTime.now();
     const userProfileId = 'user@email.te';
 
     late UserProfileResource userProfileResource;

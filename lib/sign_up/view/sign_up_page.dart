@@ -5,6 +5,7 @@ import 'package:fitts/sign_up/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:user_profile_repository/user_profile_repository.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -15,7 +16,10 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignUpBloc(context.read<AuthenticationClient>()),
+      create: (context) => SignUpBloc(
+        authenticationClient: context.read<AuthenticationClient>(),
+        userProfileRepository: context.read<UserProfileRepository>(),
+      ),
       child: const SignUpView(),
     );
   }
