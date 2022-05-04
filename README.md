@@ -40,3 +40,9 @@ installed and then run:
 melos build:runner
 
 ```
+
+## Build assets
+
+```
+melos build:assets
+```

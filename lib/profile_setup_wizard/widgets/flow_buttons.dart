@@ -21,21 +21,50 @@ class FlowButtons extends StatelessWidget {
         ),
         child: SizedBox(
           height: height,
-          child: Row(
+          child: Column(
             children: [
-              Assets.icons.appLogo.svg(
-                alignment: Alignment.centerLeft,
-                width: 22,
-                height: 22,
-              ),
-              ...buttons.map(
-                (button) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: buttonPadding,
-                  ),
-                  child: button,
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: AppColors.black[100],
                 ),
-              )
+                child: const SizedBox(
+                  height: 1,
+                  width: double.infinity,
+                ),
+              ),
+              Row(
+                children: [
+                  const SizedBox(width: AppSpacing.xs),
+                  AppTextButton(
+                    onPressed: () {},
+                    child: Assets.icons.icBack.svg(
+                      alignment: Alignment.centerLeft,
+                      width: 22,
+                      height: 22,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.xs),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: AppColors.black[100],
+                    ),
+                    child: const SizedBox(
+                      height: 24,
+                      width: 1,
+                    ),
+                  ),
+                  const Spacer(),
+                  ...buttons.map(
+                    (button) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: buttonPadding,
+                      ),
+                      child: button,
+                    ),
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ],
           ),
         ),
