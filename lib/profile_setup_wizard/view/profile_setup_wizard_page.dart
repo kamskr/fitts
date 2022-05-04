@@ -35,7 +35,17 @@ class _ProfileSetupWizardPageBody extends StatelessWidget {
     return IndexedStack(
       children: const [
         WizardStep(
-          child: Text('gender'),
+          headerText: 'Male or female?',
+          text: 'Certainly, men and women need different workout approaches 😉',
+          currentStep: 1,
+          totalSteps: 5,
+          child: Center(
+            child: SizedBox(
+              height: 30,
+              width: 49,
+              child: Text('gender'),
+            ),
+          ),
         ),
       ],
     );
