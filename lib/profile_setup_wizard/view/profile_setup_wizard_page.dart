@@ -1,3 +1,4 @@
+import 'package:fitts/profile_setup_wizard/widgets/wizard_step.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSetupWizardPage extends StatelessWidget {
@@ -31,8 +32,12 @@ class _ProfileSetupWizardPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('ProfileSetupWizardPage'),
+    return IndexedStack(
+      children: const [
+        WizardStep(
+          child: Text('gender'),
+        ),
+      ],
     );
   }
 }

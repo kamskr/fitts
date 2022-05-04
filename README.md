@@ -29,3 +29,14 @@ open coverage/index.html
 fvm flutter build web
 firebase deploy
 ```
+
+## Build project
+
+Project uses melos for running scripts across packages
+To run build runner in all packages first make sure you have melos
+installed and then run:
+
+```
+melos build:runner
+
+```
