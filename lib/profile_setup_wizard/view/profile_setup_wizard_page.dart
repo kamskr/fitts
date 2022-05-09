@@ -42,13 +42,17 @@ class _ProfileSetupWizardPageBody extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.currentStep != current.currentStep,
       builder: (context, state) {
-        return IndexedStack(
-          index: state.currentStep - 1,
-          children: const [
-            _GenderStep(),
-            _AgeStep(),
-            _WeightStep(),
-          ],
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: IndexedStack(
+            key: Key(state.currentStep.toString()),
+            index: state.currentStep - 1,
+            children: const [
+              _GenderStep(),
+              _AgeStep(),
+              _WeightStep(),
+            ],
+          ),
         );
       },
     );
