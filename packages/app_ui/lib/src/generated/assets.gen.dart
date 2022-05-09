@@ -18,6 +18,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/drag-icon.svg
   SvgGenImage get dragIcon => const SvgGenImage('assets/icons/drag-icon.svg');
 
+  /// File path: assets/icons/female.svg
+  SvgGenImage get female => const SvgGenImage('assets/icons/female.svg');
+
   /// File path: assets/icons/ic-add.svg
   SvgGenImage get icAdd => const SvgGenImage('assets/icons/ic-add.svg');
 
@@ -98,6 +101,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ic-workouts-completed.svg
   SvgGenImage get icWorkoutsCompleted =>
       const SvgGenImage('assets/icons/ic-workouts-completed.svg');
+
+  /// File path: assets/icons/male.svg
+  SvgGenImage get male => const SvgGenImage('assets/icons/male.svg');
 }
 
 class Assets {

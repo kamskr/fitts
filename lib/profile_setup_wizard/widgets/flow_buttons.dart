@@ -2,9 +2,14 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class FlowButtons extends StatelessWidget {
-  const FlowButtons({Key? key, required this.buttons}) : super(key: key);
+  const FlowButtons({
+    Key? key,
+    required this.buttons,
+    this.onBackButton,
+  }) : super(key: key);
 
   final List<Widget> buttons;
+  final VoidCallback? onBackButton;
   static const buttonHeight = 56;
 
   @override
@@ -36,11 +41,14 @@ class FlowButtons extends StatelessWidget {
                 children: [
                   const SizedBox(width: AppSpacing.xs),
                   AppTextButton(
-                    onPressed: () {},
+                    onPressed: onBackButton,
                     child: Assets.icons.icBack.svg(
                       alignment: Alignment.centerLeft,
                       width: 22,
                       height: 22,
+                      color: onBackButton != null
+                          ? AppColors.primary
+                          : AppColors.black[100],
                     ),
                   ),
                   const SizedBox(width: AppSpacing.xs),

@@ -1,5 +1,7 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:fitts/profile_setup_wizard/bloc/profile_setup_wizard_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets.dart';
 
@@ -9,18 +11,17 @@ class WizardStep extends StatelessWidget {
     required this.child,
     required this.headerText,
     required this.text,
-    required this.currentStep,
-    required this.totalSteps,
   }) : super(key: key);
 
   final Widget child;
   final String headerText;
   final String text;
-  final int currentStep;
-  final int totalSteps;
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<ProfileSetupWizardBloc>();
+    final currentStep = bloc.state.currentStep;
+    const totalSteps = ProfileSetupWizardState.totalSteps;
     final isLastStep = currentStep == totalSteps;
 
     return Stack(
@@ -40,6 +41,11 @@ class WizardStep extends StatelessWidget {
           ],
         ),
         FlowButtons(
+          onBackButton: currentStep != 1
+              ? () {
+                  bloc.add(StepChanged(currentStep - 1));
+                }
+              : null,
           buttons: [
             if (isLastStep)
               AppTextButton(
@@ -55,11 +61,7 @@ class WizardStep extends StatelessWidget {
             if (!isLastStep)
               AppTextButton(
                 onPressed: () {
-                  // context.read<ProfileWizardBloc>().add(
-                  //       ProfileWizardEvent.stepChanged(
-                  //         nextStep: stepInfo.stepNumber + 1,
-                  //       ),
-                  //     );
+                  bloc.add(StepChanged(currentStep + 1));
                 },
                 child: const Text('CONTINUE'),
               ),
