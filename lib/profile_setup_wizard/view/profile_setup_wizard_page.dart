@@ -51,6 +51,7 @@ class _ProfileSetupWizardPageBody extends StatelessWidget {
               _GenderStep(),
               _AgeStep(),
               _WeightStep(),
+              _HeightStep(),
             ],
           ),
         );
@@ -133,7 +134,7 @@ class _WeightStep extends StatelessWidget {
 
     return WizardStep(
       headerText: 'How much do you weigh?',
-      text: 'This is used to set up reccommendations just for you.',
+      text: 'This is used to set up recommendations just for you.',
       canGoNext: weight > 0,
       child: Column(
         children: [
@@ -165,6 +166,36 @@ class _WeightStep extends StatelessWidget {
               Text('kg', style: AppTypography.headline6),
               const Spacer(),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeightStep extends StatelessWidget {
+  const _HeightStep({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final height = context.watch<ProfileSetupWizardBloc>().state.height;
+
+    return WizardStep(
+      headerText: 'How tall are you?',
+      text: 'This is used to set up recommendations just for you.',
+      child: Column(
+        children: [
+          const SizedBox(height: AppSpacing.xxxlg),
+          const SizedBox(height: AppSpacing.xxxlg),
+          AppNumberPicker(
+            currentValue: height,
+            onChanged: (value) => context.read<ProfileSetupWizardBloc>().add(
+                  HeightChanged(value),
+                ),
+            minValue: 1,
+            maxValue: 300,
           ),
         ],
       ),

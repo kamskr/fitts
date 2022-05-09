@@ -27,8 +27,8 @@ class AppNumberPicker extends StatelessWidget {
             itemHeight: 60,
             value: currentValue,
             haptics: true,
-            minValue: 0,
-            maxValue: 100,
+            minValue: minValue,
+            maxValue: maxValue,
             onChanged: onChanged,
             axis: isHorizontal ? Axis.horizontal : Axis.vertical,
             textStyle: TextStyle(
