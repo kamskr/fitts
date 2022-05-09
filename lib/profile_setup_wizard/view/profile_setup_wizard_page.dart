@@ -38,14 +38,18 @@ class _ProfileSetupWizardPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex =
-        context.watch<ProfileSetupWizardBloc>().state.currentStep - 1;
-
-    return IndexedStack(
-      index: currentIndex,
-      children: const [
-        _GenderStep(),
-      ],
+    return BlocBuilder<ProfileSetupWizardBloc, ProfileSetupWizardState>(
+      buildWhen: (previous, current) =>
+          previous.currentStep != current.currentStep,
+      builder: (context, state) {
+        return IndexedStack(
+          index: state.currentStep - 1,
+          children: const [
+            _GenderStep(),
+            _AgeStep(),
+          ],
+        );
+      },
     );
   }
 }
@@ -57,9 +61,12 @@ class _GenderStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gender = context.watch<ProfileSetupWizardBloc>().state.gender;
+
     return WizardStep(
       headerText: 'Male or female?',
       text: 'Certainly, men and women need different workout approaches 😉',
+      canGoNext: gender != null,
       child: Column(
         children: [
           const SizedBox(height: AppSpacing.xxxlg),
@@ -73,6 +80,36 @@ class _GenderStep extends StatelessWidget {
                     .add(GenderChanged(gender));
               },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AgeStep extends StatelessWidget {
+  const _AgeStep({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final age = context.watch<ProfileSetupWizardBloc>().state.age;
+
+    return WizardStep(
+      headerText: 'How old are you?',
+      text: 'This is used to make better suggestions on workouts and plans.',
+      child: Column(
+        children: [
+          const SizedBox(height: AppSpacing.xxxlg),
+          const SizedBox(height: AppSpacing.xxxlg),
+          AppNumberPicker(
+            currentValue: age,
+            onChanged: (value) => context.read<ProfileSetupWizardBloc>().add(
+                  AgeChanged(value),
+                ),
+            minValue: 1,
+            maxValue: 200,
           ),
         ],
       ),

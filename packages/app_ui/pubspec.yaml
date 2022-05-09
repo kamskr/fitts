@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   flutter_gen_runner: ^4.1.6
   flutter_svg: ^1.0.0
+  horizontal_picker: ^1.2.0
+  numberpicker: ^2.1.1
   very_good_analysis: ^2.4.0
 
 dev_dependencies:

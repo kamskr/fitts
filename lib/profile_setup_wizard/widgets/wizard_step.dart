@@ -11,11 +11,13 @@ class WizardStep extends StatelessWidget {
     required this.child,
     required this.headerText,
     required this.text,
+    this.canGoNext = true,
   }) : super(key: key);
 
   final Widget child;
   final String headerText;
   final String text;
+  final bool canGoNext;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +62,11 @@ class WizardStep extends StatelessWidget {
               ),
             if (!isLastStep)
               AppTextButton(
-                onPressed: () {
-                  bloc.add(StepChanged(currentStep + 1));
-                },
+                onPressed: canGoNext
+                    ? () {
+                        bloc.add(StepChanged(currentStep + 1));
+                      }
+                    : null,
                 child: const Text('CONTINUE'),
               ),
           ],

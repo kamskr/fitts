@@ -23,7 +23,7 @@ class ProfileSetupWizardState extends Equatable {
   final int height;
 
   @override
-  List<Object?> get props => [gender, age, weight, height];
+  List<Object?> get props => [currentStep, gender, age, weight, height];
 
   ProfileSetupWizardState copyWith({
     Gender? gender,
@@ -32,13 +32,14 @@ class ProfileSetupWizardState extends Equatable {
     int? height,
     int? currentStep,
   }) {
-    return ProfileSetupWizardState(
+    final newState = ProfileSetupWizardState(
       gender: gender ?? this.gender,
       age: age ?? this.age,
       weight: weight ?? this.weight,
       height: height ?? this.height,
       currentStep: currentStep ?? this.currentStep,
     );
+    return newState;
   }
 }
 
