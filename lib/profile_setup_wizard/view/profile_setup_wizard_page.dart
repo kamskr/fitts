@@ -194,6 +194,7 @@ class _HeightStep extends StatelessWidget {
             onChanged: (value) => context.read<ProfileSetupWizardBloc>().add(
                   HeightChanged(value),
                 ),
+            textMapper: (value) => '$value cm',
             minValue: 1,
             maxValue: 300,
           ),

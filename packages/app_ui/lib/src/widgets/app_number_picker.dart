@@ -10,6 +10,7 @@ class AppNumberPicker extends StatelessWidget {
     required this.maxValue,
     required this.onChanged,
     this.isHorizontal = false,
+    this.textMapper,
   }) : super(key: key);
 
   final int currentValue;
@@ -17,6 +18,7 @@ class AppNumberPicker extends StatelessWidget {
   final int maxValue;
   final void Function(int) onChanged;
   final bool isHorizontal;
+  final TextMapper? textMapper;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class AppNumberPicker extends StatelessWidget {
       children: [
         Center(
           child: NumberPicker(
+            textMapper: textMapper,
             itemHeight: 60,
             value: currentValue,
             haptics: true,
