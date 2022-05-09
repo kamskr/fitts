@@ -22,6 +22,7 @@ class AppNumberPicker extends StatelessWidget {
       children: [
         Center(
           child: NumberPicker(
+            itemHeight: 60,
             value: currentValue,
             haptics: true,
             minValue: 0,
