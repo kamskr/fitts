@@ -9,12 +9,14 @@ class AppNumberPicker extends StatelessWidget {
     required this.minValue,
     required this.maxValue,
     required this.onChanged,
+    this.isHorizontal = false,
   }) : super(key: key);
 
   final int currentValue;
   final int minValue;
   final int maxValue;
   final void Function(int) onChanged;
+  final bool isHorizontal;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class AppNumberPicker extends StatelessWidget {
             minValue: 0,
             maxValue: 100,
             onChanged: onChanged,
+            axis: isHorizontal ? Axis.horizontal : Axis.vertical,
             textStyle: TextStyle(
                 fontSize: 20, color: AppColors.black[500]!.withOpacity(0.5)),
             selectedTextStyle: const TextStyle(
