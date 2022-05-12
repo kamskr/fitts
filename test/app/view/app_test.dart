@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
@@ -29,7 +30,7 @@ void main() {
 
     testWidgets('renders AppView', (tester) async {
       await tester.pumpApp(
-        App(),
+        App(lightThemeData: AppThemeFactory.lightTheme),
         authenticationClient: authenticationClient,
       );
       await tester.pump();
@@ -52,7 +53,7 @@ void main() {
         const AppState.unauthenticated(),
       );
       await tester.pumpApp(
-        const AppView(),
+        AppView(lightThemeData: AppThemeFactory.lightTheme),
         appBloc: appBloc,
       );
       await tester.pumpAndSettle();
@@ -68,7 +69,7 @@ void main() {
         ),
       );
       await tester.pumpApp(
-        const AppView(),
+        AppView(lightThemeData: AppThemeFactory.lightTheme),
         appBloc: appBloc,
       );
       await tester.pumpAndSettle();

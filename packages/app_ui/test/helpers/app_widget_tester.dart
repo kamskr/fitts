@@ -9,7 +9,7 @@ extension AppWidgetTester on WidgetTester {
   }) async {
     await pumpWidget(
       MaterialApp(
-        theme: theme ?? AppTheme.lightTheme,
+        theme: theme ?? AppThemeFactory.lightTheme.materialThemeData,
         home: Scaffold(
           body: widget,
         ),

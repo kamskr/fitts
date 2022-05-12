@@ -20,6 +20,7 @@ abstract class AppColors {
   });
 
   static const white = Colors.white;
+  static const error = Color(0xffED254E);
 
   static const black = MaterialColor(0xff23253A, {
     50: Color(0xffF5F5F5),

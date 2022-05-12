@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitts/app/app.dart';
 import 'package:fitts/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +22,7 @@ Future<void> main() async {
 
   BlocOverrides.runZoned(
     () => runApp(
-      bootstrap(App()),
+      bootstrap(),
     ),
     blocObserver: AppBlocObserver(),
   );
