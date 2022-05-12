@@ -1,6 +1,6 @@
 import 'package:api_models/api_models.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class GenderPicker extends StatelessWidget {
   const GenderPicker({
@@ -44,12 +44,14 @@ class _MaleOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainColors = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () => onChange(Gender.male),
       child: _GenderCircle(
         isSelected: isSelected,
         child: Assets.icons.male.svg(
-          color: isSelected ? AppColors.white : AppColors.primary,
+          color: isSelected ? mainColors.surface : mainColors.primary,
         ),
       ),
     );
@@ -68,12 +70,14 @@ class _FemaleOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainColors = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () => onChange(Gender.female),
       child: _GenderCircle(
         isSelected: isSelected,
         child: Assets.icons.female.svg(
-          color: isSelected ? AppColors.white : AppColors.primary,
+          color: isSelected ? mainColors.surface : mainColors.primary,
         ),
       ),
     );
@@ -92,15 +96,17 @@ class _GenderCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainColors = Theme.of(context).colorScheme;
+
     return SizedBox(
       height: 110,
       width: 110,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.white,
+          color: isSelected ? mainColors.primary : mainColors.surface,
           shape: BoxShape.circle,
           border: Border.all(
-            color: AppColors.primary,
+            color: mainColors.primary,
             width: 2,
           ),
         ),

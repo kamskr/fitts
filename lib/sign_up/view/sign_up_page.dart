@@ -31,17 +31,19 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
+
     return _SignUpBlocListener(
       child: DecoratedBox(
-        decoration: const BoxDecoration(
-          gradient: AppColors.primaryGradient3,
+        decoration: BoxDecoration(
+          gradient: additionalColors.primaryGradient3,
         ),
         child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
-              iconTheme: const IconThemeData(
-                color: AppColors.white,
+              iconTheme: IconThemeData(
+                color: additionalColors.white,
               ),
             ),
             body: SafeArea(
@@ -97,6 +99,7 @@ class _SignUpTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -105,7 +108,7 @@ class _SignUpTitle extends StatelessWidget {
       ),
       child: Text(
         l10n.signUpPageTitle,
-        style: AppTypography.headline3.copyWith(color: AppColors.white),
+        style: AppTypography.headline3.copyWith(color: additionalColors.white),
         textAlign: TextAlign.left,
       ),
     );
@@ -194,13 +197,14 @@ class _LegalNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
 
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Text(
         l10n.signUpPageLegal,
         style: AppTypography.overline.copyWith(
-          color: AppColors.white.withOpacity(0.8),
+          color: additionalColors.white.withOpacity(0.8),
         ),
       ),
     );

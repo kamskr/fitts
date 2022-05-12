@@ -26,17 +26,19 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
+
     return _SignInBlocListener(
       child: DecoratedBox(
-        decoration: const BoxDecoration(
-          gradient: AppColors.primaryGradient3,
+        decoration: BoxDecoration(
+          gradient: additionalColors.primaryGradient3,
         ),
         child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
-              iconTheme: const IconThemeData(
-                color: AppColors.white,
+              iconTheme: IconThemeData(
+                color: additionalColors.white,
               ),
             ),
             body: SafeArea(
@@ -90,6 +92,7 @@ class _SignInTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -98,7 +101,7 @@ class _SignInTitle extends StatelessWidget {
       ),
       child: Text(
         l10n.signInPageTitle,
-        style: AppTypography.headline3.copyWith(color: AppColors.white),
+        style: AppTypography.headline3.copyWith(color: additionalColors.white),
         textAlign: TextAlign.left,
       ),
     );
