@@ -107,8 +107,8 @@ class _AgeStep extends StatelessWidget {
       text: 'This is used to make better suggestions on workouts and plans.',
       child: Column(
         children: [
-          const SizedBox(height: AppSpacing.xxxlg),
-          const SizedBox(height: AppSpacing.xxxlg),
+          const AppGap.xxxlg(),
+          const AppGap.xxxlg(),
           AppNumberPicker(
             currentValue: age,
             onChanged: (value) => context.read<ProfileSetupWizardBloc>().add(
@@ -138,8 +138,8 @@ class _WeightStep extends StatelessWidget {
       canGoNext: weight > 0,
       child: Column(
         children: [
-          const SizedBox(height: AppSpacing.xxxlg),
-          const SizedBox(height: AppSpacing.xxxlg),
+          const AppGap.xxxlg(),
+          const AppGap.xxxlg(),
           Row(
             children: [
               const Spacer(),
@@ -187,8 +187,8 @@ class _HeightStep extends StatelessWidget {
       text: 'This is used to set up recommendations just for you.',
       child: Column(
         children: [
-          const SizedBox(height: AppSpacing.xxxlg),
-          const SizedBox(height: AppSpacing.xxxlg),
+          const AppGap.xxxlg(),
+          const AppGap.xxxlg(),
           AppNumberPicker(
             currentValue: height,
             onChanged: (value) => context.read<ProfileSetupWizardBloc>().add(

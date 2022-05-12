@@ -41,7 +41,7 @@ class FlowButtons extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const SizedBox(width: AppSpacing.xs),
+                  const AppGap.xs(),
                   AppTextButton(
                     onPressed: onBackButton,
                     child: Assets.icons.icBack.svg(
@@ -53,7 +53,7 @@ class FlowButtons extends StatelessWidget {
                           : additionalColors.black100,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.xs),
+                  const AppGap.xs(),
                   DecoratedBox(
                     decoration: BoxDecoration(
                       color: additionalColors.black100,

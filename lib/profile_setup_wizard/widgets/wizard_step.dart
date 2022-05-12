@@ -30,14 +30,14 @@ class WizardStep extends StatelessWidget {
       children: [
         Column(
           children: [
-            const SizedBox(height: AppSpacing.xlg),
+            const AppGap.xlg(),
             _StepIndicator(
               currentStep: currentStep,
               totalSteps: totalSteps,
             ),
-            const SizedBox(height: AppSpacing.lg),
+            const AppGap.lg(),
             _Header(headerText),
-            const SizedBox(height: AppSpacing.md),
+            const AppGap.md(),
             _Text(text),
             child,
           ],

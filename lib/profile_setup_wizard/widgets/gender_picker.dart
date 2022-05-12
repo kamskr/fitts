@@ -21,7 +21,7 @@ class GenderPicker extends StatelessWidget {
           isSelected: selected == Gender.male,
           onChange: onChange,
         ),
-        const SizedBox(width: AppSpacing.xlg),
+        const AppGap.xlg(),
         _FemaleOption(
           isSelected: selected == Gender.female,
           onChange: onChange,
