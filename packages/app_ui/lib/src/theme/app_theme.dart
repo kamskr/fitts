@@ -1,5 +1,4 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:app_ui/src/theme/app_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppTheme {
@@ -39,6 +38,11 @@ abstract class AppTheme {
     secondaryAccent500: AppColors.secondaryAccent[500]!,
     white: AppColors.white,
     black: AppColors.black,
+    black50: AppColors.black[50]!,
+    black100: AppColors.black[100]!,
+    black400: AppColors.black[400]!,
+    black500: AppColors.black[500]!,
+    black900: AppColors.black[900]!,
     primaryGradient1: AppColors.primaryGradient1,
     primaryGradient2: AppColors.primaryGradient2,
     primaryGradient3: AppColors.primaryGradient3,

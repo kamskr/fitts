@@ -75,10 +75,8 @@ class _GenderStep extends StatelessWidget {
       canGoNext: gender != null,
       child: Column(
         children: [
-          const SizedBox(height: AppSpacing.xxxlg),
-          const SizedBox(height: AppSpacing.xxxlg),
-          const AppGap.xxlg(),
-          const Text('test'),
+          const AppGap.xxxlg(),
+          const AppGap.xxxlg(),
           Center(
             child: GenderPicker(
               selected: context.watch<ProfileSetupWizardBloc>().state.gender,

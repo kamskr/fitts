@@ -14,8 +14,10 @@ class FlowButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const buttonPadding = AppSpacing.md;
+    final mainColors = Theme.of(context).colorScheme;
+    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
 
+    const buttonPadding = AppSpacing.md;
     const height = buttonHeight + 2 * buttonPadding;
 
     return Align(
@@ -30,7 +32,7 @@ class FlowButtons extends StatelessWidget {
             children: [
               DecoratedBox(
                 decoration: BoxDecoration(
-                  color: AppColors.black[100],
+                  color: additionalColors.black100,
                 ),
                 child: const SizedBox(
                   height: 1,
@@ -47,14 +49,14 @@ class FlowButtons extends StatelessWidget {
                       width: 22,
                       height: 22,
                       color: onBackButton != null
-                          ? AppColors.primary
-                          : AppColors.black[100],
+                          ? mainColors.primary
+                          : additionalColors.black100,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.xs),
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      color: AppColors.black[100],
+                      color: additionalColors.black100,
                     ),
                     child: const SizedBox(
                       height: 24,

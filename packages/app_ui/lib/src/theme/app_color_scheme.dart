@@ -16,6 +16,11 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.secondaryAccent500,
     required this.white,
     required this.black,
+    required this.black50,
+    required this.black100,
+    required this.black400,
+    required this.black500,
+    required this.black900,
     required this.primaryGradient1,
     required this.primaryGradient2,
     required this.primaryGradient3,
@@ -40,7 +45,13 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color secondaryAccent500;
 
   final Color white;
+
   final Color black;
+  final Color black50;
+  final Color black100;
+  final Color black400;
+  final Color black500;
+  final Color black900;
 
   final LinearGradient primaryGradient1;
   final LinearGradient primaryGradient2;
@@ -65,6 +76,11 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? secondaryAccent500,
     Color? white,
     Color? black,
+    Color? black50,
+    Color? black100,
+    Color? black400,
+    Color? black500,
+    Color? black900,
     LinearGradient? primaryGradient1,
     LinearGradient? primaryGradient2,
     LinearGradient? primaryGradient3,
@@ -86,6 +102,11 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       secondaryAccent500: secondaryAccent500 ?? this.secondaryAccent500,
       white: white ?? this.white,
       black: black ?? this.black,
+      black50: black50 ?? this.black50,
+      black100: black100 ?? this.black100,
+      black400: black400 ?? this.black400,
+      black500: black500 ?? this.black500,
+      black900: black900 ?? this.black900,
       primaryGradient1: primaryGradient1 ?? this.primaryGradient1,
       primaryGradient2: primaryGradient2 ?? this.primaryGradient2,
       primaryGradient3: primaryGradient3 ?? this.primaryGradient3,
@@ -122,6 +143,11 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
           Color.lerp(secondaryAccent500, other.secondaryAccent500, t)!,
       white: Color.lerp(white, other.white, t)!,
       black: Color.lerp(black, other.black, t)!,
+      black50: Color.lerp(black50, other.black50, t)!,
+      black100: Color.lerp(black100, other.black100, t)!,
+      black400: Color.lerp(black400, other.black400, t)!,
+      black500: Color.lerp(black500, other.black500, t)!,
+      black900: Color.lerp(black900, other.black900, t)!,
       primaryGradient1:
           LinearGradient.lerp(primaryGradient1, other.primaryGradient1, t)!,
       primaryGradient2:
