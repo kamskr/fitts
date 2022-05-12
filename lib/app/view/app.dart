@@ -1,4 +1,3 @@
-import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/l10n/l10n.dart';
@@ -14,7 +13,7 @@ class App extends StatelessWidget {
     // required this.darkThemeData,
   }) : super(key: key);
 
-  final AppThemeData lightThemeData;
+  final ThemeData lightThemeData;
   // final AppThemeData darkThemeData;
 
   @override
@@ -35,7 +34,7 @@ class AppView extends StatelessWidget {
     required this.lightThemeData,
   }) : super(key: key);
 
-  final AppThemeData lightThemeData;
+  final ThemeData lightThemeData;
   // final AppThemeData darkThemeData;
 
   @override
@@ -44,7 +43,7 @@ class AppView extends StatelessWidget {
 
     return MaterialApp(
       title: 'Fitts',
-      theme: lightThemeData.materialThemeData,
+      theme: lightThemeData,
       // darkTheme: darkThemeData.materialThemeData,
       // themeMode: themeMode,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -53,31 +52,6 @@ class AppView extends StatelessWidget {
         state: context.select((AppBloc bloc) => bloc.state),
         onGeneratePages: onGenerateAppViewPages,
       ),
-    );
-  }
-}
-
-/// Provides full theme to the app
-class AppOverlay extends StatelessWidget {
-  const AppOverlay({
-    Key? key,
-    required this.lightStyleData,
-    // required this.darkStyleData,
-    required this.themeMode,
-    required this.child,
-  }) : super(key: key);
-
-  final AppThemeData lightStyleData;
-  // final AppThemeData darkStyleData;
-  final ThemeMode themeMode;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppTheme(
-      // themeData: _useDarkStyle(context) ? darkStyleData : lightStyleData,
-      themeData: lightStyleData,
-      child: child,
     );
   }
 }

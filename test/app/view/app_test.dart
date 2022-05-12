@@ -30,7 +30,7 @@ void main() {
 
     testWidgets('renders AppView', (tester) async {
       await tester.pumpApp(
-        App(lightThemeData: AppThemeFactory.lightTheme),
+        App(lightThemeData: AppTheme.lightTheme),
         authenticationClient: authenticationClient,
       );
       await tester.pump();
@@ -53,7 +53,7 @@ void main() {
         const AppState.unauthenticated(),
       );
       await tester.pumpApp(
-        AppView(lightThemeData: AppThemeFactory.lightTheme),
+        AppView(lightThemeData: AppTheme.lightTheme),
         appBloc: appBloc,
       );
       await tester.pumpAndSettle();
@@ -69,7 +69,7 @@ void main() {
         ),
       );
       await tester.pumpApp(
-        AppView(lightThemeData: AppThemeFactory.lightTheme),
+        AppView(lightThemeData: AppTheme.lightTheme),
         appBloc: appBloc,
       );
       await tester.pumpAndSettle();

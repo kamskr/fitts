@@ -13,7 +13,7 @@ Widget bootstrap() {
   final _authenticationClient = AuthenticationClient();
   final _apiClient = ApiClient(firebaseFirestore: firestore);
 
-  final lightThemeData = AppThemeFactory.lightTheme;
+  final lightThemeData = AppTheme.lightTheme;
 
   return MultiRepositoryProvider(
     providers: [

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: AppThemeFactory.lightTheme.materialThemeData,
+      theme: AppTheme.lightTheme,
       home: Scaffold(
         appBar: AppBar(
           title: const Text(
