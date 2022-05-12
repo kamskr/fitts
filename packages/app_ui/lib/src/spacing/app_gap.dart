@@ -15,7 +15,7 @@ enum AppGapSize {
 }
 
 extension AppGapSizeExtension on AppGapSize {
-  double getSpacing(ThemeData theme) {
+  double getSpacing() {
     switch (this) {
       case AppGapSize.xxxs:
         return AppSpacing.xxxs;
@@ -94,8 +94,6 @@ class AppGap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Gap(size.getSpacing(theme));
+    return Gap(size.getSpacing());
   }
 }
