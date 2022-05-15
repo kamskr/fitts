@@ -32,9 +32,11 @@ class ProfileSetupWizardPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: _ProfileSetupWizardPageBody(),
+    return const ProfileSetupWizard(
+      child: Scaffold(
+        body: SafeArea(
+          child: _ProfileSetupWizardPageBody(),
+        ),
       ),
     );
   }

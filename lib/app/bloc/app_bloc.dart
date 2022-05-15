@@ -19,13 +19,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         _userProfileRepository = userProfileRepository,
         super(const AppState.loading(null)) {
     on<AppUserChanged>(_onUserChanged);
-    on<AppUserProfileChanged>(_onUserProfileUpdated);
+    on<AppUserProfileChanged>(_onUserProfileChanged);
     _userSubscription = _authenticationClient.user.listen(_userChanged);
 
     _userProfileSubscription = _authenticationClient.user
         .flatMap((user) => _userProfileRepository.userProfile(user.email!))
         .handleError(addError)
-        .listen(_userProfileUpdated);
+        .listen(_userProfileChanged);
   }
 
   final AuthenticationClient _authenticationClient;
@@ -36,8 +36,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   late StreamSubscription<UserProfile> _userProfileSubscription;
 
   void _userChanged(User user) => add(AppUserChanged(user));
-  void _userProfileUpdated(UserProfile userProfile) {
-    add(AppUserProfileChanged(userProfile));
+  void _userProfileChanged(UserProfile userProfile) {
+    return add(AppUserProfileChanged(userProfile));
   }
 
   Future<void> _onUserChanged(
@@ -51,7 +51,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     return emit(AppState.loading(event.user));
   }
 
-  void _onUserProfileUpdated(
+  void _onUserProfileChanged(
     AppUserProfileChanged event,
     Emitter<AppState> emit,
   ) {
@@ -60,8 +60,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     return emit(AppState.authenticated(
       event.userProfile,
-      // event.userProfile.isNewUser,
-      true,
+      event.userProfile.isNewUser,
     ));
   }
 
