@@ -1,10 +1,13 @@
-import 'package:authentication_client/authentication_client.dart';
+import 'package:api_models/api_models.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/profile_setup_wizard/profile_setup_wizard.dart';
 import 'package:fitts/welcome/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockUserProfile extends Mock implements UserProfile {}
 
 void main() {
   group('onGenerateAppViewPages', () {
@@ -26,8 +29,8 @@ void main() {
         'and isNewUser == true', () {
       expect(
         onGenerateAppViewPages(
-            const AppState.authenticated(
-              User.empty,
+            AppState.authenticated(
+              MockUserProfile(),
               true,
             ),
             []),
@@ -44,8 +47,8 @@ void main() {
     test('returns [HomePage] when authenticated and isNewUser == false', () {
       expect(
         onGenerateAppViewPages(
-            const AppState.authenticated(
-              User.empty,
+            AppState.authenticated(
+              MockUserProfile(),
               false,
             ),
             []),

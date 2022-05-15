@@ -7,6 +7,13 @@ abstract class ProfileSetupWizardEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class Submit extends ProfileSetupWizardEvent {
+  const Submit();
+
+  @override
+  List<Object> get props => [];
+}
+
 class StepChanged extends ProfileSetupWizardEvent {
   const StepChanged(this.step);
 
@@ -25,13 +32,13 @@ class GenderChanged extends ProfileSetupWizardEvent {
   List<Object> get props => [gender];
 }
 
-class AgeChanged extends ProfileSetupWizardEvent {
-  const AgeChanged(this.age);
+class DateOfBirthChanged extends ProfileSetupWizardEvent {
+  const DateOfBirthChanged(this.dateOfBirth);
 
-  final int age;
+  final DateTime dateOfBirth;
 
   @override
-  List<Object> get props => [age];
+  List<Object> get props => [dateOfBirth];
 }
 
 class WeightChanged extends ProfileSetupWizardEvent {

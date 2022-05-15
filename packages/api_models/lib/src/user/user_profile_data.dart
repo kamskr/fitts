@@ -1,27 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'user_profile.g.dart';
-
-/// {@template gender}
-/// Represents gender of the user
-/// {@endtemplate}
-enum Gender {
-  /// Male
-  male,
-
-  /// Female
-  female,
-}
-
-/// A class used for storing gender string representation.
-abstract class GenderStringValue {
-  /// String value representing [Gender.male]
-  static const male = 'male';
-
-  /// String value representing [Gender.female]
-  static const female = 'female';
-}
+part 'user_profile_data.g.dart';
 
 /// {@template user_profile}
 /// A model representing user profile stored in the firestore realtime database.
@@ -30,73 +10,81 @@ abstract class GenderStringValue {
 /// are contained in the firebase auth process.
 /// {@endtemplate}
 @JsonSerializable()
-class UserProfile extends Equatable {
+class UserProfileData extends Equatable {
   /// {@macro user_profile}
-  const UserProfile({
+  const UserProfileData({
     required this.email,
-    required this.photoUrl,
-    required this.displayName,
-    required this.goal,
-    required this.gender,
-    required this.dateOfBirth,
-    required this.height,
-    required this.weight,
-    required this.isNewUser,
+    this.photoUrl,
+    this.displayName,
+    this.goal,
+    this.gender,
+    this.dateOfBirth,
+    this.height,
+    this.weight,
+    this.isNewUser,
   });
 
+  /// Factory which converts a [Map] into a [UserProfileData].
+  factory UserProfileData.fromJson(Map<String, dynamic> json) =>
+      _$UserProfileDataFromJson(json);
+
+  /// Converts the [UserProfileData] to [Map].
+  Map<String, dynamic> toJson() => _$UserProfileDataToJson(this);
+
   /// The email of the user.
+  @JsonKey(name: 'email')
   final String email;
 
   /// The photo url of the user.
-  final String photoUrl;
+  @JsonKey(name: 'photoUrl')
+  final String? photoUrl;
 
   /// The display name of the user.
-  final String displayName;
+  @JsonKey(name: 'displayName')
+  final String? displayName;
 
   /// Current goal of this user (loose weight, gain weight, etc).
-  final String goal;
+  @JsonKey(name: 'goal')
+  final String? goal;
 
   /// Gender of the user.
-  final Gender gender;
+  @JsonKey(name: 'gender')
+  final String? gender;
 
   /// Birth date of the user.
-  final DateTime dateOfBirth;
+  @JsonKey(name: 'dateOfBirth')
+  final DateTime? dateOfBirth;
 
   /// Height of the user.
-  final int height;
+  @JsonKey(name: 'height')
+  final int? height;
 
   /// Weight if the user.
-  final double weight;
+  @JsonKey(name: 'weight')
+  final double? weight;
 
   /// If user is new - require profile setup.
-  final bool isNewUser;
+  @JsonKey(name: 'isNewUser')
+  final bool? isNewUser;
 
-  /// An empty [UserProfile] object.
-  static UserProfile empty = UserProfile(
-    email: '',
-    photoUrl: '',
-    displayName: '',
-    goal: '',
-    gender: Gender.male,
-    dateOfBirth: DateTime.now(),
-    height: 0,
-    weight: 0,
-    isNewUser: true,
+  /// An empty [UserProfileData] object.
+  static UserProfileData empty = const UserProfileData(
+    email: 'email',
   );
 
-  /// Creates a copy of [UserProfile].
-  UserProfile copyWith({
+  /// Creates a copy of [UserProfileData].
+  UserProfileData copyWith({
     String? email,
     String? photoUrl,
     String? displayName,
     String? goal,
-    Gender? gender,
+    String? gender,
     DateTime? dateOfBirth,
     int? height,
     double? weight,
     bool? isNewUser,
   }) {
-    return UserProfile(
+    return UserProfileData(
       email: email ?? this.email,
       photoUrl: photoUrl ?? this.photoUrl,
       displayName: displayName ?? this.displayName,
@@ -110,7 +98,7 @@ class UserProfile extends Equatable {
   }
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       email,
       photoUrl,
@@ -126,7 +114,7 @@ class UserProfile extends Equatable {
 
   @override
   String toString() {
-    return 'UserProfile('
+    return 'UserProfileData('
         'email: $email, '
         'photoUrl: $photoUrl, '
         'displayName: $displayName, '

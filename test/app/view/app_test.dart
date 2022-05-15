@@ -2,7 +2,6 @@ import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
-import 'package:fitts/home/home.dart';
 import 'package:fitts/welcome/welcome.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -40,8 +39,6 @@ void main() {
 
   group('AppView', () {
     late AppBloc appBloc;
-    const id = 'mock-id';
-    const email = 'mock-email';
 
     setUp(() {
       appBloc = MockAppBloc();
@@ -58,22 +55,6 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byType(WelcomePage), findsOneWidget);
-    });
-
-    testWidgets('navigates to HomePage when authenticated', (tester) async {
-      const user = User(email: email, id: id);
-      when(() => appBloc.state).thenReturn(
-        const AppState.authenticated(
-          user,
-          false,
-        ),
-      );
-      await tester.pumpApp(
-        AppView(lightThemeData: AppTheme.lightTheme),
-        appBloc: appBloc,
-      );
-      await tester.pumpAndSettle();
-      expect(find.byType(HomePage), findsOneWidget);
     });
   });
 }

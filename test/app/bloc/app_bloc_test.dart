@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
+import 'package:api_models/api_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
@@ -10,18 +11,18 @@ class MockAuthenticationClient extends Mock implements AuthenticationClient {}
 
 class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 
-class MockUser extends Mock implements User {}
+class MockUserProfile extends Mock implements UserProfile {}
 
 void main() {
   group('AppBloc', () {
     late AuthenticationClient authenticationClient;
     late UserProfileRepository userProfileRepository;
-    late User authenticatedUser;
+    late UserProfile authenticatedUser;
 
     setUp(() {
       authenticationClient = MockAuthenticationClient();
       userProfileRepository = MockUserProfileRepository();
-      authenticatedUser = MockUser();
+      authenticatedUser = MockUserProfile();
 
       when(() => authenticationClient.user).thenAnswer(
         (_) => Stream.empty(),
@@ -35,7 +36,7 @@ void main() {
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
         ).state,
-        AppState.loading(),
+        AppState.loading(null),
       );
     });
 
@@ -47,21 +48,8 @@ void main() {
       ),
       act: (bloc) => bloc.add(AppUserChanged(User.empty)),
       expect: () => const <AppState>[
-        AppState.loading(),
+        AppState.loading(null),
         AppState.unauthenticated(),
-      ],
-    );
-
-    blocTest<AppBloc, AppState>(
-      'emits AppState.authenticated() if user is not empty',
-      build: () => AppBloc(
-        authenticationClient: authenticationClient,
-        userProfileRepository: userProfileRepository,
-      ),
-      act: (bloc) => bloc.add(AppUserChanged(authenticatedUser)),
-      expect: () => <AppState>[
-        AppState.loading(),
-        AppState.authenticated(authenticatedUser, true),
       ],
     );
   });

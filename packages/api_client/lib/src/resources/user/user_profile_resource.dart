@@ -35,7 +35,30 @@ class UserProfileResource {
     if (snapshot.exists) {
       final data = snapshot.data() as Map<String, dynamic>?;
       try {
-        return UserProfile.fromJson(data!);
+        final userProfileData = UserProfileData.fromJson(data!);
+        final emptyUser = UserProfile.empty;
+
+        Gender? gender;
+
+        if (userProfileData.gender == GenderStringValue.male) {
+          gender = Gender.male;
+        }
+
+        if (userProfileData.gender == GenderStringValue.female) {
+          gender = Gender.female;
+        }
+
+        return emptyUser.copyWith(
+          email: userProfileData.email,
+          photoUrl: userProfileData.photoUrl,
+          displayName: userProfileData.displayName,
+          goal: userProfileData.goal,
+          gender: gender,
+          dateOfBirth: userProfileData.dateOfBirth,
+          height: userProfileData.height,
+          weight: userProfileData.weight,
+          isNewUser: userProfileData.isNewUser,
+        );
       } catch (error, stackTrace) {
         throw DeserializationException(error, stackTrace);
       }

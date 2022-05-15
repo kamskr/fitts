@@ -11,14 +11,19 @@ class AppState extends Equatable {
     required this.status,
     this.isNewUser = false,
     this.user,
+    this.userProfile,
   });
 
-  const AppState.loading() : this._(status: AppStatus.loading);
+  const AppState.loading(User? user)
+      : this._(
+          status: AppStatus.loading,
+          user: user,
+        );
 
-  const AppState.authenticated(User user, bool isNewUser)
+  const AppState.authenticated(UserProfile userProfile, bool isNewUser)
       : this._(
           status: AppStatus.authenticated,
-          user: user,
+          userProfile: userProfile,
           isNewUser: isNewUser,
         );
 
@@ -26,6 +31,7 @@ class AppState extends Equatable {
 
   final AppStatus status;
   final User? user;
+  final UserProfile? userProfile;
   final bool isNewUser;
 
   @override

@@ -52,11 +52,7 @@ class WizardStep extends StatelessWidget {
             if (isLastStep)
               AppTextButton(
                 onPressed: () {
-                  // context.read<ProfileWizardBloc>().add(
-                  //       ProfileWizardEvent.stepChanged(
-                  //         nextStep: stepInfo.stepNumber + 1,
-                  //       ),
-                  //     );
+                  bloc.add(const Submit());
                 },
                 child: const Text('FINISH'),
               ),

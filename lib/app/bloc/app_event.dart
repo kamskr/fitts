@@ -13,3 +13,12 @@ class AppUserChanged extends AppEvent {
   @override
   List<Object> get props => [user];
 }
+
+class AppUserProfileChanged extends AppEvent {
+  const AppUserProfileChanged(this.userProfile);
+
+  final UserProfile userProfile;
+
+  @override
+  List<Object> get props => [userProfile];
+}

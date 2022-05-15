@@ -116,7 +116,7 @@ class AppButton extends StatelessWidget {
   /// [BorderRadius] of the button.
   final BorderRadius _borderRadius;
 
-  /// Determins if button should be disabled displayed with progress indicator.
+  /// Determines if button should be disabled displayed with progress indicator.
   final bool _isLoading;
 
   /// [Widget] displayed on the button.
