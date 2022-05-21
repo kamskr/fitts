@@ -14,7 +14,7 @@ List<Page> onGenerateAppViewPages(AppState state, List<Page<dynamic>> pages) {
   }
 
   if (state.status == AppStatus.onboardingRequired) {
-    return [ProfileSetupWizardPage.page()];
+    return [ProfileSetupWelcomePage.page()];
   }
 
   return [HomePage.page()];

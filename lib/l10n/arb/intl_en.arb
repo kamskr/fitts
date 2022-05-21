@@ -20,5 +20,18 @@
   "signInPageEmailErrorMessage": "This email is invalid",
   "signInPagePasswordLabel": "Password",
   "signInPagePasswordErrorMessage": "This password is invalid",
-  "signInPageSignInButton": "SIGN IN"
+  "signInPageSignInButton": "SIGN IN",
+  "onboardingWelcomeTitle": "Want Our Advice?",
+  "onboardingWelcomeDescription": "We'll help you get started",
+  "onboardingWelcomeContinueButton": "LET'S DO IT",
+  "onboardingContinueButton": "CONTINUE",
+  "onboardingFinishButton": "FINISH",
+  "onboardingGenderSelectionTitle": "Male or female?",
+  "onboardingGenderSelectionDescription": "Certainly, men and women need different workout approaches 😉",
+  "onboardingBirthDateSelectionTitle": "What's your date of birth?",
+  "onboardingBirthDateSelectionDescription": "This is used to make better suggestions on workouts and plans.",
+  "onboardingWeightSelectionTitle": "How much do you weigh?",
+  "onboardingWeightSelectionDescription": "This is used to set up recommendations just for you.",
+  "onboardingHeightSelectionTitle": "How tall are you?",
+  "onboardingHeightSelectionDescription": "This is used to set up recommendations just for you.."
 }

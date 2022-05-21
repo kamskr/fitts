@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
+import 'package:fitts/l10n/l10n.dart';
 import 'package:fitts/profile_setup_wizard/profile_setup_wizard.dart';
 import 'package:fitts/profile_setup_wizard/widgets/wizard_step.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,8 @@ import 'package:user_profile_repository/user_profile_repository.dart';
 class ProfileSetupWizardPage extends StatelessWidget {
   const ProfileSetupWizardPage({Key? key}) : super(key: key);
 
-  static Page page() {
-    return const MaterialPage<void>(child: ProfileSetupWizardPage());
-  }
+  static Route route() =>
+      MaterialPageRoute<void>(builder: (_) => const ProfileSetupWizardPage());
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class _ProfileSetupWizardPageBody extends StatelessWidget {
             index: state.currentStep - 1,
             children: const [
               _GenderStep(),
-              _AgeStep(),
+              _DateOfBirth(),
               _WeightStep(),
               _HeightStep(),
             ],
@@ -108,11 +108,12 @@ class _GenderStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final gender = context.watch<ProfileSetupWizardBloc>().state.gender;
 
     return WizardStep(
-      headerText: 'Male or female?',
-      text: 'Certainly, men and women need different workout approaches 😉',
+      headerText: l10n.onboardingGenderSelectionTitle,
+      text: l10n.onboardingGenderSelectionDescription,
       canGoNext: gender != null,
       child: Column(
         children: [
@@ -134,13 +135,15 @@ class _GenderStep extends StatelessWidget {
   }
 }
 
-class _AgeStep extends StatelessWidget {
-  const _AgeStep({
+class _DateOfBirth extends StatelessWidget {
+  const _DateOfBirth({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     final dateOfBirth =
         context.watch<ProfileSetupWizardBloc>().state.dateOfBirth;
     final dateTimeNow = DateTime.now();
@@ -149,8 +152,8 @@ class _AgeStep extends StatelessWidget {
         DateTime(dateValue.year, dateValue.month + 1, 0).day;
 
     return WizardStep(
-      headerText: "What's your date of birth",
-      text: 'This is used to make better suggestions on workouts and plans.',
+      headerText: l10n.onboardingBirthDateSelectionTitle,
+      text: l10n.onboardingBirthDateSelectionDescription,
       child: Column(
         children: [
           const AppGap.xxxlg(),
@@ -218,11 +221,13 @@ class _WeightStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     final weight = context.watch<ProfileSetupWizardBloc>().state.weight;
 
     return WizardStep(
-      headerText: 'How much do you weigh?',
-      text: 'This is used to set up recommendations just for you.',
+      headerText: l10n.onboardingWeightSelectionTitle,
+      text: l10n.onboardingWeightSelectionDescription,
       canGoNext: weight > 0,
       child: Column(
         children: [
@@ -268,11 +273,13 @@ class _HeightStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     final height = context.watch<ProfileSetupWizardBloc>().state.height;
 
     return WizardStep(
-      headerText: 'How tall are you?',
-      text: 'This is used to set up recommendations just for you.',
+      headerText: l10n.onboardingHeightSelectionTitle,
+      text: l10n.onboardingHeightSelectionDescription,
       child: Column(
         children: [
           const AppGap.xxxlg(),
