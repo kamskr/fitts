@@ -67,23 +67,10 @@ class ProfileSetupWizardListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ProfileSetupWizardBloc, ProfileSetupWizardState>(
       listener: (context, state) {
-        if (state.status == ProfileSetupWizardStatus.submitting) {
-          AppSnackBar.show(
-            context,
-            const Text('Submitting'),
-          );
-        }
         if (state.status == ProfileSetupWizardStatus.submitFailed) {
           AppSnackBar.show(
             context,
             const Text('Failed to submit'),
-          );
-        }
-        if (state.status == ProfileSetupWizardStatus.submitSuccess) {
-          // Navigator.of(context).pushReplacement(HomePage.page);
-          AppSnackBar.show(
-            context,
-            const Text('Success to submit'),
           );
         }
       },
