@@ -33,23 +33,18 @@ class ProfileSetupWizardPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfileSetupWizardListener(
-      child: Stack(
-        children: [
-          Scaffold(
-            body: BlocBuilder<ProfileSetupWizardBloc, ProfileSetupWizardState>(
-              buildWhen: (previous, current) =>
-                  previous.status != current.status,
-              builder: (context, state) {
-                if (state.status == ProfileSetupWizardStatus.submitting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return const SafeArea(
-                  child: _ProfileSetupWizardPageBody(),
-                );
-              },
-            ),
-          ),
-        ],
+      child: Scaffold(
+        body: BlocBuilder<ProfileSetupWizardBloc, ProfileSetupWizardState>(
+          buildWhen: (previous, current) => previous.status != current.status,
+          builder: (context, state) {
+            if (state.status == ProfileSetupWizardStatus.submitting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return const SafeArea(
+              child: _ProfileSetupWizardPageBody(),
+            );
+          },
+        ),
       ),
     );
   }
