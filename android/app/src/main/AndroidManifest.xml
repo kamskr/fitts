@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fitts">
    <application
-        android:label="fitts"
+        android:label="Fitts Test"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
