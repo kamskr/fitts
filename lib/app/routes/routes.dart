@@ -13,7 +13,7 @@ List<Page> onGenerateAppViewPages(AppState state, List<Page<dynamic>> pages) {
     return [WelcomePage.page()];
   }
 
-  if (state.isNewUser) {
+  if (state.status == AppStatus.onboardingRequired) {
     return [ProfileSetupWizardPage.page()];
   }
 

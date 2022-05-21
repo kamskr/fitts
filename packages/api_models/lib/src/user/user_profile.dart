@@ -14,6 +14,20 @@ enum Gender {
   female,
 }
 
+/// {@template profile_status}
+/// Profile status represent current status of user's profile
+/// {@endtemplate}
+enum ProfileStatus {
+  /// Profile required onboarding
+  onboardingRequired,
+
+  /// Profile active
+  active,
+
+  /// Profile blocked
+  blocked
+}
+
 /// A class used for storing gender string representation.
 abstract class GenderStringValue {
   /// String value representing [Gender.male]
@@ -21,6 +35,18 @@ abstract class GenderStringValue {
 
   /// String value representing [Gender.female]
   static const female = 'female';
+}
+
+/// A class used for storing profileStatus string representation.
+abstract class ProfileStatusStringValue {
+  /// String value representing [ProfileStatus.onboardingRequired]
+  static const onboardingRequired = 'onboardingRequired';
+
+  /// String value representing [ProfileStatus.active]
+  static const active = 'active';
+
+  /// String value representing [ProfileStatus.blocked]
+  static const blocked = 'blocked';
 }
 
 /// {@template user_profile}
@@ -41,7 +67,7 @@ class UserProfile extends Equatable {
     required this.dateOfBirth,
     required this.height,
     required this.weight,
-    required this.isNewUser,
+    required this.profileStatus,
   });
 
   /// The email of the user.
@@ -69,7 +95,7 @@ class UserProfile extends Equatable {
   final double weight;
 
   /// If user is new - require profile setup.
-  final bool isNewUser;
+  final ProfileStatus profileStatus;
 
   /// An empty [UserProfile] object.
   static UserProfile empty = UserProfile(
@@ -81,7 +107,7 @@ class UserProfile extends Equatable {
     dateOfBirth: DateTime.now(),
     height: 0,
     weight: 0,
-    isNewUser: true,
+    profileStatus: ProfileStatus.active,
   );
 
   /// Creates a copy of [UserProfile].
@@ -94,7 +120,7 @@ class UserProfile extends Equatable {
     DateTime? dateOfBirth,
     int? height,
     double? weight,
-    bool? isNewUser,
+    ProfileStatus? profileStatus,
   }) {
     return UserProfile(
       email: email ?? this.email,
@@ -105,7 +131,7 @@ class UserProfile extends Equatable {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       height: height ?? this.height,
       weight: weight ?? this.weight,
-      isNewUser: isNewUser ?? this.isNewUser,
+      profileStatus: profileStatus ?? this.profileStatus,
     );
   }
 
@@ -120,7 +146,7 @@ class UserProfile extends Equatable {
       dateOfBirth,
       height,
       weight,
-      isNewUser,
+      profileStatus,
     ];
   }
 
@@ -135,7 +161,7 @@ class UserProfile extends Equatable {
         'dateOfBirth: $dateOfBirth, '
         'height: $height, '
         'weight: $weight, '
-        'isNewUser: $isNewUser '
+        'profileStatus: $profileStatus '
         ')';
   }
 }

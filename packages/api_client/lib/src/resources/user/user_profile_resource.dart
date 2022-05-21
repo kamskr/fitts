@@ -39,13 +39,27 @@ class UserProfileResource {
         final emptyUser = UserProfile.empty;
 
         Gender? gender;
+        ProfileStatus? profileStatus;
 
-        if (userProfileData.gender == GenderStringValue.male) {
-          gender = Gender.male;
+        switch (userProfileData.gender) {
+          case GenderStringValue.male:
+            gender = Gender.male;
+            break;
+          case GenderStringValue.female:
+            gender = Gender.female;
+            break;
         }
 
-        if (userProfileData.gender == GenderStringValue.female) {
-          gender = Gender.female;
+        switch (userProfileData.profileStatus) {
+          case ProfileStatusStringValue.active:
+            profileStatus = ProfileStatus.active;
+            break;
+          case ProfileStatusStringValue.onboardingRequired:
+            profileStatus = ProfileStatus.onboardingRequired;
+            break;
+          case ProfileStatusStringValue.blocked:
+            profileStatus = ProfileStatus.blocked;
+            break;
         }
 
         return emptyUser.copyWith(
@@ -57,7 +71,7 @@ class UserProfileResource {
           dateOfBirth: userProfileData.dateOfBirth,
           height: userProfileData.height,
           weight: userProfileData.weight,
-          isNewUser: userProfileData.isNewUser,
+          profileStatus: profileStatus,
         );
       } catch (error, stackTrace) {
         throw DeserializationException(error, stackTrace);

@@ -18,7 +18,7 @@ UserProfileData _$UserProfileDataFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['dateOfBirth'] as String),
       height: json['height'] as int?,
       weight: (json['weight'] as num?)?.toDouble(),
-      isNewUser: json['isNewUser'] as bool?,
+      profileStatus: json['profileStatus'] as String?,
     );
 
 Map<String, dynamic> _$UserProfileDataToJson(UserProfileData instance) =>
@@ -31,5 +31,5 @@ Map<String, dynamic> _$UserProfileDataToJson(UserProfileData instance) =>
       'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
       'height': instance.height,
       'weight': instance.weight,
-      'isNewUser': instance.isNewUser,
+      'profileStatus': instance.profileStatus,
     };

@@ -21,7 +21,7 @@ class UserProfileData extends Equatable {
     this.dateOfBirth,
     this.height,
     this.weight,
-    this.isNewUser,
+    this.profileStatus,
   });
 
   /// Factory which converts a [Map] into a [UserProfileData].
@@ -64,8 +64,8 @@ class UserProfileData extends Equatable {
   final double? weight;
 
   /// If user is new - require profile setup.
-  @JsonKey(name: 'isNewUser')
-  final bool? isNewUser;
+  @JsonKey(name: 'profileStatus')
+  final String? profileStatus;
 
   /// An empty [UserProfileData] object.
   static UserProfileData empty = const UserProfileData(
@@ -82,7 +82,7 @@ class UserProfileData extends Equatable {
     DateTime? dateOfBirth,
     int? height,
     double? weight,
-    bool? isNewUser,
+    String? profileStatus,
   }) {
     return UserProfileData(
       email: email ?? this.email,
@@ -93,7 +93,7 @@ class UserProfileData extends Equatable {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       height: height ?? this.height,
       weight: weight ?? this.weight,
-      isNewUser: isNewUser ?? this.isNewUser,
+      profileStatus: profileStatus ?? this.profileStatus,
     );
   }
 
@@ -108,7 +108,7 @@ class UserProfileData extends Equatable {
       dateOfBirth,
       height,
       weight,
-      isNewUser,
+      profileStatus,
     ];
   }
 
@@ -123,7 +123,7 @@ class UserProfileData extends Equatable {
         'dateOfBirth: $dateOfBirth, '
         'height: $height, '
         'weight: $weight, '
-        'isNewUser: $isNewUser '
+        'profileStatus: $profileStatus '
         ')';
   }
 }

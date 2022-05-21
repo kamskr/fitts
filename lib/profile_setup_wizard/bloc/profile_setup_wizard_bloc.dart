@@ -58,7 +58,7 @@ class ProfileSetupWizardBloc
           dateOfBirth: state.dateOfBirth!,
           height: state.height,
           weight: state.weight,
-          isNewUser: false,
+          profileStatus: ProfileStatusStringValue.active,
         ),
       );
       emit(state.copyWith(status: ProfileSetupWizardStatus.submitSuccess));

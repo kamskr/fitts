@@ -18,7 +18,7 @@ class UserProfileUpdatePayload extends Equatable {
     required this.dateOfBirth,
     required this.height,
     required this.weight,
-    required this.isNewUser,
+    required this.profileStatus,
   });
 
   /// Factory which converts a [Map] into a [UserProfileUpdatePayload].
@@ -61,8 +61,8 @@ class UserProfileUpdatePayload extends Equatable {
   final double weight;
 
   /// Weight if the user.
-  @JsonKey(name: 'isNewUser')
-  final bool isNewUser;
+  @JsonKey(name: 'profileStatus')
+  final String profileStatus;
 
   /// An empty [UserProfileUpdatePayload] object.
   static UserProfileUpdatePayload empty = UserProfileUpdatePayload(
@@ -74,7 +74,7 @@ class UserProfileUpdatePayload extends Equatable {
     dateOfBirth: DateTime.now(),
     height: 0,
     weight: 0,
-    isNewUser: false,
+    profileStatus: 'active',
   );
 
   /// Creates a copy of [UserProfileUpdatePayload].
@@ -87,7 +87,7 @@ class UserProfileUpdatePayload extends Equatable {
     DateTime? dateOfBirth,
     int? height,
     double? weight,
-    bool? isNewUser,
+    String? profileStatus,
   }) {
     return UserProfileUpdatePayload(
       email: email ?? this.email,
@@ -98,7 +98,7 @@ class UserProfileUpdatePayload extends Equatable {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       height: height ?? this.height,
       weight: weight ?? this.weight,
-      isNewUser: isNewUser ?? this.isNewUser,
+      profileStatus: profileStatus ?? this.profileStatus,
     );
   }
 
@@ -113,7 +113,7 @@ class UserProfileUpdatePayload extends Equatable {
       dateOfBirth,
       height,
       weight,
-      isNewUser,
+      profileStatus,
     ];
   }
 
@@ -128,7 +128,7 @@ class UserProfileUpdatePayload extends Equatable {
         'dateOfBirth: $dateOfBirth, '
         'height: $height, '
         'weight: $weight, '
-        'isNewUser: $isNewUser'
+        'profileStatus: $profileStatus'
         ')';
   }
 }

@@ -61,8 +61,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     return emit(state.copyWith(
       userProfile: event.userProfile,
-      isNewUser: event.userProfile.isNewUser,
-      status: AppStatus.authenticated,
+      status: event.userProfile.profileStatus == ProfileStatus.active
+          ? AppStatus.authenticated
+          : AppStatus.onboardingRequired,
     ));
   }
 
