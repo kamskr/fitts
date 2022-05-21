@@ -1,15 +1,15 @@
-part of 'profile_setup_wizard_bloc.dart';
+part of 'onboarding_bloc.dart';
 
-enum ProfileSetupWizardStatus {
+enum OnboardingStatus {
   initial,
   submitting,
   submitSuccess,
   submitFailed,
 }
 
-class ProfileSetupWizardState extends Equatable {
-  const ProfileSetupWizardState({
-    this.status = ProfileSetupWizardStatus.initial,
+class OnboardingState extends Equatable {
+  const OnboardingState({
+    this.status = OnboardingStatus.initial,
     this.currentStep = 1,
     this.weight = 68,
     this.height = 170,
@@ -18,7 +18,7 @@ class ProfileSetupWizardState extends Equatable {
   });
 
   /// Status of the views
-  final ProfileSetupWizardStatus status;
+  final OnboardingStatus status;
 
   /// Indicates on which step of the setup wizard user is
   /// currently in.
@@ -43,8 +43,8 @@ class ProfileSetupWizardState extends Equatable {
         height,
       ];
 
-  ProfileSetupWizardState copyWith({
-    ProfileSetupWizardStatus? status,
+  OnboardingState copyWith({
+    OnboardingStatus? status,
     Gender? gender,
     DateTime? dateOfBirth,
     double? weight,
@@ -52,7 +52,7 @@ class ProfileSetupWizardState extends Equatable {
     int? currentStep,
     UserProfile? userProfile,
   }) {
-    final newState = ProfileSetupWizardState(
+    final newState = OnboardingState(
       status: status ?? this.status,
       gender: gender ?? this.gender,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,

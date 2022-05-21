@@ -5,18 +5,17 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
-part 'profile_setup_wizard_event.dart';
-part 'profile_setup_wizard_state.dart';
+part 'onboarding_event.dart';
+part 'onboarding_state.dart';
 
-class ProfileSetupWizardBloc
-    extends Bloc<ProfileSetupWizardEvent, ProfileSetupWizardState> {
-  ProfileSetupWizardBloc({
+class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
+  OnboardingBloc({
     required UserProfileRepository userProfileRepository,
     required UserProfile userProfile,
   })  : _userProfileRepository = userProfileRepository,
         _userProfile = userProfile,
         super(
-          ProfileSetupWizardState(
+          OnboardingState(
             dateOfBirth: DateTime.now(),
           ),
         ) {
@@ -35,10 +34,10 @@ class ProfileSetupWizardBloc
 
   Future<void> _onSubmit(
     Submit event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) async {
     try {
-      emit(state.copyWith(status: ProfileSetupWizardStatus.submitting));
+      emit(state.copyWith(status: OnboardingStatus.submitting));
 
       late String gender;
 
@@ -61,44 +60,44 @@ class ProfileSetupWizardBloc
           profileStatus: ProfileStatusStringValue.active,
         ),
       );
-      emit(state.copyWith(status: ProfileSetupWizardStatus.submitSuccess));
+      emit(state.copyWith(status: OnboardingStatus.submitSuccess));
     } catch (error, stackTrace) {
-      emit(state.copyWith(status: ProfileSetupWizardStatus.submitFailed));
+      emit(state.copyWith(status: OnboardingStatus.submitFailed));
       addError(error, stackTrace);
     }
   }
 
   void _onStepChanged(
     StepChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(currentStep: event.step));
   }
 
   void _onGenderChanged(
     GenderChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(gender: event.gender));
   }
 
   void _onDateOfBirthChanged(
     DateOfBirthChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(dateOfBirth: event.dateOfBirth));
   }
 
   void _onWeightChanged(
     WeightChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(weight: event.weight));
   }
 
   void _onHeightChanged(
     HeightChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(height: event.height));
   }
