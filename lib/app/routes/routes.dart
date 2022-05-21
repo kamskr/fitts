@@ -24,11 +24,15 @@ class _LoadingPage extends StatelessWidget {
   const _LoadingPage({Key? key}) : super(key: key);
 
   static Page page() {
-    return const MaterialPage<void>(child: WelcomePage());
+    return const MaterialPage<void>(child: _LoadingPage());
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Text('loading');
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }

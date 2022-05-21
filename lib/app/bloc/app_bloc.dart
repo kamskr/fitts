@@ -17,7 +17,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     required UserProfileRepository userProfileRepository,
   })  : _authenticationClient = authenticationClient,
         _userProfileRepository = userProfileRepository,
-        super(const AppState.loading(null)) {
+        super(const AppState.initial()) {
     on<AppUserChanged>(_onUserChanged);
     on<AppUserProfileChanged>(_onUserProfileChanged);
     _userSubscription = _authenticationClient.user.listen(_userChanged);
@@ -44,11 +44,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppUserChanged event,
     Emitter<AppState> emit,
   ) async {
-    emit(const AppState.loading(null));
+    emit(state.copyWith(status: AppStatus.loading));
     if (event.user == User.empty) {
-      return emit(const AppState.unauthenticated());
+      return emit(state.copyWith(status: AppStatus.unauthenticated));
     }
-    return emit(AppState.loading(event.user));
+    return emit(state.copyWith(user: event.user));
   }
 
   void _onUserProfileChanged(
@@ -58,9 +58,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (event.userProfile == UserProfile.empty) {
       return;
     }
-    return emit(AppState.authenticated(
-      event.userProfile,
-      event.userProfile.isNewUser,
+
+    return emit(state.copyWith(
+      userProfile: event.userProfile,
+      isNewUser: event.userProfile.isNewUser,
+      status: AppStatus.authenticated,
     ));
   }
 

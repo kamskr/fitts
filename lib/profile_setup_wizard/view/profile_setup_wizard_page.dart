@@ -32,18 +32,31 @@ class ProfileSetupWizardPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ProfileSetupWizard(
-      child: Scaffold(
-        body: SafeArea(
-          child: _ProfileSetupWizardPageBody(),
-        ),
+    return ProfileSetupWizardListener(
+      child: Stack(
+        children: [
+          Scaffold(
+            body: BlocBuilder<ProfileSetupWizardBloc, ProfileSetupWizardState>(
+              buildWhen: (previous, current) =>
+                  previous.status != current.status,
+              builder: (context, state) {
+                if (state.status == ProfileSetupWizardStatus.submitting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return const SafeArea(
+                  child: _ProfileSetupWizardPageBody(),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class ProfileSetupWizard extends StatelessWidget {
-  const ProfileSetupWizard({
+class ProfileSetupWizardListener extends StatelessWidget {
+  const ProfileSetupWizardListener({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -67,6 +80,7 @@ class ProfileSetupWizard extends StatelessWidget {
           );
         }
         if (state.status == ProfileSetupWizardStatus.submitSuccess) {
+          // Navigator.of(context).pushReplacement(HomePage.page);
           AppSnackBar.show(
             context,
             const Text('Success to submit'),
