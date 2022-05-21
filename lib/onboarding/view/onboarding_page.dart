@@ -68,6 +68,9 @@ class OnboardingListener extends StatelessWidget {
             const Text('Failed to submit'),
           );
         }
+        if (state.status == OnboardingStatus.submitSuccess) {
+          Navigator.of(context).pop();
+        }
       },
       child: child,
     );
