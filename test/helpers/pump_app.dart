@@ -1,4 +1,5 @@
 import 'package:api_models/api_models.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
@@ -57,6 +58,7 @@ extension AppTester on WidgetTester {
             ),
           ],
           child: MaterialApp(
+            theme: AppTheme.lightTheme,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

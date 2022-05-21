@@ -30,7 +30,7 @@ void main() {
     });
 
     test(
-        'returns [ProfileSetupWizardPage] when authenticated '
+        'returns [OnboardingWelcomePage] when authenticated '
         'and isNewUser == true', () {
       expect(
         onGenerateAppViewPages(
@@ -43,7 +43,7 @@ void main() {
           isA<MaterialPage>().having(
             (p) => p.child,
             'child',
-            isA<OnboardingPage>(),
+            isA<OnboardingWelcomePage>(),
           )
         ],
       );

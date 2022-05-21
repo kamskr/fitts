@@ -1,5 +1,6 @@
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fitts/sign_in/sign_in.dart';
 import 'package:fitts/sign_up/sign_up.dart';
 import 'package:fitts/welcome/welcome.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../helpers/pump_app.dart';
+import '../../helpers/helpers.dart';
 
 class MockAuthenticationClient extends Mock implements AuthenticationClient {}
 
@@ -21,11 +22,13 @@ class MockWelcomeCubit extends MockCubit<WelcomeState> implements WelcomeCubit {
 class FakeWelcomeState extends Fake implements WelcomeState {}
 
 void main() {
+  setupFirebaseAuthMocks();
   group('WelcomePage', () {
     late WelcomeCubit welcomeCubit;
 
-    setUpAll(() {
+    setUpAll(() async {
       registerFallbackValue(FakeWelcomeState());
+      await Firebase.initializeApp();
     });
 
     setUp(() {
@@ -46,7 +49,10 @@ void main() {
       await tester.pumpApp(
         RepositoryProvider(
           create: (context) => AuthenticationClient(),
-          child: const WelcomePage(),
+          child: BlocProvider.value(
+            value: welcomeCubit,
+            child: const WelcomePage(),
+          ),
         ),
       );
 
@@ -83,26 +89,6 @@ void main() {
 
       /// Ensure SignInPage presence.
       expect(find.byType(SignInPage), findsOneWidget);
-    });
-
-    testWidgets(
-        'initiates signInWithGoogle action on signInWithGoogle button pressed.',
-        (tester) async {
-      await tester.pumpApp(
-        BlocProvider.value(
-          value: welcomeCubit,
-          child: const WelcomeView(),
-        ),
-      );
-
-      final signInWithGoogleButton =
-          find.byKey(const Key('welcomePage_signInWithGoogle'));
-
-      expect(signInWithGoogleButton, findsOneWidget);
-      await tester.tap(signInWithGoogleButton);
-      await tester.pumpAndSettle();
-
-      verify(welcomeCubit.signInWithGoogle).called(1);
     });
   });
 }

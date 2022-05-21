@@ -20,7 +20,6 @@ class AppState extends Equatable {
 
   AppState copyWith({
     AppStatus? status,
-    bool? isNewUser,
     User? user,
     UserProfile? userProfile,
   }) {
