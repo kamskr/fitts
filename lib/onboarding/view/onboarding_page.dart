@@ -1,47 +1,47 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
 import 'package:fitts/l10n/l10n.dart';
-import 'package:fitts/profile_setup_wizard/profile_setup_wizard.dart';
-import 'package:fitts/profile_setup_wizard/widgets/wizard_step.dart';
+import 'package:fitts/onboarding/onboarding.dart';
+import 'package:fitts/onboarding/widgets/wizard_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
-class ProfileSetupWizardPage extends StatelessWidget {
-  const ProfileSetupWizardPage({Key? key}) : super(key: key);
+class OnboardingPage extends StatelessWidget {
+  const OnboardingPage({Key? key}) : super(key: key);
 
   static Route route() =>
-      MaterialPageRoute<void>(builder: (_) => const ProfileSetupWizardPage());
+      MaterialPageRoute<void>(builder: (_) => const OnboardingPage());
 
   @override
   Widget build(BuildContext context) {
     final userProfile = context.watch<AppBloc>().state.userProfile;
 
     return BlocProvider(
-      create: (context) => ProfileSetupWizardBloc(
+      create: (context) => OnboardingBloc(
         userProfileRepository: context.read<UserProfileRepository>(),
         userProfile: userProfile,
       ),
-      child: const ProfileSetupWizardPageView(),
+      child: const OnboardingPageView(),
     );
   }
 }
 
-class ProfileSetupWizardPageView extends StatelessWidget {
-  const ProfileSetupWizardPageView({Key? key}) : super(key: key);
+class OnboardingPageView extends StatelessWidget {
+  const OnboardingPageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ProfileSetupWizardListener(
+    return OnboardingListener(
       child: Scaffold(
-        body: BlocBuilder<ProfileSetupWizardBloc, ProfileSetupWizardState>(
+        body: BlocBuilder<OnboardingBloc, OnboardingState>(
           buildWhen: (previous, current) => previous.status != current.status,
           builder: (context, state) {
-            if (state.status == ProfileSetupWizardStatus.submitting) {
+            if (state.status == OnboardingStatus.submitting) {
               return const Center(child: CircularProgressIndicator());
             }
             return const SafeArea(
-              child: _ProfileSetupWizardPageBody(),
+              child: _OnboardingPageBody(),
             );
           },
         ),
@@ -50,8 +50,8 @@ class ProfileSetupWizardPageView extends StatelessWidget {
   }
 }
 
-class ProfileSetupWizardListener extends StatelessWidget {
-  const ProfileSetupWizardListener({
+class OnboardingListener extends StatelessWidget {
+  const OnboardingListener({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -60,9 +60,9 @@ class ProfileSetupWizardListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProfileSetupWizardBloc, ProfileSetupWizardState>(
+    return BlocListener<OnboardingBloc, OnboardingState>(
       listener: (context, state) {
-        if (state.status == ProfileSetupWizardStatus.submitFailed) {
+        if (state.status == OnboardingStatus.submitFailed) {
           AppSnackBar.show(
             context,
             const Text('Failed to submit'),
@@ -74,12 +74,12 @@ class ProfileSetupWizardListener extends StatelessWidget {
   }
 }
 
-class _ProfileSetupWizardPageBody extends StatelessWidget {
-  const _ProfileSetupWizardPageBody({Key? key}) : super(key: key);
+class _OnboardingPageBody extends StatelessWidget {
+  const _OnboardingPageBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileSetupWizardBloc, ProfileSetupWizardState>(
+    return BlocBuilder<OnboardingBloc, OnboardingState>(
       buildWhen: (previous, current) =>
           previous.currentStep != current.currentStep,
       builder: (context, state) {
@@ -109,7 +109,7 @@ class _GenderStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final gender = context.watch<ProfileSetupWizardBloc>().state.gender;
+    final gender = context.watch<OnboardingBloc>().state.gender;
 
     return WizardStep(
       headerText: l10n.onboardingGenderSelectionTitle,
@@ -121,11 +121,9 @@ class _GenderStep extends StatelessWidget {
           const AppGap.xxxlg(),
           Center(
             child: GenderPicker(
-              selected: context.watch<ProfileSetupWizardBloc>().state.gender,
+              selected: context.watch<OnboardingBloc>().state.gender,
               onChange: (gender) {
-                context
-                    .read<ProfileSetupWizardBloc>()
-                    .add(GenderChanged(gender));
+                context.read<OnboardingBloc>().add(GenderChanged(gender));
               },
             ),
           ),
@@ -144,8 +142,7 @@ class _DateOfBirth extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final dateOfBirth =
-        context.watch<ProfileSetupWizardBloc>().state.dateOfBirth;
+    final dateOfBirth = context.watch<OnboardingBloc>().state.dateOfBirth;
     final dateTimeNow = DateTime.now();
     final dateValue = dateOfBirth ?? dateTimeNow;
     final maxNumberOfDaysInCurrentMonth =
@@ -163,46 +160,43 @@ class _DateOfBirth extends StatelessWidget {
             children: [
               AppNumberPicker(
                 currentValue: dateValue.year,
-                onChanged: (value) =>
-                    context.read<ProfileSetupWizardBloc>().add(
-                          DateOfBirthChanged(
-                            DateTime(
-                              value,
-                              dateValue.month,
-                              dateValue.day,
-                            ),
-                          ),
+                onChanged: (value) => context.read<OnboardingBloc>().add(
+                      DateOfBirthChanged(
+                        DateTime(
+                          value,
+                          dateValue.month,
+                          dateValue.day,
                         ),
+                      ),
+                    ),
                 minValue: 1900,
                 maxValue: dateTimeNow.year,
               ),
               AppNumberPicker(
                 currentValue: dateValue.month,
-                onChanged: (value) =>
-                    context.read<ProfileSetupWizardBloc>().add(
-                          DateOfBirthChanged(
-                            DateTime(
-                              dateValue.year,
-                              value,
-                              dateValue.day,
-                            ),
-                          ),
+                onChanged: (value) => context.read<OnboardingBloc>().add(
+                      DateOfBirthChanged(
+                        DateTime(
+                          dateValue.year,
+                          value,
+                          dateValue.day,
                         ),
+                      ),
+                    ),
                 minValue: 1,
                 maxValue: 12,
               ),
               AppNumberPicker(
                 currentValue: dateValue.day,
-                onChanged: (value) =>
-                    context.read<ProfileSetupWizardBloc>().add(
-                          DateOfBirthChanged(
-                            DateTime(
-                              dateValue.year,
-                              dateValue.month,
-                              value,
-                            ),
-                          ),
+                onChanged: (value) => context.read<OnboardingBloc>().add(
+                      DateOfBirthChanged(
+                        DateTime(
+                          dateValue.year,
+                          dateValue.month,
+                          value,
                         ),
+                      ),
+                    ),
                 minValue: 1,
                 maxValue: maxNumberOfDaysInCurrentMonth,
               ),
@@ -223,7 +217,7 @@ class _WeightStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final weight = context.watch<ProfileSetupWizardBloc>().state.weight;
+    final weight = context.watch<OnboardingBloc>().state.weight;
 
     return WizardStep(
       headerText: l10n.onboardingWeightSelectionTitle,
@@ -249,7 +243,7 @@ class _WeightStep extends StatelessWidget {
                   onChanged: (value) {
                     final newWeight = double.tryParse(value);
 
-                    context.read<ProfileSetupWizardBloc>().add(
+                    context.read<OnboardingBloc>().add(
                           WeightChanged(newWeight ?? 0),
                         );
                   },
@@ -275,7 +269,7 @@ class _HeightStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final height = context.watch<ProfileSetupWizardBloc>().state.height;
+    final height = context.watch<OnboardingBloc>().state.height;
 
     return WizardStep(
       headerText: l10n.onboardingHeightSelectionTitle,
@@ -286,7 +280,7 @@ class _HeightStep extends StatelessWidget {
           const AppGap.xxxlg(),
           AppNumberPicker(
             currentValue: height,
-            onChanged: (value) => context.read<ProfileSetupWizardBloc>().add(
+            onChanged: (value) => context.read<OnboardingBloc>().add(
                   HeightChanged(value),
                 ),
             textMapper: (value) => '$value cm',

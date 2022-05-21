@@ -1,20 +1,20 @@
-part of 'profile_setup_wizard_bloc.dart';
+part of 'onboarding_bloc.dart';
 
-abstract class ProfileSetupWizardEvent extends Equatable {
-  const ProfileSetupWizardEvent();
+abstract class OnboardingEvent extends Equatable {
+  const OnboardingEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class Submit extends ProfileSetupWizardEvent {
+class Submit extends OnboardingEvent {
   const Submit();
 
   @override
   List<Object> get props => [];
 }
 
-class StepChanged extends ProfileSetupWizardEvent {
+class StepChanged extends OnboardingEvent {
   const StepChanged(this.step);
 
   final int step;
@@ -23,7 +23,7 @@ class StepChanged extends ProfileSetupWizardEvent {
   List<Object> get props => [step];
 }
 
-class GenderChanged extends ProfileSetupWizardEvent {
+class GenderChanged extends OnboardingEvent {
   const GenderChanged(this.gender);
 
   final Gender gender;
@@ -32,7 +32,7 @@ class GenderChanged extends ProfileSetupWizardEvent {
   List<Object> get props => [gender];
 }
 
-class DateOfBirthChanged extends ProfileSetupWizardEvent {
+class DateOfBirthChanged extends OnboardingEvent {
   const DateOfBirthChanged(this.dateOfBirth);
 
   final DateTime dateOfBirth;
@@ -41,7 +41,7 @@ class DateOfBirthChanged extends ProfileSetupWizardEvent {
   List<Object> get props => [dateOfBirth];
 }
 
-class WeightChanged extends ProfileSetupWizardEvent {
+class WeightChanged extends OnboardingEvent {
   const WeightChanged(this.weight);
 
   final double weight;
@@ -50,7 +50,7 @@ class WeightChanged extends ProfileSetupWizardEvent {
   List<Object> get props => [weight];
 }
 
-class HeightChanged extends ProfileSetupWizardEvent {
+class HeightChanged extends OnboardingEvent {
   const HeightChanged(this.height);
 
   final int height;
@@ -59,4 +59,4 @@ class HeightChanged extends ProfileSetupWizardEvent {
   List<Object> get props => [height];
 }
 
-class ProfileSubmitted extends ProfileSetupWizardEvent {}
+class ProfileSubmitted extends OnboardingEvent {}

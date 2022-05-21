@@ -43,7 +43,7 @@ void main() {
           isA<MaterialPage>().having(
             (p) => p.child,
             'child',
-            isA<ProfileSetupWizardPage>(),
+            isA<OnboardingPage>(),
           )
         ],
       );

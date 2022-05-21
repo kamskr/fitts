@@ -2,23 +2,23 @@ import 'package:app_ui/app_ui.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
-import 'profile_setup_wizard_page.dart';
+import 'onboarding_page.dart';
 
-class ProfileSetupWelcomePage extends StatelessWidget {
-  const ProfileSetupWelcomePage({Key? key}) : super(key: key);
+class OnboardingWelcomePage extends StatelessWidget {
+  const OnboardingWelcomePage({Key? key}) : super(key: key);
 
   static Page page() {
-    return const MaterialPage<void>(child: ProfileSetupWelcomePage());
+    return const MaterialPage<void>(child: OnboardingWelcomePage());
   }
 
   @override
   Widget build(BuildContext context) {
-    return const ProfileSetupWelcomePageView();
+    return const OnboardingWelcomePageView();
   }
 }
 
-class ProfileSetupWelcomePageView extends StatelessWidget {
-  const ProfileSetupWelcomePageView({Key? key}) : super(key: key);
+class OnboardingWelcomePageView extends StatelessWidget {
+  const OnboardingWelcomePageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class _ContinueButton extends StatelessWidget {
         child: Text(l10n.onboardingWelcomeContinueButton),
         onPressed: () {
           Navigator.of(context).push<void>(
-            ProfileSetupWizardPage.route(),
+            OnboardingPage.route(),
           );
         },
       ),
