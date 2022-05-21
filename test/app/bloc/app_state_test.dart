@@ -10,17 +10,22 @@ void main() {
   group('AppState', () {
     group('unauthenticated', () {
       test('has correct status', () {
-        final state = AppState.unauthenticated();
-        expect(state.status, AppStatus.unauthenticated);
+        final state = AppState.initial(
+          userProfile: UserProfile.empty,
+        );
+        expect(state.status, AppStatus.loading);
         expect(state.user, null);
       });
     });
 
     group('authenticated', () {
       test('has correct status', () {
-        final state = AppState.authenticated(MockUserProfile(), false);
+        final state = AppState.initial(
+          userProfile: MockUserProfile(),
+          status: AppStatus.authenticated,
+        );
         expect(state.status, AppStatus.authenticated);
-        expect(state.user, MockUserProfile());
+        expect(state.userProfile, MockUserProfile());
       });
     });
   });

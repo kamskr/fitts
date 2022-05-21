@@ -15,7 +15,7 @@ class ProfileSetupWizardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProfile = context.watch<AppBloc>().state.userProfile!;
+    final userProfile = context.watch<AppBloc>().state.userProfile;
 
     return BlocProvider(
       create: (context) => ProfileSetupWizardBloc(

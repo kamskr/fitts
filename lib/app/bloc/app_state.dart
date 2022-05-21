@@ -9,14 +9,14 @@ enum AppStatus {
 
 class AppState extends Equatable {
   const AppState.initial({
+    required this.userProfile,
     this.status = AppStatus.loading,
-    this.user,
-    this.userProfile,
+    this.user = User.empty,
   });
 
   final AppStatus status;
-  final User? user;
-  final UserProfile? userProfile;
+  final User user;
+  final UserProfile userProfile;
 
   AppState copyWith({
     AppStatus? status,

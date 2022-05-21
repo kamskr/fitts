@@ -1,3 +1,4 @@
+import 'package:api_models/api_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -47,7 +48,10 @@ void main() {
     testWidgets('navigates to WelcomeScreen when unauthenticated',
         (tester) async {
       when(() => appBloc.state).thenReturn(
-        const AppState.unauthenticated(),
+        AppState.initial(
+          userProfile: UserProfile.empty,
+          status: AppStatus.unauthenticated,
+        ),
       );
       await tester.pumpApp(
         AppView(lightThemeData: AppTheme.lightTheme),

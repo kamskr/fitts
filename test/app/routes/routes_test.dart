@@ -13,7 +13,12 @@ void main() {
   group('onGenerateAppViewPages', () {
     test('returns [WelcomePage] when not authenticated', () {
       expect(
-        onGenerateAppViewPages(const AppState.unauthenticated(), []),
+        onGenerateAppViewPages(
+            AppState.initial(
+              userProfile: UserProfile.empty,
+              status: AppStatus.unauthenticated,
+            ),
+            []),
         [
           isA<MaterialPage>().having(
             (p) => p.child,
@@ -29,9 +34,9 @@ void main() {
         'and isNewUser == true', () {
       expect(
         onGenerateAppViewPages(
-            AppState.authenticated(
-              MockUserProfile(),
-              true,
+            AppState.initial(
+              userProfile: UserProfile.empty,
+              status: AppStatus.onboardingRequired,
             ),
             []),
         [
@@ -47,9 +52,9 @@ void main() {
     test('returns [HomePage] when authenticated and isNewUser == false', () {
       expect(
         onGenerateAppViewPages(
-            AppState.authenticated(
-              MockUserProfile(),
-              false,
+            AppState.initial(
+              userProfile: UserProfile.empty,
+              status: AppStatus.authenticated,
             ),
             []),
         [

@@ -11,23 +11,23 @@ class MockAuthenticationClient extends Mock implements AuthenticationClient {}
 
 class MockUserProfileRepository extends Mock implements UserProfileRepository {}
 
-class MockUserProfile extends Mock implements UserProfile {}
+class MockUserProfile extends Mock implements UserProfile {
+  @override
+  ProfileStatus get profileStatus => ProfileStatus.active;
+}
 
 void main() {
   group('AppBloc', () {
     late AuthenticationClient authenticationClient;
     late UserProfileRepository userProfileRepository;
-    late UserProfile authenticatedUser;
 
     setUp(() {
       authenticationClient = MockAuthenticationClient();
       userProfileRepository = MockUserProfileRepository();
-      authenticatedUser = MockUserProfile();
 
       when(() => authenticationClient.user).thenAnswer(
         (_) => Stream.empty(),
       );
-      when(() => authenticatedUser.isNewUser).thenReturn(false);
     });
 
     test('has initial state `loading`', () {
@@ -36,7 +36,7 @@ void main() {
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
         ).state,
-        AppState.loading(null),
+        AppState.initial(userProfile: UserProfile.empty),
       );
     });
 
@@ -47,9 +47,12 @@ void main() {
         userProfileRepository: userProfileRepository,
       ),
       act: (bloc) => bloc.add(AppUserChanged(User.empty)),
-      expect: () => const <AppState>[
-        AppState.loading(null),
-        AppState.unauthenticated(),
+      expect: () => <AppState>[
+        AppState.initial(userProfile: UserProfile.empty),
+        AppState.initial(
+          userProfile: UserProfile.empty,
+          status: AppStatus.unauthenticated,
+        ),
       ],
     );
   });

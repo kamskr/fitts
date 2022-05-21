@@ -32,7 +32,7 @@ void main() {
         dateOfBirth: DateTime(1990),
         gender: 'female',
         photoUrl: 'photoUrl',
-        isNewUser: false,
+        profileStatus: ProfileStatusStringValue.active,
       );
 
       test('Calls appointmentsResource.updateUserProfile with proper payload',

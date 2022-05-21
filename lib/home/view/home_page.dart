@@ -42,23 +42,17 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<AppBloc>().state;
 
-    if (state.user == null) {
-      return const Text('no user');
-    }
-
-    if (state.userProfile == null) {
-      return const Text('no user profile');
-    }
-
     return Column(
       children: [
         const SizedBox(height: 100),
-        Text(state.user!.isNewUser ? 'New user' : 'Existing user'),
-        Text(state.userProfile!.email),
-        Text(state.userProfile!.displayName),
-        Text(state.userProfile!.gender == Gender.male ? 'Male' : 'Female'),
-        Text(state.userProfile!.height.toString()),
-        Text(state.userProfile!.weight.toString()),
+        Text(state.userProfile.profileStatus == ProfileStatus.active
+            ? 'User active'
+            : 'User not active'),
+        Text(state.userProfile.email),
+        Text(state.userProfile.displayName),
+        Text(state.userProfile.gender == Gender.male ? 'Male' : 'Female'),
+        Text(state.userProfile.height.toString()),
+        Text(state.userProfile.weight.toString()),
         Center(
           child: AppButton.primary(
             child: const Text('Sign out'),

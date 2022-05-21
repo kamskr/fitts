@@ -17,7 +17,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     required UserProfileRepository userProfileRepository,
   })  : _authenticationClient = authenticationClient,
         _userProfileRepository = userProfileRepository,
-        super(const AppState.initial()) {
+        super(
+          AppState.initial(userProfile: UserProfile.empty),
+        ) {
     on<AppUserChanged>(_onUserChanged);
     on<AppUserProfileChanged>(_onUserProfileChanged);
     _userSubscription = _authenticationClient.user.listen(_userChanged);

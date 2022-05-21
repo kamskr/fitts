@@ -1,7 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-part 'user_profile.g.dart';
 
 /// {@template gender}
 /// Represents gender of the user
@@ -55,7 +52,7 @@ abstract class ProfileStatusStringValue {
 /// This model is an extension to the user information which
 /// are contained in the firebase auth process.
 /// {@endtemplate}
-@JsonSerializable()
+
 class UserProfile extends Equatable {
   /// {@macro user_profile}
   const UserProfile({
