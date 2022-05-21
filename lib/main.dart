@@ -2,12 +2,11 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitts/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'app/view/app.dart';
-import 'firebase_options.dart';
-import 'main/bootstrap.dart';
+import 'bootstrap.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +22,7 @@ Future<void> main() async {
 
   BlocOverrides.runZoned(
     () => runApp(
-      bootstrap(App()),
+      bootstrap(),
     ),
     blocObserver: AppBlocObserver(),
   );

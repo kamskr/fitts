@@ -1,3 +1,4 @@
+import 'package:api_models/api_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
@@ -20,7 +21,9 @@ void registerFallbackValues() {
 
 class MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {
   @override
-  AppState get state => const AppState.unauthenticated();
+  AppState get state => AppState.initial(
+        userProfile: UserProfile.empty,
+      );
 }
 
 class MockAuthenticationClient extends Mock implements AuthenticationClient {

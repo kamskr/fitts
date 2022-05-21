@@ -35,7 +35,8 @@ void main() {
       'gender': 'male',
       'dateOfBirth': '1974-03-20 00:00:00.000',
       'height': 180,
-      'weight': 85.5
+      'weight': 85.5,
+      'profileStatus': ProfileStatusStringValue.active,
     };
 
     final userProfileDataMalformed = {
@@ -46,7 +47,8 @@ void main() {
       'gender': 'not-male',
       'dateOfBirth': 'data',
       'height': '180',
-      'weight': '85.5'
+      'weight': '85.5',
+      'profileStatus': ProfileStatusStringValue.active,
     };
 
     final userProfile = UserProfile(
@@ -58,6 +60,7 @@ void main() {
       dateOfBirth: DateTime.parse('1974-03-20 00:00:00.000'),
       height: 180,
       weight: 85.5,
+      profileStatus: ProfileStatus.active,
     );
     final userProfilePayload = UserProfileUpdatePayload(
       email: 'test@email.com',
@@ -68,6 +71,7 @@ void main() {
       dateOfBirth: DateTime.parse('1974-03-20 00:00:00.000'),
       height: 180,
       weight: 85.5,
+      profileStatus: ProfileStatusStringValue.active,
     );
 
     setUp(() {

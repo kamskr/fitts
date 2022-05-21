@@ -73,12 +73,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           password: state.password.value,
         );
 
-        await _authenticationClient.signUp(
-          displayName: state.username.value,
-          email: state.email.value,
-          password: state.password.value,
-        );
-
         await _userProfileRepository.updateUserProfile(
           payload: UserProfileUpdatePayload.empty.copyWith(
             email: state.email.value,

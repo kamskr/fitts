@@ -1,3 +1,4 @@
+import 'package:api_models/api_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
@@ -39,12 +40,19 @@ class HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.select((AppBloc bloc) => bloc.state.user);
+    final state = context.watch<AppBloc>().state;
 
     return Column(
       children: [
         const SizedBox(height: 100),
-        Text(user?.name ?? 'No user'),
+        Text(state.userProfile.profileStatus == ProfileStatus.active
+            ? 'User active'
+            : 'User not active'),
+        Text(state.userProfile.email),
+        Text(state.userProfile.displayName),
+        Text(state.userProfile.gender == Gender.male ? 'Male' : 'Female'),
+        Text(state.userProfile.height.toString()),
+        Text(state.userProfile.weight.toString()),
         Center(
           child: AppButton.primary(
             child: const Text('Sign out'),

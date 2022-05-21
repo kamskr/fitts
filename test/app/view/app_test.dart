@@ -1,9 +1,9 @@
+import 'package:api_models/api_models.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
-import 'package:fitts/home/home.dart';
 import 'package:fitts/welcome/welcome.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -29,11 +29,9 @@ void main() {
     });
 
     testWidgets('renders AppView', (tester) async {
-      await tester.pumpWidget(
-        RepositoryProvider.value(
-          value: authenticationClient,
-          child: App(),
-        ),
+      await tester.pumpApp(
+        App(lightThemeData: AppTheme.lightTheme),
+        authenticationClient: authenticationClient,
       );
       await tester.pump();
       expect(find.byType(AppView), findsOneWidget);
@@ -42,8 +40,6 @@ void main() {
 
   group('AppView', () {
     late AppBloc appBloc;
-    const id = 'mock-id';
-    const email = 'mock-email';
 
     setUp(() {
       appBloc = MockAppBloc();
@@ -52,27 +48,17 @@ void main() {
     testWidgets('navigates to WelcomeScreen when unauthenticated',
         (tester) async {
       when(() => appBloc.state).thenReturn(
-        const AppState.unauthenticated(),
+        AppState.initial(
+          userProfile: UserProfile.empty,
+          status: AppStatus.unauthenticated,
+        ),
       );
       await tester.pumpApp(
-        const AppView(),
+        AppView(lightThemeData: AppTheme.lightTheme),
         appBloc: appBloc,
       );
       await tester.pumpAndSettle();
       expect(find.byType(WelcomePage), findsOneWidget);
-    });
-
-    testWidgets('navigates to HomePage when authenticated', (tester) async {
-      const user = User(email: email, id: id);
-      when(() => appBloc.state).thenReturn(
-        const AppState.authenticated(user),
-      );
-      await tester.pumpApp(
-        const AppView(),
-        appBloc: appBloc,
-      );
-      await tester.pumpAndSettle();
-      expect(find.byType(HomePage), findsOneWidget);
     });
   });
 }

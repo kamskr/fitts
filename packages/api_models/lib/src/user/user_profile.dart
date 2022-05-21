@@ -1,7 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-part 'user_profile.g.dart';
 
 /// {@template gender}
 /// Represents gender of the user
@@ -14,13 +11,48 @@ enum Gender {
   female,
 }
 
+/// {@template profile_status}
+/// Profile status represent current status of user's profile
+/// {@endtemplate}
+enum ProfileStatus {
+  /// Profile required onboarding
+  onboardingRequired,
+
+  /// Profile active
+  active,
+
+  /// Profile blocked
+  blocked
+}
+
+/// A class used for storing gender string representation.
+abstract class GenderStringValue {
+  /// String value representing [Gender.male]
+  static const male = 'male';
+
+  /// String value representing [Gender.female]
+  static const female = 'female';
+}
+
+/// A class used for storing profileStatus string representation.
+abstract class ProfileStatusStringValue {
+  /// String value representing [ProfileStatus.onboardingRequired]
+  static const onboardingRequired = 'onboardingRequired';
+
+  /// String value representing [ProfileStatus.active]
+  static const active = 'active';
+
+  /// String value representing [ProfileStatus.blocked]
+  static const blocked = 'blocked';
+}
+
 /// {@template user_profile}
 /// A model representing user profile stored in the firestore realtime database.
 ///
 /// This model is an extension to the user information which
 /// are contained in the firebase auth process.
 /// {@endtemplate}
-@JsonSerializable()
+
 class UserProfile extends Equatable {
   /// {@macro user_profile}
   const UserProfile({
@@ -32,46 +64,35 @@ class UserProfile extends Equatable {
     required this.dateOfBirth,
     required this.height,
     required this.weight,
+    required this.profileStatus,
   });
 
-  /// Factory which converts a [Map] into a [UserProfile].
-  factory UserProfile.fromJson(Map<String, dynamic> json) =>
-      _$UserProfileFromJson(json);
-
-  /// Converts the [UserProfile] to [Map].
-  Map<String, dynamic> toJson() => _$UserProfileToJson(this);
-
   /// The email of the user.
-  @JsonKey(name: 'email')
   final String email;
 
   /// The photo url of the user.
-  @JsonKey(name: 'photoUrl')
   final String photoUrl;
 
   /// The display name of the user.
-  @JsonKey(name: 'displayName')
   final String displayName;
 
   /// Current goal of this user (loose weight, gain weight, etc).
-  @JsonKey(name: 'goal')
   final String goal;
 
   /// Gender of the user.
-  @JsonKey(name: 'gender')
   final Gender gender;
 
   /// Birth date of the user.
-  @JsonKey(name: 'dateOfBirth')
   final DateTime dateOfBirth;
 
   /// Height of the user.
-  @JsonKey(name: 'height')
   final int height;
 
   /// Weight if the user.
-  @JsonKey(name: 'weight')
   final double weight;
+
+  /// If user is new - require profile setup.
+  final ProfileStatus profileStatus;
 
   /// An empty [UserProfile] object.
   static UserProfile empty = UserProfile(
@@ -83,6 +104,7 @@ class UserProfile extends Equatable {
     dateOfBirth: DateTime.now(),
     height: 0,
     weight: 0,
+    profileStatus: ProfileStatus.active,
   );
 
   /// Creates a copy of [UserProfile].
@@ -95,6 +117,7 @@ class UserProfile extends Equatable {
     DateTime? dateOfBirth,
     int? height,
     double? weight,
+    ProfileStatus? profileStatus,
   }) {
     return UserProfile(
       email: email ?? this.email,
@@ -105,6 +128,7 @@ class UserProfile extends Equatable {
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       height: height ?? this.height,
       weight: weight ?? this.weight,
+      profileStatus: profileStatus ?? this.profileStatus,
     );
   }
 
@@ -119,6 +143,7 @@ class UserProfile extends Equatable {
       dateOfBirth,
       height,
       weight,
+      profileStatus,
     ];
   }
 
@@ -132,7 +157,8 @@ class UserProfile extends Equatable {
         'gender: $gender, '
         'dateOfBirth: $dateOfBirth, '
         'height: $height, '
-        'weight: $weight'
+        'weight: $weight, '
+        'profileStatus: $profileStatus '
         ')';
   }
 }

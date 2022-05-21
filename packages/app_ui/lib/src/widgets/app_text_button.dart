@@ -8,10 +8,10 @@ class AppTextButton extends StatelessWidget {
   /// {@macro app_text_button}
   const AppTextButton({
     Key? key,
+    required this.child,
     this.onPressed,
     Color? textColor,
     TextStyle? textStyle,
-    required this.child,
   })  : _textColor = textColor ?? AppColors.primary,
         _textStyle = textStyle,
         super(key: key);

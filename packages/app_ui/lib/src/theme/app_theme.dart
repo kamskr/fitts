@@ -4,18 +4,52 @@ import 'package:flutter/material.dart';
 abstract class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Rubik',
-    colorScheme: _colorScheme,
+    colorScheme: _lightColorScheme,
     iconTheme: _iconTheme,
     appBarTheme: _appBarTheme,
     textTheme: _textTheme,
+    extensions: [_lightAppColorsExtension],
   );
 
-  static final _colorScheme = ColorScheme.fromSwatch().copyWith(
-    primary: AppColors.primary,
-    secondary: AppColors.accent,
-    background: AppColors.black[50],
-    surface: AppColors.white,
+  static final _lightColorScheme = ColorScheme(
     brightness: Brightness.light,
+    primary: AppColors.primary,
+    onPrimary: AppColors.white,
+    secondary: AppColors.accent,
+    onSecondary: AppColors.black,
+    surface: AppColors.white,
+    onSurface: AppColors.black,
+    error: AppColors.error,
+    onError: AppColors.white,
+    background: AppColors.black[50]!,
+    onBackground: AppColors.black,
+  );
+
+  static final _lightAppColorsExtension = AppColorScheme(
+    primary50: AppColors.primary[50]!,
+    primary400: AppColors.primary[400]!,
+    primary500: AppColors.primary[500]!,
+    primary900: AppColors.primary[900]!,
+    accent300: AppColors.accent[300]!,
+    accent500: AppColors.accent[500]!,
+    accent900: AppColors.accent[900]!,
+    secondaryAccent: AppColors.secondaryAccent,
+    secondaryAccent400: AppColors.secondaryAccent[400]!,
+    secondaryAccent500: AppColors.secondaryAccent[500]!,
+    white: AppColors.white,
+    black: AppColors.black,
+    black50: AppColors.black[50]!,
+    black100: AppColors.black[100]!,
+    black400: AppColors.black[400]!,
+    black500: AppColors.black[500]!,
+    black900: AppColors.black[900]!,
+    primaryGradient1: AppColors.primaryGradient1,
+    primaryGradient2: AppColors.primaryGradient2,
+    primaryGradient3: AppColors.primaryGradient3,
+    primaryGradient4: AppColors.primaryGradient4,
+    primaryGradient5: AppColors.primaryGradient5,
+    accentGradient: AppColors.accentGradient,
+    secondaryAccentGradient: AppColors.secondaryAccentGradient,
   );
 
   static const _iconTheme = IconThemeData(color: AppColors.primary);

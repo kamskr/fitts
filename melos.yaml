@@ -8,8 +8,11 @@ scripts:
     name: Run static analysis
     run: melos exec --depends-on=very_good_analysis --flutter "fvm flutter analyze"
   build:runner:
-    name: Build freezed code
+    name: Run build runner
     run: melos exec -c 1 --depends-on=build_runner --flutter "fvm flutter pub get && fvm flutter pub run build_runner build --delete-conflicting-outputs"
+  build:assets:
+    name: Generate all assets
+    run: melos exec -c 1 "fluttergen"
   build:translations:
     name: Builds translation dart files
     run: melos exec --depends-on=intl_utils --flutter "fvm flutter pub run intl_utils:generate"
