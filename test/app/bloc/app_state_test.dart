@@ -14,18 +14,18 @@ void main() {
           userProfile: UserProfile.empty,
         );
         expect(state.status, AppStatus.loading);
-        expect(state.user, null);
+        expect(state.userProfile, UserProfile.empty);
       });
     });
 
     group('authenticated', () {
       test('has correct status', () {
         final state = AppState.initial(
-          userProfile: MockUserProfile(),
+          userProfile: UserProfile.empty,
           status: AppStatus.authenticated,
         );
         expect(state.status, AppStatus.authenticated);
-        expect(state.userProfile, MockUserProfile());
+        expect(state.userProfile, UserProfile.empty);
       });
     });
   });

@@ -3,28 +3,23 @@ import 'package:fitts/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'widgets.dart';
-
 class WizardStep extends StatelessWidget {
   const WizardStep({
     Key? key,
     required this.child,
     required this.headerText,
     required this.text,
-    this.canGoNext = true,
   }) : super(key: key);
 
   final Widget child;
   final String headerText;
   final String text;
-  final bool canGoNext;
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<OnboardingBloc>();
     final currentStep = bloc.state.currentStep;
     const totalSteps = OnboardingState.totalSteps;
-    final isLastStep = currentStep == totalSteps;
 
     return Stack(
       children: [
@@ -40,31 +35,6 @@ class WizardStep extends StatelessWidget {
             const AppGap.md(),
             _Text(text),
             child,
-          ],
-        ),
-        FlowButtons(
-          onBackButton: currentStep != 1
-              ? () {
-                  bloc.add(StepChanged(currentStep - 1));
-                }
-              : null,
-          buttons: [
-            if (isLastStep)
-              AppTextButton(
-                onPressed: () {
-                  bloc.add(const Submit());
-                },
-                child: const Text('FINISH'),
-              ),
-            if (!isLastStep)
-              AppTextButton(
-                onPressed: canGoNext
-                    ? () {
-                        bloc.add(StepChanged(currentStep + 1));
-                      }
-                    : null,
-                child: const Text('CONTINUE'),
-              ),
           ],
         ),
       ],

@@ -8,6 +8,8 @@ import 'package:user_profile_repository/user_profile_repository.dart';
 part 'onboarding_event.dart';
 part 'onboarding_state.dart';
 
+// ignore: todo
+// TODO(kamskry): Add validation for fields.
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   OnboardingBloc({
     required UserProfileRepository userProfileRepository,
@@ -16,10 +18,10 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
         _userProfile = userProfile,
         super(
           OnboardingState(
-            dateOfBirth: DateTime.now(),
+            dateOfBirth: DateTime(2000),
           ),
         ) {
-    on<Submit>(_onSubmit);
+    on<ProfileSubmitted>(_onProfileSubmitted);
     on<StepChanged>(_onStepChanged);
     on<GenderChanged>(_onGenderChanged);
     on<DateOfBirthChanged>(_onDateOfBirthChanged);
@@ -30,15 +32,12 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final UserProfileRepository _userProfileRepository;
   final UserProfile _userProfile;
 
-  StreamSubscription<UserProfile>? _userProfileSubscription;
-
-  Future<void> _onSubmit(
-    Submit event,
+  Future<void> _onProfileSubmitted(
+    ProfileSubmitted event,
     Emitter<OnboardingState> emit,
   ) async {
+    emit(state.copyWith(status: OnboardingStatus.submitting));
     try {
-      emit(state.copyWith(status: OnboardingStatus.submitting));
-
       late String gender;
 
       if (state.gender == Gender.male) {
@@ -100,11 +99,5 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(height: event.height));
-  }
-
-  @override
-  Future<void> close() {
-    _userProfileSubscription?.cancel();
-    return super.close();
   }
 }

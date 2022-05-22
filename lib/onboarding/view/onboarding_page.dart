@@ -86,20 +86,67 @@ class _OnboardingPageBody extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.currentStep != current.currentStep,
       builder: (context, state) {
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          child: IndexedStack(
-            key: Key(state.currentStep.toString()),
-            index: state.currentStep - 1,
-            children: const [
-              _GenderStep(),
-              _DateOfBirth(),
-              _WeightStep(),
-              _HeightStep(),
-            ],
-          ),
+        return Stack(
+          children: [
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: IndexedStack(
+                key: Key(state.currentStep.toString()),
+                index: state.currentStep - 1,
+                children: const [
+                  _GenderStep(),
+                  _DateOfBirth(),
+                  _WeightStep(),
+                  _HeightStep(),
+                ],
+              ),
+            ),
+            const _FormFlowButtons(),
+          ],
         );
       },
+    );
+  }
+}
+
+class _FormFlowButtons extends StatelessWidget {
+  const _FormFlowButtons({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final bloc = context.watch<OnboardingBloc>();
+    final currentStep = bloc.state.currentStep;
+    const totalSteps = OnboardingState.totalSteps;
+    final isLastStep = currentStep == totalSteps;
+    const canGoNext = true;
+
+    return FlowButtons(
+      onBackButton: currentStep != 1
+          ? () {
+              bloc.add(StepChanged(currentStep - 1));
+            }
+          : null,
+      buttons: [
+        if (isLastStep)
+          AppTextButton(
+            key: const Key('onboarding_finish_button'),
+            onPressed: () {
+              bloc.add(const ProfileSubmitted());
+            },
+            child: Text(l10n.onboardingFinishButton),
+          ),
+        if (!isLastStep)
+          AppTextButton(
+            key: const Key('onboarding_continue_button'),
+            onPressed: canGoNext
+                ? () {
+                    bloc.add(StepChanged(currentStep + 1));
+                  }
+                : null,
+            child: Text(l10n.onboardingContinueButton),
+          ),
+      ],
     );
   }
 }
@@ -112,12 +159,10 @@ class _GenderStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final gender = context.watch<OnboardingBloc>().state.gender;
 
     return WizardStep(
       headerText: l10n.onboardingGenderSelectionTitle,
       text: l10n.onboardingGenderSelectionDescription,
-      canGoNext: gender != null,
       child: Column(
         children: [
           const AppGap.xxxlg(),
@@ -225,7 +270,6 @@ class _WeightStep extends StatelessWidget {
     return WizardStep(
       headerText: l10n.onboardingWeightSelectionTitle,
       text: l10n.onboardingWeightSelectionDescription,
-      canGoNext: weight > 0,
       child: Column(
         children: [
           const AppGap.xxxlg(),

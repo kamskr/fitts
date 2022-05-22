@@ -110,6 +110,7 @@ class _ContinueButton extends StatelessWidget {
     return SizedBox(
       width: 200,
       child: AppButton.gradient(
+        key: const Key('onboardingWelcomePage_continueButton'),
         child: Text(l10n.onboardingWelcomeContinueButton),
         onPressed: () {
           Navigator.of(context).push<void>(

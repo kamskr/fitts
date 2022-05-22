@@ -7,13 +7,6 @@ abstract class OnboardingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class Submit extends OnboardingEvent {
-  const Submit();
-
-  @override
-  List<Object> get props => [];
-}
-
 class StepChanged extends OnboardingEvent {
   const StepChanged(this.step);
 
@@ -59,4 +52,9 @@ class HeightChanged extends OnboardingEvent {
   List<Object> get props => [height];
 }
 
-class ProfileSubmitted extends OnboardingEvent {}
+class ProfileSubmitted extends OnboardingEvent {
+  const ProfileSubmitted();
+
+  @override
+  List<Object> get props => [];
+}
