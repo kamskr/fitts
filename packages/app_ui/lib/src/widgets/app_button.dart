@@ -158,6 +158,7 @@ class AppButton extends StatelessWidget {
           foregroundColor: MaterialStateProperty.all(_foregroundColor),
           side: MaterialStateProperty.all(_borderSide),
           padding: MaterialStateProperty.all(EdgeInsets.zero),
+          enableFeedback: true,
         ),
         child: SizedBox(
           height: _height,
