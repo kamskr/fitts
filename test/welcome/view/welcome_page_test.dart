@@ -23,6 +23,7 @@ class FakeWelcomeState extends Fake implements WelcomeState {}
 
 void main() {
   setupFirebaseAuthMocks();
+
   group('WelcomePage', () {
     late WelcomeCubit welcomeCubit;
 
