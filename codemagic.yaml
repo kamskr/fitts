@@ -1,0 +1,112 @@
+workflows:
+  development:
+    name: development
+    max_build_duration: 60
+    environment:
+      flutter: 2.10.5
+      xcode: latest
+      cocoapods: default
+      vars:
+        FLAVOR: development
+        BUNDLE_ID: com.hamilton.reboot.dev
+      groups:
+        - keystore_credentials
+        - google_play_credentials
+        - appstore_credentials
+        - certificate_credentials
+        - others
+        - stripe_development
+    cache:
+      cache_paths:
+        - $HOME/Library/Caches/CocoaPods
+        - $HOME/.pub-cache
+        - $HOME/.gradle/caches
+    triggering:
+      events:
+        - tag
+    scripts:
+      - &create_release_notes_txt
+        name: Create release_notes.txt file
+        script: cp RELEASE_NOTES.md release_notes.txt
+      - &get_latest_tag
+        name: Get latest tag
+        script: set TAG=$(git describe --tags)
+      - &set_up_key_properties
+        name: Set up Android key.properties
+        script: |
+          echo $FCI_KEYSTORE | base64 --decode > /tmp/keystore.keystore
+          cat >> "$FCI_BUILD_DIR/android/key.properties" <<EOF
+          storePassword=$FCI_KEYSTORE_PASSWORD
+          keyPassword=$FCI_KEY_PASSWORD
+          keyAlias=$FCI_KEY_ALIAS
+          storeFile=/tmp/keystore.keystore
+          EOF
+      - &set_up_local_properties
+        name: Set up Android local properties
+        script: echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+      - &setup_keychain
+        name: Setup keychain
+        script: keychain initialize
+      - &fetch_signing_files
+        name: Fetch signing files
+        script: |
+          app-store-connect fetch-signing-files "${BUNDLE_ID}" \
+              --type IOS_APP_STORE \
+              --create
+      - &get_packages
+        name: Get packages
+        script: flutter packages pub get
+      - &build_apk
+        name: Build Android APK
+        script: flutter build apk --release --flavor ${FLAVOR} -t lib/main/main_${FLAVOR}.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300)) --dart-define=STRIPE_KEY=${STRIPE_KEY}
+      - &build_aab
+        name: Build Android AAB
+        script: flutter build appbundle --release --flavor ${FLAVOR} -t lib/main/main_${FLAVOR}.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300)) --dart-define=STRIPE_KEY=${STRIPE_KEY}
+      - &setup_signing_certificates
+        name: Set up signing certificate
+        script: keychain add-certificates
+      - &use_profiles
+        name: Use Xcode profiles
+        script: xcode-project use-profiles
+      - &pod_install
+        name: Run pod install
+        script: find . -name "Podfile" -execdir pod install \;
+      - &build_ios
+        name: Build and sign iOS
+        script: flutter build ipa --release --flavor ${FLAVOR} -t lib/main/main_${FLAVOR}.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300)) --export-options-plist=/Users/builder/export_options.plist --dart-define=STRIPE_KEY=${STRIPE_KEY}
+      - &upload_dsym
+        name: 'Upload dsym artifacts to Firebase Crashlytics'
+        script: |
+          echo "Find build artifacts"
+          dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive $CM_BUILD_DIR/build/ios/xcarchive/Runner.xcarchive -name "*.dSYM.zip" | head -1)
+          if [[ -z ${dsymPath} ]]
+          then
+            echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
+          else
+            echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
+            ls -d -- ios/Pods/*
+            $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
+          fi
+
+    artifacts:
+      - build/app/outputs/apk/${FLAVOR}/release/*.apk
+      - build/app/outputs/bundle/${FLAVOR}Release/*.aab
+      - build/app/outputs/mapping/**/mapping.txt
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      slack: 
+        channel: '#_hamilton_builds'
+        notify_on_build_start: true
+        notify:
+          success: true
+          failure: true 
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: $GOOGLE_PLAY_TRACK
