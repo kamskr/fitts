@@ -39,7 +39,7 @@ class UserProfileRepository {
       /// Emit empty user profile when waiting for updates from the database.
       /// Ensures new user does not see any profile information of the previous
       /// one while waiting for the response.
-      _userProfileSubject.add(UserProfile.empty);
+      _userProfileSubject.add(UserProfile.empty.copyWith(email: 'waiting'));
 
       _userProfileSubscription?.cancel();
       _userProfileSubscription = _apiClient.userProfileResource

@@ -58,6 +58,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) {
     if (event.userProfile == UserProfile.empty) {
+      return emit(state.copyWith(status: AppStatus.unauthenticated));
+    }
+
+    if (event.userProfile == UserProfile.empty.copyWith(email: 'waiting')) {
       return;
     }
 

@@ -22,7 +22,7 @@ class AuthenticationClient {
   final GoogleSignIn _googleSignIn;
 
   /// Whether or not the current environment is web
-  /// Should only be overriden for testing purposes. Otherwise,
+  /// Should only be override for testing purposes. Otherwise,
   /// defaults to [kIsWeb]
   @visibleForTesting
   bool isWeb = kIsWeb;
