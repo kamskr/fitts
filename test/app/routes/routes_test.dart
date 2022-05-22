@@ -1,7 +1,7 @@
 import 'package:api_models/api_models.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
-import 'package:fitts/profile_setup_wizard/profile_setup_wizard.dart';
+import 'package:fitts/onboarding/onboarding.dart';
 import 'package:fitts/welcome/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,7 +30,7 @@ void main() {
     });
 
     test(
-        'returns [ProfileSetupWizardPage] when authenticated '
+        'returns [OnboardingWelcomePage] when authenticated '
         'and isNewUser == true', () {
       expect(
         onGenerateAppViewPages(
@@ -43,7 +43,7 @@ void main() {
           isA<MaterialPage>().having(
             (p) => p.child,
             'child',
-            isA<ProfileSetupWizardPage>(),
+            isA<OnboardingWelcomePage>(),
           )
         ],
       );

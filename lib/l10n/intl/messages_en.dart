@@ -25,6 +25,34 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyHaveAccountText":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "homePageTitle": MessageLookupByLibrary.simpleMessage("Home page"),
+        "onboardingBirthDateSelectionDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "This is used to make better suggestions on workouts and plans."),
+        "onboardingBirthDateSelectionTitle":
+            MessageLookupByLibrary.simpleMessage("What\'s your date of birth?"),
+        "onboardingContinueButton":
+            MessageLookupByLibrary.simpleMessage("CONTINUE"),
+        "onboardingFinishButton":
+            MessageLookupByLibrary.simpleMessage("FINISH"),
+        "onboardingGenderSelectionDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Certainly, men and women need different workout approaches 😉"),
+        "onboardingGenderSelectionTitle":
+            MessageLookupByLibrary.simpleMessage("Male or female?"),
+        "onboardingHeightSelectionDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "This is used to set up recommendations just for you.."),
+        "onboardingHeightSelectionTitle":
+            MessageLookupByLibrary.simpleMessage("How tall are you?"),
+        "onboardingWeightSelectionDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "This is used to set up recommendations just for you."),
+        "onboardingWeightSelectionTitle":
+            MessageLookupByLibrary.simpleMessage("How much do you weigh?"),
+        "onboardingWelcomeDescription":
+            MessageLookupByLibrary.simpleMessage("We\'ll help you get started"),
+        "onboardingWelcomeTitle":
+            MessageLookupByLibrary.simpleMessage("Want Our Advice?"),
         "signInButton": MessageLookupByLibrary.simpleMessage("SIGN IN"),
         "signInPageEmailErrorMessage":
             MessageLookupByLibrary.simpleMessage("This email is invalid"),

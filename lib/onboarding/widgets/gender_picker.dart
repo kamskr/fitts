@@ -18,11 +18,13 @@ class GenderPicker extends StatelessWidget {
       children: [
         const Spacer(),
         _MaleOption(
+          key: const Key('gender_picker_male'),
           isSelected: selected == Gender.male,
           onChange: onChange,
         ),
         const AppGap.xlg(),
         _FemaleOption(
+          key: const Key('gender_picker_female'),
           isSelected: selected == Gender.female,
           onChange: onChange,
         ),

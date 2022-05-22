@@ -5,22 +5,23 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
-part 'profile_setup_wizard_event.dart';
-part 'profile_setup_wizard_state.dart';
+part 'onboarding_event.dart';
+part 'onboarding_state.dart';
 
-class ProfileSetupWizardBloc
-    extends Bloc<ProfileSetupWizardEvent, ProfileSetupWizardState> {
-  ProfileSetupWizardBloc({
+// ignore: todo
+// TODO(kamskry): Add validation for fields.
+class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
+  OnboardingBloc({
     required UserProfileRepository userProfileRepository,
     required UserProfile userProfile,
   })  : _userProfileRepository = userProfileRepository,
         _userProfile = userProfile,
         super(
-          ProfileSetupWizardState(
-            dateOfBirth: DateTime.now(),
+          OnboardingState(
+            dateOfBirth: DateTime(2000),
           ),
         ) {
-    on<Submit>(_onSubmit);
+    on<ProfileSubmitted>(_onProfileSubmitted);
     on<StepChanged>(_onStepChanged);
     on<GenderChanged>(_onGenderChanged);
     on<DateOfBirthChanged>(_onDateOfBirthChanged);
@@ -31,15 +32,12 @@ class ProfileSetupWizardBloc
   final UserProfileRepository _userProfileRepository;
   final UserProfile _userProfile;
 
-  StreamSubscription<UserProfile>? _userProfileSubscription;
-
-  Future<void> _onSubmit(
-    Submit event,
-    Emitter<ProfileSetupWizardState> emit,
+  Future<void> _onProfileSubmitted(
+    ProfileSubmitted event,
+    Emitter<OnboardingState> emit,
   ) async {
+    emit(state.copyWith(status: OnboardingStatus.submitting));
     try {
-      emit(state.copyWith(status: ProfileSetupWizardStatus.submitting));
-
       late String gender;
 
       if (state.gender == Gender.male) {
@@ -61,51 +59,45 @@ class ProfileSetupWizardBloc
           profileStatus: ProfileStatusStringValue.active,
         ),
       );
-      emit(state.copyWith(status: ProfileSetupWizardStatus.submitSuccess));
+      emit(state.copyWith(status: OnboardingStatus.submitSuccess));
     } catch (error, stackTrace) {
-      emit(state.copyWith(status: ProfileSetupWizardStatus.submitFailed));
+      emit(state.copyWith(status: OnboardingStatus.submitFailed));
       addError(error, stackTrace);
     }
   }
 
   void _onStepChanged(
     StepChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(currentStep: event.step));
   }
 
   void _onGenderChanged(
     GenderChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(gender: event.gender));
   }
 
   void _onDateOfBirthChanged(
     DateOfBirthChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(dateOfBirth: event.dateOfBirth));
   }
 
   void _onWeightChanged(
     WeightChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(weight: event.weight));
   }
 
   void _onHeightChanged(
     HeightChanged event,
-    Emitter<ProfileSetupWizardState> emit,
+    Emitter<OnboardingState> emit,
   ) {
     emit(state.copyWith(height: event.height));
-  }
-
-  @override
-  Future<void> close() {
-    _userProfileSubscription?.cancel();
-    return super.close();
   }
 }
