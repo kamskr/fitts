@@ -69,7 +69,7 @@ class _WelcomeTitle extends StatelessWidget {
     final l10n = context.l10n;
 
     return Text(
-      l10n.onboardingWeightSelectionTitle,
+      l10n.onboardingWelcomeTitle,
       style: AppTypography.headline5,
       textAlign: TextAlign.left,
     );
@@ -90,7 +90,7 @@ class _WelcomeDescription extends StatelessWidget {
         horizontal: AppSpacing.xxlg,
       ),
       child: Text(
-        l10n.onboardingWeightSelectionTitle,
+        l10n.onboardingWelcomeDescription,
         style: AppTypography.body1,
         textAlign: TextAlign.center,
       ),
