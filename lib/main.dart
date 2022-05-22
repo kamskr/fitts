@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bootstrap.dart';
 
 Future<void> main() async {
-  const useEmulator = false;
+  const useEmulator = bool.fromEnvironment('USE_FIREBASE_EMULATOR');
 
   WidgetsFlutterBinding.ensureInitialized();
 

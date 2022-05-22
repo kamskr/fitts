@@ -7,7 +7,10 @@
         {
             "name": "App",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--dart-define=USE_FIREBASE_EMULATOR=true"
+            ]
         },
         {
             "name": "App UI Gallery",
