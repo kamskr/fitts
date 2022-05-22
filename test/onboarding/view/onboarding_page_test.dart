@@ -1,3 +1,4 @@
+import 'package:api_models/api_models.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,61 @@ void main() {
         verify(
           () => onboardingBloc.add(const StepChanged(2)),
         ).called(1);
+      });
+
+      group('gender picker', () {
+        testWidgets('renders on correct page', (tester) async {
+          final expectedStates = [
+            const OnboardingState(),
+          ];
+
+          whenListen(onboardingBloc, Stream.fromIterable(expectedStates));
+
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: onboardingBloc,
+              child: const OnboardingPageView(),
+            ),
+          );
+
+          await tester.pumpAndSettle();
+
+          final genderPicker = find.byType(GenderPicker);
+
+          expect(genderPicker, findsOneWidget);
+        });
+        testWidgets('selects correct weight', (tester) async {
+          final expectedStates = [
+            const OnboardingState(),
+          ];
+
+          whenListen(onboardingBloc, Stream.fromIterable(expectedStates));
+
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: onboardingBloc,
+              child: const OnboardingPageView(),
+            ),
+          );
+
+          await tester.pumpAndSettle();
+
+          final malePicker = find.byKey(const Key('gender_picker_male'));
+
+          await tester.tap(malePicker);
+
+          verify(
+            () => onboardingBloc.add(const GenderChanged(Gender.male)),
+          ).called(1);
+
+          final femalePicker = find.byKey(const Key('gender_picker_female'));
+
+          await tester.tap(femalePicker);
+
+          verify(
+            () => onboardingBloc.add(const GenderChanged(Gender.female)),
+          ).called(1);
+        });
       });
     });
   });

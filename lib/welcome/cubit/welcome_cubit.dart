@@ -14,7 +14,6 @@ class WelcomeCubit extends Cubit<WelcomeState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _authenticationClient.signInWithGoogle();
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on LogInWithGoogleFailure catch (e) {
       emit(state.copyWith(
         errorMessage: e.message,
