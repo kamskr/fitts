@@ -3,19 +3,11 @@ workflows:
     name: development
     max_build_duration: 60
     environment:
-      flutter: 2.10.5
+      flutter: 3.0.0
       xcode: latest
       cocoapods: default
       vars:
-        FLAVOR: development
-        BUNDLE_ID: com.hamilton.reboot.dev
-      groups:
-        - keystore_credentials
-        - google_play_credentials
-        - appstore_credentials
-        - certificate_credentials
-        - others
-        - stripe_development
+        USE_FIREBASE_EMULATOR: false
     cache:
       cache_paths:
         - $HOME/Library/Caches/CocoaPods
@@ -23,14 +15,13 @@ workflows:
         - $HOME/.gradle/caches
     triggering:
       events:
-        - tag
+        - push
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+          source: true
+      cancel_previous_builds: true
     scripts:
-      - &create_release_notes_txt
-        name: Create release_notes.txt file
-        script: cp RELEASE_NOTES.md release_notes.txt
-      - &get_latest_tag
-        name: Get latest tag
-        script: set TAG=$(git describe --tags)
       - &set_up_key_properties
         name: Set up Android key.properties
         script: |
@@ -97,16 +88,10 @@ workflows:
       - flutter_drive.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
     publishing:
-      slack: 
-        channel: '#_hamilton_builds'
-        notify_on_build_start: true
-        notify:
-          success: true
-          failure: true 
       app_store_connect:
-        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
-        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
-      google_play:
-        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-        track: $GOOGLE_PLAY_TRACK
+        api_key: MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg8frlAW+WtUBux3MOgWgIVrHwEfMTmZYN+9Q5LcZHPjigCgYIKoZIzj0DAQehRANCAAR6P0JyFFNAD6vmS0qQIDqwPtSxFSyI51EY8J3O4cMiR7ohrOZbSCM4WrLx0tq6g4WQmYjFyjpM49crMDiTeKmC
+        key_id: 68D7DT3B7P
+        issuer_id: e1d36718-7200-4ea4-98ac-62d8e1f8b0e4
+      # google_play:
+      #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+      #   track: $GOOGLE_PLAY_TRACK
