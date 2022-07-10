@@ -41,6 +41,15 @@ melos build:runner
 
 ```
 
+
+## Firebase Emulators
+When developing locally, you can use firebase emulators for development.
+To start emulators:
+
+```
+firebase emulators:start
+```
+
 ## Build assets
 
 ```

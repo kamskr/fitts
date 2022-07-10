@@ -1,6 +1,7 @@
 import 'package:api_models/api_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class GenderPicker extends StatelessWidget {
   const GenderPicker({
@@ -49,7 +50,10 @@ class _MaleOption extends StatelessWidget {
     final mainColors = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: () => onChange(Gender.male),
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onChange(Gender.male);
+      },
       child: _GenderCircle(
         isSelected: isSelected,
         child: Assets.icons.male.svg(
