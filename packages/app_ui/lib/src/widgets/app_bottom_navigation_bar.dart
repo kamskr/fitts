@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppMenuItem {
   const AppMenuItem({
@@ -7,7 +8,7 @@ class AppMenuItem {
     required this.label,
   });
 
-  final Icon icon;
+  final Widget icon;
   final String label;
 }
 
@@ -36,7 +37,10 @@ class AppBottomNavigationBar extends StatelessWidget {
           .toList(),
       selectedItemColor: AppColors.black,
       currentIndex: currentIndex,
-      onTap: onTap,
+      onTap: (index) {
+        HapticFeedback.lightImpact();
+        onTap.call(index);
+      },
     );
   }
 }

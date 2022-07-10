@@ -1,5 +1,4 @@
 import 'package:fitts/app/app.dart';
-import 'package:fitts/home/home.dart';
 import 'package:fitts/onboarding/onboarding.dart';
 import 'package:fitts/welcome/welcome.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ List<Page> onGenerateAppViewPages(AppState state, List<Page<dynamic>> pages) {
     return [OnboardingWelcomePage.page()];
   }
 
-  return [HomePage.page()];
+  return [Navigation.page()];
 }
 
 class _LoadingPage extends StatelessWidget {

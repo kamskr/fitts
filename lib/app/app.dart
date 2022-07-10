@@ -1,3 +1,3 @@
 export 'bloc/bloc.dart';
 export 'routes/routes.dart';
-export 'view/app.dart';
+export 'view/view.dart';
