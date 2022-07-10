@@ -8,7 +8,7 @@ class AppMenuItem {
     required this.label,
   });
 
-  final Icon icon;
+  final Widget icon;
   final String label;
 }
 

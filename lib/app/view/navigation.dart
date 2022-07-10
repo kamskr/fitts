@@ -56,21 +56,21 @@ class _NavigationState extends State<Navigation> {
       bottomNavigationBar: AppBottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        menuItems: const [
+        menuItems: [
           AppMenuItem(
-            icon: Icon(Icons.home),
+            icon: Assets.icons.icMenuHome.svg(),
             label: 'Dashboard',
           ),
           AppMenuItem(
-            icon: Icon(Icons.settings),
+            icon: Assets.icons.icMenuStats.svg(),
             label: 'Stats',
           ),
           AppMenuItem(
-            icon: Icon(Icons.settings),
+            icon: Assets.icons.icMenuHistory.svg(),
             label: 'Calendar',
           ),
           AppMenuItem(
-            icon: Icon(Icons.settings),
+            icon: Assets.icons.icMenuPlans.svg(),
             label: 'Plans',
           ),
         ],
