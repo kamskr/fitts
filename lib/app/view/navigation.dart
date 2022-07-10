@@ -2,6 +2,8 @@ import 'package:app_ui/app_ui.dart';
 import 'package:fitts/home/home.dart';
 import 'package:flutter/material.dart';
 
+import 'widget/fade_indexed_stack.dart';
+
 class Navigation extends StatefulWidget {
   const Navigation({
     Key? key,
@@ -17,36 +19,33 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
-  late PageController _pageController;
+  // late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    // _pageController = PageController();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    // _pageController.dispose();
     super.dispose();
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      _pageController.animateToPage(index,
-          duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+      // _pageController.animateToPage(index,
+      //     duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() => _selectedIndex = index);
-        },
+      body: FadeIndexedStack(
+        index: _selectedIndex,
         children: const <Widget>[
           HomePage(),
           Center(child: Text('Stats')),
