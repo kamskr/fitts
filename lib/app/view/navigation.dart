@@ -1,9 +1,14 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/home/home.dart';
+import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 import 'widget/fade_indexed_stack.dart';
 
+/// {@template navigation}
+/// Widget used for main navigation of the app.
+/// It switches between provided pages and implements AppBottomNavigationBar.
+/// {@endtemplate}
 class Navigation extends StatefulWidget {
   const Navigation({
     Key? key,
@@ -19,30 +24,17 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
-  // late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    // _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    // _pageController.dispose();
-    super.dispose();
-  }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      // _pageController.animateToPage(index,
-      //     duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: FadeIndexedStack(
         index: _selectedIndex,
@@ -59,19 +51,19 @@ class _NavigationState extends State<Navigation> {
         menuItems: [
           AppMenuItem(
             icon: Assets.icons.icMenuHome.svg(),
-            label: 'Dashboard',
+            label: l10n.menuItemDashboard,
           ),
           AppMenuItem(
             icon: Assets.icons.icMenuStats.svg(),
-            label: 'Stats',
+            label: l10n.menuItemStats,
           ),
           AppMenuItem(
             icon: Assets.icons.icMenuHistory.svg(),
-            label: 'Calendar',
+            label: l10n.menuItemCalendar,
           ),
           AppMenuItem(
             icon: Assets.icons.icMenuPlans.svg(),
-            label: 'Plans',
+            label: l10n.menuItemPlans,
           ),
         ],
       ),
