@@ -1,9 +1,8 @@
+import 'package:animations/animations.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
-
-import 'widget/fade_indexed_stack.dart';
 
 /// {@template navigation}
 /// Widget used for main navigation of the app.
@@ -23,11 +22,23 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  int _selectedIndex = 0;
+  int _currentIndex = 0;
+  final _pages = [
+    const HomePage(key: PageStorageKey('homePage')),
+    const Scaffold(
+      body: Center(child: Text('Stats')),
+    ),
+    const Scaffold(
+      body: Center(child: Text('Calendar')),
+    ),
+    const Scaffold(
+      body: Center(child: Text('Plans')),
+    ),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _currentIndex = index;
     });
   }
 
@@ -35,34 +46,48 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    Color iconColor(int index) =>
+        AppColors.black.withOpacity(_currentIndex == index ? 1 : 0.5);
+
     return Scaffold(
-      body: FadeIndexedStack(
-        index: _selectedIndex,
-        children: const <Widget>[
-          HomePage(),
-          Center(child: Text('Stats')),
-          Center(child: Text('Calendar')),
-          Center(child: Text('Plans')),
-        ],
+      body: PageTransitionSwitcher(
+        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+          return SharedAxisTransition(
+            animation: primaryAnimation,
+            secondaryAnimation: secondaryAnimation,
+            transitionType: SharedAxisTransitionType.horizontal,
+            // fillColor: Colors.black,
+            child: child,
+          );
+        },
+        child: _pages[_currentIndex],
       ),
       bottomNavigationBar: AppBottomNavigationBar(
-        currentIndex: _selectedIndex,
+        currentIndex: _currentIndex,
         onTap: _onItemTapped,
         menuItems: [
           AppMenuItem(
-            icon: Assets.icons.icMenuHome.svg(),
+            icon: Assets.icons.icMenuHome.svg(
+              color: iconColor(0),
+            ),
             label: l10n.menuItemDashboard,
           ),
           AppMenuItem(
-            icon: Assets.icons.icMenuStats.svg(),
+            icon: Assets.icons.icMenuStats.svg(
+              color: iconColor(1),
+            ),
             label: l10n.menuItemStats,
           ),
           AppMenuItem(
-            icon: Assets.icons.icMenuHistory.svg(),
+            icon: Assets.icons.icMenuHistory.svg(
+              color: iconColor(2),
+            ),
             label: l10n.menuItemCalendar,
           ),
           AppMenuItem(
-            icon: Assets.icons.icMenuPlans.svg(),
+            icon: Assets.icons.icMenuPlans.svg(
+              color: iconColor(3),
+            ),
             label: l10n.menuItemPlans,
           ),
         ],
