@@ -1,6 +1,5 @@
 import 'package:api_models/api_models.dart';
 import 'package:fitts/app/app.dart';
-import 'package:fitts/home/home.dart';
 import 'package:fitts/onboarding/onboarding.dart';
 import 'package:fitts/welcome/view/view.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +60,7 @@ void main() {
           isA<MaterialPage>().having(
             (p) => p.child,
             'child',
-            isA<HomePage>(),
+            isA<Navigation>(),
           )
         ],
       );

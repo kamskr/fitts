@@ -42,7 +42,6 @@ void main() {
         act: (cubit) => cubit.signInWithGoogle(),
         expect: () => const <WelcomeState>[
           WelcomeState(status: FormzStatus.submissionInProgress),
-          WelcomeState(status: FormzStatus.submissionSuccess)
         ],
       );
 

@@ -27,8 +27,6 @@ class AppBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      showUnselectedLabels: false,
       items: menuItems
           .map((menuItem) => BottomNavigationBarItem(
                 icon: menuItem.icon,
@@ -36,6 +34,7 @@ class AppBottomNavigationBar extends StatelessWidget {
               ))
           .toList(),
       selectedItemColor: AppColors.black,
+      unselectedItemColor: AppColors.black[100],
       currentIndex: currentIndex,
       onTap: (index) {
         HapticFeedback.lightImpact();
