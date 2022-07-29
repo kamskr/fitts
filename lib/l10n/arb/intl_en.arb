@@ -1,4 +1,8 @@
 {
+  "menuItemDashboard": "Dashboard",
+  "menuItemStats": "Stats",
+  "menuItemCalendar": "Calendar",
+  "menuItemPlans": "Plans",
   "welcomePageTitle": "Welcome to Fitts",
   "welcomePageSubtitle": "Sign Up to continue",
   "signUpButton": "SIGN UP",

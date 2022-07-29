@@ -6,9 +6,10 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.1.0"
-  flutter: 3.0.0
+  flutter: 3.0.5
 
 dependencies:
+  animations: ^2.0.3
   api_client:
     path: packages/api_client
   api_models:

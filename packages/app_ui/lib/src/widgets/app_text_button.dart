@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// {@template app_text_button}
 /// Button with text displayed in the application.
@@ -32,7 +33,10 @@ class AppTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: () {
+        HapticFeedback.lightImpact();
+        onPressed!.call();
+      },
       style: ButtonStyle(
         textStyle: MaterialStateProperty.all(_textStyle),
         foregroundColor: MaterialStateProperty.resolveWith((states) {
@@ -41,6 +45,7 @@ class AppTextButton extends StatelessWidget {
           }
           return _textColor;
         }),
+        splashFactory: NoSplash.splashFactory,
       ),
       child: child,
     );

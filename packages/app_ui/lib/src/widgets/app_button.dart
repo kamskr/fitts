@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// {@template app_button}
 /// Button with text displayed in the application.
@@ -146,7 +147,12 @@ class AppButton extends StatelessWidget {
       duration: kThemeAnimationDuration,
       opacity: onPressed != null ? 1 : 0.5,
       child: ElevatedButton(
-        onPressed: _isLoading ? null : onPressed,
+        onPressed: _isLoading
+            ? null
+            : () {
+                HapticFeedback.lightImpact();
+                onPressed!.call();
+              },
         style: ButtonStyle(
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
@@ -159,6 +165,7 @@ class AppButton extends StatelessWidget {
           side: MaterialStateProperty.all(_borderSide),
           padding: MaterialStateProperty.all(EdgeInsets.zero),
           enableFeedback: true,
+          splashFactory: NoSplash.splashFactory,
         ),
         child: SizedBox(
           height: _height,
