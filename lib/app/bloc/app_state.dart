@@ -24,8 +24,8 @@ class AppState extends Equatable {
     UserProfile? userProfile,
   }) {
     return AppState.initial(
-      status: status ?? this.status,
       user: user ?? this.user,
+      status: status ?? this.status,
       userProfile: userProfile ?? this.userProfile,
     );
   }
