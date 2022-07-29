@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppMenuItem {
   const AppMenuItem({
@@ -7,7 +8,7 @@ class AppMenuItem {
     required this.label,
   });
 
-  final Icon icon;
+  final Widget icon;
   final String label;
 }
 
@@ -26,8 +27,6 @@ class AppBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      showUnselectedLabels: false,
       items: menuItems
           .map((menuItem) => BottomNavigationBarItem(
                 icon: menuItem.icon,
@@ -35,8 +34,12 @@ class AppBottomNavigationBar extends StatelessWidget {
               ))
           .toList(),
       selectedItemColor: AppColors.black,
+      unselectedItemColor: AppColors.black[100],
       currentIndex: currentIndex,
-      onTap: onTap,
+      onTap: (index) {
+        HapticFeedback.lightImpact();
+        onTap.call(index);
+      },
     );
   }
 }

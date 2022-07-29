@@ -9,6 +9,7 @@ abstract class AppTheme {
     appBarTheme: _appBarTheme,
     textTheme: _textTheme,
     extensions: [_lightAppColorsExtension],
+    splashColor: Colors.transparent,
   );
 
   static final _lightColorScheme = ColorScheme(

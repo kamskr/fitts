@@ -3,7 +3,7 @@ workflows:
     name: development
     max_build_duration: 60
     environment:
-      flutter: 3.0.0
+      flutter: 3.0.4
       xcode: latest
       cocoapods: default
       vars:
@@ -17,7 +17,7 @@ workflows:
       events:
         - push
       branch_patterns:
-        - pattern: 'main'
+        - pattern: "main"
           include: true
           source: true
       cancel_previous_builds: true
@@ -66,7 +66,7 @@ workflows:
         name: Build and sign iOS
         script: flutter build ipa --release --flavor ${FLAVOR} -t lib/main/main_${FLAVOR}.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300)) --export-options-plist=/Users/builder/export_options.plist --dart-define=STRIPE_KEY=${STRIPE_KEY}
       - &upload_dsym
-        name: 'Upload dsym artifacts to Firebase Crashlytics'
+        name: "Upload dsym artifacts to Firebase Crashlytics"
         script: |
           echo "Find build artifacts"
           dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive $CM_BUILD_DIR/build/ios/xcarchive/Runner.xcarchive -name "*.dSYM.zip" | head -1)

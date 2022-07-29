@@ -44,6 +44,7 @@ class HomeBody extends StatelessWidget {
 
     return Column(
       children: [
+        const Text('Dashboard'),
         const SizedBox(height: 100),
         Text(state.userProfile.profileStatus == ProfileStatus.active
             ? 'User active'

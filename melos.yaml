@@ -22,3 +22,6 @@ scripts:
   flutter:test:
     name: Test
     run: melos exec --dir-exists="test" --flutter "fvm flutter test"
+  build:translations:
+    name: Builds translation dart files
+    run: melos exec --depends-on=intl_utils --flutter "fvm flutter pub run intl_utils:generate"

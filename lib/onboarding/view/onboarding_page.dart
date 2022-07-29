@@ -207,18 +207,18 @@ class _DateOfBirth extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppNumberPicker(
-                currentValue: dateValue.year,
+                currentValue: dateValue.day,
                 onChanged: (value) => context.read<OnboardingBloc>().add(
                       DateOfBirthChanged(
                         DateTime(
-                          value,
+                          dateValue.year,
                           dateValue.month,
-                          dateValue.day,
+                          value,
                         ),
                       ),
                     ),
-                minValue: 1900,
-                maxValue: dateTimeNow.year,
+                minValue: 1,
+                maxValue: maxNumberOfDaysInCurrentMonth,
               ),
               AppNumberPicker(
                 currentValue: dateValue.month,
@@ -235,18 +235,18 @@ class _DateOfBirth extends StatelessWidget {
                 maxValue: 12,
               ),
               AppNumberPicker(
-                currentValue: dateValue.day,
+                currentValue: dateValue.year,
                 onChanged: (value) => context.read<OnboardingBloc>().add(
                       DateOfBirthChanged(
                         DateTime(
-                          dateValue.year,
-                          dateValue.month,
                           value,
+                          dateValue.month,
+                          dateValue.day,
                         ),
                       ),
                     ),
-                minValue: 1,
-                maxValue: maxNumberOfDaysInCurrentMonth,
+                minValue: 1900,
+                maxValue: dateTimeNow.year,
               ),
             ],
           ),

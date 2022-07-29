@@ -1,3 +1,4 @@
+import 'package:api_models/api_models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -74,7 +75,7 @@ class UserProfileUpdatePayload extends Equatable {
     dateOfBirth: DateTime.now(),
     height: 0,
     weight: 0,
-    profileStatus: 'active',
+    profileStatus: ProfileStatusStringValue.onboardingRequired,
   );
 
   /// Creates a copy of [UserProfileUpdatePayload].
