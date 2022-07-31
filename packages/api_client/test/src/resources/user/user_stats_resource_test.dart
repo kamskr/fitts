@@ -1,3 +1,5 @@
+// ignore_for_file: subtype_of_sealed_class
+
 import 'package:api_client/api_client.dart';
 import 'package:api_models/api_models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -141,6 +143,28 @@ void main() {
       expect(
         userStatsResource.userStats(userId),
         emits(null),
+      );
+    });
+
+    test("doesn't throw error when user profile updated", () async {
+      expect(
+        () => userStatsResource.updateUserStats(
+          userId: userId,
+          payload: userStats,
+        ),
+        isNot(isException),
+      );
+    });
+    test('throws error when user profile update failed', () async {
+      when(() => firebaseFirestore.collection(collectionName))
+          .thenThrow(Exception());
+
+      expect(
+        () => userStatsResource.updateUserStats(
+          userId: userId,
+          payload: userStats,
+        ),
+        throwsA(isA<ApiException>()),
       );
     });
   });

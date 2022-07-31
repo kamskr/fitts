@@ -3,7 +3,7 @@ import 'package:api_models/api_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'exceptions.dart';
+import 'package:user_stats_repository/src/exceptions.dart';
 
 /// {@template user_stats_repository}
 /// Repository which exposes user stats resource.
@@ -48,18 +48,19 @@ class UserStatsRepository {
 
   /// Updates the user stats.
   /// User ID is equal to the user email.
-  // Future<void> updateUserProfile({
-  //   required String userId,
-  //   required UserStats payload,
-  // }) async {
-  //   try {
-  //     final userStatsResource = _apiClient.userStatsResource;
+  Future<void> updateUserStats({
+    required String userId,
+    required UserStats payload,
+  }) async {
+    try {
+      final userStatsResource = _apiClient.userStatsResource;
 
-  //     await userStatsResource.updateUserStats(
-  //       payload: userStats,
-  //     );
-  //   } catch (error, stackTrace) {
-  //     throw UpdateUserStatsFailure(error, stackTrace);
-  //   }
-  // }
+      await userStatsResource.updateUserStats(
+        userId: userId,
+        payload: payload,
+      );
+    } catch (error, stackTrace) {
+      throw UpdateUserStatsFailure(error, stackTrace);
+    }
+  }
 }

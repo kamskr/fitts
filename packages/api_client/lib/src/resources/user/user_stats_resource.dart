@@ -43,4 +43,23 @@ class UserStatsResource {
       throw ApiException(e, st);
     }
   }
+
+  /// Update user stats information.
+  /// This method can also be used to create user stats.
+  ///
+  /// When connection to the Firestore is not possible throws
+  /// exception of type [ApiException].
+  Future<void> updateUserStats({
+    required String userId,
+    required UserStats payload,
+  }) async {
+    try {
+      await _firebaseFirestore
+          .collection(_collectionName)
+          .doc(userId)
+          .set(payload.toJson());
+    } catch (error, stackTrace) {
+      throw ApiException(error, stackTrace);
+    }
+  }
 }
