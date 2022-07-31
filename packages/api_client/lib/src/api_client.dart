@@ -18,4 +18,9 @@ class ApiClient {
   late final UserProfileResource userProfileResource = UserProfileResource(
     _firebaseFirestore,
   );
+
+  /// {@macro user_stats_resource}
+  late final UserStatsResource userStatsResource = UserStatsResource(
+    _firebaseFirestore,
+  );
 }

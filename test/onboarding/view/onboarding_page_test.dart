@@ -32,12 +32,16 @@ void main() {
       });
 
       testWidgets('changes pages properly', (tester) async {
+        when(() => onboardingBloc.state)
+            .thenAnswer((_) => const OnboardingState(currentStep: 2));
+
         final expectedStates = [
-          const OnboardingState(),
+          const OnboardingState(currentStep: 2),
+          const OnboardingState(currentStep: 3),
+          const OnboardingState(currentStep: 2),
         ];
 
         whenListen(onboardingBloc, Stream.fromIterable(expectedStates));
-
         await tester.pumpApp(
           BlocProvider.value(
             value: onboardingBloc,
@@ -55,7 +59,50 @@ void main() {
         await tester.tap(continueButton);
 
         verify(
-          () => onboardingBloc.add(const StepChanged(2)),
+          () => onboardingBloc.add(const StepChanged(3)),
+        ).called(1);
+
+        await tester.pumpAndSettle();
+
+        final backButton = find.byKey(const Key('flowButtonsBackButton'));
+        expect(backButton, findsOneWidget);
+
+        await tester.tap(backButton);
+
+        verify(
+          () => onboardingBloc.add(const StepChanged(1)),
+        ).called(1);
+      });
+      testWidgets('displays submit button on last step', (tester) async {
+        when(() => onboardingBloc.state).thenAnswer(
+          (_) => const OnboardingState(
+            currentStep: OnboardingState.totalSteps,
+          ),
+        );
+
+        final expectedStates = [
+          const OnboardingState(currentStep: OnboardingState.totalSteps),
+        ];
+
+        whenListen(onboardingBloc, Stream.fromIterable(expectedStates));
+
+        await tester.pumpApp(
+          BlocProvider.value(
+            value: onboardingBloc,
+            child: const OnboardingPageView(),
+          ),
+        );
+
+        await tester.pumpAndSettle();
+
+        final submitButton = find.byKey(const Key('onboarding_finish_button'));
+
+        expect(submitButton, findsOneWidget);
+
+        await tester.tap(submitButton);
+
+        verify(
+          () => onboardingBloc.add(const ProfileSubmitted()),
         ).called(1);
       });
 

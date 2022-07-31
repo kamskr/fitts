@@ -43,6 +43,7 @@ class FlowButtons extends StatelessWidget {
                 children: [
                   const AppGap.xs(),
                   AppTextButton(
+                    key: const Key('flowButtonsBackButton'),
                     onPressed: onBackButton,
                     child: Assets.icons.icBack.svg(
                       alignment: Alignment.centerLeft,
