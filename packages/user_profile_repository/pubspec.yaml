@@ -1,6 +1,6 @@
 name: user_profile_repository
 description: Flutter package used for communicating with user_profile resources.
-version: 0.0.1
+version: 1.0.0
 publish_to: none
 
 environment:
