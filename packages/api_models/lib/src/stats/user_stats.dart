@@ -27,9 +27,11 @@ class UserStats extends Equatable {
   ///
   /// [Map] where key is [String] representing exercise id and
   /// value is [ExerciseStats].
+  @JsonKey(name: 'exercises')
   final Map<String, ExerciseStats> exercisesStats;
 
   /// Global user statistics.
+  @JsonKey(name: 'global')
   final GlobalStats globalStats;
 
   @override

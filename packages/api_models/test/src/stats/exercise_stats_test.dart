@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('ExerciseStats', () {
     const exerciseStats = ExerciseStats(
-      hightestWeight: 130,
+      highestWeight: 130,
       repetitionsDone: 10,
       timesPerformed: 50,
       overallBest: OverallBest(
@@ -15,7 +15,7 @@ void main() {
 
     test('can be instantiated.', () {
       const exerciseStats2 = ExerciseStats(
-        hightestWeight: 130,
+        highestWeight: 130,
         repetitionsDone: 10,
         timesPerformed: 50,
         overallBest: OverallBest(
@@ -28,7 +28,7 @@ void main() {
 
     test('supports value equality.', () {
       const exerciseStats2 = ExerciseStats(
-        hightestWeight: 130,
+        highestWeight: 130,
         repetitionsDone: 10,
         timesPerformed: 50,
         overallBest: OverallBest(
@@ -44,7 +44,7 @@ void main() {
       expect(
         exerciseStats.props,
         equals([
-          exerciseStats.hightestWeight,
+          exerciseStats.highestWeight,
           exerciseStats.repetitionsDone,
           exerciseStats.timesPerformed,
           exerciseStats.overallBest,
@@ -54,7 +54,7 @@ void main() {
 
     test('can be copyWith with changed properties', () {
       final copy = exerciseStats.copyWith(
-        hightestWeight: 120,
+        highestWeight: 120,
         repetitionsDone: 11,
         timesPerformed: 55,
         overallBest: const OverallBest(
@@ -64,7 +64,7 @@ void main() {
       );
 
       const exerciseStats2 = ExerciseStats(
-        hightestWeight: 120,
+        highestWeight: 120,
         repetitionsDone: 11,
         timesPerformed: 55,
         overallBest: OverallBest(

@@ -9,7 +9,7 @@ void main() {
     );
 
     const exerciseStats = ExerciseStats(
-      hightestWeight: 130,
+      highestWeight: 130,
       repetitionsDone: 10,
       timesPerformed: 50,
       overallBest: overallBest,

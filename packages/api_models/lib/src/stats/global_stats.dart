@@ -25,15 +25,19 @@ class GlobalStats extends Equatable {
 
   /// List of key lifts. Defined by user. Those are the lifts that are shown in
   /// global stats. The list is ordered by the order of the lifts in the app.
+  @JsonKey(name: 'keyLifts')
   final List<String> keyLifts;
 
   /// Total time spent on lifting.
+  @JsonKey(name: 'liftingTimeSpent')
   final int liftingTimeSpent;
 
   /// Total amount of kilograms lifted.
+  @JsonKey(name: 'totalKgLifted')
   final int totalKgLifted;
 
   /// Total number of workouts completed.
+  @JsonKey(name: 'workoutsCompleted')
   final int workoutsCompleted;
 
   @override

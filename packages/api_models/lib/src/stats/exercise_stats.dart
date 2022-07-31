@@ -11,7 +11,7 @@ part 'exercise_stats.g.dart';
 class ExerciseStats extends Equatable {
   /// {@macro exercise_stats}
   const ExerciseStats({
-    required this.hightestWeight,
+    required this.highestWeight,
     required this.repetitionsDone,
     required this.timesPerformed,
     required this.overallBest,
@@ -25,30 +25,34 @@ class ExerciseStats extends Equatable {
   Map<String, dynamic> toJson() => _$ExerciseStatsToJson(this);
 
   /// Highest weight used for the exercise.
-  final double hightestWeight;
+  @JsonKey(name: 'highestWeight')
+  final double highestWeight;
 
   /// Total of repetitions done for the exercise.
+  @JsonKey(name: 'repetitionsDone')
   final int repetitionsDone;
 
   /// Total of times the exercise was performed.
+  @JsonKey(name: 'timesPerformed')
   final int timesPerformed;
 
   /// Overall best result for the exercise (reps*weight).
+  @JsonKey(name: 'overallBest')
   final OverallBest overallBest;
 
   @override
   List<Object> get props =>
-      [hightestWeight, repetitionsDone, timesPerformed, overallBest];
+      [highestWeight, repetitionsDone, timesPerformed, overallBest];
 
   /// Creates a copy of [ExerciseStats].
   ExerciseStats copyWith({
-    double? hightestWeight,
+    double? highestWeight,
     int? repetitionsDone,
     int? timesPerformed,
     OverallBest? overallBest,
   }) {
     return ExerciseStats(
-      hightestWeight: hightestWeight ?? this.hightestWeight,
+      highestWeight: highestWeight ?? this.highestWeight,
       repetitionsDone: repetitionsDone ?? this.repetitionsDone,
       timesPerformed: timesPerformed ?? this.timesPerformed,
       overallBest: overallBest ?? this.overallBest,

@@ -8,7 +8,7 @@ part of 'exercise_stats.dart';
 
 ExerciseStats _$ExerciseStatsFromJson(Map<String, dynamic> json) =>
     ExerciseStats(
-      hightestWeight: (json['hightestWeight'] as num).toDouble(),
+      highestWeight: (json['highestWeight'] as num).toDouble(),
       repetitionsDone: json['repetitionsDone'] as int,
       timesPerformed: json['timesPerformed'] as int,
       overallBest:
@@ -17,7 +17,7 @@ ExerciseStats _$ExerciseStatsFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ExerciseStatsToJson(ExerciseStats instance) =>
     <String, dynamic>{
-      'hightestWeight': instance.hightestWeight,
+      'highestWeight': instance.highestWeight,
       'repetitionsDone': instance.repetitionsDone,
       'timesPerformed': instance.timesPerformed,
       'overallBest': instance.overallBest,

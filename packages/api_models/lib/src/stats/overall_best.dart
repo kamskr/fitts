@@ -21,9 +21,11 @@ class OverallBest extends Equatable {
   Map<String, dynamic> toJson() => _$OverallBestToJson(this);
 
   /// Weight used for the best result.
+  @JsonKey(name: 'weight')
   final double weight;
 
   /// Number of repetitions used for the best result.
+  @JsonKey(name: 'repetitions')
   final int repetitions;
   @override
   List<Object> get props => [weight, repetitions];
