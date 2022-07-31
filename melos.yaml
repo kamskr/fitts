@@ -10,6 +10,8 @@ scripts:
   build:runner:
     name: Run build runner
     run: melos exec -c 1 --depends-on=build_runner --flutter "fvm flutter pub get && fvm flutter pub run build_runner build --delete-conflicting-outputs"
+    select-package:
+      depends-on: json_serializable
   build:assets:
     name: Generate all assets
     run: melos exec -c 1 "fluttergen"

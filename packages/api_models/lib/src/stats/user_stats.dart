@@ -1,16 +1,27 @@
 import 'package:api_models/api_models.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user_stats.g.dart';
 
 /// {@template user_stats}
 /// Model representing User statistics data. Stats are split into global and
 /// per exercise statistics.
 /// {@endtemplate}
+@JsonSerializable()
 class UserStats extends Equatable {
   /// {@macro user_stats}
   const UserStats({
     required this.exercisesStats,
     required this.globalStats,
   });
+
+  /// Factory which converts a [Map] into a [UserStats].
+  factory UserStats.fromJson(Map<String, dynamic> json) =>
+      _$UserStatsFromJson(json);
+
+  /// Converts the [UserStats] to [Map].
+  Map<String, dynamic> toJson() => _$UserStatsToJson(this);
 
   /// Statistics related to the individual exercises.
   ///

@@ -1,5 +1,6 @@
 import 'package:api_client/api_client.dart';
 import 'package:api_models/api_models.dart';
+import 'package:authentication_client/authentication_client.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'exceptions.dart';
@@ -9,50 +10,56 @@ import 'exceptions.dart';
 /// {@endtemplate}
 class UserStatsRepository {
   /// {@macro user_stats_repository}
-  UserStatsRepository(ApiClient apiClient) : _apiClient = apiClient;
+  UserStatsRepository({
+    required ApiClient apiClient,
+    required AuthenticationClient authenticationClient,
+  })  : _apiClient = apiClient,
+        _authenticationClient = authenticationClient;
 
   final ApiClient _apiClient;
+  final AuthenticationClient _authenticationClient;
 
-  final _userStatsSubject = BehaviorSubject<UserStats>();
+  BehaviorSubject<UserStats?>? _userStatsSubject;
 
-  /// Stores the last user id for which the [userProfile] method was called.
-  /// It is used in order to reuse the stream and optimize number of calls
-  /// to [UserStatsResource].
-  String? _lastUserId;
+  /// Returns a stream of user stats updates for a current user.
+  ///
+  /// When this method is called multiple times for the same user id,
+  /// then the already existing stream is reused.
+  Stream<UserStats?> get userStats {
+    if (_userStatsSubject == null) {
+      _userStatsSubject = BehaviorSubject();
 
-  /// Emits [UserStats] data updates. If called multiple times, reuses
-  /// existing stream.
-  Stream<UserStats> userStats(String userId) {
-    if (userId != _lastUserId) {
-      _lastUserId = userId;
+      final userStatsResource = _apiClient.userStatsResource;
 
-      _userProfileSubscription = _apiClient.userStatsResource
-          .userStats(userId)
+      final userStatsStream = _authenticationClient.user
+          .distinct((user1, user2) => user1.id == user2.id)
+          .switchMap((user) => userStatsResource.userStats(user.id));
+
+      userStatsStream
           .handleError(_handleUserStatsStreamError)
-          .listen(_userStatsSubject.add);
+          .listen(_userStatsSubject!.add);
     }
-
-    return _userStatsSubject.stream;
+    return _userStatsSubject!.stream;
   }
 
   void _handleUserStatsStreamError(Object error, StackTrace stackTrace) {
-    _userStatsSubject.addError(UserStatsStreamFailure(error, stackTrace));
+    _userStatsSubject?.addError(UserStatsStreamFailure(error, stackTrace));
   }
 
   /// Updates the user stats.
   /// User ID is equal to the user email.
-  Future<void> updateUserProfile({
-    required String userId,
-    required UserStats payload,
-  }) async {
-    try {
-      final userStatsResource = _apiClient.userStatsResource;
+  // Future<void> updateUserProfile({
+  //   required String userId,
+  //   required UserStats payload,
+  // }) async {
+  //   try {
+  //     final userStatsResource = _apiClient.userStatsResource;
 
-      await userStatsResource.updateUserStats(
-        payload: userStats,
-      );
-    } catch (error, stackTrace) {
-      throw UpdateUserStatsFailure(error, stackTrace);
-    }
-  }
+  //     await userStatsResource.updateUserStats(
+  //       payload: userStats,
+  //     );
+  //   } catch (error, stackTrace) {
+  //     throw UpdateUserStatsFailure(error, stackTrace);
+  //   }
+  // }
 }

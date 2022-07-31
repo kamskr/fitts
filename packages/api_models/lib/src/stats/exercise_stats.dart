@@ -1,9 +1,13 @@
 import 'package:api_models/api_models.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'exercise_stats.g.dart';
 
 /// {@template exercise_stats}
 /// Model representing users statistics for specific exercise.
 /// {@endtemplate}
+@JsonSerializable()
 class ExerciseStats extends Equatable {
   /// {@macro exercise_stats}
   const ExerciseStats({
@@ -12,6 +16,13 @@ class ExerciseStats extends Equatable {
     required this.timesPerformed,
     required this.overallBest,
   });
+
+  /// Factory which converts a [Map] into a [ExerciseStats].
+  factory ExerciseStats.fromJson(Map<String, dynamic> json) =>
+      _$ExerciseStatsFromJson(json);
+
+  /// Converts the [ExerciseStats] to [Map].
+  Map<String, dynamic> toJson() => _$ExerciseStatsToJson(this);
 
   /// Highest weight used for the exercise.
   final double hightestWeight;

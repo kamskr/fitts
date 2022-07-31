@@ -17,7 +17,7 @@ class UserStatsResource {
   static const _collectionName = 'UserStats';
 
   /// Stream of [UserStats] data for user with id [userId].
-  Stream<UserStats?> userStars(String userId) {
+  Stream<UserStats?> userStats(String userId) {
     try {
       return _firebaseFirestore
           .collection(_collectionName)

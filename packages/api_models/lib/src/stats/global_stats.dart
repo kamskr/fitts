@@ -1,8 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'global_stats.g.dart';
 
 /// {@template global_stats}
 /// Global user statistics.
 /// {@endtemplate}
+@JsonSerializable()
 class GlobalStats extends Equatable {
   /// {@macro global_stats}
   const GlobalStats({
@@ -11,6 +15,13 @@ class GlobalStats extends Equatable {
     required this.totalKgLifted,
     required this.workoutsCompleted,
   });
+
+  /// Factory which converts a [Map] into a [GlobalStats].
+  factory GlobalStats.fromJson(Map<String, dynamic> json) =>
+      _$GlobalStatsFromJson(json);
+
+  /// Converts the [GlobalStats] to [Map].
+  Map<String, dynamic> toJson() => _$GlobalStatsToJson(this);
 
   /// List of key lifts. Defined by user. Those are the lifts that are shown in
   /// global stats. The list is ordered by the order of the lifts in the app.
