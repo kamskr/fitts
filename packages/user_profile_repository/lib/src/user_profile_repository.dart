@@ -16,15 +16,12 @@ class UserProfileRepository {
   /// {@macro user_profile_repository}
   UserProfileRepository(ApiClient apiClient) : _apiClient = apiClient;
 
-  // ignore: unused_field
   final ApiClient _apiClient;
 
-  // ignore: unused_field
   final _userProfileSubject = BehaviorSubject<UserProfile>();
 
   StreamSubscription<UserProfile>? _userProfileSubscription;
 
-  // ignore: comment_references
   /// Stores the last user id for which the [userProfile] method was called.
   /// It is used in order to reuse the stream and optimize number of calls
   /// to [UserProfileResource].
