@@ -152,9 +152,7 @@ class _FormFlowButtons extends StatelessWidget {
 }
 
 class _GenderStep extends StatelessWidget {
-  const _GenderStep({
-    Key? key,
-  }) : super(key: key);
+  const _GenderStep({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,9 +180,7 @@ class _GenderStep extends StatelessWidget {
 }
 
 class _DateOfBirth extends StatelessWidget {
-  const _DateOfBirth({
-    Key? key,
-  }) : super(key: key);
+  const _DateOfBirth({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -257,9 +253,7 @@ class _DateOfBirth extends StatelessWidget {
 }
 
 class _WeightStep extends StatelessWidget {
-  const _WeightStep({
-    Key? key,
-  }) : super(key: key);
+  const _WeightStep({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -308,9 +302,7 @@ class _WeightStep extends StatelessWidget {
 }
 
 class _HeightStep extends StatelessWidget {
-  const _HeightStep({
-    Key? key,
-  }) : super(key: key);
+  const _HeightStep({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

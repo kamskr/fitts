@@ -45,9 +45,7 @@ class OnboardingWelcomePageView extends StatelessWidget {
 }
 
 class _WelcomeImage extends StatelessWidget {
-  const _WelcomeImage({
-    Key? key,
-  }) : super(key: key);
+  const _WelcomeImage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +58,7 @@ class _WelcomeImage extends StatelessWidget {
 }
 
 class _WelcomeTitle extends StatelessWidget {
-  const _WelcomeTitle({
-    Key? key,
-  }) : super(key: key);
+  const _WelcomeTitle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +73,7 @@ class _WelcomeTitle extends StatelessWidget {
 }
 
 class _WelcomeDescription extends StatelessWidget {
-  const _WelcomeDescription({
-    Key? key,
-  }) : super(key: key);
+  const _WelcomeDescription({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,9 +93,7 @@ class _WelcomeDescription extends StatelessWidget {
 }
 
 class _ContinueButton extends StatelessWidget {
-  const _ContinueButton({
-    Key? key,
-  }) : super(key: key);
+  const _ContinueButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -33,10 +33,12 @@ class AppTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        HapticFeedback.lightImpact();
-        onPressed!.call();
-      },
+      onPressed: onPressed != null
+          ? () {
+              HapticFeedback.lightImpact();
+              onPressed!.call();
+            }
+          : null,
       style: ButtonStyle(
         textStyle: MaterialStateProperty.all(_textStyle),
         foregroundColor: MaterialStateProperty.resolveWith((states) {
