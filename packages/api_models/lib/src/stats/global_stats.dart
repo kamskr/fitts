@@ -26,8 +26,12 @@ class GlobalStats extends Equatable {
   final int workoutsCompleted;
 
   @override
-  List<Object> get props =>
-      [keyLifts, liftingTimeSpent, totalKgLifted, workoutsCompleted];
+  List<Object> get props => [
+        keyLifts,
+        liftingTimeSpent,
+        totalKgLifted,
+        workoutsCompleted,
+      ];
 
   /// Creates a copy of [GlobalStats].
   GlobalStats copyWith({
