@@ -1,6 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 /// {@template home_page}
@@ -42,18 +43,20 @@ class _HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        _HomeHeader(),
-        AppGap.lg(),
-        Divider(height: 1),
-        _DashboardStats(),
-        Divider(height: 1),
-        // AppGap.lg(),
-        // _PreviousWorkout(),
-        AppGap.xlg(),
-        _MyWorkouts(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          _HomeHeader(),
+          AppGap.lg(),
+          Divider(height: 1),
+          _DashboardStats(),
+          Divider(height: 1),
+          // AppGap.lg(),
+          // _PreviousWorkout(),
+          AppGap.xlg(),
+          _MyWorkouts(),
+        ],
+      ),
     );
   }
 }
@@ -236,13 +239,61 @@ class _MyWorkouts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-      ),
-      child: SizedBox(
-        height: 200,
-      ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+          ),
+          child: Stack(
+            children: [
+              SvgPicture.asset(
+                'assets/home/empty_dashboard.svg',
+                semanticsLabel: 'Empty workouts',
+              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        const Color.fromARGB(0, 255, 255, 255),
+                        Theme.of(context).colorScheme.background,
+                      ],
+                      stops: const [.1, .8],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const AppGap.md(),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.xlg,
+          ),
+          child: Text(
+            'You have no workouts yet. Go on and create your first one!',
+            style: Theme.of(context).textTheme.bodyText1,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        const AppGap.md(),
+        SizedBox(
+          height: 48,
+          width: 210,
+          child: AppButton.gradient(
+            onPressed: () {},
+            child: const Text('CREATE WORKOUT'),
+          ),
+        ),
+      ],
     );
   }
 }
