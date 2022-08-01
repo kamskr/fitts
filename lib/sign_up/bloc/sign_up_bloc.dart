@@ -9,7 +9,11 @@ import 'package:user_profile_repository/user_profile_repository.dart';
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
 
+/// {@template sign_up_bloc}
+/// Bloc used for managing sign up flow.
+/// {@endtemplate}
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+  /// {@macro sign_up_bloc}
   SignUpBloc({
     required AuthenticationClient authenticationClient,
     required UserProfileRepository userProfileRepository,
@@ -26,20 +30,26 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final UserProfileRepository _userProfileRepository;
 
   void _onUsernameChanged(
-      SignUpUsernameChanged event, Emitter<SignUpState> emit) {
+    SignUpUsernameChanged event,
+    Emitter<SignUpState> emit,
+  ) {
     final username = Username.dirty(event.username);
-    emit(state.copyWith(
-      username: username,
-      status: Formz.validate([username, state.email, state.password]),
-    ));
+    emit(
+      state.copyWith(
+        username: username,
+        status: Formz.validate([username, state.email, state.password]),
+      ),
+    );
   }
 
   void _onEmailChanged(SignUpEmailChanged event, Emitter<SignUpState> emit) {
     final email = Email.dirty(event.email);
-    emit(state.copyWith(
-      email: email,
-      status: Formz.validate([state.username, email, state.password]),
-    ));
+    emit(
+      state.copyWith(
+        email: email,
+        status: Formz.validate([state.username, email, state.password]),
+      ),
+    );
   }
 
   void _onPasswordChanged(
@@ -47,10 +57,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) {
     final password = Password.dirty(event.password);
-    emit(state.copyWith(
-      password: password,
-      status: Formz.validate([state.username, state.email, password]),
-    ));
+    emit(
+      state.copyWith(
+        password: password,
+        status: Formz.validate([state.username, state.email, password]),
+      ),
+    );
   }
 
   Future<void> _onSubmit(
@@ -58,12 +70,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     if (!state.status.isValidated) {
-      emit(state.copyWith(
-        username: Username.dirty(state.username.value),
-        email: Email.dirty(state.email.value),
-        password: Password.dirty(state.password.value),
-        status: Formz.validate([state.email, state.password]),
-      ));
+      emit(
+        state.copyWith(
+          username: Username.dirty(state.username.value),
+          email: Email.dirty(state.email.value),
+          password: Password.dirty(state.password.value),
+          status: Formz.validate([state.email, state.password]),
+        ),
+      );
     } else {
       try {
         emit(state.copyWith(status: FormzStatus.submissionInProgress));

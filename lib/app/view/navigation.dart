@@ -9,11 +9,13 @@ import 'package:flutter/material.dart';
 /// It switches between provided pages and implements AppBottomNavigationBar.
 /// {@endtemplate}
 class Navigation extends StatefulWidget {
+  /// {@macro navigation}
   const Navigation({
     Key? key,
   }) : super(key: key);
 
-  static Page page() {
+  /// Page helper for creating pages.
+  static Page<void> page() {
     return const MaterialPage<void>(child: Navigation());
   }
 

@@ -34,11 +34,13 @@ class UserStatsResource {
         } else {
           return null;
         }
-      }).transform(StreamTransformer.fromHandlers(
-        handleError: (e, st, sink) {
-          sink.addError(e);
-        },
-      ));
+      }).transform(
+        StreamTransformer.fromHandlers(
+          handleError: (e, st, sink) {
+            sink.addError(e);
+          },
+        ),
+      );
     } on Exception catch (e, st) {
       throw ApiException(e, st);
     }

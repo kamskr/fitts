@@ -4,7 +4,8 @@ final usernameRegex =
 
 /// Regular expression used for validating email input.
 final emailRegex = RegExp(
-    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+);
 
 /// Regular expression used for validating password input.
 final passwordRegex =

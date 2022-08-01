@@ -7,10 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
+/// {@template onboarding_page}
+/// Onboarding page widget.
+/// {@endtemplate}
 class OnboardingPage extends StatelessWidget {
+  /// {@macro onboarding_page}
   const OnboardingPage({Key? key}) : super(key: key);
 
-  static Route route() =>
+  /// Page helper for creating routes.
+  static Route<void> route() =>
       MaterialPageRoute<void>(builder: (_) => const OnboardingPage());
 
   @override
@@ -27,12 +32,15 @@ class OnboardingPage extends StatelessWidget {
   }
 }
 
+@visibleForTesting
+// ignore: public_member_api_docs
 class OnboardingPageView extends StatelessWidget {
+// ignore: public_member_api_docs
   const OnboardingPageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return OnboardingListener(
+    return _OnboardingListener(
       child: Scaffold(
         body: BlocBuilder<OnboardingBloc, OnboardingState>(
           buildWhen: (previous, current) => previous.status != current.status,
@@ -50,8 +58,8 @@ class OnboardingPageView extends StatelessWidget {
   }
 }
 
-class OnboardingListener extends StatelessWidget {
-  const OnboardingListener({
+class _OnboardingListener extends StatelessWidget {
+  const _OnboardingListener({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -158,7 +166,7 @@ class _GenderStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return WizardStep(
+    return OnboardingStep(
       headerText: l10n.onboardingGenderSelectionTitle,
       text: l10n.onboardingGenderSelectionDescription,
       child: Column(
@@ -192,7 +200,7 @@ class _DateOfBirth extends StatelessWidget {
     final maxNumberOfDaysInCurrentMonth =
         DateTime(dateValue.year, dateValue.month + 1, 0).day;
 
-    return WizardStep(
+    return OnboardingStep(
       headerText: l10n.onboardingBirthDateSelectionTitle,
       text: l10n.onboardingBirthDateSelectionDescription,
       child: Column(
@@ -261,7 +269,7 @@ class _WeightStep extends StatelessWidget {
 
     final weight = context.watch<OnboardingBloc>().state.weight;
 
-    return WizardStep(
+    return OnboardingStep(
       headerText: l10n.onboardingWeightSelectionTitle,
       text: l10n.onboardingWeightSelectionDescription,
       child: Column(
@@ -310,7 +318,7 @@ class _HeightStep extends StatelessWidget {
 
     final height = context.watch<OnboardingBloc>().state.height;
 
-    return WizardStep(
+    return OnboardingStep(
       headerText: l10n.onboardingHeightSelectionTitle,
       text: l10n.onboardingHeightSelectionDescription,
       child: Column(

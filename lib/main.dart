@@ -1,14 +1,15 @@
+// ignore_for_file: strict_raw_type
+
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitts/bootstrap.dart';
 import 'package:fitts/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'bootstrap.dart';
 
 Future<void> main() async {
   const useEmulator = bool.fromEnvironment('USE_FIREBASE_EMULATOR');
@@ -32,12 +33,12 @@ Future<void> main() async {
     () => runApp(
       bootstrap(),
     ),
-    blocObserver: AppBlocObserver(),
+    blocObserver: _AppBlocObserver(),
   );
 }
 
-class AppBlocObserver extends BlocObserver {
-  AppBlocObserver();
+class _AppBlocObserver extends BlocObserver {
+  _AppBlocObserver();
 
   @override
   void onTransition(Bloc bloc, Transition transition) {

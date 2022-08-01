@@ -93,9 +93,11 @@ void main() {
         authenticationClient: authenticationClient,
         userProfileRepository: userProfileRepository,
       ),
-      act: (bloc) => bloc.add(AppUserProfileChanged(
-        userProfileActive,
-      )),
+      act: (bloc) => bloc.add(
+        AppUserProfileChanged(
+          userProfileActive,
+        ),
+      ),
       expect: () => <AppState>[
         AppState.initial(
           userProfile: userProfileActive,
@@ -109,9 +111,11 @@ void main() {
         authenticationClient: authenticationClient,
         userProfileRepository: userProfileRepository,
       ),
-      act: (bloc) => bloc.add(AppUserProfileChanged(
-        userProfileNew,
-      )),
+      act: (bloc) => bloc.add(
+        AppUserProfileChanged(
+          userProfileNew,
+        ),
+      ),
       expect: () => <AppState>[
         AppState.initial(
           userProfile: userProfileNew,
@@ -125,9 +129,11 @@ void main() {
         authenticationClient: authenticationClient,
         userProfileRepository: userProfileRepository,
       ),
-      act: (bloc) => bloc.add(AppUserProfileChanged(
-        UserProfile.empty,
-      )),
+      act: (bloc) => bloc.add(
+        AppUserProfileChanged(
+          UserProfile.empty,
+        ),
+      ),
       expect: () => <AppState>[
         AppState.initial(
           userProfile: UserProfile.empty,
@@ -141,9 +147,11 @@ void main() {
         authenticationClient: authenticationClient,
         userProfileRepository: userProfileRepository,
       ),
-      act: (bloc) => bloc.add(AppUserProfileChanged(
-        UserProfile.empty.copyWith(email: 'waiting'),
-      )),
+      act: (bloc) => bloc.add(
+        AppUserProfileChanged(
+          UserProfile.empty.copyWith(email: 'waiting'),
+        ),
+      ),
       expect: () => <AppState>[],
     );
   });

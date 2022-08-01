@@ -7,6 +7,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
+/// {@template bootstrap}
+/// Bootstrap method used for generating all global providers and DI.
+/// {@endtemplate}
 Widget bootstrap() {
   final firestore = FirebaseFirestore.instance;
 

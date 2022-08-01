@@ -136,7 +136,8 @@ void main() {
       test("doesn't throw error when user profile updated", () async {
         expect(
           () => userProfileResource.updateUserProfile(
-              payload: userProfilePayload),
+            payload: userProfilePayload,
+          ),
           isNot(isException),
         );
       });

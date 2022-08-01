@@ -14,7 +14,7 @@ void main() {
   group('OnboardingPage', () {
     group('page', () {
       testWidgets('is routable.', (tester) async {
-        expect(OnboardingPage.route(), isA<MaterialPageRoute>());
+        expect(OnboardingPage.route(), isA<MaterialPageRoute<void>>());
       });
 
       testWidgets('renders properly.', (tester) async {

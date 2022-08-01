@@ -1,7 +1,14 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-enum AppTextFieldType { text, name, email, password }
+enum AppTextFieldType {
+  text,
+  name,
+  email,
+  password,
+}
 
 /// {@template app_text_field}
 /// A text field component based on material [TextFormField] widget with a

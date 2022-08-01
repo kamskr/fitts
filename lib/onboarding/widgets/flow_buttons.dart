@@ -1,16 +1,24 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
+/// {@template flow_buttons}
+///  Buttons used in onboarding flow for changing current step.
+/// {@endtemplate}
 class FlowButtons extends StatelessWidget {
+  /// {@macro flow_buttons}
   const FlowButtons({
     Key? key,
     required this.buttons,
     this.onBackButton,
   }) : super(key: key);
 
+  /// Buttons used in onboarding flow for changing current step.
   final List<Widget> buttons;
+
+  /// Callback for back button.
   final VoidCallback? onBackButton;
-  static const buttonHeight = 56;
+
+  static const _buttonHeight = 56;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +26,7 @@ class FlowButtons extends StatelessWidget {
     final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
 
     const buttonPadding = AppSpacing.md;
-    const height = buttonHeight + 2 * buttonPadding;
+    const height = _buttonHeight + 2 * buttonPadding;
 
     return Align(
       alignment: Alignment.bottomCenter,

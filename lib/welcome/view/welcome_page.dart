@@ -8,10 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+/// {@template welcome_page}
+/// First page shown to the user.
+///
+/// Here user can login with auth providers or
+/// be redirected to sign up/in screens.
+/// {@endtemplate}
 class WelcomePage extends StatelessWidget {
+  /// {@macro welcome_page}
   const WelcomePage({Key? key}) : super(key: key);
 
-  static Page page() {
+  /// Helper method for generating [MaterialPageRoute] to this page.
+  static Page<void> page() {
     return const MaterialPage<void>(child: WelcomePage());
   }
 
@@ -25,7 +33,9 @@ class WelcomePage extends StatelessWidget {
 }
 
 @visibleForTesting
+// ignore: public_member_api_docs
 class WelcomeView extends StatelessWidget {
+  // ignore: public_member_api_docs
   const WelcomeView({Key? key}) : super(key: key);
 
   @override
@@ -122,7 +132,9 @@ class _WelcomeSubtitle extends StatelessWidget {
 }
 
 @visibleForTesting
+// ignore: public_member_api_docs
 class SignUpButton extends StatelessWidget {
+  // ignore: public_member_api_docs
   const SignUpButton({Key? key}) : super(key: key);
 
   @override
@@ -141,7 +153,9 @@ class SignUpButton extends StatelessWidget {
 }
 
 @visibleForTesting
+// ignore: public_member_api_docs
 class SignUpWithGoogleButton extends StatelessWidget {
+  // ignore: public_member_api_docs
   const SignUpWithGoogleButton({Key? key}) : super(key: key);
 
   @override
@@ -176,7 +190,9 @@ class _AlreadyHaveAccountText extends StatelessWidget {
 }
 
 @visibleForTesting
+// ignore: public_member_api_docs
 class SignInButton extends StatelessWidget {
+  // ignore: public_member_api_docs
   const SignInButton({Key? key}) : super(key: key);
 
   @override

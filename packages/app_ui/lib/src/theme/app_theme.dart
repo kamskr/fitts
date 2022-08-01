@@ -1,7 +1,11 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
+/// {@template app_theme}
+/// Theme used by the application.
+/// {@endtemplate}
 abstract class AppTheme {
+  /// Light theme.
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Rubik',
     colorScheme: _lightColorScheme,

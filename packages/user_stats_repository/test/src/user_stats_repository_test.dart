@@ -25,14 +25,8 @@ void main() {
     late UserStats userStats;
 
     const user1Id = '1';
-    const user2Id = '2';
 
     final userSubject = BehaviorSubject<User>()
-      ..add(
-        const User(id: user1Id),
-      );
-
-    final userSubject2 = BehaviorSubject<User>()
       ..add(
         const User(id: user1Id),
       );
@@ -52,11 +46,12 @@ void main() {
 
     test('can be instantiated', () {
       expect(
-          UserStatsRepository(
-            apiClient: apiClient,
-            authenticationClient: authenticationClient,
-          ),
-          isNotNull);
+        UserStatsRepository(
+          apiClient: apiClient,
+          authenticationClient: authenticationClient,
+        ),
+        isNotNull,
+      );
     });
 
     group('userStats', () {
