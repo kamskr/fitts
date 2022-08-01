@@ -392,7 +392,7 @@ packages:
     source: hosted
     version: "4.1.6"
   flutter_gen_runner:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_gen_runner
       url: "https://pub.dartlang.org"

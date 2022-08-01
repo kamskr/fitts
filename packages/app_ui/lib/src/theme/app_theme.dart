@@ -14,6 +14,11 @@ abstract class AppTheme {
     textTheme: _textTheme,
     extensions: [_lightAppColorsExtension],
     splashColor: Colors.transparent,
+    scaffoldBackgroundColor: _lightColorScheme.background,
+    dividerTheme: DividerThemeData(
+      color: _lightAppColorsExtension.black100,
+      thickness: 1,
+    ),
   );
 
   static final _lightColorScheme = ColorScheme(
