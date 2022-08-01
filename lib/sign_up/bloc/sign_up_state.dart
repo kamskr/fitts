@@ -1,6 +1,10 @@
 part of 'sign_up_bloc.dart';
 
+/// {@template sign_up_state}
+/// State of the sign up process.
+/// {@endtemplate}
 class SignUpState extends Equatable {
+  /// {@macro sign_up_state}
   const SignUpState({
     this.username = const Username.pure(),
     this.email = const Email.pure(),
@@ -9,15 +13,25 @@ class SignUpState extends Equatable {
     this.errorMessage,
   });
 
+  /// User username.
   final Username username;
+
+  /// User email.
   final Email email;
+
+  /// User password.
   final Password password;
+
+  /// Status of the form.
   final FormzStatus status;
+
+  /// Error message.
   final String? errorMessage;
 
   @override
   List<Object> get props => [username, email, password, status];
 
+  /// Copy method.
   SignUpState copyWith({
     Username? username,
     Email? email,

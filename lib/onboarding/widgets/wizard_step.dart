@@ -3,16 +3,25 @@ import 'package:fitts/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WizardStep extends StatelessWidget {
-  const WizardStep({
+/// {@template onboarding_step}
+/// Widget used for showing single onboarding step.
+/// {@endtemplate}
+class OnboardingStep extends StatelessWidget {
+  /// {@macro onboarding_step}
+  const OnboardingStep({
     Key? key,
     required this.child,
     required this.headerText,
     required this.text,
   }) : super(key: key);
 
+  /// Child widget.
   final Widget child;
+
+  /// Header text - title.
   final String headerText;
+
+  /// Text shown below the header.
   final String text;
 
   @override

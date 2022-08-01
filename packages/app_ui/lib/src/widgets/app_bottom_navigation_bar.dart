@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs,
+
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,16 +24,18 @@ class AppBottomNavigationBar extends StatelessWidget {
 
   final List<AppMenuItem> menuItems;
   final int currentIndex;
-  final Function(int) onTap;
+  final void Function(int) onTap;
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: menuItems
-          .map((menuItem) => BottomNavigationBarItem(
-                icon: menuItem.icon,
-                label: menuItem.label,
-              ))
+          .map(
+            (menuItem) => BottomNavigationBarItem(
+              icon: menuItem.icon,
+              label: menuItem.label,
+            ),
+          )
           .toList(),
       selectedItemColor: AppColors.black,
       unselectedItemColor: AppColors.black[100],

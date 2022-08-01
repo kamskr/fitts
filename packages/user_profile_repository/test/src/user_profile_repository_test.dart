@@ -37,9 +37,11 @@ void main() {
 
       test('Calls appointmentsResource.updateUserProfile with proper payload',
           () async {
-        when(() => resource.updateUserProfile(
-              payload: payload,
-            )).thenAnswer((_) async {});
+        when(
+          () => resource.updateUserProfile(
+            payload: payload,
+          ),
+        ).thenAnswer((_) async {});
 
         final repository = UserProfileRepository(apiClient);
         await repository.updateUserProfile(
@@ -54,9 +56,11 @@ void main() {
       test(
           'throws [UpdateUserProfileFailure] '
           'when fetching user profile from resource fails', () async {
-        when(() => resource.updateUserProfile(
-              payload: payload,
-            )).thenThrow(Exception());
+        when(
+          () => resource.updateUserProfile(
+            payload: payload,
+          ),
+        ).thenThrow(Exception());
         final repository = UserProfileRepository(apiClient);
 
         expect(

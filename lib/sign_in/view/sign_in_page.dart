@@ -6,10 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
+/// {@template sign_in_page}
+/// Page used for user sign in.
+/// {@endtemplate}
 class SignInPage extends StatelessWidget {
+  /// {@macro sign_in_page}
   const SignInPage({Key? key}) : super(key: key);
 
-  static Route route() =>
+  /// Helper method for generating [MaterialPageRoute] to this page.
+  static Route<void> route() =>
       MaterialPageRoute<void>(builder: (_) => const SignInPage());
 
   @override
@@ -21,7 +26,10 @@ class SignInPage extends StatelessWidget {
   }
 }
 
+@visibleForTesting
+// ignore: public_member_api_docs
 class SignInView extends StatelessWidget {
+  // ignore: public_member_api_docs
   const SignInView({Key? key}) : super(key: key);
 
   @override
@@ -34,26 +42,27 @@ class SignInView extends StatelessWidget {
           gradient: additionalColors.primaryGradient3,
         ),
         child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              iconTheme: IconThemeData(
-                color: additionalColors.white,
+            iconTheme: IconThemeData(
+              color: additionalColors.white,
+            ),
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  _SignInTitle(),
+                  _EmailInput(),
+                  _PasswordInput(),
+                  _SignInButton(),
+                ],
               ),
             ),
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    _SignInTitle(),
-                    _EmailInput(),
-                    _PasswordInput(),
-                    _SignInButton(),
-                  ],
-                ),
-              ),
-            )),
+          ),
+        ),
       ),
     );
   }

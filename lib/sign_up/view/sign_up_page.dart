@@ -7,10 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
+/// {@macro sign_up_page}
+/// Page used for user sign up.
+/// {@endtemplate}
 class SignUpPage extends StatelessWidget {
+  /// {@macro sign_up_page}
   const SignUpPage({Key? key}) : super(key: key);
 
-  static Route route() =>
+  /// Helper method for generating [MaterialPageRoute] to this page.
+  static Route<void> route() =>
       MaterialPageRoute<void>(builder: (_) => const SignUpPage());
 
   @override
@@ -26,7 +31,9 @@ class SignUpPage extends StatelessWidget {
 }
 
 @visibleForTesting
+// ignore: public_member_api_docs
 class SignUpView extends StatelessWidget {
+  // ignore: public_member_api_docs
   const SignUpView({Key? key}) : super(key: key);
 
   @override
@@ -39,28 +46,29 @@ class SignUpView extends StatelessWidget {
           gradient: additionalColors.primaryGradient3,
         ),
         child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              iconTheme: IconThemeData(
-                color: additionalColors.white,
+            iconTheme: IconThemeData(
+              color: additionalColors.white,
+            ),
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  _SignUpTitle(),
+                  _UsernameInput(),
+                  _EmailInput(),
+                  _PasswordInput(),
+                  _LegalNote(),
+                  _SignUpButton(),
+                ],
               ),
             ),
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    _SignUpTitle(),
-                    _UsernameInput(),
-                    _EmailInput(),
-                    _PasswordInput(),
-                    _LegalNote(),
-                    _SignUpButton(),
-                  ],
-                ),
-              ),
-            )),
+          ),
+        ),
       ),
     );
   }

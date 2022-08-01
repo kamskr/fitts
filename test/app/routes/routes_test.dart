@@ -13,13 +13,14 @@ void main() {
     test('returns [WelcomePage] when not authenticated', () {
       expect(
         onGenerateAppViewPages(
-            AppState.initial(
-              userProfile: UserProfile.empty,
-              status: AppStatus.unauthenticated,
-            ),
-            []),
+          AppState.initial(
+            userProfile: UserProfile.empty,
+            status: AppStatus.unauthenticated,
+          ),
+          [],
+        ),
         [
-          isA<MaterialPage>().having(
+          isA<MaterialPage<void>>().having(
             (p) => p.child,
             'child',
             isA<WelcomePage>(),
@@ -33,13 +34,14 @@ void main() {
         'and isNewUser == true', () {
       expect(
         onGenerateAppViewPages(
-            AppState.initial(
-              userProfile: UserProfile.empty,
-              status: AppStatus.onboardingRequired,
-            ),
-            []),
+          AppState.initial(
+            userProfile: UserProfile.empty,
+            status: AppStatus.onboardingRequired,
+          ),
+          [],
+        ),
         [
-          isA<MaterialPage>().having(
+          isA<MaterialPage<void>>().having(
             (p) => p.child,
             'child',
             isA<OnboardingWelcomePage>(),
@@ -51,13 +53,14 @@ void main() {
     test('returns [HomePage] when authenticated and isNewUser == false', () {
       expect(
         onGenerateAppViewPages(
-            AppState.initial(
-              userProfile: UserProfile.empty,
-              status: AppStatus.authenticated,
-            ),
-            []),
+          AppState.initial(
+            userProfile: UserProfile.empty,
+            status: AppStatus.authenticated,
+          ),
+          [],
+        ),
         [
-          isA<MaterialPage>().having(
+          isA<MaterialPage<void>>().having(
             (p) => p.child,
             'child',
             isA<Navigation>(),

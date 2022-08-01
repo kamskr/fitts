@@ -12,12 +12,13 @@ void main() {
     });
     test('returns object with updated status when status is passed', () {
       expect(
-          const OnboardingState().copyWith(
-            currentStep: 3,
-          ),
-          const OnboardingState(
-            currentStep: 3,
-          ));
+        const OnboardingState().copyWith(
+          currentStep: 3,
+        ),
+        const OnboardingState(
+          currentStep: 3,
+        ),
+      );
     });
   });
 }

@@ -7,7 +7,11 @@ import 'package:formz/formz.dart';
 part 'sign_in_event.dart';
 part 'sign_in_state.dart';
 
+/// {@template sign_in_bloc}
+/// Bloc used for managing sign in flow.
+/// {@endtemplate}
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
+  /// {@macro sign_in_bloc}
   SignInBloc(this._authenticationClient) : super(const SignInState()) {
     on<SignInEmailChanged>(_onEmailChanged);
     on<SignInPasswordChanged>(_onPasswordChanged);
@@ -18,10 +22,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
   void _onEmailChanged(SignInEmailChanged event, Emitter<SignInState> emit) {
     final email = Email.dirty(event.email);
-    emit(state.copyWith(
-      email: email,
-      status: Formz.validate([email, state.password]),
-    ));
+    emit(
+      state.copyWith(
+        email: email,
+        status: Formz.validate([email, state.password]),
+      ),
+    );
   }
 
   void _onPasswordChanged(
@@ -29,10 +35,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     Emitter<SignInState> emit,
   ) {
     final password = Password.dirty(event.password);
-    emit(state.copyWith(
-      password: password,
-      status: Formz.validate([state.email, password]),
-    ));
+    emit(
+      state.copyWith(
+        password: password,
+        status: Formz.validate([state.email, password]),
+      ),
+    );
   }
 
   Future<void> _onSubmit(
@@ -40,11 +48,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     Emitter<SignInState> emit,
   ) async {
     if (!state.status.isValidated) {
-      emit(state.copyWith(
-        email: Email.dirty(state.email.value),
-        password: Password.dirty(state.password.value),
-        status: Formz.validate([state.email, state.password]),
-      ));
+      emit(
+        state.copyWith(
+          email: Email.dirty(state.email.value),
+          password: Password.dirty(state.password.value),
+          status: Formz.validate([state.email, state.password]),
+        ),
+      );
     } else {
       try {
         emit(state.copyWith(status: FormzStatus.submissionInProgress));
@@ -61,9 +71,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           ),
         );
       } catch (e, st) {
-        emit(state.copyWith(
-          status: FormzStatus.submissionFailure,
-        ));
+        emit(
+          state.copyWith(
+            status: FormzStatus.submissionFailure,
+          ),
+        );
         addError(e, st);
       }
     }

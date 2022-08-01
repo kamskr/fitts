@@ -1,8 +1,11 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:fitts/app/app.dart';
 import 'package:fitts/onboarding/onboarding.dart';
 import 'package:fitts/welcome/welcome.dart';
 import 'package:flutter/material.dart';
 
+// ignore: strict_raw_type
 List<Page> onGenerateAppViewPages(AppState state, List<Page<dynamic>> pages) {
   if (state.status == AppStatus.loading) {
     return [_LoadingPage.page()];
@@ -22,7 +25,7 @@ List<Page> onGenerateAppViewPages(AppState state, List<Page<dynamic>> pages) {
 class _LoadingPage extends StatelessWidget {
   const _LoadingPage({Key? key}) : super(key: key);
 
-  static Page page() {
+  static Page<void> page() {
     return const MaterialPage<void>(child: _LoadingPage());
   }
 

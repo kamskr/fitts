@@ -6,21 +6,26 @@ import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// {@template home_page}
+///  Dashboard view of the application.
+/// {@endtemplate}
 class HomePage extends StatelessWidget {
+  /// {@macro home_page}
   const HomePage({Key? key}) : super(key: key);
 
-  static Page page() {
+  /// Page helper for creating pages.
+  static Page<void> page() {
     return const MaterialPage<void>(child: HomePage());
   }
 
   @override
   Widget build(BuildContext context) {
-    return const HomeView();
+    return const _HomeView();
   }
 }
 
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+class _HomeView extends StatelessWidget {
+  const _HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +35,13 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: Text(l10n.homePageTitle),
       ),
-      body: const HomeBody(),
+      body: const _HomeBody(),
     );
   }
 }
 
-class HomeBody extends StatelessWidget {
-  const HomeBody({Key? key}) : super(key: key);
+class _HomeBody extends StatelessWidget {
+  const _HomeBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +51,11 @@ class HomeBody extends StatelessWidget {
       children: [
         const Text('Dashboard'),
         const SizedBox(height: 100),
-        Text(state.userProfile.profileStatus == ProfileStatus.active
-            ? 'User active'
-            : 'User not active'),
+        Text(
+          state.userProfile.profileStatus == ProfileStatus.active
+              ? 'User active'
+              : 'User not active',
+        ),
         Text(state.userProfile.email),
         Text(state.userProfile.displayName),
         Text(state.userProfile.gender == Gender.male ? 'Male' : 'Female'),

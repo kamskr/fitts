@@ -9,7 +9,7 @@ void main() {
   group('Navigation', () {
     group('page', () {
       testWidgets('is routable.', (tester) async {
-        expect(Navigation.page(), isA<MaterialPage>());
+        expect(Navigation.page(), isA<MaterialPage<void>>());
       });
 
       testWidgets('renders properly.', (tester) async {

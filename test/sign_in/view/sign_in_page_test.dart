@@ -29,7 +29,7 @@ void main() {
   group('SignInPage', () {
     group('page', () {
       testWidgets('is routable.', (tester) async {
-        expect(SignInPage.route(), isA<MaterialPageRoute>());
+        expect(SignInPage.route(), isA<MaterialPageRoute<void>>());
       });
 
       testWidgets('renders properly.', (tester) async {

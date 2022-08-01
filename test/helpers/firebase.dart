@@ -21,6 +21,7 @@ void setupFirebaseAuthMocks([Callback? customHandlers]) {
             'messagingSenderId': '123',
             'projectId': '123',
           },
+          // ignore: inference_failure_on_collection_literal
           'pluginConstants': {},
         }
       ];
@@ -30,6 +31,7 @@ void setupFirebaseAuthMocks([Callback? customHandlers]) {
       return {
         'name': call.arguments['appName'],
         'options': call.arguments['options'],
+        // ignore: inference_failure_on_collection_literal
         'pluginConstants': {},
       };
     }
