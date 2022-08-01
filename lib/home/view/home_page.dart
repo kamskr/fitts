@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
+import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -68,25 +69,27 @@ class _DashboardStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final userProfile = context.read<AppBloc>().state.userProfile;
 
     return Row(
       children: [
-        const _DashboardStatsItem(
+        _DashboardStatsItem(
           count: '0',
-          titlePart1: 'workouts',
-          titlePart2: 'completed',
+          titlePart1: l10n.homePageWorkoutsCompleted1,
+          titlePart2: l10n.homePageWorkoutsCompleted2,
         ),
-        const _DashboardStatsItem(
+        _DashboardStatsItem(
           count: '0',
-          titlePart1: 'tonnage',
-          titlePart2: 'lifted',
+          suffix: 'kg',
+          titlePart1: l10n.homePageTonnageLifted1,
+          titlePart2: l10n.homePageTonnageLifted2,
         ),
         _DashboardStatsItem(
           count: '${userProfile.weight}',
           suffix: 'kg',
-          titlePart1: 'current',
-          titlePart2: 'weight',
+          titlePart1: l10n.homePageCurrentWeight1,
+          titlePart2: l10n.homePageCurrentWeight2,
           showBorder: false,
         ),
       ],
@@ -180,6 +183,7 @@ class _HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final userProfile = context.watch<AppBloc>().state.userProfile;
 
@@ -191,7 +195,7 @@ class _HomeHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Dashboard',
+            l10n.homePageTitle,
             style: theme.textTheme.headline3,
           ),
           _SmallAvatar(photoUrl: userProfile.photoUrl),
@@ -239,6 +243,7 @@ class _MyWorkouts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       children: [
         Padding(
@@ -279,7 +284,7 @@ class _MyWorkouts extends StatelessWidget {
             horizontal: AppSpacing.xlg,
           ),
           child: Text(
-            'You have no workouts yet. Go on and create your first one!',
+            l10n.homePageNoWorkoutsMessage,
             style: Theme.of(context).textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
@@ -290,7 +295,7 @@ class _MyWorkouts extends StatelessWidget {
           width: 210,
           child: AppButton.gradient(
             onPressed: () {},
-            child: const Text('CREATE WORKOUT'),
+            child: Text(l10n.homePageCreateWorkoutButtonText),
           ),
         ),
       ],
