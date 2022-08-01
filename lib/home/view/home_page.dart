@@ -1,8 +1,5 @@
-import 'package:api_models/api_models.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
-import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,13 +26,13 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.homePageTitle),
+        backgroundColor: Theme.of(context).colorScheme.background,
       ),
-      body: const _HomeBody(),
+      body: const SafeArea(
+        child: _HomeBody(),
+      ),
     );
   }
 }
@@ -45,31 +42,207 @@ class _HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<AppBloc>().state;
-
     return Column(
+      children: const [
+        _HomeHeader(),
+        AppGap.lg(),
+        Divider(height: 1),
+        _DashboardStats(),
+        Divider(height: 1),
+        // AppGap.lg(),
+        // _PreviousWorkout(),
+        AppGap.xlg(),
+        _MyWorkouts(),
+      ],
+    );
+  }
+}
+
+class _DashboardStats extends StatelessWidget {
+  const _DashboardStats({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final userProfile = context.read<AppBloc>().state.userProfile;
+
+    return Row(
       children: [
-        const Text('Dashboard'),
-        const SizedBox(height: 100),
-        Text(
-          state.userProfile.profileStatus == ProfileStatus.active
-              ? 'User active'
-              : 'User not active',
+        const _DashboardStatsItem(
+          count: '0',
+          titlePart1: 'workouts',
+          titlePart2: 'completed',
         ),
-        Text(state.userProfile.email),
-        Text(state.userProfile.displayName),
-        Text(state.userProfile.gender == Gender.male ? 'Male' : 'Female'),
-        Text(state.userProfile.height.toString()),
-        Text(state.userProfile.weight.toString()),
-        Center(
-          child: AppButton.primary(
-            child: const Text('Sign out'),
-            onPressed: () {
-              context.read<AuthenticationClient>().signOut();
-            },
-          ),
+        const _DashboardStatsItem(
+          count: '0',
+          titlePart1: 'tonnage',
+          titlePart2: 'lifted',
+        ),
+        _DashboardStatsItem(
+          count: '${userProfile.weight}',
+          suffix: 'kg',
+          titlePart1: 'current',
+          titlePart2: 'weight',
+          showBorder: false,
         ),
       ],
+    );
+  }
+}
+
+class _DashboardStatsItem extends StatelessWidget {
+  const _DashboardStatsItem({
+    Key? key,
+    required this.count,
+    required this.titlePart1,
+    required this.titlePart2,
+    this.showBorder = true,
+    this.suffix,
+  }) : super(key: key);
+
+  final String count;
+  final String titlePart1;
+  final String titlePart2;
+  final bool showBorder;
+  final String? suffix;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: SizedBox(
+        width: double.infinity,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            border: showBorder
+                ? Border(
+                    right: BorderSide(
+                      color: Theme.of(context)
+                          .extension<AppColorScheme>()!
+                          .black100,
+                    ),
+                  )
+                : null,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: AppSpacing.md,
+              bottom: AppSpacing.md,
+              left: AppSpacing.lg,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      count,
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    if (suffix != null)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: AppSpacing.xxxs,
+                          bottom: AppSpacing.xxs,
+                        ),
+                        child: Text(
+                          suffix!,
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                      ),
+                  ],
+                ),
+                const AppGap.xxxs(),
+                Text(
+                  titlePart1,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                Text(
+                  titlePart2,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HomeHeader extends StatelessWidget {
+  const _HomeHeader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final userProfile = context.watch<AppBloc>().state.userProfile;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Dashboard',
+            style: theme.textTheme.headline3,
+          ),
+          _SmallAvatar(photoUrl: userProfile.photoUrl),
+        ],
+      ),
+    );
+  }
+}
+
+class _SmallAvatar extends StatelessWidget {
+  const _SmallAvatar({
+    Key? key,
+    required this.photoUrl,
+  }) : super(key: key);
+
+  final String photoUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppSpacing.lg),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppSpacing.xxxs),
+        child: SizedBox(
+          height: 40,
+          width: 40,
+          child: photoUrl != ''
+              ? Image.network(
+                  photoUrl,
+                  height: 40,
+                  width: 40,
+                  fit: BoxFit.contain,
+                )
+              : Assets.icons.emptyProfileImage.svg(),
+        ),
+      ),
+    );
+  }
+}
+
+class _MyWorkouts extends StatelessWidget {
+  const _MyWorkouts({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+      ),
+      child: SizedBox(
+        height: 200,
+      ),
     );
   }
 }
