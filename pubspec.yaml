@@ -54,7 +54,8 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/onboarding/welcome_image.png
+    - assets/onboarding/
+    - assets/home/
 
 flutter_gen:
   output: lib/generated/
