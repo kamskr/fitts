@@ -16,12 +16,12 @@ class UserStatsResource {
 
   static const _collectionName = 'UserStats';
 
-  /// Stream of [UserStats] data for user with id [userId].
-  Stream<UserStats?> userStats(String userId) {
+  /// Stream of [UserStats] data for user with [userEmail].
+  Stream<UserStats?> userStats(String userEmail) {
     try {
       return _firebaseFirestore
           .collection(_collectionName)
-          .doc(userId)
+          .doc(userEmail)
           .snapshots()
           .map<UserStats?>((documentSnapshot) {
         final data = documentSnapshot.data();

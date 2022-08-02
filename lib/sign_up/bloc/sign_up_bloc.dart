@@ -80,16 +80,19 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       );
     } else {
       try {
+        // To lower case is used to avoid case sensitive email in firebase.
+        final email = state.email.value.toLowerCase();
+
         emit(state.copyWith(status: FormzStatus.submissionInProgress));
         await _authenticationClient.signUp(
           displayName: state.username.value,
-          email: state.email.value,
+          email: email,
           password: state.password.value,
         );
 
         await _userProfileRepository.updateUserProfile(
           payload: UserProfileUpdatePayload.empty.copyWith(
-            email: state.email.value,
+            email: email,
             displayName: state.username.value,
           ),
         );

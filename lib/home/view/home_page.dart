@@ -86,9 +86,18 @@ class _DashboardStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final userProfile = context.read<AppBloc>().state.userProfile;
+    final userProfile = context.watch<AppBloc>().state.userProfile;
     final userStats =
-        (context.read<HomeBloc>().state as HomeSuccessState).userStats;
+        (context.watch<HomeBloc>().state as HomeSuccessState).userStats;
+
+    final totalKg = userStats.globalStats.totalKgLifted;
+    late String totalKgString;
+
+    if (totalKg < 1000) {
+      totalKgString = totalKg.toString();
+    } else {
+      totalKgString = '${(totalKg / 1000).round()}k';
+    }
 
     return Row(
       children: [
@@ -98,7 +107,7 @@ class _DashboardStats extends StatelessWidget {
           titlePart2: l10n.homePageWorkoutsCompleted2,
         ),
         _DashboardStatsItem(
-          count: '0',
+          count: totalKgString,
           suffix: 'kg',
           titlePart1: l10n.homePageTonnageLifted1,
           titlePart2: l10n.homePageTonnageLifted2,
