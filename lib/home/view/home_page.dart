@@ -7,6 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:user_stats_repository/user_stats_repository.dart';
 
+// todo(kamskry): TEMP FLAGS TO BE REMOVED AND REPLACED WITH REAL CONDITIONS
+const bool _workoutsExist = true;
+const bool _previousWorkoutExists = true;
+
 /// {@template home_page}
 ///  Dashboard view of the application.
 /// {@endtemplate}
@@ -68,10 +72,20 @@ class _HomeBody extends StatelessWidget {
           Divider(height: 1),
           _DashboardStats(),
           Divider(height: 1),
-          // AppGap.lg(),
-          // _PreviousWorkout(),
-          AppGap.xlg(),
-          _MyWorkouts(),
+          AppGap.md(),
+          if (_previousWorkoutExists) ...[
+            _PreviousWorkout(),
+            AppGap.md(),
+            Divider(height: 1),
+          ],
+          if (_workoutsExist) ...[
+            AppGap.xs(),
+            _UserWorkouts(),
+          ],
+          if (!_workoutsExist) ...[
+            AppGap.xs(),
+            _EmptyWorkouts(),
+          ],
         ],
       ),
     );
@@ -265,12 +279,88 @@ class _SmallAvatar extends StatelessWidget {
   }
 }
 
-class _MyWorkouts extends StatelessWidget {
-  const _MyWorkouts({Key? key}) : super(key: key);
+class _PreviousWorkout extends StatelessWidget {
+  const _PreviousWorkout({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
+    return GestureDetector(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 58,
+                  width: 39,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '22',
+                        style: theme.textTheme.headline6!.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'MAY',
+                        style: theme.textTheme.overline!.copyWith(
+                          color: Colors.white.withOpacity(.6),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const AppGap.md(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.homePagePreviousWorkoutLabel,
+                      style: theme.textTheme.bodyText2!.copyWith(
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const AppGap.xxs(),
+                    Text(
+                      'Quads & Deltoids',
+                      style: theme.textTheme.headline6,
+                    ),
+                    Text(
+                      l10n.homePagePreviousWorkoutExercisesCount(7),
+                      style: theme.textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Assets.icons.icChevronRight.svg(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EmptyWorkouts extends StatelessWidget {
+  const _EmptyWorkouts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+
     return Column(
       children: [
         Padding(
@@ -326,6 +416,52 @@ class _MyWorkouts extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _UserWorkouts extends StatelessWidget {
+  const _UserWorkouts({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                l10n.homePageNextWorkoutLabel,
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+              AppTextButton(
+                onPressed: () {},
+                textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                child: Text(l10n.homePageShowAllWorkouts),
+              ),
+            ],
+          ),
+          Container(
+            height: 250,
+            width: double.infinity,
+            color: Theme.of(context).colorScheme.primary,
+            child: const Center(
+              child: Text(
+                'Placeholder for next workout card',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
