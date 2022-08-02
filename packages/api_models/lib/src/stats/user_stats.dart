@@ -50,4 +50,15 @@ class UserStats extends Equatable {
       globalStats: globalStats ?? this.globalStats,
     );
   }
+
+  /// An empty [UserStats] object.
+  static const UserStats empty = UserStats(
+    exercisesStats: {},
+    globalStats: GlobalStats(
+      keyLifts: [],
+      liftingTimeSpent: 0,
+      totalKgLifted: 0,
+      workoutsCompleted: 0,
+    ),
+  );
 }

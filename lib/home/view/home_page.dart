@@ -1,9 +1,11 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
+import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:user_stats_repository/user_stats_repository.dart';
 
 /// {@template home_page}
 ///  Dashboard view of the application.
@@ -19,7 +21,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _HomeView();
+    return BlocProvider(
+      create: (context) => HomeBloc(
+        userStatsRepository: context.read<UserStatsRepository>(),
+      )..add(const UserStatsSubscriptionRequested()),
+      child: const _HomeView(),
+    );
   }
 }
 
@@ -44,6 +51,15 @@ class _HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<HomeBloc>().state;
+
+    if (state is HomeInitialState) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return SingleChildScrollView(
       child: Column(
         children: const [
@@ -71,11 +87,13 @@ class _DashboardStats extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final userProfile = context.read<AppBloc>().state.userProfile;
+    final userStats =
+        (context.read<HomeBloc>().state as HomeSuccessState).userStats;
 
     return Row(
       children: [
         _DashboardStatsItem(
-          count: '0',
+          count: userStats.globalStats.workoutsCompleted.toString(),
           titlePart1: l10n.homePageWorkoutsCompleted1,
           titlePart2: l10n.homePageWorkoutsCompleted2,
         ),
