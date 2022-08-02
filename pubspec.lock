@@ -866,6 +866,13 @@ packages:
       relative: true
     source: path
     version: "1.0.0"
+  user_stats_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/user_stats_repository"
+      relative: true
+    source: path
+    version: "1.0.0"
   vector_math:
     dependency: transitive
     description:

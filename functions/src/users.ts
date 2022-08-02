@@ -27,4 +27,17 @@ export const createProfile = (userRecord: UserRecord, _: EventContext) => {
       profileStatus: profileStatusOnboardingRequired,
     })
     .catch(console.error);
+
+  db.collection("UserStats")
+    .doc(email || uid)
+    .set({
+      exercises: {},
+      global: {
+        keyLifts: [],
+        liftingTimeSpent: 0,
+        totalKgLifted: 0,
+        workoutsCompleted: 0,
+      },
+    })
+    .catch(console.error);
 };

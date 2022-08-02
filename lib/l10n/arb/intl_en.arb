@@ -45,5 +45,17 @@
   "homePageCurrentWeight1": "current",
   "homePageCurrentWeight2": "weight",
   "homePageNoWorkoutsMessage": "You have no workouts yet. Go on and create your first one!",
-  "homePageCreateWorkoutButtonText": "CREATE WORKOUT"
+  "homePageCreateWorkoutButtonText": "CREATE WORKOUT",
+  "homePagePreviousWorkoutLabel": "Previous Workout",
+  "homePagePreviousWorkoutExercisesCount": "{count} exercises completed",
+  "@homePagePreviousWorkoutExercisesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "homePageNextWorkoutLabel": "NEXT WORKOUT",
+  "homePageShowAllWorkouts": "Show All"
 }

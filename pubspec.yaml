@@ -40,6 +40,8 @@ dependencies:
   rxdart: ^0.27.3
   user_profile_repository:
     path: packages/user_profile_repository
+  user_stats_repository:
+    path: packages/user_stats_repository
   very_good_analysis: ^3.0.1
 
 dev_dependencies:

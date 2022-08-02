@@ -58,8 +58,15 @@ To start emulators:
 firebase emulators:start
 ```
 
-## Build assets
+## Update cloud functions
+
+After changing, build cloud functions and restart emulators
+```
+cd functions && npm run build
+```
+
+To deploy do the server.
 
 ```
-melos build:assets
+firebase deploy --only functions
 ```

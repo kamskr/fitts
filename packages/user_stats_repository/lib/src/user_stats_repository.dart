@@ -33,7 +33,7 @@ class UserStatsRepository {
 
       final userStatsStream = _authenticationClient.user
           .distinct((user1, user2) => user1.id == user2.id)
-          .switchMap((user) => userStatsResource.userStats(user.id));
+          .switchMap((user) => userStatsResource.userStats(user.email!));
 
       userStatsStream
           .handleError(_handleUserStatsStreamError)
