@@ -1,37 +1,126 @@
+import 'dart:math';
+
 import 'package:app_ui/app_ui.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class AppChartCard extends StatefulWidget {
+/// {@template app_chart_card}
+/// Widget responsible for displaying charts used by the app.
+///
+/// The widget uses FlChart for displaying charts.
+/// {@endtemplate}
+class AppChartCard extends StatelessWidget {
+  /// {@macro app_chart_card}
   const AppChartCard({
     Key? key,
+    required this.values,
+    this.labels,
     this.header,
     this.footer,
-  }) : super(key: key);
+  })  : assert(
+          values.length == 6,
+          'The number of values must be 6.',
+        ),
+        assert(
+          labels == null || labels.length == 6,
+          'Labels must be null or have length of 6',
+        ),
+        super(key: key);
 
+  /// Widget displayed above the chart. (Optional)
   final Widget? header;
+
+  /// Widget displayed below the chart. (Optional)
   final Widget? footer;
 
+  /// Values to be displayed in the chart.
+  /// Position in list corresponds to position in chart.
+  final List<double> values;
+
+  /// Labels to be displayed in the chart.
+  /// Position in list corresponds to position in chart.
+  ///
+  /// Don't pass any labels if you don't want to display them.
+  final List<String>? labels;
+
   @override
-  State<StatefulWidget> createState() => AppChartCardState();
-}
+  Widget build(BuildContext context) {
+    final maxValue = values.reduce(max);
+    final midValue = maxValue / 2;
 
-class AppChartCardState extends State<AppChartCard> {
-  final double width = 6;
+    /// Compose tiles seen on the left of the chart.
+    Widget leftTitles(double value, TitleMeta meta) {
+      String text;
+      if (value == 0) {
+        text = '0';
+      } else if (value == midValue) {
+        final midValue = maxValue / 2;
+        text = midValue >= 1000
+            ? '${(midValue / 1000).floor()}k'
+            : midValue.toString();
+      } else if (value == maxValue) {
+        text = maxValue >= 1000
+            ? '${(maxValue / 1000).floor()}k'
+            : maxValue.toString();
+      } else {
+        return Container();
+      }
+      return SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 0,
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.overline!.copyWith(
+                color: AppColors.white.withOpacity(.8),
+              ),
+        ),
+      );
+    }
 
-  late List<BarChartGroupData> showingBarGroups;
+    /// Compose bottom tiles.
+    Widget bottomTitles(double value, TitleMeta meta) {
+      if (labels == null) {
+        return const SizedBox.shrink();
+      }
 
-  @override
-  void initState() {
-    super.initState();
-    final barGroup1 = makeGroupData(0, 5);
-    final barGroup2 = makeGroupData(1, 16);
-    final barGroup3 = makeGroupData(2, 18);
-    final barGroup4 = makeGroupData(3, 20);
-    final barGroup5 = makeGroupData(4, 17);
-    final barGroup6 = makeGroupData(5, 19);
+      final Widget text = Text(
+        labels![value.toInt()],
+        style: Theme.of(context).textTheme.overline!.copyWith(
+              color: AppColors.white.withOpacity(.8),
+            ),
+      );
 
-    final items = [
+      return SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 16, //margin top
+        child: text,
+      );
+    }
+
+    /// Compose group data.m
+    BarChartGroupData makeGroupData(int x, double y) {
+      return BarChartGroupData(
+        barsSpace: 5,
+        x: x,
+        barRods: [
+          BarChartRodData(
+            toY: y,
+            color: x.isEven ? AppColors.primary[100] : AppColors.primary[400],
+            width: 25,
+            borderRadius: BorderRadius.zero,
+          ),
+        ],
+      );
+    }
+
+    final barGroup1 = makeGroupData(0, values[0]);
+    final barGroup2 = makeGroupData(1, values[1]);
+    final barGroup3 = makeGroupData(2, values[2]);
+    final barGroup4 = makeGroupData(3, values[3]);
+    final barGroup5 = makeGroupData(4, values[4]);
+    final barGroup6 = makeGroupData(5, values[5]);
+
+    final showingBarGroups = [
       barGroup1,
       barGroup2,
       barGroup3,
@@ -39,12 +128,6 @@ class AppChartCardState extends State<AppChartCard> {
       barGroup5,
       barGroup6,
     ];
-
-    showingBarGroups = items;
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
       child: Card(
@@ -60,9 +143,14 @@ class AppChartCardState extends State<AppChartCard> {
               left: 0,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: Theme.of(context)
-                      .extension<AppColorScheme>()!
-                      .primaryGradient3,
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xff23253A),
+                      Color.fromARGB(255, 64, 71, 147),
+                    ],
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft,
+                  ),
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -72,14 +160,14 @@ class AppChartCardState extends State<AppChartCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  if (widget.header != null) widget.header!,
+                  if (header != null) header!,
                   const SizedBox(
                     height: 38,
                   ),
                   Expanded(
                     child: BarChart(
                       BarChartData(
-                        maxY: 20,
+                        maxY: maxValue,
                         titlesData: FlTitlesData(
                           show: true,
                           rightTitles: AxisTitles(
@@ -88,13 +176,17 @@ class AppChartCardState extends State<AppChartCard> {
                           topTitles: AxisTitles(
                             sideTitles: SideTitles(showTitles: false),
                           ),
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              getTitlesWidget: bottomTitles,
-                              reservedSize: 42,
-                            ),
-                          ),
+                          bottomTitles: labels != null
+                              ? AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    getTitlesWidget: bottomTitles,
+                                    reservedSize: 42,
+                                  ),
+                                )
+                              : AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false),
+                                ),
                           leftTitles: AxisTitles(
                             sideTitles: SideTitles(
                               showTitles: true,
@@ -112,70 +204,13 @@ class AppChartCardState extends State<AppChartCard> {
                       ),
                     ),
                   ),
-                  if (widget.footer != null) widget.footer!,
+                  if (footer != null) footer!,
                 ],
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget leftTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Color(0xff7589a2),
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-    String text;
-    if (value == 0) {
-      text = '1K';
-    } else if (value == 10) {
-      text = '5K';
-    } else if (value == 19) {
-      text = '10K';
-    } else {
-      return Container();
-    }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 0,
-      child: Text(text, style: style),
-    );
-  }
-
-  Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>['Mn', 'Te', 'Wd', 'Tu', 'Fr', 'St'];
-
-    final Widget text = Text(
-      titles[value.toInt()],
-      style: const TextStyle(
-        color: Color(0xff7589a2),
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
-      ),
-    );
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 16, //margin top
-      child: text,
-    );
-  }
-
-  BarChartGroupData makeGroupData(int x, double y) {
-    return BarChartGroupData(
-      barsSpace: 5,
-      x: x,
-      barRods: [
-        BarChartRodData(
-          toY: y,
-          color: x.isEven ? AppColors.primary : AppColors.primary[400],
-          width: 35,
-          borderRadius: BorderRadius.zero,
-        ),
-      ],
     );
   }
 }

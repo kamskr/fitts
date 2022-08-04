@@ -329,9 +329,7 @@ class _PreviousWorkout extends StatelessWidget {
                   children: [
                     Text(
                       l10n.homePagePreviousWorkoutLabel,
-                      style: theme.textTheme.bodyText2!.copyWith(
-                        fontWeight: FontWeight.w300,
-                      ),
+                      style: theme.textTheme.bodyText2,
                     ),
                     const AppGap.xxs(),
                     Text(
@@ -447,10 +445,78 @@ class _UserWorkouts extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: 250,
+          SizedBox(
+            height: 290,
             width: double.infinity,
-            child: AppChartCard(),
+            child: AppChartCard(
+              header: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Chest & Back',
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                  Text(
+                    l10n.homePagePreviousWorkoutDate('Mon, May 8'),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                ],
+              ),
+              values: const [
+                5000,
+                16000,
+                14000,
+                12000,
+                5000,
+                16000,
+              ],
+              footer: Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            '7',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5!
+                                .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
+                          ),
+                          Text(
+                            l10n.homePageNextWorkoutTimesCompleted,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 46,
+                        child: AppButton.gradient(
+                          child: Text(l10n.homePageStartWorkoutButtonText),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           )
         ],
       ),
