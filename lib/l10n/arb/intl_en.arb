@@ -63,7 +63,7 @@
   "@homePagePreviousWorkoutDate": {
     "placeholders": {
       "dateString": {
-        "type": "string",
+        "type": "String",
         "example": "Mon, May 8"
       }
     }

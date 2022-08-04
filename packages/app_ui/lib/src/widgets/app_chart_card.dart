@@ -128,88 +128,85 @@ class AppChartCard extends StatelessWidget {
       barGroup5,
       barGroup6,
     ];
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        color: Colors.transparent,
-        child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xff23253A),
-                      Color.fromARGB(255, 64, 71, 147),
-                    ],
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                  ),
-                  borderRadius: BorderRadius.circular(4),
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      color: Colors.transparent,
+      child: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xff23253A),
+                    Color.fromARGB(255, 64, 71, 147),
+                  ],
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
                 ),
+                borderRadius: BorderRadius.circular(4),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  if (header != null) header!,
-                  const SizedBox(
-                    height: 38,
-                  ),
-                  Expanded(
-                    child: BarChart(
-                      BarChartData(
-                        maxY: maxValue,
-                        titlesData: FlTitlesData(
-                          show: true,
-                          rightTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          topTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          bottomTitles: labels != null
-                              ? AxisTitles(
-                                  sideTitles: SideTitles(
-                                    showTitles: true,
-                                    getTitlesWidget: bottomTitles,
-                                    reservedSize: 42,
-                                  ),
-                                )
-                              : AxisTitles(
-                                  sideTitles: SideTitles(showTitles: false),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                if (header != null) header!,
+                const SizedBox(
+                  height: 38,
+                ),
+                Expanded(
+                  child: BarChart(
+                    BarChartData(
+                      maxY: maxValue,
+                      titlesData: FlTitlesData(
+                        show: true,
+                        rightTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        topTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        bottomTitles: labels != null
+                            ? AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget: bottomTitles,
+                                  reservedSize: 42,
                                 ),
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              reservedSize: 28,
-                              interval: 1,
-                              getTitlesWidget: leftTitles,
-                            ),
+                              )
+                            : AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 28,
+                            interval: 1,
+                            getTitlesWidget: leftTitles,
                           ),
                         ),
-                        borderData: FlBorderData(
-                          show: false,
-                        ),
-                        barGroups: showingBarGroups,
-                        gridData: FlGridData(show: false),
                       ),
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      barGroups: showingBarGroups,
+                      gridData: FlGridData(show: false),
                     ),
                   ),
-                  if (footer != null) footer!,
-                ],
-              ),
+                ),
+                if (footer != null) footer!,
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
