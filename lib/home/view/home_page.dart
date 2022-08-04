@@ -447,18 +447,10 @@ class _UserWorkouts extends StatelessWidget {
               ),
             ],
           ),
-          Container(
+          const SizedBox(
             height: 250,
             width: double.infinity,
-            color: Theme.of(context).colorScheme.primary,
-            child: const Center(
-              child: Text(
-                'Placeholder for next workout card',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            child: AppChartCard(),
           )
         ],
       ),

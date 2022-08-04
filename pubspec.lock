@@ -365,6 +365,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  fl_chart:
+    dependency: transitive
+    description:
+      name: fl_chart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.55.0"
   flow_builder:
     dependency: "direct main"
     description:
