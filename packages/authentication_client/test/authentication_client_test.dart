@@ -114,7 +114,6 @@ void main() {
 
       test('calls createUserWithEmailAndPassword', () async {
         await authenticationClient.signUp(
-          displayName: displayName,
           email: email,
           password: password,
         );
@@ -129,7 +128,6 @@ void main() {
       test('succeeds when createUserWithEmailAndPassword succeeds', () async {
         expect(
           authenticationClient.signUp(
-            displayName: displayName,
             email: email,
             password: password,
           ),
@@ -148,7 +146,6 @@ void main() {
 
         expect(
           authenticationClient.signUp(
-            displayName: displayName,
             email: email,
             password: password,
           ),

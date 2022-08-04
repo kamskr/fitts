@@ -47,15 +47,19 @@ class AuthenticationClient {
   ///
   /// Throws a [SignUpWithEmailAndPasswordFailure] if an exception occurs.
   Future<void> signUp({
-    required String displayName,
     required String email,
     required String password,
+    String? displayName,
   }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      if (displayName == null) {
+        return;
+      }
 
       final user = firebase_auth.FirebaseAuth.instance.currentUser;
 

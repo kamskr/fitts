@@ -51,6 +51,7 @@ class AppView extends StatelessWidget {
     // const themeMode = ThemeMode.system;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Fitts',
       theme: lightThemeData,
       // darkTheme: darkThemeData.materialThemeData,

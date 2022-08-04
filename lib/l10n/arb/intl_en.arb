@@ -57,5 +57,16 @@
     }
   },
   "homePageNextWorkoutLabel": "NEXT WORKOUT",
-  "homePageShowAllWorkouts": "Show All"
+  "homePageShowAllWorkouts": "Show All",
+  "homePageStartWorkoutButtonText": "START",
+  "homePagePreviousWorkoutDate": "Previous: {dateString}",
+  "@homePagePreviousWorkoutDate": {
+    "placeholders": {
+      "dateString": {
+        "type": "String",
+        "example": "Mon, May 8"
+      }
+    }
+  },
+  "homePageNextWorkoutTimesCompleted": "times completed"
 }

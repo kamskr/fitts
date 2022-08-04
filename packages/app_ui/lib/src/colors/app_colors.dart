@@ -7,6 +7,7 @@ abstract class AppColors {
   /// Primary color with different shades.
   static const primary = MaterialColor(0xff5063EE, {
     50: Color(0xffE9EAF2),
+    100: Color(0xffd1d4f0),
     400: Color(0xff808DED),
     500: Color(0xff5063EE),
     900: Color(0xff3346D4),
