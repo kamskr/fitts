@@ -71,7 +71,6 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
 
-  const displayName = 'displayName';
   const email = 'test@gmail.com';
   const password = 'password';
   const user = User(
