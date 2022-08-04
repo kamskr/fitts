@@ -30,7 +30,7 @@ void main() {
           child: AppChartCard(
             values: const [
               1000,
-              1000,
+              2000,
               1000,
               1000,
               1000,
