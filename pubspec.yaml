@@ -36,7 +36,7 @@ dependencies:
   form_validators:
     path: packages/form_validators
   formz: ^0.4.1
-  mocktail: ^0.2.0
+  mocktail: ^0.3.0
   rxdart: ^0.27.3
   user_profile_repository:
     path: packages/user_profile_repository
@@ -47,7 +47,7 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.1.7
   flutter_launcher_icons: "^0.9.2"
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 
