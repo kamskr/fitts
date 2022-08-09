@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
+import 'dart:async';
+
 import 'package:api_models/api_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -72,6 +74,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'emits new AppState with user if user not empty',
       build: () => AppBloc(
@@ -87,6 +90,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'emits authenticated if UserProfile not empty and active',
       build: () => AppBloc(
@@ -105,6 +109,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'emits onboardingRequired if UserProfile not empty and not active',
       build: () => AppBloc(
@@ -123,6 +128,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'emits unauthenticated if UserProfile empty',
       build: () => AppBloc(
@@ -141,6 +147,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'does nothing if UserProfile has email == "waiting"',
       build: () => AppBloc(

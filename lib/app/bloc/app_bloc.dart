@@ -42,9 +42,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   late StreamSubscription<UserProfile> _userProfileSubscription;
 
   void _userChanged(User user) => add(AppUserChanged(user));
-  void _userProfileChanged(UserProfile userProfile) {
-    return add(AppUserProfileChanged(userProfile));
-  }
+  void _userProfileChanged(UserProfile userProfile) =>
+      add(AppUserProfileChanged(userProfile));
 
   Future<void> _onUserChanged(
     AppUserChanged event,
