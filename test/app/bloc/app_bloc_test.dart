@@ -7,6 +7,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
 class MockAuthenticationClient extends Mock implements AuthenticationClient {}
@@ -45,7 +46,7 @@ void main() {
       );
       when(() => userProfileRepository.userProfile('user@email.com'))
           .thenAnswer(
-        (_) => Stream<UserProfile>.value(userProfileActive),
+        (_) => BehaviorSubject<UserProfile>()..add(userProfileActive),
       );
     });
 
@@ -125,6 +126,25 @@ void main() {
         AppState.initial(
           userProfile: userProfileNew,
           status: AppStatus.onboardingRequired,
+        ),
+      ],
+    );
+
+    blocTest<AppBloc, AppState>(
+      'updates UserProfile when new data emitted from stream.',
+      build: () => AppBloc(
+        authenticationClient: authenticationClient,
+        userProfileRepository: userProfileRepository,
+      ),
+      act: (bloc) => bloc.add(
+        AppUserProfileChanged(
+          UserProfile.empty,
+        ),
+      ),
+      expect: () => <AppState>[
+        AppState.initial(
+          userProfile: UserProfile.empty,
+          status: AppStatus.unauthenticated,
         ),
       ],
     );

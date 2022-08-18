@@ -124,9 +124,7 @@ class _TempPlansWidget extends StatelessWidget {
             Center(
               child: AppButton.primary(
                 child: const Text('Sign out'),
-                onPressed: () {
-                  context.read<AuthenticationClient>().signOut();
-                },
+                onPressed: () => context.read<AuthenticationClient>().signOut(),
               ),
             ),
           ],

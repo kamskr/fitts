@@ -24,11 +24,15 @@ class UserProfileResource {
   ///
   /// It emits a [DeserializationException] when deserialization fails.
   Stream<UserProfile> userProfile(String userProfileId) {
-    return _firebaseFirestore
-        .collection(_collectionName)
-        .doc(userProfileId)
-        .snapshots()
-        .map(_mapSnapshotToUserProfile);
+    try {
+      return _firebaseFirestore
+          .collection(_collectionName)
+          .doc(userProfileId)
+          .snapshots()
+          .map(_mapSnapshotToUserProfile);
+    } catch (e, st) {
+      throw ApiException(e, st);
+    }
   }
 
   UserProfile _mapSnapshotToUserProfile(DocumentSnapshot snapshot) {

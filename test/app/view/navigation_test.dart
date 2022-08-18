@@ -44,7 +44,7 @@ void main() {
           findsOneWidget,
         );
 
-        final lastMenuItem = find.text('Stats');
+        final lastMenuItem = find.text('Plans');
         await tester.tap(lastMenuItem);
         await tester.pumpAndSettle();
 
