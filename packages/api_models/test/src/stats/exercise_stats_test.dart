@@ -74,6 +74,7 @@ void main() {
       );
 
       expect(copy, equals(exerciseStats2));
+      expect(copy, equals(copy.copyWith()));
     });
   });
 }

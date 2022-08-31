@@ -68,6 +68,53 @@ void main() {
       );
 
       expect(copy, equals(userStats2));
+      expect(copy, equals(copy.copyWith()));
+    });
+    test('can be created from json', () {
+      const json = {
+        'exercises': {
+          'bench_press': {
+            'highestWeight': 130,
+            'repetitionsDone': 10,
+            'timesPerformed': 50,
+            'overallBest': {
+              'repetitions': 10,
+              'weight': 130,
+            },
+          },
+        },
+        'global': {
+          'keyLifts': ['bench', 'squat'],
+          'liftingTimeSpent': 100,
+          'totalKgLifted': 200,
+          'workoutsCompleted': 20,
+        },
+      };
+      final userStats = UserStats.fromJson(json);
+      expect(userStats, isNotNull);
+    });
+    test('can be converted to json', () {
+      const json = {
+        'exercises': {
+          'bench_press': {
+            'highestWeight': 130,
+            'repetitionsDone': 10,
+            'timesPerformed': 50,
+            'overallBest': {
+              'repetitions': 10,
+              'weight': 130,
+            },
+          },
+        },
+        'global': {
+          'keyLifts': ['bench', 'squat'],
+          'liftingTimeSpent': 100,
+          'totalKgLifted': 200,
+          'workoutsCompleted': 20,
+        },
+      };
+      final userStats = UserStats.fromJson(json);
+      expect(userStats.toJson(), equals(json));
     });
   });
 }

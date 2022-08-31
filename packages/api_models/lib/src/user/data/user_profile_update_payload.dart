@@ -7,7 +7,7 @@ part 'user_profile_update_payload.g.dart';
 /// {@template user_profile_update_payload}
 /// Represents the payload for updating user profile.
 /// {@endtemplate}
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserProfileUpdatePayload extends Equatable {
   /// {@macro user_profile_update_payload}
   const UserProfileUpdatePayload({

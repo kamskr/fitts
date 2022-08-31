@@ -14,11 +14,15 @@ void main() {
     });
 
     testWidgets('has provided child', (WidgetTester tester) async {
-      final button = AppTextButton(
-        child: const Text('T'),
-        onPressed: () {},
+      await tester.pumpIt(
+        Builder(
+          builder: (context) => AppTextButton(
+            textColor: Theme.of(context).extension<AppColorScheme>()!.black100,
+            child: const Text('T'),
+            onPressed: () {},
+          ),
+        ),
       );
-      await tester.pumpIt(button);
       final titleFinder = find.text('T');
       expect(titleFinder, findsOneWidget);
     });

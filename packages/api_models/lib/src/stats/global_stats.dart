@@ -6,7 +6,7 @@ part 'global_stats.g.dart';
 /// {@template global_stats}
 /// Global user statistics.
 /// {@endtemplate}
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class GlobalStats extends Equatable {
   /// {@macro global_stats}
   const GlobalStats({

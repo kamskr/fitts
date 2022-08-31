@@ -7,7 +7,7 @@ part 'exercise_stats.g.dart';
 /// {@template exercise_stats}
 /// Model representing users statistics for specific exercise.
 /// {@endtemplate}
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ExerciseStats extends Equatable {
   /// {@macro exercise_stats}
   const ExerciseStats({

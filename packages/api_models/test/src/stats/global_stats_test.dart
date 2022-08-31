@@ -59,6 +59,7 @@ void main() {
       );
 
       expect(copy, equals(globalStats2));
+      expect(copy, equals(copy.copyWith()));
     });
   });
 }

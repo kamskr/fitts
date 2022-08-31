@@ -5,7 +5,7 @@ part 'overall_best.g.dart';
 /// {@template overall_best}
 /// A model representing overall best result for the exercise.
 /// {@endtemplate}
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class OverallBest extends Equatable {
   /// {@macro overall_best}
   const OverallBest({

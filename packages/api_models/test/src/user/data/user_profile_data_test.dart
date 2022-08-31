@@ -89,6 +89,7 @@ void main() {
       );
 
       expect(userProfileData, equals(userProfileDataCompare));
+      expect(userProfileDataCompare, equals(userProfileDataCompare.copyWith()));
     });
     test('can be converted to json', () {
       const json = {
@@ -117,6 +118,10 @@ void main() {
       final finalJson = userProfileDataCompare.toJson();
 
       expect(json, equals(finalJson));
+    });
+
+    test('can be converted to String', () {
+      expect(UserProfileData.empty.toString(), isA<String>());
     });
   });
 }
