@@ -10,38 +10,61 @@ typedef Callback = void Function(MethodCall call);
 void setupFirebaseAuthMocks([Callback? customHandlers]) {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelFirebase.channel.setMockMethodCallHandler((call) async {
-    if (call.method == 'Firebase#initializeCore') {
-      return [
-        {
-          'name': defaultFirebaseAppName,
-          'options': {
-            'apiKey': '123',
-            'appId': '123',
-            'messagingSenderId': '123',
-            'projectId': '123',
-          },
-          // ignore: inference_failure_on_collection_literal
-          'pluginConstants': {},
-        }
-      ];
-    }
+  setupFirebaseCoreMocks();
+}
 
-    if (call.method == 'Firebase#initializeApp') {
-      return {
-        'name': call.arguments['appName'],
-        'options': call.arguments['options'],
-        // ignore: inference_failure_on_collection_literal
-        'pluginConstants': {},
-      };
-    }
+class MockFirebaseApp implements TestFirebaseCoreHostApi {
+  @override
+  Future<PigeonInitializeResponse> initializeApp(
+    String appName,
+    PigeonFirebaseOptions initializeAppRequest,
+  ) async {
+    return PigeonInitializeResponse(
+      name: appName,
+      options: PigeonFirebaseOptions(
+        apiKey: '123',
+        projectId: '123',
+        appId: '123',
+        messagingSenderId: '123',
+      ),
+      pluginConstants: {},
+    );
+  }
 
-    if (customHandlers != null) {
-      customHandlers(call);
-    }
+  @override
+  Future<List<PigeonInitializeResponse?>> initializeCore() async {
+    return [
+      PigeonInitializeResponse(
+        name: defaultFirebaseAppName,
+        options: PigeonFirebaseOptions(
+          apiKey: '123',
+          projectId: '123',
+          appId: '123',
+          messagingSenderId: '123',
+        ),
+        pluginConstants: {},
+      )
+    ];
+  }
 
-    return null;
-  });
+  @override
+  Future<PigeonFirebaseOptions> optionsFromResource() async {
+    return PigeonFirebaseOptions(
+      apiKey: '123',
+      projectId: '123',
+      appId: '123',
+      messagingSenderId: '123',
+    );
+  }
+}
+
+/// [setupFirebaseCoreMocks] can be used to mock the FirebasePlatform.
+///
+/// If you need to customize the mock,
+/// you can implement [TestFirebaseCoreHostApi]
+/// and call `TestFirebaseCoreHostApi.setup(MyMock());`
+void setupFirebaseCoreMocks() {
+  TestFirebaseCoreHostApi.setup(MockFirebaseApp());
 }
 
 Future<T> neverEndingFuture<T>() async {
