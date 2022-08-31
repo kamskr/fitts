@@ -29,7 +29,7 @@ scripts:
     run: melos exec --dir-exists="test" --flutter "fvm flutter test --coverage"
   flutter:upgrade:
     name: Test
-    run: melos exec --flutter "fvm flutter pub upgrade --major-versions"
+    run: melos exec --flutter "fvm flutter pub upgrade"
   build:translations:
     name: Builds translation dart files
     run: melos exec --depends-on=intl_utils --flutter "fvm flutter pub run intl_utils:generate"
