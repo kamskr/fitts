@@ -64,6 +64,14 @@ class _HomeBody extends StatelessWidget {
         ),
       );
     }
+
+    if (state is HomeErrorState) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Placeholder for error screen.'),
+        ),
+      );
+    }
     return SingleChildScrollView(
       child: Column(
         children: const [
