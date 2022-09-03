@@ -14,9 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// {@endtemplate}
 class Navigation extends StatefulWidget {
   /// {@macro navigation}
-  const Navigation({
-    Key? key,
-  }) : super(key: key);
+  const Navigation({Key? key}) : super(key: key);
 
   /// Page helper for creating pages.
   static Page<void> page() {
@@ -126,9 +124,7 @@ class _TempPlansWidget extends StatelessWidget {
             Center(
               child: AppButton.primary(
                 child: const Text('Sign out'),
-                onPressed: () {
-                  context.read<AuthenticationClient>().signOut();
-                },
+                onPressed: () => context.read<AuthenticationClient>().signOut(),
               ),
             ),
           ],

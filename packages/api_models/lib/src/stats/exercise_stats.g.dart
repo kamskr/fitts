@@ -20,5 +20,5 @@ Map<String, dynamic> _$ExerciseStatsToJson(ExerciseStats instance) =>
       'highestWeight': instance.highestWeight,
       'repetitionsDone': instance.repetitionsDone,
       'timesPerformed': instance.timesPerformed,
-      'overallBest': instance.overallBest,
+      'overallBest': instance.overallBest.toJson(),
     };

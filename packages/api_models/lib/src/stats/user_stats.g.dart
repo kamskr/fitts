@@ -15,6 +15,7 @@ UserStats _$UserStatsFromJson(Map<String, dynamic> json) => UserStats(
     );
 
 Map<String, dynamic> _$UserStatsToJson(UserStats instance) => <String, dynamic>{
-      'exercises': instance.exercisesStats,
-      'global': instance.globalStats,
+      'exercises':
+          instance.exercisesStats.map((k, e) => MapEntry(k, e.toJson())),
+      'global': instance.globalStats.toJson(),
     };

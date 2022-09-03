@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
+import 'dart:async';
+
 import 'package:api_models/api_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitts/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rxdart/subjects.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
 class MockAuthenticationClient extends Mock implements AuthenticationClient {}
@@ -43,7 +46,7 @@ void main() {
       );
       when(() => userProfileRepository.userProfile('user@email.com'))
           .thenAnswer(
-        (_) => Stream<UserProfile>.value(userProfileActive),
+        (_) => BehaviorSubject<UserProfile>()..add(userProfileActive),
       );
     });
 
@@ -72,6 +75,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'emits new AppState with user if user not empty',
       build: () => AppBloc(
@@ -87,6 +91,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'emits authenticated if UserProfile not empty and active',
       build: () => AppBloc(
@@ -105,6 +110,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'emits onboardingRequired if UserProfile not empty and not active',
       build: () => AppBloc(
@@ -123,6 +129,26 @@ void main() {
         ),
       ],
     );
+
+    blocTest<AppBloc, AppState>(
+      'updates UserProfile when new data emitted from stream.',
+      build: () => AppBloc(
+        authenticationClient: authenticationClient,
+        userProfileRepository: userProfileRepository,
+      ),
+      act: (bloc) => bloc.add(
+        AppUserProfileChanged(
+          UserProfile.empty,
+        ),
+      ),
+      expect: () => <AppState>[
+        AppState.initial(
+          userProfile: UserProfile.empty,
+          status: AppStatus.unauthenticated,
+        ),
+      ],
+    );
+
     blocTest<AppBloc, AppState>(
       'emits unauthenticated if UserProfile empty',
       build: () => AppBloc(
@@ -141,6 +167,7 @@ void main() {
         ),
       ],
     );
+
     blocTest<AppBloc, AppState>(
       'does nothing if UserProfile has email == "waiting"',
       build: () => AppBloc(

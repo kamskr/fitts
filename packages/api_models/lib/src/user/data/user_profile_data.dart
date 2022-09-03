@@ -9,7 +9,7 @@ part 'user_profile_data.g.dart';
 /// This model is an extension to the user information which
 /// are contained in the firebase auth process.
 /// {@endtemplate}
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserProfileData extends Equatable {
   /// {@macro user_profile}
   const UserProfileData({

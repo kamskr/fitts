@@ -8,7 +8,7 @@ part 'user_stats.g.dart';
 /// Model representing User statistics data. Stats are split into global and
 /// per exercise statistics.
 /// {@endtemplate}
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserStats extends Equatable {
   /// {@macro user_stats}
   const UserStats({

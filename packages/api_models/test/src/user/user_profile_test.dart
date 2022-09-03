@@ -62,6 +62,10 @@ void main() {
       );
 
       expect(copy, equals(userProfileCompare));
+      expect(userProfileCompare, equals(userProfileCompare.copyWith()));
+    });
+    test('can be converted to String', () {
+      expect(UserProfile.empty.toString(), isA<String>());
     });
   });
 }

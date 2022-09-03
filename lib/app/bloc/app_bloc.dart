@@ -26,12 +26,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ) {
     on<AppUserChanged>(_onUserChanged);
     on<AppUserProfileChanged>(_onUserProfileChanged);
-    _userSubscription = _authenticationClient.user.listen(_userChanged);
+    _userSubscription =
+        _authenticationClient.user.listen((user) => add(AppUserChanged(user)));
 
     _userProfileSubscription = _authenticationClient.user
         .flatMap((user) => _userProfileRepository.userProfile(user.email!))
         .handleError(addError)
-        .listen(_userProfileChanged);
+        .listen((userProfile) => add(AppUserProfileChanged(userProfile)));
   }
 
   final AuthenticationClient _authenticationClient;
@@ -40,11 +41,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   late StreamSubscription<User> _userSubscription;
   late StreamSubscription<UserProfile> _userProfileSubscription;
-
-  void _userChanged(User user) => add(AppUserChanged(user));
-  void _userProfileChanged(UserProfile userProfile) {
-    return add(AppUserProfileChanged(userProfile));
-  }
 
   Future<void> _onUserChanged(
     AppUserChanged event,

@@ -46,6 +46,7 @@ void main() {
       );
 
       expect(copy, equals(overallBest2));
+      expect(copy, equals(copy.copyWith()));
     });
   });
 }

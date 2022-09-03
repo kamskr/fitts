@@ -62,6 +62,7 @@ void main() {
       );
 
       expect(copy, equals(userProfileUpdatePayloadCompare));
+      expect(copy, equals(copy.copyWith()));
     });
     test('can be created from json', () {
       const json = {
@@ -121,5 +122,8 @@ void main() {
 
       expect(json, equals(finalJson));
     });
+  });
+  test('can be converted to String', () {
+    expect(UserProfileUpdatePayload.empty.toString(), isA<String>());
   });
 }
