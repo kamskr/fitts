@@ -72,6 +72,7 @@ class _HomeBody extends StatelessWidget {
         ),
       );
     }
+
     return SingleChildScrollView(
       child: Column(
         children: const [
@@ -475,12 +476,13 @@ class _UserWorkouts extends StatelessWidget {
                 ],
               ),
               values: const [
-                5000,
-                16000,
-                14000,
-                12000,
-                5000,
-                16000,
+                5,
+                16,
+                14,
+                12,
+                5,
+                16,
+                // 5, 5, 5, 5, 5, 5
               ],
               footer: Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
