@@ -8,8 +8,12 @@ part of 'exercise.dart';
 
 Exercise _$ExerciseFromJson(Map<String, dynamic> json) => Exercise(
       name: json['name'] as String,
-      primaryMuscles: json['primaryMuscles'] as List<dynamic>,
-      secondaryMuscles: json['secondaryMuscles'] as List<dynamic>,
+      primaryMuscles: (json['primaryMuscles'] as List<dynamic>)
+          .map((e) => $enumDecode(_$MuscleEnumMap, e))
+          .toList(),
+      secondaryMuscles: (json['secondaryMuscles'] as List<dynamic>)
+          .map((e) => $enumDecode(_$MuscleEnumMap, e))
+          .toList(),
       level: $enumDecode(_$LevelEnumMap, json['level']),
       category: $enumDecode(_$ExerciseCategoryEnumMap, json['category']),
       instructions: (json['instructions'] as List<dynamic>)
@@ -28,8 +32,10 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) => Exercise(
 Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
       'name': instance.name,
       'aliases': instance.aliases,
-      'primaryMuscles': instance.primaryMuscles,
-      'secondaryMuscles': instance.secondaryMuscles,
+      'primaryMuscles':
+          instance.primaryMuscles.map((e) => _$MuscleEnumMap[e]!).toList(),
+      'secondaryMuscles':
+          instance.secondaryMuscles.map((e) => _$MuscleEnumMap[e]!).toList(),
       'force': _$ForceEnumMap[instance.force],
       'level': _$LevelEnumMap[instance.level]!,
       'mechanicType': _$MechanicTypeEnumMap[instance.mechanicType],
@@ -39,6 +45,26 @@ Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
       'description': instance.description,
       'tips': instance.tips,
     };
+
+const _$MuscleEnumMap = {
+  Muscle.abdominals: 'abdominals',
+  Muscle.hamstrings: 'hamstrings',
+  Muscle.calves: 'calves',
+  Muscle.shoulders: 'shoulders',
+  Muscle.adductors: 'adductors',
+  Muscle.glutes: 'glutes',
+  Muscle.quadriceps: 'quadriceps',
+  Muscle.biceps: 'biceps',
+  Muscle.forearms: 'forearms',
+  Muscle.abductors: 'abductors',
+  Muscle.triceps: 'triceps',
+  Muscle.chest: 'chest',
+  Muscle.lowerBack: 'lowerBack',
+  Muscle.traps: 'traps',
+  Muscle.middleBack: 'middleBack',
+  Muscle.lats: 'lats',
+  Muscle.neck: 'neck',
+};
 
 const _$LevelEnumMap = {
   Level.beginner: 'beginner',
