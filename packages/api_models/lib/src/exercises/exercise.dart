@@ -30,51 +30,51 @@ class Exercise extends Equatable {
       _$ExerciseFromJson(json);
 
   /// Name of the exercise.
-  @JsonValue('name')
+  @JsonKey(name: 'name')
   final String name;
 
   /// Alias names of the exercise.
-  @JsonValue('aliases')
+  @JsonKey(name: 'aliases')
   final List<String>? aliases;
 
   /// Primary muscles used in the exercise.
-  @JsonValue('primaryMuscles')
+  @JsonKey(name: 'primaryMuscles')
   final List<Muscle> primaryMuscles;
 
   /// Secondary muscles used in the exercise.
-  @JsonValue('secondaryMuscles')
+  @JsonKey(name: 'secondaryMuscles')
   final List<Muscle> secondaryMuscles;
 
   /// Force type of the exercise.
-  @JsonValue('force')
+  @JsonKey(name: 'force')
   final Force? force;
 
   /// Difficulty level of the exercise.
-  @JsonValue('level')
+  @JsonKey(name: 'level')
   final Level level;
 
   /// Mechanic type of the exercise.
-  @JsonValue('mechanicType')
+  @JsonKey(name: 'mechanic')
   final MechanicType? mechanicType;
 
   /// Equipment used in the exercise.
-  @JsonValue('equipment')
+  @JsonKey(name: 'equipment')
   final Equipment? equipment;
 
   /// Category of the exercise.
-  @JsonValue('category')
+  @JsonKey(name: 'category')
   final ExerciseCategory category;
 
   /// Instructions for the exercise.
-  @JsonValue('instructions')
+  @JsonKey(name: 'instructions')
   final List<String> instructions;
 
   /// Exercise description.
-  @JsonValue('description')
+  @JsonKey(name: 'description')
   final String? description;
 
   /// Tips for the exercise.
-  @JsonValue('tips')
+  @JsonKey(name: 'tips')
   final List<String>? tips;
 
   /// Converts the [Exercise] to [Map].

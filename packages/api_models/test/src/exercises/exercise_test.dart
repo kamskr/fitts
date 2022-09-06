@@ -46,17 +46,17 @@ void main() {
         exercise.props,
         equals([
           exercise.name,
+          exercise.aliases,
           exercise.primaryMuscles,
           exercise.secondaryMuscles,
-          exercise.level,
-          exercise.category,
-          exercise.instructions,
-          exercise.tips,
           exercise.force,
+          exercise.level,
           exercise.mechanicType,
           exercise.equipment,
+          exercise.category,
+          exercise.instructions,
           exercise.description,
-          exercise.aliases,
+          exercise.tips,
         ]),
       );
     });
@@ -98,7 +98,7 @@ void main() {
           secondaryMuscles: [Muscle.abdominals],
           level: Level.beginner,
           category: ExerciseCategory.strength,
-          instructions: [],
+          instructions: ['test'],
         ),
       );
     });
@@ -106,20 +106,32 @@ void main() {
     test('can be converted to json.', () {
       const exercise = Exercise(
         name: 'name',
+        aliases: ['name2'],
         primaryMuscles: [Muscle.abdominals],
         secondaryMuscles: [Muscle.abdominals],
+        force: Force.pull,
         level: Level.beginner,
+        mechanicType: MechanicType.isolation,
+        equipment: Equipment.barbell,
         category: ExerciseCategory.strength,
         instructions: ['test'],
+        description: 'description',
+        tips: ['tip'],
       );
 
       const exerciseJson = {
         'name': 'name',
+        'aliases': ['name2'],
         'primaryMuscles': ['abdominals'],
         'secondaryMuscles': ['abdominals'],
+        'force': 'pull',
         'level': 'beginner',
+        'mechanic': 'isolation',
+        'equipment': 'barbell',
         'category': 'strength',
         'instructions': ['test'],
+        'description': 'description',
+        'tips': ['tip'],
       };
 
       expect(exercise.toJson(), equals(exerciseJson));

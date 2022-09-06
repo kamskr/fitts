@@ -22,7 +22,7 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) => Exercise(
       tips: (json['tips'] as List<dynamic>?)?.map((e) => e as String).toList(),
       force: $enumDecodeNullable(_$ForceEnumMap, json['force']),
       mechanicType:
-          $enumDecodeNullable(_$MechanicTypeEnumMap, json['mechanicType']),
+          $enumDecodeNullable(_$MechanicTypeEnumMap, json['mechanic']),
       equipment: $enumDecodeNullable(_$EquipmentEnumMap, json['equipment']),
       description: json['description'] as String?,
       aliases:
@@ -38,7 +38,7 @@ Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
           instance.secondaryMuscles.map((e) => _$MuscleEnumMap[e]!).toList(),
       'force': _$ForceEnumMap[instance.force],
       'level': _$LevelEnumMap[instance.level]!,
-      'mechanicType': _$MechanicTypeEnumMap[instance.mechanicType],
+      'mechanic': _$MechanicTypeEnumMap[instance.mechanicType],
       'equipment': _$EquipmentEnumMap[instance.equipment],
       'category': _$ExerciseCategoryEnumMap[instance.category]!,
       'instructions': instance.instructions,
