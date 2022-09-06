@@ -51,7 +51,7 @@ android {
     defaultConfig {
         applicationId "com.kamilsikora.fitts"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
