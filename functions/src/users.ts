@@ -16,16 +16,28 @@ const db = admin.firestore();
 export const createProfile = (userRecord: UserRecord, _: EventContext) => {
   const { email, uid, displayName, photoURL } = userRecord;
 
-  const profileStatusOnboardingRequired = 'onboardingRequired'
+  const profileStatusOnboardingRequired = "onboardingRequired";
 
-  return db
-    .collection("UserProfiles")
+  db.collection("UserProfiles")
     .doc(email || uid)
     .set({
       email,
       displayName,
       photoUrl: photoURL,
       profileStatus: profileStatusOnboardingRequired,
+    })
+    .catch(console.error);
+
+  db.collection("UserStats")
+    .doc(email || uid)
+    .set({
+      exercises: {},
+      global: {
+        keyLifts: [],
+        liftingTimeSpent: 0,
+        totalKgLifted: 0,
+        workoutsCompleted: 0,
+      },
     })
     .catch(console.error);
 };

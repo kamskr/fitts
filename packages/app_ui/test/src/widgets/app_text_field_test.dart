@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../helpers/app_widget_tester.dart';
+import '../../helpers/helpers.dart';
 
 void main() {
   group('AppTextField', () {

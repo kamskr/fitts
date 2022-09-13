@@ -1,3 +1,6 @@
+/// {@template app_spacing}
+/// Spacing used by the application.
+/// {@endtemplate}
 abstract class AppSpacing {
   /// The default spacing unit.
   static const double spaceUnit = 16;

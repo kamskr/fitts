@@ -9,7 +9,6 @@
   "signInWithGoogleButton": "SIGN IN WITH GOOGLE",
   "signInButton": "SIGN IN",
   "alreadyHaveAccountText": "Already have an account?",
-  "homePageTitle": "Home page",
   "signUpPageTitle": "Sign Up",
   "signUpPageUsernameLabel": "Username",
   "signUpPageUsernameErrorMessage": "This username is invalid",
@@ -37,5 +36,37 @@
   "onboardingWeightSelectionTitle": "How much do you weigh?",
   "onboardingWeightSelectionDescription": "This is used to set up recommendations just for you.",
   "onboardingHeightSelectionTitle": "How tall are you?",
-  "onboardingHeightSelectionDescription": "This is used to set up recommendations just for you.."
+  "onboardingHeightSelectionDescription": "This is used to set up recommendations just for you..",
+  "homePageTitle": "Dashboard",
+  "homePageWorkoutsCompleted1": "workouts",
+  "homePageWorkoutsCompleted2": "completed",
+  "homePageTonnageLifted1": "tonnage",
+  "homePageTonnageLifted2": "lifted",
+  "homePageCurrentWeight1": "current",
+  "homePageCurrentWeight2": "weight",
+  "homePageNoWorkoutsMessage": "You have no workouts yet. Go on and create your first one!",
+  "homePageCreateWorkoutButtonText": "CREATE WORKOUT",
+  "homePagePreviousWorkoutLabel": "Previous Workout",
+  "homePagePreviousWorkoutExercisesCount": "{count} exercises completed",
+  "@homePagePreviousWorkoutExercisesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "homePageNextWorkoutLabel": "NEXT WORKOUT",
+  "homePageShowAllWorkouts": "Show All",
+  "homePageStartWorkoutButtonText": "START",
+  "homePagePreviousWorkoutDate": "Previous: {dateString}",
+  "@homePagePreviousWorkoutDate": {
+    "placeholders": {
+      "dateString": {
+        "type": "String",
+        "example": "Mon, May 8"
+      }
+    }
+  },
+  "homePageNextWorkoutTimesCompleted": "times completed"
 }

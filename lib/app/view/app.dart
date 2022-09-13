@@ -6,13 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
+/// {@template app}
+/// Root app widget.
+/// {@endtemplate}
 class App extends StatelessWidget {
+  /// {@macro app}
   const App({
     Key? key,
     required this.lightThemeData,
     // required this.darkThemeData,
   }) : super(key: key);
 
+  /// Theme data for the light theme.
   final ThemeData lightThemeData;
   // final AppThemeData darkThemeData;
 
@@ -28,12 +33,16 @@ class App extends StatelessWidget {
   }
 }
 
+@visibleForTesting
+// ignore: public_member_api_docs
 class AppView extends StatelessWidget {
+// ignore: public_member_api_docs
   const AppView({
     Key? key,
     required this.lightThemeData,
   }) : super(key: key);
 
+  /// Theme data for the light theme.
   final ThemeData lightThemeData;
   // final AppThemeData darkThemeData;
 
@@ -42,6 +51,7 @@ class AppView extends StatelessWidget {
     // const themeMode = ThemeMode.system;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Fitts',
       theme: lightThemeData,
       // darkTheme: darkThemeData.materialThemeData,

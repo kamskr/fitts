@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
 /// This is place where you should put all custom color scheme properties
@@ -161,7 +163,10 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       accentGradient:
           LinearGradient.lerp(accentGradient, other.accentGradient, t)!,
       secondaryAccentGradient: LinearGradient.lerp(
-          secondaryAccentGradient, other.secondaryAccentGradient, t)!,
+        secondaryAccentGradient,
+        other.secondaryAccentGradient,
+        t,
+      )!,
     );
   }
 }

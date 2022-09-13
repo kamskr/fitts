@@ -1,0 +1,26 @@
+name: user_stats_repository
+description: Flutter package used for communicating with user_stats resource.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.1.0"
+  flutter: 3.3.0
+
+dependencies:
+  api_client:
+    path: ../api_client
+  api_models:
+    path: ../api_models
+  authentication_client:
+    path: ../authentication_client
+  clock: ^1.1.0
+  flutter:
+    sdk: flutter
+  rxdart: ^0.27.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  very_good_analysis: ^3.0.1

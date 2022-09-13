@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../helpers/helpers.dart';
+import '../../helpers/helpers.dart';
 
 void main() {
   group('AppTextButton', () {
@@ -14,11 +14,15 @@ void main() {
     });
 
     testWidgets('has provided child', (WidgetTester tester) async {
-      final button = AppTextButton(
-        child: const Text('T'),
-        onPressed: () {},
+      await tester.pumpIt(
+        Builder(
+          builder: (context) => AppTextButton(
+            textColor: Theme.of(context).extension<AppColorScheme>()!.black100,
+            child: const Text('T'),
+            onPressed: () {},
+          ),
+        ),
       );
-      await tester.pumpIt(button);
       final titleFinder = find.text('T');
       expect(titleFinder, findsOneWidget);
     });

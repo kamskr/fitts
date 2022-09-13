@@ -25,11 +25,16 @@ void main() {
   const validEmailString = 'test@gmail.com';
   const validEmail = Email.dirty(validEmailString);
 
+  const validEmailInvalidUserString = 'test1@gmail.com';
+  const validEmailInvalidUser = Email.dirty('test1@gmail.com');
+
   const invalidPasswordString = 'invalid';
   const invalidPassword = Password.dirty(invalidPasswordString);
 
   const validPasswordString = 't0pS3cret1234!!';
   const validPassword = Password.dirty(validPasswordString);
+
+  const errorMessage = 'Sth went wrong';
 
   group('SignUpBloc', () {
     late AuthenticationClient authenticationClient;
@@ -165,6 +170,123 @@ void main() {
             email: validEmail,
             password: validPassword,
             status: FormzStatus.valid,
+          ),
+        ],
+      );
+    });
+    group('submitting', () {
+      blocTest<SignUpBloc, SignUpState>(
+        'emits [submissionSuccess] state when credentials are valid '
+        'and submission is successful',
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
+        seed: () => const SignUpState(
+          username: validUsername,
+          email: validEmail,
+          password: validPassword,
+          status: FormzStatus.valid,
+        ),
+        act: (bloc) => bloc.add(SignUpCredentialsSubmitted()),
+        expect: () => const <SignUpState>[
+          SignUpState(
+            username: validUsername,
+            email: validEmail,
+            password: validPassword,
+            status: FormzStatus.submissionInProgress,
+          ),
+          SignUpState(
+            username: validUsername,
+            email: validEmail,
+            password: validPassword,
+            status: FormzStatus.submissionSuccess,
+          ),
+        ],
+      );
+      blocTest<SignUpBloc, SignUpState>(
+        'emits [submissionFailure] with error message state when '
+        'credentials are valid but repository returned error',
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
+        seed: () => const SignUpState(
+          username: validUsername,
+          email: validEmailInvalidUser,
+          password: validPassword,
+          status: FormzStatus.valid,
+        ),
+        act: (bloc) => bloc.add(SignUpCredentialsSubmitted()),
+        expect: () => const <SignUpState>[
+          SignUpState(
+            username: validUsername,
+            email: validEmailInvalidUser,
+            password: validPassword,
+            status: FormzStatus.submissionInProgress,
+          ),
+          SignUpState(
+            username: validUsername,
+            email: validEmailInvalidUser,
+            password: validPassword,
+            status: FormzStatus.submissionFailure,
+            errorMessage: errorMessage,
+          ),
+        ],
+      );
+      blocTest<SignUpBloc, SignUpState>(
+        'emits [submissionFailure] without error message state when '
+        'credentials are valid but repository returned error',
+        setUp: () {
+          when(
+            () => authenticationClient.signUp(
+              displayName: validUsernameString,
+              email: validEmailInvalidUserString,
+              password: any(named: 'password'),
+            ),
+          ).thenThrow(Error());
+        },
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
+        seed: () => const SignUpState(
+          email: validEmailInvalidUser,
+          password: validPassword,
+          status: FormzStatus.valid,
+        ),
+        act: (bloc) => bloc.add(SignUpCredentialsSubmitted()),
+        expect: () => const <SignUpState>[
+          SignUpState(
+            email: validEmailInvalidUser,
+            password: validPassword,
+            status: FormzStatus.submissionInProgress,
+          ),
+          SignUpState(
+            email: validEmailInvalidUser,
+            password: validPassword,
+            status: FormzStatus.submissionFailure,
+          ),
+        ],
+      );
+      blocTest<SignUpBloc, SignUpState>(
+        'emits [invalid] state when form is invalid',
+        build: () => SignUpBloc(
+          authenticationClient: authenticationClient,
+          userProfileRepository: userProfileRepository,
+        ),
+        seed: () => const SignUpState(
+          username: validUsername,
+          email: validEmail,
+          password: invalidPassword,
+        ),
+        act: (bloc) => bloc.add(SignUpCredentialsSubmitted()),
+        expect: () => const <SignUpState>[
+          SignUpState(
+            username: validUsername,
+            email: validEmail,
+            password: invalidPassword,
+            status: FormzStatus.invalid,
           ),
         ],
       );

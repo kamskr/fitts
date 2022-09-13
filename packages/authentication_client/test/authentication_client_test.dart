@@ -38,40 +38,59 @@ class FakeAuthCredential extends Fake implements firebase_auth.AuthCredential {}
 
 class FakeAuthProvider extends Fake implements AuthProvider {}
 
+class MockFirebaseApp implements TestFirebaseCoreHostApi {
+  @override
+  Future<PigeonInitializeResponse> initializeApp(
+    String appName,
+    PigeonFirebaseOptions initializeAppRequest,
+  ) async {
+    return PigeonInitializeResponse(
+      name: appName,
+      options: PigeonFirebaseOptions(
+        apiKey: '123',
+        projectId: '123',
+        appId: '123',
+        messagingSenderId: '123',
+      ),
+      pluginConstants: {},
+    );
+  }
+
+  @override
+  Future<List<PigeonInitializeResponse?>> initializeCore() async {
+    return [
+      PigeonInitializeResponse(
+        name: defaultFirebaseAppName,
+        options: PigeonFirebaseOptions(
+          apiKey: '123',
+          projectId: '123',
+          appId: '123',
+          messagingSenderId: '123',
+        ),
+        pluginConstants: {},
+      )
+    ];
+  }
+
+  @override
+  Future<PigeonFirebaseOptions> optionsFromResource() async {
+    return PigeonFirebaseOptions(
+      apiKey: '123',
+      projectId: '123',
+      appId: '123',
+      messagingSenderId: '123',
+    );
+  }
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  MethodChannelFirebase.channel.setMockMethodCallHandler((call) async {
-    if (call.method == 'Firebase#initializeCore') {
-      return [
-        {
-          'name': defaultFirebaseAppName,
-          'options': {
-            'apiKey': '123',
-            'appId': '123',
-            'messagingSenderId': '123',
-            'projectId': '123',
-          },
-          'pluginConstants': const <String, String>{},
-        }
-      ];
-    }
 
-    if (call.method == 'Firebase#initializeApp') {
-      final arguments = call.arguments as Map<String, dynamic>;
-      return <String, dynamic>{
-        'name': arguments['appName'],
-        'options': arguments['options'],
-        'pluginConstants': const <String, String>{},
-      };
-    }
-
-    return null;
-  });
+  TestFirebaseCoreHostApi.setup(MockFirebaseApp());
 
   TestWidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
 
-  const displayName = 'displayName';
   const email = 'test@gmail.com';
   const password = 'password';
   const user = User(
@@ -114,7 +133,6 @@ void main() {
 
       test('calls createUserWithEmailAndPassword', () async {
         await authenticationClient.signUp(
-          displayName: displayName,
           email: email,
           password: password,
         );
@@ -129,7 +147,6 @@ void main() {
       test('succeeds when createUserWithEmailAndPassword succeeds', () async {
         expect(
           authenticationClient.signUp(
-            displayName: displayName,
             email: email,
             password: password,
           ),
@@ -148,7 +165,6 @@ void main() {
 
         expect(
           authenticationClient.signUp(
-            displayName: displayName,
             email: email,
             password: password,
           ),

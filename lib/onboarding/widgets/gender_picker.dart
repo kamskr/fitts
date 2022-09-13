@@ -3,14 +3,21 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// {@template gender_picker}
+/// Widget used for picking user's gender.
+/// {@endtemplate}
 class GenderPicker extends StatelessWidget {
+  /// {@macro gender_picker}
   const GenderPicker({
     Key? key,
     this.selected,
     required this.onChange,
   }) : super(key: key);
 
+  /// Currently selected gender.
   final Gender? selected;
+
+  /// On change callback.
   final void Function(Gender) onChange;
 
   @override

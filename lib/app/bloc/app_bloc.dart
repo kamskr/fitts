@@ -4,14 +4,18 @@ import 'package:api_models/api_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
 
+/// {@template app_bloc}
+/// Bloc user for managing global application state.
+/// This bloc also manages authentication and active user.
+/// {@endtemplate}
 class AppBloc extends Bloc<AppEvent, AppState> {
+  /// {@macro app_bloc}
   AppBloc({
     required AuthenticationClient authenticationClient,
     required UserProfileRepository userProfileRepository,
@@ -22,12 +26,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ) {
     on<AppUserChanged>(_onUserChanged);
     on<AppUserProfileChanged>(_onUserProfileChanged);
-    _userSubscription = _authenticationClient.user.listen(_userChanged);
+    _userSubscription =
+        _authenticationClient.user.listen((user) => add(AppUserChanged(user)));
 
     _userProfileSubscription = _authenticationClient.user
         .flatMap((user) => _userProfileRepository.userProfile(user.email!))
         .handleError(addError)
-        .listen(_userProfileChanged);
+        .listen((userProfile) => add(AppUserProfileChanged(userProfile)));
   }
 
   final AuthenticationClient _authenticationClient;
@@ -36,11 +41,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   late StreamSubscription<User> _userSubscription;
   late StreamSubscription<UserProfile> _userProfileSubscription;
-
-  void _userChanged(User user) => add(AppUserChanged(user));
-  void _userProfileChanged(UserProfile userProfile) {
-    return add(AppUserProfileChanged(userProfile));
-  }
 
   Future<void> _onUserChanged(
     AppUserChanged event,
@@ -65,12 +65,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       return;
     }
 
-    return emit(state.copyWith(
-      userProfile: event.userProfile,
-      status: event.userProfile.profileStatus == ProfileStatus.active
-          ? AppStatus.authenticated
-          : AppStatus.onboardingRequired,
-    ));
+    return emit(
+      state.copyWith(
+        userProfile: event.userProfile,
+        status: event.userProfile.profileStatus == ProfileStatus.active
+            ? AppStatus.authenticated
+            : AppStatus.onboardingRequired,
+      ),
+    );
   }
 
   @override

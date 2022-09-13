@@ -7,7 +7,7 @@ import '../../helpers/helpers.dart';
 void main() {
   group('OnboardingOnboardingWelcomePage', () {
     testWidgets('is routable.', (tester) async {
-      expect(OnboardingWelcomePage.page(), isA<MaterialPage>());
+      expect(OnboardingWelcomePage.page(), isA<MaterialPage<void>>());
     });
 
     testWidgets('renders properly.', (tester) async {

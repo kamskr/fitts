@@ -1,24 +1,28 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/onboarding/view/onboarding_page.dart';
 import 'package:flutter/material.dart';
 
-import 'onboarding_page.dart';
-
+/// {@template onboarding_welcome_page}
+/// Page shown before onboarding screen.
+/// {@endtemplate}
 class OnboardingWelcomePage extends StatelessWidget {
+  /// {@macro onboarding_welcome_page}
   const OnboardingWelcomePage({Key? key}) : super(key: key);
 
-  static Page page() {
+  /// Page helper for creating pages.
+  static Page<void> page() {
     return const MaterialPage<void>(child: OnboardingWelcomePage());
   }
 
   @override
   Widget build(BuildContext context) {
-    return const OnboardingWelcomePageView();
+    return const _OnboardingWelcomePageView();
   }
 }
 
-class OnboardingWelcomePageView extends StatelessWidget {
-  const OnboardingWelcomePageView({Key? key}) : super(key: key);
+class _OnboardingWelcomePageView extends StatelessWidget {
+  const _OnboardingWelcomePageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +49,7 @@ class OnboardingWelcomePageView extends StatelessWidget {
 }
 
 class _WelcomeImage extends StatelessWidget {
-  const _WelcomeImage({
-    Key? key,
-  }) : super(key: key);
+  const _WelcomeImage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +62,7 @@ class _WelcomeImage extends StatelessWidget {
 }
 
 class _WelcomeTitle extends StatelessWidget {
-  const _WelcomeTitle({
-    Key? key,
-  }) : super(key: key);
+  const _WelcomeTitle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +77,7 @@ class _WelcomeTitle extends StatelessWidget {
 }
 
 class _WelcomeDescription extends StatelessWidget {
-  const _WelcomeDescription({
-    Key? key,
-  }) : super(key: key);
+  const _WelcomeDescription({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,9 +97,7 @@ class _WelcomeDescription extends StatelessWidget {
 }
 
 class _ContinueButton extends StatelessWidget {
-  const _ContinueButton({
-    Key? key,
-  }) : super(key: key);
+  const _ContinueButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

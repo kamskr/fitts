@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:app_ui/src/app_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +54,7 @@ abstract class AppTypography {
 
   static final TextStyle body2 = _baseTextStyle.copyWith(
     fontSize: 14,
+    fontWeight: FontWeight.w300,
   );
 
   static final TextStyle button = _baseTextStyle.copyWith(

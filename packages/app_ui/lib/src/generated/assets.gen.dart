@@ -20,6 +20,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/drag-icon.svg
   SvgGenImage get dragIcon => const SvgGenImage('assets/icons/drag-icon.svg');
 
+  /// File path: assets/icons/empty_profile_image.svg
+  SvgGenImage get emptyProfileImage =>
+      const SvgGenImage('assets/icons/empty_profile_image.svg');
+
   /// File path: assets/icons/female.svg
   SvgGenImage get female => const SvgGenImage('assets/icons/female.svg');
 

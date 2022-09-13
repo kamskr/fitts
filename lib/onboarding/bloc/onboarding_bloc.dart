@@ -8,9 +8,13 @@ import 'package:user_profile_repository/user_profile_repository.dart';
 part 'onboarding_event.dart';
 part 'onboarding_state.dart';
 
+/// {@template onboarding_bloc}
+/// Bloc used for managing onboarding state.
+/// {@endtemplate}
 // ignore: todo
 // TODO(kamskry): Add validation for fields.
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
+  /// {@macro onboarding_bloc}
   OnboardingBloc({
     required UserProfileRepository userProfileRepository,
     required UserProfile userProfile,

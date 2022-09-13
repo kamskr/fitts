@@ -43,7 +43,7 @@ void main() {
     });
 
     testWidgets('is routable.', (tester) async {
-      expect(WelcomePage.page(), isA<MaterialPage>());
+      expect(WelcomePage.page(), isA<MaterialPage<void>>());
     });
 
     testWidgets('renders properly.', (tester) async {
