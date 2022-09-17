@@ -49,10 +49,10 @@ workflows:
         script: flutter packages pub get
       - &build_apk
         name: Build Android APK
-        script: flutter build apk --release --flavor ${FLAVOR} -t lib/main/main_${FLAVOR}.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300)) --dart-define=STRIPE_KEY=${STRIPE_KEY}
+        script: flutter build apk --release -t lib/main.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300))
       - &build_aab
         name: Build Android AAB
-        script: flutter build appbundle --release --flavor ${FLAVOR} -t lib/main/main_${FLAVOR}.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300)) --dart-define=STRIPE_KEY=${STRIPE_KEY}
+        script: flutter build appbundle --release -t lib/main.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300))
       - &setup_signing_certificates
         name: Set up signing certificate
         script: keychain add-certificates
@@ -64,7 +64,7 @@ workflows:
         script: find . -name "Podfile" -execdir pod install \;
       - &build_ios
         name: Build and sign iOS
-        script: flutter build ipa --release --flavor ${FLAVOR} -t lib/main/main_${FLAVOR}.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300)) --export-options-plist=/Users/builder/export_options.plist --dart-define=STRIPE_KEY=${STRIPE_KEY}
+        script: flutter build ipa --release -t lib/main.dart --build-number=$(($PROJECT_BUILD_NUMBER + 300)) --export-options-plist=/Users/builder/export_options.plist
       - &upload_dsym
         name: "Upload dsym artifacts to Firebase Crashlytics"
         script: |
@@ -80,8 +80,8 @@ workflows:
           fi
 
     artifacts:
-      - build/app/outputs/apk/${FLAVOR}/release/*.apk
-      - build/app/outputs/bundle/${FLAVOR}Release/*.aab
+      - build/app/outputs/apk/release/*.apk
+      - build/app/outputs/bundle/Release/*.aab
       - build/app/outputs/mapping/**/mapping.txt
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log

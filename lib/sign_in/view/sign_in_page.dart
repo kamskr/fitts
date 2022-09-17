@@ -14,14 +14,48 @@ class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);
 
   /// Helper method for generating [MaterialPageRoute] to this page.
-  static Route<void> route() =>
-      MaterialPageRoute<void>(builder: (_) => const SignInPage());
+  static Route<void> route() => _SignInPageRoute();
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SignInBloc(context.read<AuthenticationClient>()),
       child: const SignInView(),
+    );
+  }
+}
+
+class _SignInPageRoute extends MaterialPageRoute<void> {
+  _SignInPageRoute()
+      : super(
+          builder: (_) => const SignInPage(),
+        );
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    final theme = Theme.of(context).pageTransitionsTheme;
+    Animation<double> onlyForwardAnimation;
+    switch (animation.status) {
+      case AnimationStatus.reverse:
+      case AnimationStatus.dismissed:
+        onlyForwardAnimation = kAlwaysCompleteAnimation;
+        break;
+      case AnimationStatus.forward:
+      case AnimationStatus.completed:
+        onlyForwardAnimation = animation;
+        break;
+    }
+
+    return theme.buildTransitions<void>(
+      this,
+      context,
+      onlyForwardAnimation,
+      secondaryAnimation,
+      child,
     );
   }
 }
