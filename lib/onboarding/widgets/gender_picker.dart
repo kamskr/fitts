@@ -86,7 +86,10 @@ class _FemaleOption extends StatelessWidget {
     final mainColors = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: () => onChange(Gender.female),
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onChange(Gender.female);
+      },
       child: _GenderCircle(
         isSelected: isSelected,
         child: Assets.icons.female.svg(
