@@ -15,8 +15,7 @@ class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   /// Helper method for generating [MaterialPageRoute] to this page.
-  static Route<void> route() =>
-      MaterialPageRoute<void>(builder: (_) => const SignUpPage());
+  static Route<void> route() => _SignUpPageRoute();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +25,41 @@ class SignUpPage extends StatelessWidget {
         userProfileRepository: context.read<UserProfileRepository>(),
       ),
       child: const SignUpView(),
+    );
+  }
+}
+
+class _SignUpPageRoute extends MaterialPageRoute<void> {
+  _SignUpPageRoute()
+      : super(
+          builder: (_) => const SignUpPage(),
+        );
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    final theme = Theme.of(context).pageTransitionsTheme;
+    Animation<double> onlyForwardAnimation;
+    switch (animation.status) {
+      case AnimationStatus.reverse:
+      case AnimationStatus.dismissed:
+        onlyForwardAnimation = kAlwaysCompleteAnimation;
+        break;
+      case AnimationStatus.forward:
+      case AnimationStatus.completed:
+        onlyForwardAnimation = animation;
+        break;
+    }
+
+    return theme.buildTransitions<void>(
+      this,
+      context,
+      onlyForwardAnimation,
+      secondaryAnimation,
+      child,
     );
   }
 }
@@ -87,7 +121,7 @@ class _SignUpBlocListener extends StatelessWidget {
     return BlocListener<SignUpBloc, SignUpState>(
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
-          Navigator.pop(context);
+          Navigator.of(context).pop();
         }
         if (state.status.isSubmissionFailure && state.errorMessage != null) {
           AppSnackBar.show(
