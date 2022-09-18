@@ -7,6 +7,7 @@ part of 'exercise.dart';
 // **************************************************************************
 
 Exercise _$ExerciseFromJson(Map<String, dynamic> json) => Exercise(
+      id: json['id'] as String,
       name: json['name'] as String,
       primaryMuscles: (json['primaryMuscles'] as List<dynamic>)
           .map((e) => $enumDecode(_$MuscleEnumMap, e))
@@ -29,22 +30,33 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) => Exercise(
           (json['aliases'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
-      'name': instance.name,
-      'aliases': instance.aliases,
-      'primaryMuscles':
-          instance.primaryMuscles.map((e) => _$MuscleEnumMap[e]!).toList(),
-      'secondaryMuscles':
-          instance.secondaryMuscles.map((e) => _$MuscleEnumMap[e]!).toList(),
-      'force': _$ForceEnumMap[instance.force],
-      'level': _$LevelEnumMap[instance.level]!,
-      'mechanic': _$MechanicTypeEnumMap[instance.mechanicType],
-      'equipment': _$EquipmentEnumMap[instance.equipment],
-      'category': _$ExerciseCategoryEnumMap[instance.category]!,
-      'instructions': instance.instructions,
-      'description': instance.description,
-      'tips': instance.tips,
-    };
+Map<String, dynamic> _$ExerciseToJson(Exercise instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('aliases', instance.aliases);
+  val['primaryMuscles'] =
+      instance.primaryMuscles.map((e) => _$MuscleEnumMap[e]!).toList();
+  val['secondaryMuscles'] =
+      instance.secondaryMuscles.map((e) => _$MuscleEnumMap[e]!).toList();
+  val['force'] = _$ForceEnumMap[instance.force];
+  val['level'] = _$LevelEnumMap[instance.level]!;
+  writeNotNull('mechanic', _$MechanicTypeEnumMap[instance.mechanicType]);
+  writeNotNull('equipment', _$EquipmentEnumMap[instance.equipment]);
+  val['category'] = _$ExerciseCategoryEnumMap[instance.category]!;
+  val['instructions'] = instance.instructions;
+  writeNotNull('description', instance.description);
+  writeNotNull('tips', instance.tips);
+  return val;
+}
 
 const _$MuscleEnumMap = {
   Muscle.abdominals: 'abdominals',

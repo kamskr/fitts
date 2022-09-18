@@ -11,6 +11,7 @@ part 'exercise.g.dart';
 class Exercise extends Equatable {
   /// {@macro exercise}
   const Exercise({
+    required this.id,
     required this.name,
     required this.primaryMuscles,
     required this.secondaryMuscles,
@@ -29,12 +30,16 @@ class Exercise extends Equatable {
   factory Exercise.fromJson(Map<String, dynamic> json) =>
       _$ExerciseFromJson(json);
 
+  /// ID of the exercise.
+  @JsonKey(name: 'id')
+  final String id;
+
   /// Name of the exercise.
   @JsonKey(name: 'name')
   final String name;
 
   /// Alias names of the exercise.
-  @JsonKey(name: 'aliases')
+  @JsonKey(name: 'aliases', includeIfNull: false)
   final List<String>? aliases;
 
   /// Primary muscles used in the exercise.
@@ -54,27 +59,27 @@ class Exercise extends Equatable {
   final Level level;
 
   /// Mechanic type of the exercise.
-  @JsonKey(name: 'mechanic')
+  @JsonKey(name: 'mechanic', includeIfNull: false)
   final MechanicType? mechanicType;
 
   /// Equipment used in the exercise.
-  @JsonKey(name: 'equipment')
+  @JsonKey(name: 'equipment', includeIfNull: false)
   final Equipment? equipment;
 
   /// Category of the exercise.
-  @JsonKey(name: 'category')
+  @JsonKey(name: 'category', includeIfNull: false)
   final ExerciseCategory category;
 
   /// Instructions for the exercise.
-  @JsonKey(name: 'instructions')
+  @JsonKey(name: 'instructions', includeIfNull: false)
   final List<String> instructions;
 
   /// Exercise description.
-  @JsonKey(name: 'description')
+  @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
 
   /// Tips for the exercise.
-  @JsonKey(name: 'tips')
+  @JsonKey(name: 'tips', includeIfNull: false)
   final List<String>? tips;
 
   /// Converts the [Exercise] to [Map].
@@ -82,6 +87,7 @@ class Exercise extends Equatable {
 
   /// Copy with helper method.
   Exercise copyWith({
+    String? id,
     String? name,
     List<String>? aliases,
     List<Muscle>? primaryMuscles,
@@ -96,6 +102,7 @@ class Exercise extends Equatable {
     List<String>? tips,
   }) {
     return Exercise(
+      id: id ?? this.id,
       name: name ?? this.name,
       aliases: aliases ?? this.aliases,
       primaryMuscles: primaryMuscles ?? this.primaryMuscles,
@@ -113,6 +120,7 @@ class Exercise extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         name,
         aliases,
         primaryMuscles,

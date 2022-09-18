@@ -5,6 +5,7 @@ void main() {
   group('Exercise', () {
     test('can be instantiated', () {
       const exercise = Exercise(
+        id: 'id',
         name: 'name',
         primaryMuscles: [],
         secondaryMuscles: [],
@@ -16,6 +17,7 @@ void main() {
     });
     test('supports value equality.', () {
       const exercise = Exercise(
+        id: 'id',
         name: 'name',
         primaryMuscles: [],
         secondaryMuscles: [],
@@ -24,6 +26,7 @@ void main() {
         instructions: [],
       );
       const exercise2 = Exercise(
+        id: 'id',
         name: 'name',
         primaryMuscles: [],
         secondaryMuscles: [],
@@ -35,6 +38,7 @@ void main() {
     });
     test('has correct props.', () {
       const exercise = Exercise(
+        id: 'id',
         name: 'name',
         primaryMuscles: [],
         secondaryMuscles: [],
@@ -62,6 +66,7 @@ void main() {
     });
     test('can copyWith with changed properties.', () {
       const exercise = Exercise(
+        id: 'id',
         name: 'name',
         primaryMuscles: [],
         secondaryMuscles: [],
@@ -80,19 +85,22 @@ void main() {
       expect(copy, isNot(equals(exercise)));
       expect(copy.name, equals('name2'));
     });
-    test('can be created from json.', () {
+    test('can be created from json and ignores null.', () {
       const exerciseJson = {
+        'id': 'id',
         'name': 'name',
         'primaryMuscles': ['abdominals'],
         'secondaryMuscles': ['abdominals'],
         'level': 'beginner',
         'category': 'strength',
         'instructions': ['test'],
+        'equipment': null,
       };
 
       expect(
         Exercise.fromJson(exerciseJson),
         const Exercise(
+          id: 'id',
           name: 'name',
           primaryMuscles: [Muscle.abdominals],
           secondaryMuscles: [Muscle.abdominals],
@@ -105,6 +113,7 @@ void main() {
 
     test('can be converted to json.', () {
       const exercise = Exercise(
+        id: 'id',
         name: 'name',
         aliases: ['name2'],
         primaryMuscles: [Muscle.abdominals],
