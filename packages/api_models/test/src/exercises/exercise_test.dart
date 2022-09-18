@@ -49,6 +49,7 @@ void main() {
       expect(
         exercise.props,
         equals([
+          exercise.id,
           exercise.name,
           exercise.aliases,
           exercise.primaryMuscles,
@@ -129,6 +130,7 @@ void main() {
       );
 
       const exerciseJson = {
+        'id': 'id',
         'name': 'name',
         'aliases': ['name2'],
         'primaryMuscles': ['abdominals'],
