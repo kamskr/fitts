@@ -11,3 +11,12 @@ abstract class ExerciseFailure implements Exception {
   /// The stack trace associated with the [error].
   final StackTrace stackTrace;
 }
+
+/// {@template exercises_fetch_failure}
+/// Thrown when fetching exercises fails.
+/// {@endtemplate}
+class ExercisesFetchFailure extends ExerciseFailure {
+  /// {@macro update_user_profile_failure}
+  const ExercisesFetchFailure(Object error, StackTrace stackTrace)
+      : super(error, stackTrace);
+}
