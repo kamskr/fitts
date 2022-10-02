@@ -54,6 +54,14 @@ melos build:runner
 When developing locally, you can use firebase emulators for development.
 To start emulators:
 
+First install dependencies for functions and build the code:
+
+```
+cd functions && npm install && npm run build && cd ..
+```
+
+Then you can start emulators with:
+
 ```
 firebase emulators:start
 ```

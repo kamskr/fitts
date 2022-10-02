@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
-  const useEmulator = bool.fromEnvironment('USE_FIREBASE_EMULATOR');
+  // const useEmulator = bool.fromEnvironment('USE_FIREBASE_EMULATOR');
+  const useEmulator = false;
 
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
