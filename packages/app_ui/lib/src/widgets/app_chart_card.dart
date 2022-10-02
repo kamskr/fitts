@@ -55,16 +55,13 @@ class AppChartCard extends StatelessWidget {
         text = '0';
       } else if (value == midValue) {
         final midValue = maxValue / 2;
-        text = midValue >= 1000
-            ? '${(midValue / 1000).floor()}k'
-            : midValue.toString();
+        text = '${midValue.floor()}k';
       } else if (value == maxValue) {
-        text = maxValue >= 1000
-            ? '${(maxValue / 1000).floor()}k'
-            : maxValue.toString();
+        text = '${maxValue.floor()}k';
       } else {
         return Container();
       }
+
       return SideTitleWidget(
         axisSide: meta.axisSide,
         space: 0,

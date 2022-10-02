@@ -35,3 +35,11 @@ class DeserializationException extends AppException {
     StackTrace originalStackTrace,
   ) : super(originalException, originalStackTrace);
 }
+
+/// {@template not_found_exception}
+/// [Exception] thrown when item not found in the database.
+/// {@endtemplate}
+class NotFoundException implements Exception {
+  /// {@macro not_found_exception}
+  const NotFoundException();
+}
