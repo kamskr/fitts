@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 /// Classifies exercises by the equipment used.
 enum Equipment {
   /// No equipment is used.
-  @JsonValue('body')
+  @JsonValue('body only')
   body,
 
   /// A machine is used.
@@ -31,18 +31,22 @@ enum Equipment {
   bands,
 
   /// A medicine ball is used.
-  @JsonValue('medicineBall')
+  @JsonValue('medicine ball')
   medicineBall,
 
   /// An exercise ball i s used.
-  @JsonValue('exerciseBall')
+  @JsonValue('exercise ball')
   exerciseBall,
 
   /// An ez bar is used.
-  @JsonValue('eZCurlBar')
+  @JsonValue('e-z curl bar')
   eZCurlBar,
 
   /// A foam roller is used.
-  @JsonValue('foamRoll')
+  @JsonValue('foam roll')
   foamRoll,
+
+  /// Not specified equipment.
+  @JsonValue('other')
+  other,
 }

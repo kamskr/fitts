@@ -1,7 +1,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:api_models/api_models.dart';
 import 'package:exercises_repository/src/exceptions.dart';
-import 'package:exercises_repository/src/exercise_repository.dart';
+import 'package:exercises_repository/src/exercises_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -34,7 +34,7 @@ void main() {
 
     group('getExercises', () {
       test('returns a map of exercises from API if cache is empty', () async {
-        final repository = ExerciseRepository(apiClient: apiClient);
+        final repository = ExercisesRepository(apiClient: apiClient);
 
         final exercises = <String, Exercise>{
           'id': exercise,
@@ -48,7 +48,7 @@ void main() {
       });
 
       test('returns a list of exercises from cache first', () async {
-        final repository = ExerciseRepository(apiClient: apiClient);
+        final repository = ExercisesRepository(apiClient: apiClient);
 
         final exercises = <String, Exercise>{
           'id': exercise,
@@ -67,7 +67,7 @@ void main() {
       test(
         'returns ExercisesFetchFailure if failed to fetch exercises',
         () async {
-          final repository = ExerciseRepository(apiClient: apiClient);
+          final repository = ExercisesRepository(apiClient: apiClient);
 
           when(() => resource.getAllExercises()).thenThrow(Exception());
 
@@ -80,7 +80,7 @@ void main() {
     });
     group('getExercise', () {
       test('returns an exercise from API if cache is empty', () async {
-        final repository = ExerciseRepository(apiClient: apiClient);
+        final repository = ExercisesRepository(apiClient: apiClient);
 
         when(() => resource.getExercise(any())).thenAnswer(
           (_) => Future.value(exercise),
@@ -89,7 +89,7 @@ void main() {
         expect(await repository.getExercise('id'), equals(exercise));
       });
       test('returns an exercise from cache first', () async {
-        final repository = ExerciseRepository(apiClient: apiClient);
+        final repository = ExercisesRepository(apiClient: apiClient);
 
         when(() => resource.getExercise(any())).thenAnswer(
           (_) => Future.value(exercise),
@@ -104,7 +104,7 @@ void main() {
       test(
         'returns ExercisesFetchFailure if failed to fetch exercise',
         () async {
-          final repository = ExerciseRepository(apiClient: apiClient);
+          final repository = ExercisesRepository(apiClient: apiClient);
 
           when(() => resource.getExercise(any())).thenThrow(Exception());
 

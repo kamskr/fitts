@@ -27,7 +27,7 @@ enum ExerciseCategory {
   cardio,
 
   /// Olympic lifting exercises.
-  @JsonValue('olympicWeightlifting')
+  @JsonValue('olympic weightlifting')
   olympicWeightlifting,
 
   /// Cross fit exercises.
@@ -35,10 +35,10 @@ enum ExerciseCategory {
   crossfit,
 
   /// Weighted body weight exercises.
-  @JsonValue('weightedBodyweight')
+  @JsonValue('weighted bodyweight')
   weightedBodyweight,
 
   /// Assisted body weight exercises.
-  @JsonValue('assistedBodyweight')
+  @JsonValue('assisted bodyweight')
   assistedBodyweight,
 }

@@ -13,4 +13,8 @@ enum Level {
   /// The exercise is for advanced users.
   @JsonValue('advanced')
   advanced,
+
+  /// The exercise is for experts.
+  @JsonValue('expert')
+  expert,
 }

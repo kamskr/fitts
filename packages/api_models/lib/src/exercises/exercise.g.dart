@@ -71,9 +71,9 @@ const _$MuscleEnumMap = {
   Muscle.abductors: 'abductors',
   Muscle.triceps: 'triceps',
   Muscle.chest: 'chest',
-  Muscle.lowerBack: 'lowerBack',
+  Muscle.lowerBack: 'lower back',
   Muscle.traps: 'traps',
-  Muscle.middleBack: 'middleBack',
+  Muscle.middleBack: 'middle back',
   Muscle.lats: 'lats',
   Muscle.neck: 'neck',
 };
@@ -82,6 +82,7 @@ const _$LevelEnumMap = {
   Level.beginner: 'beginner',
   Level.intermediate: 'intermediate',
   Level.advanced: 'advanced',
+  Level.expert: 'expert',
 };
 
 const _$ExerciseCategoryEnumMap = {
@@ -91,10 +92,10 @@ const _$ExerciseCategoryEnumMap = {
   ExerciseCategory.strongman: 'strongman',
   ExerciseCategory.powerlifting: 'powerlifting',
   ExerciseCategory.cardio: 'cardio',
-  ExerciseCategory.olympicWeightlifting: 'olympicWeightlifting',
+  ExerciseCategory.olympicWeightlifting: 'olympic weightlifting',
   ExerciseCategory.crossfit: 'crossfit',
-  ExerciseCategory.weightedBodyweight: 'weightedBodyweight',
-  ExerciseCategory.assistedBodyweight: 'assistedBodyweight',
+  ExerciseCategory.weightedBodyweight: 'weighted bodyweight',
+  ExerciseCategory.assistedBodyweight: 'assisted bodyweight',
 };
 
 const _$ForceEnumMap = {
@@ -109,15 +110,16 @@ const _$MechanicTypeEnumMap = {
 };
 
 const _$EquipmentEnumMap = {
-  Equipment.body: 'body',
+  Equipment.body: 'body only',
   Equipment.machine: 'machine',
   Equipment.kettlebells: 'kettlebells',
   Equipment.dumbbell: 'dumbbell',
   Equipment.cable: 'cable',
   Equipment.barbell: 'barbell',
   Equipment.bands: 'bands',
-  Equipment.medicineBall: 'medicineBall',
-  Equipment.exerciseBall: 'exerciseBall',
-  Equipment.eZCurlBar: 'eZCurlBar',
-  Equipment.foamRoll: 'foamRoll',
+  Equipment.medicineBall: 'medicine ball',
+  Equipment.exerciseBall: 'exercise ball',
+  Equipment.eZCurlBar: 'e-z curl bar',
+  Equipment.foamRoll: 'foam roll',
+  Equipment.other: 'other',
 };

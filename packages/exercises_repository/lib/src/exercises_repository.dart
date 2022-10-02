@@ -6,9 +6,9 @@ import 'package:exercises_repository/src/exceptions.dart';
 /// {@template exercise_repository}
 /// Repository which exposes exercise resource.
 /// {@endtemplate}
-class ExerciseRepository {
+class ExercisesRepository {
   /// {@macro exercise_repository}
-  ExerciseRepository({
+  ExercisesRepository({
     required ApiClient apiClient,
   }) : _apiClient = apiClient;
 

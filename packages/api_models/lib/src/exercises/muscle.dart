@@ -51,7 +51,7 @@ enum Muscle {
   chest,
 
   /// Lower back
-  @JsonValue('lowerBack')
+  @JsonValue('lower back')
   lowerBack,
 
   /// Traps
@@ -59,7 +59,7 @@ enum Muscle {
   traps,
 
   /// Middle back
-  @JsonValue('middleBack')
+  @JsonValue('middle back')
   middleBack,
 
   /// Lats

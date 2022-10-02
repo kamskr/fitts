@@ -8,11 +8,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fitts/bootstrap.dart';
 import 'package:fitts/firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
   const useEmulator = bool.fromEnvironment('USE_FIREBASE_EMULATOR');
 
-  WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
@@ -27,7 +29,7 @@ Future<void> main() async {
 
   FirebaseFirestore.instance;
 
-  runApp(bootstrap());
+  runApp(await bootstrap());
 }
 
 /// Connect to the firebase emulator for Firestore and Authentication
