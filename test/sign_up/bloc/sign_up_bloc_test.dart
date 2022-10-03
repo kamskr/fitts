@@ -7,10 +7,13 @@ import 'package:form_validators/form_validators.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
+import 'package:user_stats_repository/user_stats_repository.dart';
 
 class MockAuthenticationClient extends Mock implements AuthenticationClient {}
 
 class MockUserProfileRepository extends Mock implements UserProfileRepository {}
+
+class MockUserStatsRepository extends Mock implements UserStatsRepository {}
 
 void main() {
   const invalidUsernameString = 't';
@@ -39,10 +42,12 @@ void main() {
   group('SignUpBloc', () {
     late AuthenticationClient authenticationClient;
     late UserProfileRepository userProfileRepository;
+    late UserStatsRepository userStatsRepository;
 
     setUp(() {
       authenticationClient = MockAuthenticationClient();
       userProfileRepository = MockUserProfileRepository();
+      userStatsRepository = MockUserStatsRepository();
 
       when(
         () => authenticationClient.signUp(
@@ -60,6 +65,13 @@ void main() {
           ),
         ),
       ).thenAnswer((_) async {});
+
+      when(
+        () => userStatsRepository.updateUserStats(
+          userId: validEmailString,
+          payload: UserStats.empty,
+        ),
+      ).thenAnswer((_) async {});
     });
 
     group('username changed', () {
@@ -68,6 +80,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         act: (bloc) => bloc.add(
           const SignUpUsernameChanged(invalidUsernameString),
@@ -82,6 +95,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         seed: () => const SignUpState(
           email: validEmail,
@@ -106,6 +120,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         act: (bloc) => bloc.add(
           const SignUpEmailChanged(invalidEmailString),
@@ -120,6 +135,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         seed: () => const SignUpState(
           username: validUsername,
@@ -143,6 +159,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         act: (bloc) => bloc.add(
           const SignUpPasswordChanged(invalidPasswordString),
@@ -157,6 +174,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         seed: () => const SignUpState(
           email: validEmail,
@@ -181,6 +199,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         seed: () => const SignUpState(
           username: validUsername,
@@ -210,6 +229,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         seed: () => const SignUpState(
           username: validUsername,
@@ -249,6 +269,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         seed: () => const SignUpState(
           email: validEmailInvalidUser,
@@ -274,6 +295,7 @@ void main() {
         build: () => SignUpBloc(
           authenticationClient: authenticationClient,
           userProfileRepository: userProfileRepository,
+          userStatsRepository: userStatsRepository,
         ),
         seed: () => const SignUpState(
           username: validUsername,

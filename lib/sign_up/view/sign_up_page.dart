@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
+import 'package:user_stats_repository/user_stats_repository.dart';
 
 /// {@macro sign_up_page}
 /// Page used for user sign up.
@@ -23,6 +24,7 @@ class SignUpPage extends StatelessWidget {
       create: (context) => SignUpBloc(
         authenticationClient: context.read<AuthenticationClient>(),
         userProfileRepository: context.read<UserProfileRepository>(),
+        userStatsRepository: context.read<UserStatsRepository>(),
       ),
       child: const SignUpView(),
     );
