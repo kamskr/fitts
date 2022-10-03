@@ -1,4 +1,4 @@
-import 'package:api_models/api_models.dart';
+import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc_test/bloc_test.dart';

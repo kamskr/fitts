@@ -1,4 +1,4 @@
-import 'package:api_models/api_models.dart';
+import 'package:app_models/app_models.dart';
 import 'package:fitts/onboarding/onboarding.dart';
 import 'package:flutter_test/flutter_test.dart';
 

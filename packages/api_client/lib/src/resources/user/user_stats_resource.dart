@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:api_client/api_client.dart';
-import 'package:api_models/api_models.dart';
+import 'package:app_models/app_models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// {@template user_stats_resource}

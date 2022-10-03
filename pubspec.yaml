@@ -12,8 +12,8 @@ dependencies:
   animations: ^2.0.3
   api_client:
     path: packages/api_client
-  api_models:
-    path: packages/api_models
+  app_models:
+    path: packages/app_models
   app_ui:
     path: packages/app_ui
   authentication_client:

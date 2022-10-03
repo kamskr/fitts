@@ -8,8 +8,8 @@ environment:
   flutter: 3.3.0
 
 dependencies:
-  api_models:
-    path: ../api_models
+  app_models:
+    path: ../app_models
   clock: ^1.1.1
   cloud_firestore: ^3.4.6
   firebase_database: ^9.1.3

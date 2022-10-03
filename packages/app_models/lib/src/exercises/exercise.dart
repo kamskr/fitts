@@ -1,4 +1,4 @@
-import 'package:api_models/src/exercises/exercises.dart';
+import 'package:app_models/src/exercises/exercises.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

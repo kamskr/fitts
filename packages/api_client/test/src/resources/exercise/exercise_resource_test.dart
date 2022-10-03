@@ -1,6 +1,6 @@
 // ignore_for_file: subtype_of_sealed_class, lines_longer_than_80_chars
 import 'package:api_client/api_client.dart';
-import 'package:api_models/api_models.dart';
+import 'package:app_models/app_models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

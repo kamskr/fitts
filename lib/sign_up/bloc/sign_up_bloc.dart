@@ -1,4 +1,4 @@
-import 'package:api_models/api_models.dart';
+import 'package:app_models/app_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
