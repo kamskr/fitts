@@ -7,7 +7,6 @@ part of 'workout_log.dart';
 // **************************************************************************
 
 WorkoutLog _$WorkoutLogFromJson(Map<String, dynamic> json) => WorkoutLog(
-      id: json['id'] as String,
       duration: json['duration'] as int,
       datePerformed: DateTime.parse(json['datePerformed'] as String),
       workoutTemplateId: json['workoutTemplateId'] as String,
@@ -18,7 +17,6 @@ WorkoutLog _$WorkoutLogFromJson(Map<String, dynamic> json) => WorkoutLog(
 
 Map<String, dynamic> _$WorkoutLogToJson(WorkoutLog instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'duration': instance.duration,
       'datePerformed': instance.datePerformed.toIso8601String(),
       'workoutTemplateId': instance.workoutTemplateId,

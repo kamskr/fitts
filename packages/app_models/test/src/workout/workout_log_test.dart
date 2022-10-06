@@ -5,7 +5,6 @@ void main() {
   group('WorkoutLog', () {
     test('can be instantiated.', () {
       final workoutLog = WorkoutLog(
-        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -28,7 +27,6 @@ void main() {
 
     test('supports value equality.', () {
       final workoutLog1 = WorkoutLog(
-        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -47,7 +45,6 @@ void main() {
         ],
       );
       final workoutLog2 = WorkoutLog(
-        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -70,7 +67,6 @@ void main() {
 
     test('has correct props', () {
       final workoutLog = WorkoutLog(
-        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -89,7 +85,6 @@ void main() {
         ],
       );
       expect(workoutLog.props, [
-        'id',
         3600,
         DateTime(2020),
         'template-id',
@@ -111,7 +106,6 @@ void main() {
 
     test('can be copyWith with changed properties', () {
       final workoutLog = WorkoutLog(
-        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -149,7 +143,7 @@ void main() {
         ],
       );
       expect(copy, isNot(workoutLog));
-      expect(copy.id, 'id2');
+
       expect(copy.duration, 7200);
       expect(copy.datePerformed, DateTime(2021));
       expect(copy.workoutTemplateId, 'template-id2');
@@ -188,7 +182,7 @@ void main() {
         ],
       });
       expect(workoutLog, isNotNull);
-      expect(workoutLog.id, 'id');
+
       expect(workoutLog.duration, 3600);
       expect(workoutLog.datePerformed, DateTime(2020));
       expect(workoutLog.workoutTemplateId, 'template-id');
