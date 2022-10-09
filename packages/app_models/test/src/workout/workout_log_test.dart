@@ -89,6 +89,7 @@ void main() {
         ],
       );
       expect(workoutLog.props, [
+        'id',
         3600,
         DateTime(2020),
         'template-id',

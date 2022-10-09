@@ -19,11 +19,11 @@ class WorkoutsRepository {
   final AuthenticationClient _authenticationClient;
 
   BehaviorSubject<List<WorkoutTemplate>?>? _workoutTemplatesSubject;
-  Map<String, BehaviorSubject<WorkoutTemplate?>> _workoutTemplatesSubjectMap =
-      {};
+  final Map<String, BehaviorSubject<WorkoutTemplate?>>
+      _workoutTemplatesSubjectMap = {};
 
   BehaviorSubject<List<WorkoutLog>?>? _workoutLogsSubject;
-  Map<String, BehaviorSubject<WorkoutLog?>> _workoutLogsSubjectMap = {};
+  final Map<String, BehaviorSubject<WorkoutLog?>> _workoutLogsSubjectMap = {};
 
   /// Returns a stream of workout templates for a given user id.
   /// Currently user can only access his own templates.
@@ -75,7 +75,7 @@ class WorkoutsRepository {
 
       workoutTemplateStream
           .handleError(
-            (e, st) => _handleWorkoutTemplateStreamError(
+            (Object e, StackTrace st) => _handleWorkoutTemplateStreamError(
               workoutTemplateId,
               e,
               st,
@@ -89,7 +89,10 @@ class WorkoutsRepository {
   }
 
   void _handleWorkoutTemplateStreamError(
-      String workoutTemplateId, Object error, StackTrace stackTrace) {
+    String workoutTemplateId,
+    Object error,
+    StackTrace stackTrace,
+  ) {
     _workoutTemplatesSubjectMap[workoutTemplateId]
         ?.addError(WorkoutTemplateStreamFailure(error, stackTrace));
   }
@@ -184,7 +187,8 @@ class WorkoutsRepository {
 
       workoutLogStream
           .handleError(
-            (e, st) => _handleWorkoutLogStreamError(workoutLogId, e, st),
+            (Object e, StackTrace st) =>
+                _handleWorkoutLogStreamError(workoutLogId, e, st),
           )
           .listen(workoutLogSubject.add);
 

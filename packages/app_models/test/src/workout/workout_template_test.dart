@@ -101,6 +101,7 @@ void main() {
         ],
       );
       expect(workoutTemplate.props, [
+        'id',
         'name',
         'notes',
         1,

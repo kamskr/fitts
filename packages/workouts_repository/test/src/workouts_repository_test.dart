@@ -202,10 +202,12 @@ void main() {
 
       group('createWorkoutTemplate', () {
         test('returns normally when successful.', () async {
-          when(() => workoutTemplatesResource.createUserWorkoutTemplate(
-                userId: userId,
-                payload: workoutTemplate,
-              )).thenAnswer((_) async => {});
+          when(
+            () => workoutTemplatesResource.createUserWorkoutTemplate(
+              userId: userId,
+              payload: workoutTemplate,
+            ),
+          ).thenAnswer((_) async => {});
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -216,10 +218,12 @@ void main() {
           );
         });
         test('passes through error from API', () {
-          when(() => workoutTemplatesResource.createUserWorkoutTemplate(
-                userId: userId,
-                payload: workoutTemplate,
-              )).thenThrow(Exception());
+          when(
+            () => workoutTemplatesResource.createUserWorkoutTemplate(
+              userId: userId,
+              payload: workoutTemplate,
+            ),
+          ).thenThrow(Exception());
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -236,11 +240,13 @@ void main() {
 
       group('updateWorkoutTemplate', () {
         test('returns normally when successful.', () async {
-          when(() => workoutTemplatesResource.updateUserWorkoutTemplate(
-                userId: userId,
-                workoutTemplateId: workoutTemplateId,
-                payload: workoutTemplate,
-              )).thenAnswer((_) async => {});
+          when(
+            () => workoutTemplatesResource.updateUserWorkoutTemplate(
+              userId: userId,
+              workoutTemplateId: workoutTemplateId,
+              payload: workoutTemplate,
+            ),
+          ).thenAnswer((_) async => {});
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -252,11 +258,13 @@ void main() {
           );
         });
         test('passes through error from API', () {
-          when(() => workoutTemplatesResource.updateUserWorkoutTemplate(
-                userId: userId,
-                workoutTemplateId: workoutTemplateId,
-                payload: workoutTemplate,
-              )).thenThrow(Exception());
+          when(
+            () => workoutTemplatesResource.updateUserWorkoutTemplate(
+              userId: userId,
+              workoutTemplateId: workoutTemplateId,
+              payload: workoutTemplate,
+            ),
+          ).thenThrow(Exception());
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -275,10 +283,12 @@ void main() {
 
     group('deleteWorkoutTemplate', () {
       test('returns normally when successful.', () async {
-        when(() => workoutTemplatesResource.deleteUserWorkoutTemplate(
-              userId: userId,
-              workoutTemplateId: workoutTemplateId,
-            )).thenAnswer((_) async => {});
+        when(
+          () => workoutTemplatesResource.deleteUserWorkoutTemplate(
+            userId: userId,
+            workoutTemplateId: workoutTemplateId,
+          ),
+        ).thenAnswer((_) async => {});
         final repository = WorkoutsRepository(
           apiClient: apiClient,
           authenticationClient: authenticationClient,
@@ -289,10 +299,12 @@ void main() {
         );
       });
       test('passes through error from API', () {
-        when(() => workoutTemplatesResource.deleteUserWorkoutTemplate(
-              userId: userId,
-              workoutTemplateId: workoutTemplateId,
-            )).thenThrow(Exception());
+        when(
+          () => workoutTemplatesResource.deleteUserWorkoutTemplate(
+            userId: userId,
+            workoutTemplateId: workoutTemplateId,
+          ),
+        ).thenThrow(Exception());
         final repository = WorkoutsRepository(
           apiClient: apiClient,
           authenticationClient: authenticationClient,
@@ -417,10 +429,12 @@ void main() {
 
       group('createWorkoutLog', () {
         test('returns normally when successful.', () async {
-          when(() => workoutLogsResource.createUserWorkoutLog(
-                userId: userId,
-                payload: workoutLog,
-              )).thenAnswer((_) async => {});
+          when(
+            () => workoutLogsResource.createUserWorkoutLog(
+              userId: userId,
+              payload: workoutLog,
+            ),
+          ).thenAnswer((_) async => {});
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -429,10 +443,12 @@ void main() {
           await repository.createWorkoutLog(workoutLog: workoutLog);
         });
         test('passes through error from API', () {
-          when(() => workoutLogsResource.createUserWorkoutLog(
-                userId: userId,
-                payload: workoutLog,
-              )).thenThrow(Exception());
+          when(
+            () => workoutLogsResource.createUserWorkoutLog(
+              userId: userId,
+              payload: workoutLog,
+            ),
+          ).thenThrow(Exception());
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -447,11 +463,13 @@ void main() {
 
       group('updateWorkoutLog', () {
         test('returns normally when successful.', () async {
-          when(() => workoutLogsResource.updateUserWorkoutLog(
-                userId: userId,
-                workoutLogId: workoutLogId,
-                payload: workoutLog,
-              )).thenAnswer((_) async => {});
+          when(
+            () => workoutLogsResource.updateUserWorkoutLog(
+              userId: userId,
+              workoutLogId: workoutLogId,
+              payload: workoutLog,
+            ),
+          ).thenAnswer((_) async => {});
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -463,11 +481,13 @@ void main() {
           );
         });
         test('passes through error from API', () {
-          when(() => workoutLogsResource.updateUserWorkoutLog(
-                userId: userId,
-                workoutLogId: workoutLogId,
-                payload: workoutLog,
-              )).thenThrow(Exception());
+          when(
+            () => workoutLogsResource.updateUserWorkoutLog(
+              userId: userId,
+              workoutLogId: workoutLogId,
+              payload: workoutLog,
+            ),
+          ).thenThrow(Exception());
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -485,10 +505,12 @@ void main() {
 
       group('deleteWorkoutLog', () {
         test('returns normally when successful.', () async {
-          when(() => workoutLogsResource.deleteUserWorkoutLog(
-                userId: userId,
-                workoutLogId: workoutLogId,
-              )).thenAnswer((_) async => {});
+          when(
+            () => workoutLogsResource.deleteUserWorkoutLog(
+              userId: userId,
+              workoutLogId: workoutLogId,
+            ),
+          ).thenAnswer((_) async => {});
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
@@ -499,10 +521,12 @@ void main() {
           );
         });
         test('passes through error from API', () {
-          when(() => workoutLogsResource.deleteUserWorkoutLog(
-                userId: userId,
-                workoutLogId: workoutLogId,
-              )).thenThrow(Exception());
+          when(
+            () => workoutLogsResource.deleteUserWorkoutLog(
+              userId: userId,
+              workoutLogId: workoutLogId,
+            ),
+          ).thenThrow(Exception());
           final repository = WorkoutsRepository(
             apiClient: apiClient,
             authenticationClient: authenticationClient,
