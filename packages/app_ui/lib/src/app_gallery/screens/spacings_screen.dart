@@ -7,7 +7,7 @@ class SpacingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _items = [
+    const items = [
       _SpacingDisplay(spacing: AppSpacing.xxxs, name: 'xxxs'),
       _SpacingDisplay(spacing: AppSpacing.xxs, name: 'xxs'),
       _SpacingDisplay(spacing: AppSpacing.xs, name: 'xs'),
@@ -25,7 +25,7 @@ class SpacingsScreen extends StatelessWidget {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: _items,
+        children: items,
       ),
     );
   }

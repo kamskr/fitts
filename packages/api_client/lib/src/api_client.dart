@@ -28,4 +28,15 @@ class ApiClient {
   late final ExerciseResource exerciseResource = ExerciseResource(
     _firebaseFirestore,
   );
+
+  /// {@macro workout_templates_resource}
+  late final WorkoutTemplatesResource workoutTemplatesResource =
+      WorkoutTemplatesResource(
+    _firebaseFirestore,
+  );
+
+  /// {@macro workout_logs_resource}
+  late final WorkoutLogsResource workoutLogsResource = WorkoutLogsResource(
+    _firebaseFirestore,
+  );
 }

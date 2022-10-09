@@ -10,8 +10,8 @@ environment:
 dependencies:
   api_client:
     path: ../api_client
-  api_models:
-    path: ../api_models
+  app_models:
+    path: ../app_models
   authentication_client:
     path: ../authentication_client
   clock: ^1.1.0

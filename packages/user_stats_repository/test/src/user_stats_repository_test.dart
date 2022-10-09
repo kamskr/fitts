@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:api_client/api_client.dart';
-import 'package:api_models/api_models.dart';
+import 'package:app_models/app_models.dart';
 import 'package:authentication_client/authentication_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

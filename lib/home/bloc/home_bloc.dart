@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:api_models/api_models.dart';
+import 'package:app_models/app_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:user_stats_repository/user_stats_repository.dart';

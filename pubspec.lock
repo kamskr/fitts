@@ -29,10 +29,10 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  api_models:
+  app_models:
     dependency: "direct main"
     description:
-      path: "packages/api_models"
+      path: "packages/app_models"
       relative: true
     source: path
     version: "0.0.1"
