@@ -41,7 +41,11 @@ void main() {
     const collectionName = 'WorkoutLogs';
     const userLogsCollectionName = 'UserLogs';
 
+    const userId = 'userId';
+    const logId = 'logId';
+
     final workoutLogData = {
+      'id': logId,
       'duration': 1,
       'datePerformed': DateTime.now().toString(),
       'workoutTemplateId': 'id',
@@ -69,9 +73,6 @@ void main() {
       ],
     };
 
-    const userId = 'userId';
-    const templateId = 'templateId';
-
     setUp(() {
       firebaseFirestore = FirebaseFirestoreMock();
       workoutLogsResource = WorkoutLogsResource(firebaseFirestore);
@@ -90,7 +91,7 @@ void main() {
       when(() => documentReference.collection(userLogsCollectionName))
           .thenReturn(userLogsCollectionReference);
 
-      when(() => userLogsCollectionReference.doc(templateId))
+      when(() => userLogsCollectionReference.doc(logId))
           .thenReturn(documentReference);
 
       when(() => documentReference.snapshots())
@@ -98,7 +99,7 @@ void main() {
 
       when(() => documentSnapshot.exists).thenReturn(true);
       when(documentSnapshot.data).thenReturn(workoutLogData);
-      when(() => documentSnapshot.id).thenReturn(templateId);
+      when(() => documentSnapshot.id).thenReturn(logId);
       when(() => userLogsCollectionReference.add(any()))
           .thenAnswer((_) async => documentReference);
       when(() => documentReference.set(any())).thenAnswer((_) async {});
@@ -112,7 +113,7 @@ void main() {
 
       when(() => queryDocumentSnapshot.data()).thenReturn(workoutLogData);
 
-      when(() => queryDocumentSnapshot.id).thenReturn(templateId);
+      when(() => queryDocumentSnapshot.id).thenReturn(logId);
     });
 
     test('can be instantiated', () {
@@ -166,7 +167,7 @@ void main() {
       test('returns Stream<WorkoutLog?> with correct data', () {
         final result = workoutLogsResource.getUserWorkoutLogById(
           userId: userId,
-          workoutLogId: templateId,
+          workoutLogId: logId,
         );
 
         expect(result, isA<Stream<WorkoutLog?>>());
@@ -189,7 +190,7 @@ void main() {
           expect(
             () => workoutLogsResource.getUserWorkoutLogById(
               userId: userId,
-              workoutLogId: templateId,
+              workoutLogId: logId,
             ),
             throwsA(isInstanceOf<ApiException>()),
           );
@@ -203,6 +204,7 @@ void main() {
           workoutLogsResource.createUserWorkoutLog(
             userId: userId,
             payload: WorkoutLog(
+              id: logId,
               duration: 3600,
               datePerformed: DateTime(2020),
               workoutTemplateId: 'template-id',
@@ -223,20 +225,21 @@ void main() {
           );
 
           verify(
-            () => userLogsCollectionReference.add(any()),
+            () => userLogsCollectionReference.doc(logId).set(any()),
           ).called(1);
         },
       );
       test(
         'throws ApiException when failed to create document in Firestore',
         () {
-          when(() => userLogsCollectionReference.add(any()))
+          when(() => userLogsCollectionReference.doc(logId).set(any()))
               .thenThrow(Exception());
 
           expect(
             () => workoutLogsResource.createUserWorkoutLog(
               userId: userId,
               payload: WorkoutLog(
+                id: logId,
                 duration: 3600,
                 datePerformed: DateTime(2020),
                 workoutTemplateId: 'template-id',
@@ -266,8 +269,9 @@ void main() {
         () {
           workoutLogsResource.updateUserWorkoutLog(
             userId: userId,
-            workoutLogId: templateId,
+            workoutLogId: logId,
             payload: WorkoutLog(
+              id: logId,
               duration: 3600,
               datePerformed: DateTime(2020),
               workoutTemplateId: 'template-id',
@@ -300,8 +304,9 @@ void main() {
           expect(
             () => workoutLogsResource.updateUserWorkoutLog(
               userId: userId,
-              workoutLogId: templateId,
+              workoutLogId: logId,
               payload: WorkoutLog(
+                id: logId,
                 duration: 3600,
                 datePerformed: DateTime(2020),
                 workoutTemplateId: 'template-id',
@@ -331,7 +336,7 @@ void main() {
         () {
           workoutLogsResource.deleteUserWorkoutLog(
             userId: userId,
-            workoutLogId: templateId,
+            workoutLogId: logId,
           );
 
           verify(
@@ -347,7 +352,7 @@ void main() {
           expect(
             () => workoutLogsResource.deleteUserWorkoutLog(
               userId: userId,
-              workoutLogId: templateId,
+              workoutLogId: logId,
             ),
             throwsA(isInstanceOf<ApiException>()),
           );

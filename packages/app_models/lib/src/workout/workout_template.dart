@@ -16,6 +16,7 @@ part 'workout_template.g.dart';
 class WorkoutTemplate extends Equatable {
   /// {@macro workout_template}
   const WorkoutTemplate({
+    required this.id,
     required this.name,
     required this.notes,
     required this.tonnageLifted,
@@ -31,6 +32,9 @@ class WorkoutTemplate extends Equatable {
 
   /// Converts the [WorkoutTemplate] to [Map].
   Map<String, dynamic> toJson() => _$WorkoutTemplateToJson(this);
+
+  /// Id of the workout.
+  final String id;
 
   /// Name of the workout.
   final String name;
@@ -56,6 +60,7 @@ class WorkoutTemplate extends Equatable {
 
   /// Creates a copy of [WorkoutTemplate].
   WorkoutTemplate copyWith({
+    String? id,
     String? name,
     String? notes,
     int? tonnageLifted,
@@ -65,6 +70,7 @@ class WorkoutTemplate extends Equatable {
     List<WorkoutExercise>? exercises,
   }) {
     return WorkoutTemplate(
+      id: id ?? this.id,
       name: name ?? this.name,
       notes: notes ?? this.notes,
       tonnageLifted: tonnageLifted ?? this.tonnageLifted,
@@ -77,6 +83,7 @@ class WorkoutTemplate extends Equatable {
 
   @override
   List<Object> get props => [
+        id,
         name,
         notes,
         tonnageLifted,

@@ -5,6 +5,7 @@ void main() {
   group('WorkoutLog', () {
     test('can be instantiated.', () {
       final workoutLog = WorkoutLog(
+        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -27,6 +28,7 @@ void main() {
 
     test('supports value equality.', () {
       final workoutLog1 = WorkoutLog(
+        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -45,6 +47,7 @@ void main() {
         ],
       );
       final workoutLog2 = WorkoutLog(
+        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -67,6 +70,7 @@ void main() {
 
     test('has correct props', () {
       final workoutLog = WorkoutLog(
+        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',
@@ -106,6 +110,7 @@ void main() {
 
     test('can be copyWith with changed properties', () {
       final workoutLog = WorkoutLog(
+        id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
         workoutTemplateId: 'template-id',

@@ -8,6 +8,7 @@ part of 'workout_template.dart';
 
 WorkoutTemplate _$WorkoutTemplateFromJson(Map<String, dynamic> json) =>
     WorkoutTemplate(
+      id: json['id'] as String,
       name: json['name'] as String,
       notes: json['notes'] as String,
       tonnageLifted: json['tonnageLifted'] as int,
@@ -21,6 +22,7 @@ WorkoutTemplate _$WorkoutTemplateFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$WorkoutTemplateToJson(WorkoutTemplate instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'notes': instance.notes,
       'tonnageLifted': instance.tonnageLifted,

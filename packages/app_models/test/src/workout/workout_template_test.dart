@@ -5,6 +5,7 @@ void main() {
   group('WorkoutTemplate', () {
     test('can be instantiated.', () {
       const workoutTemplate = WorkoutTemplate(
+        id: 'id',
         name: 'name',
         notes: 'notes',
         tonnageLifted: 1,
@@ -30,6 +31,7 @@ void main() {
 
     test('supports value equality.', () {
       const workoutTemplate1 = WorkoutTemplate(
+        id: 'id',
         name: 'name',
         notes: 'notes',
         tonnageLifted: 1,
@@ -51,6 +53,7 @@ void main() {
         ],
       );
       const workoutTemplate2 = WorkoutTemplate(
+        id: 'id',
         name: 'name',
         notes: 'notes',
         tonnageLifted: 1,
@@ -76,6 +79,7 @@ void main() {
 
     test('has correct props', () {
       const workoutTemplate = WorkoutTemplate(
+        id: 'id',
         name: 'name',
         notes: 'notes',
         tonnageLifted: 1,
@@ -121,6 +125,7 @@ void main() {
 
     test('can be copyWith with changed properties', () {
       const workoutTemplate = WorkoutTemplate(
+        id: 'id',
         name: 'name',
         notes: 'notes',
         tonnageLifted: 1,
@@ -142,6 +147,7 @@ void main() {
         ],
       );
       const newWorkoutTemplate = WorkoutTemplate(
+        id: 'id',
         name: 'new-name',
         notes: 'new-notes',
         tonnageLifted: 2,
@@ -189,6 +195,7 @@ void main() {
     });
     test('can be created from json', () {
       const workoutTemplate = WorkoutTemplate(
+        id: 'id',
         name: 'name',
         notes: 'notes',
         tonnageLifted: 1,

@@ -42,7 +42,11 @@ void main() {
     const collectionName = 'WorkoutTemplates';
     const userTemplatesCollectionName = 'UserTemplates';
 
+    const userId = 'userId';
+    const templateId = 'templateId';
+
     const workoutTemplateData = {
+      'id': templateId,
       'name': 'Test Workout',
       'notes': 'notes',
       'tonnageLifted': 1,
@@ -72,9 +76,6 @@ void main() {
         },
       ],
     };
-
-    const userId = 'userId';
-    const templateId = 'templateId';
 
     setUp(() {
       firebaseFirestore = FirebaseFirestoreMock();
@@ -241,6 +242,7 @@ void main() {
           workoutTemplatesResource.createUserWorkoutTemplate(
             userId: userId,
             payload: const WorkoutTemplate(
+              id: templateId,
               name: 'name',
               notes: 'notes',
               tonnageLifted: 1,
@@ -264,20 +266,22 @@ void main() {
           );
 
           verify(
-            () => userTemplatesCollectionReference.add(any()),
+            () => userTemplatesCollectionReference.doc(templateId).set(any()),
           ).called(1);
         },
       );
       test(
         'throws ApiException when failed to create document in Firestore',
         () {
-          when(() => userTemplatesCollectionReference.add(any()))
-              .thenThrow(Exception());
+          when(
+            () => userTemplatesCollectionReference.doc(templateId).set(any()),
+          ).thenThrow(Exception());
 
           expect(
             () => workoutTemplatesResource.createUserWorkoutTemplate(
               userId: userId,
               payload: const WorkoutTemplate(
+                id: templateId,
                 name: 'name',
                 notes: 'notes',
                 tonnageLifted: 1,
@@ -312,6 +316,7 @@ void main() {
             userId: userId,
             workoutTemplateId: templateId,
             payload: const WorkoutTemplate(
+              id: templateId,
               name: 'name',
               notes: 'notes',
               tonnageLifted: 1,
@@ -349,6 +354,7 @@ void main() {
               userId: userId,
               workoutTemplateId: templateId,
               payload: const WorkoutTemplate(
+                id: templateId,
                 name: 'name',
                 notes: 'notes',
                 tonnageLifted: 1,

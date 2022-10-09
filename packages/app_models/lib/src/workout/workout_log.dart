@@ -12,6 +12,7 @@ part 'workout_log.g.dart';
 class WorkoutLog extends Equatable {
   /// {@macro workout_log}
   const WorkoutLog({
+    required this.id,
     required this.duration,
     required this.datePerformed,
     required this.workoutTemplateId,
@@ -24,6 +25,9 @@ class WorkoutLog extends Equatable {
 
   /// Converts the [WorkoutLog] to [Map].
   Map<String, dynamic> toJson() => _$WorkoutLogToJson(this);
+
+  /// Workout log id.
+  final String id;
 
   /// Workout duration in seconds.
   final int duration;
@@ -46,6 +50,7 @@ class WorkoutLog extends Equatable {
     List<WorkoutExercise>? exercises,
   }) {
     return WorkoutLog(
+      id: id ?? this.id,
       duration: duration ?? this.duration,
       datePerformed: datePerformed ?? this.datePerformed,
       workoutTemplateId: workoutTemplateId ?? this.workoutTemplateId,
@@ -55,6 +60,7 @@ class WorkoutLog extends Equatable {
 
   @override
   List<Object> get props => [
+        id,
         duration,
         datePerformed,
         workoutTemplateId,

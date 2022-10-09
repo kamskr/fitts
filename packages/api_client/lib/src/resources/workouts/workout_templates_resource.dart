@@ -93,7 +93,8 @@ class WorkoutTemplatesResource {
           .collection(_collectionName)
           .doc(userId)
           .collection(_userTemplatesCollectionName)
-          .add(payload.toJson());
+          .doc(payload.id)
+          .set(payload.toJson());
     } catch (e, st) {
       throw ApiException(e, st);
     }

@@ -95,7 +95,8 @@ class WorkoutLogsResource {
           .collection(_collectionName)
           .doc(userId)
           .collection(_userLogsCollectionName)
-          .add(payload.toJson());
+          .doc(payload.id)
+          .set(payload.toJson());
     } catch (e, st) {
       throw ApiException(e, st);
     }
