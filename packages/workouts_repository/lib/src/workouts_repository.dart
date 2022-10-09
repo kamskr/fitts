@@ -27,7 +27,7 @@ class WorkoutsRepository {
 
   /// Returns a stream of workout templates for a given user id.
   /// Currently user can only access his own templates.
-  Stream<List<WorkoutTemplate>?> getWorkoutTemplates(String userId) {
+  Stream<List<WorkoutTemplate>?> getWorkoutTemplates() {
     if (_workoutTemplatesSubject == null) {
       _workoutTemplatesSubject = BehaviorSubject();
 
@@ -57,7 +57,6 @@ class WorkoutsRepository {
   /// template id.
   /// Currently user can only access his own templates.
   Stream<WorkoutTemplate?> getWorkoutTemplateById({
-    required String userId,
     required String workoutTemplateId,
   }) {
     if (!_workoutTemplatesSubjectMap.containsKey(workoutTemplateId)) {
@@ -75,7 +74,13 @@ class WorkoutsRepository {
       final workoutTemplateSubject = BehaviorSubject<WorkoutTemplate?>();
 
       workoutTemplateStream
-          .handleError(_handleWorkoutTemplateStreamError)
+          .handleError(
+            (e, st) => _handleWorkoutTemplateStreamError(
+              workoutTemplateId,
+              e,
+              st,
+            ),
+          )
           .listen(workoutTemplateSubject.add);
 
       _workoutTemplatesSubjectMap[workoutTemplateId] = workoutTemplateSubject;
@@ -83,20 +88,22 @@ class WorkoutsRepository {
     return _workoutTemplatesSubjectMap[workoutTemplateId]!.stream;
   }
 
-  void _handleWorkoutTemplateStreamError(Object error, StackTrace stackTrace) {
-    _workoutTemplatesSubject
+  void _handleWorkoutTemplateStreamError(
+      String workoutTemplateId, Object error, StackTrace stackTrace) {
+    _workoutTemplatesSubjectMap[workoutTemplateId]
         ?.addError(WorkoutTemplateStreamFailure(error, stackTrace));
   }
 
   /// Creates workout template for a given user id.
   /// Currently user can only create his own templates.
   Future<void> createWorkoutTemplate({
-    required String userId,
     required WorkoutTemplate workoutTemplate,
   }) async {
+    final user = await _authenticationClient.user.first;
+
     final workoutTemplatesResource = _apiClient.workoutTemplatesResource;
     await workoutTemplatesResource.createUserWorkoutTemplate(
-      userId: userId,
+      userId: user.email!,
       payload: workoutTemplate,
     );
   }
@@ -104,13 +111,14 @@ class WorkoutsRepository {
   /// Updates workout template for a given user id and workout template id.
   /// Currently user can only update his own templates.
   Future<void> updateWorkoutTemplate({
-    required String userId,
     required String workoutTemplateId,
     required WorkoutTemplate workoutTemplate,
   }) async {
+    final user = await _authenticationClient.user.first;
+
     final workoutTemplatesResource = _apiClient.workoutTemplatesResource;
     await workoutTemplatesResource.updateUserWorkoutTemplate(
-      userId: userId,
+      userId: user.email!,
       workoutTemplateId: workoutTemplateId,
       payload: workoutTemplate,
     );
@@ -119,12 +127,13 @@ class WorkoutsRepository {
   /// Deletes workout template for a given user id and workout template id.
   /// Currently user can only delete his own templates.
   Future<void> deleteWorkoutTemplate({
-    required String userId,
     required String workoutTemplateId,
   }) async {
+    final user = await _authenticationClient.user.first;
     final workoutTemplatesResource = _apiClient.workoutTemplatesResource;
+
     await workoutTemplatesResource.deleteUserWorkoutTemplate(
-      userId: userId,
+      userId: user.email!,
       workoutTemplateId: workoutTemplateId,
     );
   }
@@ -152,13 +161,11 @@ class WorkoutsRepository {
   }
 
   void _handleWorkoutLogsStreamError(Object error, StackTrace stackTrace) {
-    _workoutTemplatesSubject
-        ?.addError(WorkoutTemplatesStreamFailure(error, stackTrace));
+    _workoutLogsSubject?.addError(WorkoutLogsStreamFailure(error, stackTrace));
   }
 
   /// Stream workout log by id.
   Stream<WorkoutLog?> getWorkoutLogById({
-    required String userId,
     required String workoutLogId,
   }) {
     if (!_workoutLogsSubjectMap.containsKey(workoutLogId)) {
@@ -176,7 +183,9 @@ class WorkoutsRepository {
       final workoutLogSubject = BehaviorSubject<WorkoutLog?>();
 
       workoutLogStream
-          .handleError(_handleWorkoutLogStreamError)
+          .handleError(
+            (e, st) => _handleWorkoutLogStreamError(workoutLogId, e, st),
+          )
           .listen(workoutLogSubject.add);
 
       _workoutLogsSubjectMap[workoutLogId] = workoutLogSubject;
@@ -184,18 +193,24 @@ class WorkoutsRepository {
     return _workoutLogsSubjectMap[workoutLogId]!.stream;
   }
 
-  void _handleWorkoutLogStreamError(Object error, StackTrace stackTrace) {
-    _workoutLogsSubject?.addError(WorkoutLogStreamFailure(error, stackTrace));
+  void _handleWorkoutLogStreamError(
+    String workoutLogId,
+    Object error,
+    StackTrace stackTrace,
+  ) {
+    _workoutLogsSubjectMap[workoutLogId]
+        ?.addError(WorkoutLogStreamFailure(error, stackTrace));
   }
 
   /// Create workout log and update related workout template.
   Future<void> createWorkoutLog({
-    required String userId,
     required WorkoutLog workoutLog,
   }) async {
+    final user = await _authenticationClient.user.first;
+
     final workoutLogsResource = _apiClient.workoutLogsResource;
     await workoutLogsResource.createUserWorkoutLog(
-      userId: userId,
+      userId: user.email!,
       payload: workoutLog,
     );
   }
@@ -203,13 +218,14 @@ class WorkoutsRepository {
   /// Update workout log and update related workout template.
   /// Currently user can only update his own workout logs.
   Future<void> updateWorkoutLog({
-    required String userId,
     required String workoutLogId,
     required WorkoutLog workoutLog,
   }) async {
+    final user = await _authenticationClient.user.first;
+
     final workoutLogsResource = _apiClient.workoutLogsResource;
     await workoutLogsResource.updateUserWorkoutLog(
-      userId: userId,
+      userId: user.email!,
       workoutLogId: workoutLogId,
       payload: workoutLog,
     );
@@ -218,12 +234,13 @@ class WorkoutsRepository {
   /// Delete workout log and update related workout template.
   /// Currently user can only delete his own workout logs.
   Future<void> deleteWorkoutLog({
-    required String userId,
     required String workoutLogId,
   }) async {
+    final user = await _authenticationClient.user.first;
     final workoutLogsResource = _apiClient.workoutLogsResource;
+
     await workoutLogsResource.deleteUserWorkoutLog(
-      userId: userId,
+      userId: user.email!,
       workoutLogId: workoutLogId,
     );
   }
