@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app_models/app_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fitts/utils/utils.dart';
 import 'package:user_stats_repository/user_stats_repository.dart';
 import 'package:workouts_repository/workouts_repository.dart';
 
@@ -21,7 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         _workoutsRepository = workoutsRepository,
         super(
           const HomeState(
-            status: HomeStatus.initial,
+            status: DataLoadingStatus.initial,
           ),
         ) {
     on<UserStatsSubscriptionRequested>(_onUserStatsSubscriptionRequested);
@@ -43,11 +44,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         add(const WorkoutTemplatesSubscriptionRequested());
         return state.copyWith(
           userStats: userStats,
-          status: HomeStatus.loading,
+          status: DataLoadingStatus.loading,
         );
       },
       onError: (_, __) => state.copyWith(
-        status: HomeStatus.error,
+        status: DataLoadingStatus.error,
       ),
     );
   }
@@ -64,17 +65,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         onData: (workoutTemplates) {
           return state.copyWith(
             workoutTemplates: workoutTemplates,
-            status: HomeStatus.success,
+            status: DataLoadingStatus.success,
             recentWorkoutLog: workoutLog,
           );
         },
         onError: (_, __) => state.copyWith(
-          status: HomeStatus.error,
+          status: DataLoadingStatus.error,
         ),
       );
     } catch (e) {
       state.copyWith(
-        status: HomeStatus.error,
+        status: DataLoadingStatus.error,
       );
 
       addError(e);

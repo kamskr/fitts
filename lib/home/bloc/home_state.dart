@@ -1,23 +1,6 @@
 part of 'home_bloc.dart';
 
 /// {@template home_state}
-/// Status values for [HomeBloc] state.
-/// {@endtemplate}
-enum HomeStatus {
-  /// Initial state of the bloc and loading state.
-  initial,
-
-  /// Loading state of the bloc.
-  loading,
-
-  /// Success state of the bloc.
-  success,
-
-  /// Error state of the bloc.
-  error,
-}
-
-/// {@template home_state}
 /// Template for the [HomeBloc] state.
 /// {@endtemplate}
 class HomeState extends Equatable {
@@ -30,7 +13,7 @@ class HomeState extends Equatable {
   });
 
   /// Current status of the bloc.
-  final HomeStatus status;
+  final DataLoadingStatus status;
 
   /// The [UserStats] of current user.
   final UserStats? userStats;
@@ -46,7 +29,7 @@ class HomeState extends Equatable {
 
   /// Copy method
   HomeState copyWith({
-    HomeStatus? status,
+    DataLoadingStatus? status,
     UserStats? userStats,
     List<WorkoutTemplate>? workoutTemplates,
     WorkoutLog? recentWorkoutLog,

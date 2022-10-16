@@ -21,11 +21,11 @@ class WorkoutTemplate extends Equatable {
     required this.notes,
     required this.tonnageLifted,
     required this.workoutsCompleted,
-    required this.averageWorkoutLength,
-    required this.lastAverageRestTime,
     required this.exercises,
-    required this.lastPerformed,
-    required this.recentTotalTonnageLifted,
+    this.averageWorkoutLength,
+    this.lastAverageRestTime,
+    this.lastPerformed,
+    this.recentTotalTonnageLifted,
   });
 
   /// Factory which converts a [Map] into a [WorkoutTemplate].

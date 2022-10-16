@@ -1,4 +1,11 @@
+import 'package:app_ui/app_ui.dart';
+import 'package:fitts/my_workouts/bloc/my_workouts_bloc.dart';
+import 'package:fitts/my_workouts/my_workouts.dart';
+import 'package:fitts/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:workouts_repository/workouts_repository.dart';
 
 /// {@template my_workouts_page}
 /// Page with list of user's workout templates.
@@ -13,7 +20,12 @@ class MyWorkoutsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _MyWorkoutsPageView();
+    return BlocProvider(
+      create: (context) => MyWorkoutsBloc(
+        workoutsRepository: context.read<WorkoutsRepository>(),
+      )..add(const WorkoutTemplatesSubscriptionRequested()),
+      child: const _MyWorkoutsPageView(),
+    );
   }
 }
 
@@ -22,9 +34,94 @@ class _MyWorkoutsPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Text('my workouts'),
+    return Scaffold(
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+          statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        scrolledUnderElevation: 1,
+        actions: [
+          AppTextButton(
+            textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            child: const Text(
+              'Create',
+            ),
+            onPressed: () {},
+          ),
+          AppTextButton(
+            textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            child: const Text('Edit'),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: const _MyWorkoutsBody(),
+    );
+  }
+}
+
+class _MyWorkoutsBody extends StatelessWidget {
+  const _MyWorkoutsBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.watch<MyWorkoutsBloc>().state;
+
+    if (state.status == DataLoadingStatus.loading ||
+        state.status == DataLoadingStatus.initial) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    if (state.status == DataLoadingStatus.error) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Placeholder for error screen.'),
+        ),
+      );
+    }
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg,
+            ),
+            child: Text(
+              'My Workouts',
+              style: Theme.of(context).textTheme.headline3,
+            ),
+          ),
+          const AppGap.md(),
+          ...state.workoutTemplates!
+              .map(
+                (workoutTemplate) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                  ),
+                  child: WorkoutCard(
+                    workoutTemplate: workoutTemplate,
+                  ),
+                ),
+              )
+              .toList(),
+          SizedBox(
+            height: MediaQuery.of(context).padding.bottom,
+          ),
+        ],
       ),
     );
   }

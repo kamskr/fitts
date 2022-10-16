@@ -58,8 +58,8 @@ class _HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<HomeBloc>().state;
 
-    if (state.status == HomeStatus.loading ||
-        state.status == HomeStatus.initial) {
+    if (state.status == DataLoadingStatus.loading ||
+        state.status == DataLoadingStatus.initial) {
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
@@ -67,7 +67,7 @@ class _HomeBody extends StatelessWidget {
       );
     }
 
-    if (state.status == HomeStatus.error) {
+    if (state.status == DataLoadingStatus.error) {
       return const Scaffold(
         body: Center(
           child: Text('Placeholder for error screen.'),
