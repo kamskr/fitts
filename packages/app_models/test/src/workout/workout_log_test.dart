@@ -3,12 +3,37 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('WorkoutLog', () {
+    final workoutTemplate = WorkoutTemplate(
+      id: 'id',
+      name: 'name',
+      notes: 'notes',
+      tonnageLifted: 1,
+      workoutsCompleted: 1,
+      averageWorkoutLength: 1,
+      lastAverageRestTime: 1,
+      lastPerformed: DateTime(2020),
+      recentTotalTonnageLifted: const [1],
+      exercises: const [
+        WorkoutExercise(
+          exerciseId: 'bench-press',
+          notes: 'notes',
+          sets: [
+            ExerciseSet(
+              weight: 100,
+              repetitions: 10,
+            ),
+          ],
+          restTime: 100,
+        ),
+      ],
+    );
+
     test('can be instantiated.', () {
       final workoutLog = WorkoutLog(
         id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
-        workoutTemplateId: 'template-id',
+        workoutTemplate: workoutTemplate,
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -31,7 +56,7 @@ void main() {
         id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
-        workoutTemplateId: 'template-id',
+        workoutTemplate: workoutTemplate,
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -50,7 +75,7 @@ void main() {
         id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
-        workoutTemplateId: 'template-id',
+        workoutTemplate: workoutTemplate,
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -73,7 +98,7 @@ void main() {
         id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
-        workoutTemplateId: 'template-id',
+        workoutTemplate: workoutTemplate,
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -92,7 +117,7 @@ void main() {
         'id',
         3600,
         DateTime(2020),
-        'template-id',
+        workoutTemplate,
         [
           const WorkoutExercise(
             exerciseId: 'bench-press',
@@ -114,7 +139,7 @@ void main() {
         id: 'id',
         duration: 3600,
         datePerformed: DateTime(2020),
-        workoutTemplateId: 'template-id',
+        workoutTemplate: workoutTemplate,
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -133,7 +158,7 @@ void main() {
         id: 'id2',
         duration: 7200,
         datePerformed: DateTime(2021),
-        workoutTemplateId: 'template-id2',
+        workoutTemplate: workoutTemplate,
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -152,7 +177,11 @@ void main() {
 
       expect(copy.duration, 7200);
       expect(copy.datePerformed, DateTime(2021));
-      expect(copy.workoutTemplateId, 'template-id2');
+      expect(
+        copy.workoutTemplate,
+        workoutTemplate,
+      );
+
       expect(copy.exercises, const [
         WorkoutExercise(
           exerciseId: 'bench-press',
@@ -172,7 +201,7 @@ void main() {
         'id': 'id',
         'duration': 3600,
         'datePerformed': DateTime(2020).toIso8601String(),
-        'workoutTemplateId': 'template-id',
+        'workoutTemplate': workoutTemplate.toJson(),
         'exercises': const [
           {
             'exerciseId': 'bench-press',
@@ -191,7 +220,10 @@ void main() {
 
       expect(workoutLog.duration, 3600);
       expect(workoutLog.datePerformed, DateTime(2020));
-      expect(workoutLog.workoutTemplateId, 'template-id');
+      expect(
+        workoutLog.workoutTemplate,
+        workoutTemplate,
+      );
       expect(workoutLog.exercises, const [
         WorkoutExercise(
           exerciseId: 'bench-press',

@@ -44,11 +44,36 @@ void main() {
     const userId = 'userId';
     const logId = 'logId';
 
+    final workoutTemplate = WorkoutTemplate(
+      id: 'id',
+      name: 'name',
+      notes: 'notes',
+      tonnageLifted: 1,
+      workoutsCompleted: 1,
+      averageWorkoutLength: 1,
+      lastAverageRestTime: 1,
+      lastPerformed: DateTime(2020),
+      recentTotalTonnageLifted: const [1],
+      exercises: const [
+        WorkoutExercise(
+          exerciseId: 'bench-press',
+          notes: 'notes',
+          sets: [
+            ExerciseSet(
+              weight: 100,
+              repetitions: 10,
+            ),
+          ],
+          restTime: 100,
+        ),
+      ],
+    );
+
     final workoutLogData = {
       'id': logId,
       'duration': 1,
       'datePerformed': DateTime.now().toString(),
-      'workoutTemplateId': 'id',
+      'workoutTemplate': workoutTemplate.toJson(),
       'exercises': [
         {
           'exerciseId': 'Squat',
@@ -207,7 +232,7 @@ void main() {
               id: logId,
               duration: 3600,
               datePerformed: DateTime(2020),
-              workoutTemplateId: 'template-id',
+              workoutTemplate: workoutTemplate,
               exercises: const [
                 WorkoutExercise(
                   exerciseId: 'bench-press',
@@ -242,7 +267,7 @@ void main() {
                 id: logId,
                 duration: 3600,
                 datePerformed: DateTime(2020),
-                workoutTemplateId: 'template-id',
+                workoutTemplate: workoutTemplate,
                 exercises: const [
                   WorkoutExercise(
                     exerciseId: 'bench-press',
@@ -274,7 +299,7 @@ void main() {
               id: logId,
               duration: 3600,
               datePerformed: DateTime(2020),
-              workoutTemplateId: 'template-id',
+              workoutTemplate: workoutTemplate,
               exercises: const [
                 WorkoutExercise(
                   exerciseId: 'bench-press',
@@ -309,7 +334,7 @@ void main() {
                 id: logId,
                 duration: 3600,
                 datePerformed: DateTime(2020),
-                workoutTemplateId: 'template-id',
+                workoutTemplate: workoutTemplate,
                 exercises: const [
                   WorkoutExercise(
                     exerciseId: 'bench-press',

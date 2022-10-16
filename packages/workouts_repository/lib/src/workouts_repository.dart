@@ -248,4 +248,14 @@ class WorkoutsRepository {
       workoutLogId: workoutLogId,
     );
   }
+
+  /// Get latest workout log
+  Future<WorkoutLog?> getLatestWorkoutLog() async {
+    final user = await _authenticationClient.user.first;
+    final workoutLogsResource = _apiClient.workoutLogsResource;
+
+    return workoutLogsResource.getRecentWorkoutLog(
+      user.email!,
+    );
+  }
 }

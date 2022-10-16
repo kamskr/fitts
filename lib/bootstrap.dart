@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 import 'package:user_stats_repository/user_stats_repository.dart';
+import 'package:workouts_repository/workouts_repository.dart';
 
 /// {@template bootstrap}
 /// Bootstrap method used for generating all global providers and DI.
@@ -32,6 +33,12 @@ Future<Widget> bootstrap() async {
       ),
       RepositoryProvider(
         create: (_) => UserStatsRepository(
+          apiClient: _apiClient,
+          authenticationClient: _authenticationClient,
+        ),
+      ),
+      RepositoryProvider(
+        create: (_) => WorkoutsRepository(
           apiClient: _apiClient,
           authenticationClient: _authenticationClient,
         ),

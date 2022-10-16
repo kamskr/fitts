@@ -7,16 +7,15 @@
         {
             "name": "App",
             "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "App with simulator",
+            "request": "launch",
             "type": "dart",
             "args": [
                 "--dart-define=USE_FIREBASE_EMULATOR=true"
             ]
-        },
-        {
-            "name": "App UI Gallery",
-            "cwd": "packages/app_ui/app_gallery",
-            "request": "launch",
-            "type": "dart",
         },
     ]
 }

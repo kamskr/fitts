@@ -45,7 +45,7 @@ void main() {
     const userId = 'userId';
     const templateId = 'templateId';
 
-    const workoutTemplateData = {
+    final workoutTemplateData = {
       'id': templateId,
       'name': 'Test Workout',
       'notes': 'notes',
@@ -53,6 +53,8 @@ void main() {
       'workoutsCompleted': 1,
       'averageWorkoutLength': 1,
       'lastAverageRestTime': 1,
+      'lastPerformed': DateTime(2020).toIso8601String(),
+      'recentTotalTonnageLifted': [1],
       'exercises': [
         {
           'exerciseId': 'Squat',
@@ -241,7 +243,7 @@ void main() {
         () {
           workoutTemplatesResource.createUserWorkoutTemplate(
             userId: userId,
-            payload: const WorkoutTemplate(
+            payload: WorkoutTemplate(
               id: templateId,
               name: 'name',
               notes: 'notes',
@@ -249,7 +251,9 @@ void main() {
               workoutsCompleted: 2,
               averageWorkoutLength: 3,
               lastAverageRestTime: 4,
-              exercises: [
+              lastPerformed: DateTime(2020),
+              recentTotalTonnageLifted: const [1],
+              exercises: const [
                 WorkoutExercise(
                   exerciseId: 'exerciseId',
                   notes: 'notes',
@@ -280,7 +284,7 @@ void main() {
           expect(
             () => workoutTemplatesResource.createUserWorkoutTemplate(
               userId: userId,
-              payload: const WorkoutTemplate(
+              payload: WorkoutTemplate(
                 id: templateId,
                 name: 'name',
                 notes: 'notes',
@@ -288,7 +292,9 @@ void main() {
                 workoutsCompleted: 2,
                 averageWorkoutLength: 3,
                 lastAverageRestTime: 4,
-                exercises: [
+                lastPerformed: DateTime(2020),
+                recentTotalTonnageLifted: const [1],
+                exercises: const [
                   WorkoutExercise(
                     exerciseId: 'exerciseId',
                     notes: 'notes',
@@ -315,7 +321,7 @@ void main() {
           workoutTemplatesResource.updateUserWorkoutTemplate(
             userId: userId,
             workoutTemplateId: templateId,
-            payload: const WorkoutTemplate(
+            payload: WorkoutTemplate(
               id: templateId,
               name: 'name',
               notes: 'notes',
@@ -323,7 +329,9 @@ void main() {
               workoutsCompleted: 2,
               averageWorkoutLength: 3,
               lastAverageRestTime: 4,
-              exercises: [
+              lastPerformed: DateTime(2020),
+              recentTotalTonnageLifted: const [1],
+              exercises: const [
                 WorkoutExercise(
                   exerciseId: 'exerciseId',
                   notes: 'notes',
@@ -353,7 +361,7 @@ void main() {
             () => workoutTemplatesResource.updateUserWorkoutTemplate(
               userId: userId,
               workoutTemplateId: templateId,
-              payload: const WorkoutTemplate(
+              payload: WorkoutTemplate(
                 id: templateId,
                 name: 'name',
                 notes: 'notes',
@@ -361,7 +369,9 @@ void main() {
                 workoutsCompleted: 2,
                 averageWorkoutLength: 3,
                 lastAverageRestTime: 4,
-                exercises: [
+                lastPerformed: DateTime(2020),
+                recentTotalTonnageLifted: const [1],
+                exercises: const [
                   WorkoutExercise(
                     exerciseId: 'exerciseId',
                     notes: 'notes',

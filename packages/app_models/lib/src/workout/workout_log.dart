@@ -15,7 +15,7 @@ class WorkoutLog extends Equatable {
     required this.id,
     required this.duration,
     required this.datePerformed,
-    required this.workoutTemplateId,
+    required this.workoutTemplate,
     required this.exercises,
   });
 
@@ -35,8 +35,8 @@ class WorkoutLog extends Equatable {
   /// Date when the workout was performed.
   final DateTime datePerformed;
 
-  /// Id of the workout template used to create this workout log.
-  final String workoutTemplateId;
+  /// [WorkoutTemplate] used for this workout.
+  final WorkoutTemplate workoutTemplate;
 
   /// List of exercises performed in the workout.
   final List<WorkoutExercise> exercises;
@@ -46,14 +46,14 @@ class WorkoutLog extends Equatable {
     String? id,
     int? duration,
     DateTime? datePerformed,
-    String? workoutTemplateId,
+    WorkoutTemplate? workoutTemplate,
     List<WorkoutExercise>? exercises,
   }) {
     return WorkoutLog(
       id: id ?? this.id,
       duration: duration ?? this.duration,
       datePerformed: datePerformed ?? this.datePerformed,
-      workoutTemplateId: workoutTemplateId ?? this.workoutTemplateId,
+      workoutTemplate: workoutTemplate ?? this.workoutTemplate,
       exercises: exercises ?? this.exercises,
     );
   }
@@ -63,7 +63,7 @@ class WorkoutLog extends Equatable {
         id,
         duration,
         datePerformed,
-        workoutTemplateId,
+        workoutTemplate,
         exercises,
       ];
 }
