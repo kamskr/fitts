@@ -1,7 +1,7 @@
 part of 'my_workouts_bloc.dart';
 
 /// {@template my_workouts_state}
-/// State object for my_workouts_.
+/// State object for my_workouts_bloc.
 /// {@endtemplate}
 class MyWorkoutsState extends Equatable {
   /// {@macro my_workouts_state}
