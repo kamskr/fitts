@@ -40,23 +40,12 @@ class _MyWorkoutsPageView extends StatelessWidget {
           statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
           statusBarBrightness: Brightness.light, // For iOS (dark icons)
         ),
+        titleSpacing: 40,
         backgroundColor: Theme.of(context).colorScheme.background,
         scrolledUnderElevation: 1,
         actions: [
-          AppTextButton(
-            textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            child: const Text(
-              'Create',
-            ),
-            onPressed: () {},
-          ),
-          AppTextButton(
-            textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            child: const Text('Edit'),
+          IconButton(
+            icon: const Icon(Icons.add),
             onPressed: () {},
           ),
         ],
