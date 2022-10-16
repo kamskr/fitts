@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('WorkoutTemplate', () {
     test('can be instantiated.', () {
-      const workoutTemplate = WorkoutTemplate(
+      final workoutTemplate = WorkoutTemplate(
         id: 'id',
         name: 'name',
         notes: 'notes',
@@ -12,7 +12,9 @@ void main() {
         workoutsCompleted: 1,
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
-        exercises: [
+        lastPerformed: DateTime(2020),
+        recentTotalTonnageLifted: const [1],
+        exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
             notes: 'notes',
@@ -30,7 +32,7 @@ void main() {
     });
 
     test('supports value equality.', () {
-      const workoutTemplate1 = WorkoutTemplate(
+      final workoutTemplate1 = WorkoutTemplate(
         id: 'id',
         name: 'name',
         notes: 'notes',
@@ -38,7 +40,9 @@ void main() {
         workoutsCompleted: 1,
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
-        exercises: [
+        lastPerformed: DateTime(2020),
+        recentTotalTonnageLifted: const [1],
+        exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
             notes: 'notes',
@@ -52,7 +56,7 @@ void main() {
           ),
         ],
       );
-      const workoutTemplate2 = WorkoutTemplate(
+      final workoutTemplate2 = WorkoutTemplate(
         id: 'id',
         name: 'name',
         notes: 'notes',
@@ -60,7 +64,9 @@ void main() {
         workoutsCompleted: 1,
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
-        exercises: [
+        lastPerformed: DateTime(2020),
+        recentTotalTonnageLifted: const [1],
+        exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
             notes: 'notes',
@@ -78,7 +84,7 @@ void main() {
     });
 
     test('has correct props', () {
-      const workoutTemplate = WorkoutTemplate(
+      final workoutTemplate = WorkoutTemplate(
         id: 'id',
         name: 'name',
         notes: 'notes',
@@ -86,7 +92,9 @@ void main() {
         workoutsCompleted: 1,
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
-        exercises: [
+        lastPerformed: DateTime(2020),
+        recentTotalTonnageLifted: const [1],
+        exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
             notes: 'notes',
@@ -121,11 +129,13 @@ void main() {
             restTime: 100,
           ),
         ],
+        DateTime(2020),
+        const [1]
       ]);
     });
 
     test('can be copyWith with changed properties', () {
-      const workoutTemplate = WorkoutTemplate(
+      final workoutTemplate = WorkoutTemplate(
         id: 'id',
         name: 'name',
         notes: 'notes',
@@ -133,7 +143,9 @@ void main() {
         workoutsCompleted: 1,
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
-        exercises: [
+        lastPerformed: DateTime(2020),
+        recentTotalTonnageLifted: const [1],
+        exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
             notes: 'notes',
@@ -147,7 +159,7 @@ void main() {
           ),
         ],
       );
-      const newWorkoutTemplate = WorkoutTemplate(
+      final newWorkoutTemplate = WorkoutTemplate(
         id: 'id',
         name: 'new-name',
         notes: 'new-notes',
@@ -155,7 +167,9 @@ void main() {
         workoutsCompleted: 2,
         averageWorkoutLength: 2,
         lastAverageRestTime: 2,
-        exercises: [
+        lastPerformed: DateTime(2020),
+        recentTotalTonnageLifted: const [1],
+        exercises: const [
           WorkoutExercise(
             exerciseId: 'new-bench-press',
             notes: 'new-notes',
@@ -177,6 +191,8 @@ void main() {
           workoutsCompleted: 2,
           averageWorkoutLength: 2,
           lastAverageRestTime: 2,
+          lastPerformed: DateTime(2020),
+          recentTotalTonnageLifted: const [1],
           exercises: [
             const WorkoutExercise(
               exerciseId: 'new-bench-press',
@@ -195,7 +211,7 @@ void main() {
       );
     });
     test('can be created from json', () {
-      const workoutTemplate = WorkoutTemplate(
+      final workoutTemplate = WorkoutTemplate(
         id: 'id',
         name: 'name',
         notes: 'notes',
@@ -203,7 +219,9 @@ void main() {
         workoutsCompleted: 1,
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
-        exercises: [
+        lastPerformed: DateTime(2020),
+        recentTotalTonnageLifted: const [1],
+        exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
             notes: 'notes',

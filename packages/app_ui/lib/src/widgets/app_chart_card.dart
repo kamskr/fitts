@@ -14,6 +14,7 @@ class AppChartCard extends StatelessWidget {
   const AppChartCard({
     Key? key,
     required this.values,
+    this.emptyText,
     this.labels,
     this.header,
     this.footer,
@@ -30,6 +31,9 @@ class AppChartCard extends StatelessWidget {
   /// Widget displayed above the chart. (Optional)
   final Widget? header;
 
+  /// Text displayed when there are no values to display. (Optional)s
+  final String? emptyText;
+
   /// Widget displayed below the chart. (Optional)
   final Widget? footer;
 
@@ -45,7 +49,7 @@ class AppChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxValue = values.reduce(max);
+    final maxValue = values.reduce(max) / 1000;
     final midValue = maxValue / 2;
 
     /// Compose tiles seen on the left of the chart.
@@ -101,7 +105,7 @@ class AppChartCard extends StatelessWidget {
         x: x,
         barRods: [
           BarChartRodData(
-            toY: y,
+            toY: y / 1000,
             color: x.isEven ? AppColors.primary[100] : AppColors.primary[400],
             width: 25,
             borderRadius: BorderRadius.zero,
@@ -125,6 +129,7 @@ class AppChartCard extends StatelessWidget {
       barGroup5,
       barGroup6,
     ];
+
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -159,46 +164,62 @@ class AppChartCard extends StatelessWidget {
                 const SizedBox(
                   height: 38,
                 ),
-                Expanded(
-                  child: BarChart(
-                    BarChartData(
-                      maxY: maxValue,
-                      titlesData: FlTitlesData(
-                        show: true,
-                        rightTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
+                if (emptyText != null)
+                  Expanded(
+                    child: SizedBox(
+                      height: double.infinity,
+                      child: Center(
+                        child: Text(
+                          emptyText!,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: AppColors.white.withOpacity(.8),
+                                  ),
                         ),
-                        topTitles: AxisTitles(
-                          sideTitles: SideTitles(showTitles: false),
-                        ),
-                        bottomTitles: labels != null
-                            ? AxisTitles(
-                                sideTitles: SideTitles(
-                                  showTitles: true,
-                                  getTitlesWidget: bottomTitles,
-                                  reservedSize: 42,
+                      ),
+                    ),
+                  )
+                else
+                  Expanded(
+                    child: BarChart(
+                      BarChartData(
+                        maxY: maxValue,
+                        titlesData: FlTitlesData(
+                          show: true,
+                          rightTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          bottomTitles: labels != null
+                              ? AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    getTitlesWidget: bottomTitles,
+                                    reservedSize: 42,
+                                  ),
+                                )
+                              : AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false),
                                 ),
-                              )
-                            : AxisTitles(
-                                sideTitles: SideTitles(showTitles: false),
-                              ),
-                        leftTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: 28,
-                            interval: 1,
-                            getTitlesWidget: leftTitles,
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              reservedSize: 28,
+                              interval: 1,
+                              getTitlesWidget: leftTitles,
+                            ),
                           ),
                         ),
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        barGroups: showingBarGroups,
+                        gridData: FlGridData(show: false),
                       ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      barGroups: showingBarGroups,
-                      gridData: FlGridData(show: false),
                     ),
                   ),
-                ),
                 if (footer != null) footer!,
               ],
             ),

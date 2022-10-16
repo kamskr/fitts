@@ -68,5 +68,6 @@
       }
     }
   },
-  "homePageNextWorkoutTimesCompleted": "times completed"
+  "homePageNextWorkoutTimesCompleted": "times completed",
+  "workoutWidgetNoWorkoutsPerformedYet": "No workouts performed yet"
 }

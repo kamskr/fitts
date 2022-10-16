@@ -1,15 +1,15 @@
+import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/my_workouts/my_workouts.dart';
+import 'package:fitts/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:user_stats_repository/user_stats_repository.dart';
-
-// todo(kamskry): TEMP FLAGS TO BE REMOVED AND REPLACED WITH REAL CONDITIONS
-const bool _workoutsExist = true;
-const bool _previousWorkoutExists = true;
+import 'package:workouts_repository/workouts_repository.dart';
 
 /// {@template home_page}
 ///  Dashboard view of the application.
@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => HomeBloc(
         userStatsRepository: context.read<UserStatsRepository>(),
+        workoutsRepository: context.read<WorkoutsRepository>(),
       )..add(const UserStatsSubscriptionRequested()),
       child: const _HomeView(),
     );
@@ -57,7 +58,8 @@ class _HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<HomeBloc>().state;
 
-    if (state is HomeInitialState) {
+    if (state.status == DataLoadingStatus.loading ||
+        state.status == DataLoadingStatus.initial) {
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
@@ -65,7 +67,7 @@ class _HomeBody extends StatelessWidget {
       );
     }
 
-    if (state is HomeErrorState) {
+    if (state.status == DataLoadingStatus.error) {
       return const Scaffold(
         body: Center(
           child: Text('Placeholder for error screen.'),
@@ -75,25 +77,27 @@ class _HomeBody extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Column(
-        children: const [
-          _HomeHeader(),
-          AppGap.lg(),
-          Divider(height: 1),
-          _DashboardStats(),
-          Divider(height: 1),
-          AppGap.md(),
-          if (_previousWorkoutExists) ...[
-            _PreviousWorkout(),
-            AppGap.md(),
-            Divider(height: 1),
+        children: [
+          const _HomeHeader(),
+          const AppGap.lg(),
+          const Divider(height: 1),
+          const _DashboardStats(),
+          const Divider(height: 1),
+          const AppGap.md(),
+          if (state.recentWorkoutLog != null) ...[
+            const _PreviousWorkout(),
+            const AppGap.md(),
+            const Divider(height: 1),
           ],
-          if (_workoutsExist) ...[
-            AppGap.xs(),
-            _UserWorkouts(),
-          ],
-          if (!_workoutsExist) ...[
-            AppGap.xs(),
-            _EmptyWorkouts(),
+          if (state.workoutTemplates != null &&
+              state.workoutTemplates!.isNotEmpty) ...[
+            const AppGap.xs(),
+            _NextWorkout(
+              workoutTemplate: state.workoutTemplates!.first,
+            ),
+          ] else ...[
+            const AppGap.xs(),
+            const _EmptyWorkouts(),
           ],
         ],
       ),
@@ -111,7 +115,7 @@ class _DashboardStats extends StatelessWidget {
     final l10n = context.l10n;
     final userProfile = context.watch<AppBloc>().state.userProfile;
     final userStats =
-        (context.watch<HomeBloc>().state as HomeSuccessState).userStats;
+        context.watch<HomeBloc>().state.userStats ?? UserStats.empty;
 
     final totalKg = userStats.globalStats.totalKgLifted;
     late String totalKgString;
@@ -122,25 +126,29 @@ class _DashboardStats extends StatelessWidget {
       totalKgString = '${(totalKg / 1000).round()}k';
     }
 
-    return Row(
+    return Column(
       children: [
-        _DashboardStatsItem(
-          count: userStats.globalStats.workoutsCompleted.toString(),
-          titlePart1: l10n.homePageWorkoutsCompleted1,
-          titlePart2: l10n.homePageWorkoutsCompleted2,
-        ),
-        _DashboardStatsItem(
-          count: totalKgString,
-          suffix: 'kg',
-          titlePart1: l10n.homePageTonnageLifted1,
-          titlePart2: l10n.homePageTonnageLifted2,
-        ),
-        _DashboardStatsItem(
-          count: '${userProfile.weight}',
-          suffix: 'kg',
-          titlePart1: l10n.homePageCurrentWeight1,
-          titlePart2: l10n.homePageCurrentWeight2,
-          showBorder: false,
+        Row(
+          children: [
+            _DashboardStatsItem(
+              count: userStats.globalStats.workoutsCompleted.toString(),
+              titlePart1: l10n.homePageWorkoutsCompleted1,
+              titlePart2: l10n.homePageWorkoutsCompleted2,
+            ),
+            _DashboardStatsItem(
+              count: totalKgString,
+              suffix: 'kg',
+              titlePart1: l10n.homePageTonnageLifted1,
+              titlePart2: l10n.homePageTonnageLifted2,
+            ),
+            _DashboardStatsItem(
+              count: '${userProfile.weight}',
+              suffix: 'kg',
+              titlePart1: l10n.homePageCurrentWeight1,
+              titlePart2: l10n.homePageCurrentWeight2,
+              showBorder: false,
+            ),
+          ],
         ),
       ],
     );
@@ -295,6 +303,7 @@ class _PreviousWorkout extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    final workoutLog = context.watch<HomeBloc>().state.recentWorkoutLog!;
 
     return GestureDetector(
       onTap: () {},
@@ -318,13 +327,13 @@ class _PreviousWorkout extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '22',
+                        DateFormatters.day(workoutLog.datePerformed),
                         style: theme.textTheme.headline6!.copyWith(
                           color: Colors.white,
                         ),
                       ),
                       Text(
-                        'MAY',
+                        DateFormatters.month(workoutLog.datePerformed),
                         style: theme.textTheme.overline!.copyWith(
                           color: Colors.white.withOpacity(.6),
                         ),
@@ -342,11 +351,13 @@ class _PreviousWorkout extends StatelessWidget {
                     ),
                     const AppGap.xxs(),
                     Text(
-                      'Quads & Deltoids',
+                      workoutLog.workoutTemplate.name,
                       style: theme.textTheme.headline6,
                     ),
                     Text(
-                      l10n.homePagePreviousWorkoutExercisesCount(7),
+                      l10n.homePagePreviousWorkoutExercisesCount(
+                        workoutLog.exercises.length,
+                      ),
                       style: theme.textTheme.bodyText1,
                     ),
                   ],
@@ -427,12 +438,28 @@ class _EmptyWorkouts extends StatelessWidget {
   }
 }
 
-class _UserWorkouts extends StatelessWidget {
-  const _UserWorkouts({Key? key}) : super(key: key);
+class _NextWorkout extends StatelessWidget {
+  const _NextWorkout({
+    Key? key,
+    required this.workoutTemplate,
+  }) : super(key: key);
+
+  /// Workout template to display.
+  final WorkoutTemplate workoutTemplate;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final tonnageLifted = List<double>.filled(6, 0);
+
+    if (workoutTemplate.recentTotalTonnageLifted != null) {
+      final tonnageEntries =
+          workoutTemplate.recentTotalTonnageLifted!.asMap().entries;
+
+      for (final entry in tonnageEntries) {
+        tonnageLifted[entry.key] = entry.value.toDouble();
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
@@ -446,7 +473,9 @@ class _UserWorkouts extends StatelessWidget {
                 style: Theme.of(context).textTheme.subtitle2,
               ),
               AppTextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MyWorkoutsPage.route());
+                },
                 textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -454,80 +483,9 @@ class _UserWorkouts extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 290,
-            width: double.infinity,
-            child: AppChartCard(
-              header: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Chest & Back',
-                    style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                  ),
-                  Text(
-                    l10n.homePagePreviousWorkoutDate('Mon, May 8'),
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                  ),
-                ],
-              ),
-              values: const [
-                5,
-                16,
-                14,
-                12,
-                5,
-                16,
-                // 5, 5, 5, 5, 5, 5
-              ],
-              footer: Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Text(
-                            '7',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5!
-                                .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
-                          ),
-                          Text(
-                            l10n.homePageNextWorkoutTimesCompleted,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        height: 46,
-                        child: AppButton.gradient(
-                          child: Text(l10n.homePageStartWorkoutButtonText),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
+          WorkoutCard(
+            workoutTemplate: workoutTemplate,
+          ),
         ],
       ),
     );

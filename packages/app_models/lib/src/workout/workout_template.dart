@@ -21,9 +21,11 @@ class WorkoutTemplate extends Equatable {
     required this.notes,
     required this.tonnageLifted,
     required this.workoutsCompleted,
-    required this.averageWorkoutLength,
-    required this.lastAverageRestTime,
     required this.exercises,
+    this.averageWorkoutLength,
+    this.lastAverageRestTime,
+    this.lastPerformed,
+    this.recentTotalTonnageLifted,
   });
 
   /// Factory which converts a [Map] into a [WorkoutTemplate].
@@ -49,10 +51,16 @@ class WorkoutTemplate extends Equatable {
   final int workoutsCompleted;
 
   /// Average workout length in seconds.
-  final int averageWorkoutLength;
+  final int? averageWorkoutLength;
 
   /// Average rest time between sets in seconds.
-  final int lastAverageRestTime;
+  final int? lastAverageRestTime;
+
+  /// When this workout was last performed.
+  final DateTime? lastPerformed;
+
+  /// Recent total tonnage lifted in this workout.
+  final List<int>? recentTotalTonnageLifted;
 
   /// List of exercises in the workout. Order is important, it defines the order
   /// in which exercises are performed.
@@ -67,6 +75,8 @@ class WorkoutTemplate extends Equatable {
     int? workoutsCompleted,
     int? averageWorkoutLength,
     int? lastAverageRestTime,
+    DateTime? lastPerformed,
+    List<int>? recentTotalTonnageLifted,
     List<WorkoutExercise>? exercises,
   }) {
     return WorkoutTemplate(
@@ -77,12 +87,15 @@ class WorkoutTemplate extends Equatable {
       workoutsCompleted: workoutsCompleted ?? this.workoutsCompleted,
       averageWorkoutLength: averageWorkoutLength ?? this.averageWorkoutLength,
       lastAverageRestTime: lastAverageRestTime ?? this.lastAverageRestTime,
+      lastPerformed: lastPerformed ?? this.lastPerformed,
+      recentTotalTonnageLifted:
+          recentTotalTonnageLifted ?? this.recentTotalTonnageLifted,
       exercises: exercises ?? this.exercises,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         name,
         notes,
@@ -91,5 +104,7 @@ class WorkoutTemplate extends Equatable {
         averageWorkoutLength,
         lastAverageRestTime,
         exercises,
+        lastPerformed,
+        recentTotalTonnageLifted
       ];
 }

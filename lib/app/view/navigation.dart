@@ -7,6 +7,7 @@ import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:workouts_repository/workouts_repository.dart';
 
 /// {@template navigation}
 /// Widget used for main navigation of the app.
@@ -106,6 +107,43 @@ class _TempPlansWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AppBloc>().state;
+
+    final workoutTemplate = WorkoutTemplate(
+      id: 'chest-and-biceps',
+      name: 'Chest & Biceps',
+      notes: 'Notes',
+      tonnageLifted: 40000,
+      workoutsCompleted: 3,
+      averageWorkoutLength: 3600,
+      lastAverageRestTime: 200,
+      lastPerformed: DateTime(2020),
+      recentTotalTonnageLifted: const [
+        15000,
+        28000,
+        18000,
+      ],
+      exercises: const [
+        WorkoutExercise(
+          exerciseId: 'barbell_bench_press_medium_grip',
+          notes: '5x5',
+          restTime: 180,
+          sets: [
+            ExerciseSet(
+              repetitions: 6,
+              weight: 100,
+            ),
+            ExerciseSet(
+              repetitions: 8,
+              weight: 90,
+            ),
+            ExerciseSet(
+              repetitions: 10,
+              weight: 80,
+            ),
+          ],
+        ),
+      ],
+    );
     return SafeArea(
       child: Center(
         child: Column(
@@ -121,6 +159,49 @@ class _TempPlansWidget extends StatelessWidget {
             Text(state.userProfile.gender == Gender.male ? 'Male' : 'Female'),
             Text(state.userProfile.height.toString()),
             Text(state.userProfile.weight.toString()),
+            AppButton.primary(
+              child: const Text('Update test workout_log'),
+              onPressed: () {
+                context.read<WorkoutsRepository>().createWorkoutLog(
+                      workoutLog: WorkoutLog(
+                        id: 'id',
+                        duration: 3600,
+                        datePerformed: DateTime(2020),
+                        workoutTemplate: workoutTemplate,
+                        exercises: const [
+                          WorkoutExercise(
+                            exerciseId: 'bench-press',
+                            notes: 'notes',
+                            sets: [
+                              ExerciseSet(
+                                repetitions: 6,
+                                weight: 100,
+                              ),
+                              ExerciseSet(
+                                repetitions: 8,
+                                weight: 90,
+                              ),
+                              ExerciseSet(
+                                repetitions: 10,
+                                weight: 80,
+                              ),
+                            ],
+                            restTime: 100,
+                          ),
+                        ],
+                      ),
+                    );
+              },
+            ),
+            AppButton.primary(
+              child: const Text('Update test workout_template'),
+              onPressed: () {
+                context.read<WorkoutsRepository>().updateWorkoutTemplate(
+                      workoutTemplateId: 'chest-and-biceps',
+                      workoutTemplate: workoutTemplate,
+                    );
+              },
+            ),
             Center(
               child: AppButton.primary(
                 child: const Text('Sign out'),

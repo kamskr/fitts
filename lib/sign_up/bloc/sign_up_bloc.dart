@@ -101,13 +101,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           ),
         );
 
-        await _userProfileRepository.updateUserProfile(
-          payload: UserProfileUpdatePayload.empty.copyWith(
-            email: email,
-            displayName: state.username.value,
-          ),
-        );
-
         await _userStatsRepository.updateUserStats(
           userId: email,
           payload: UserStats.empty,

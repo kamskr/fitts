@@ -46,6 +46,8 @@ dependencies:
   user_stats_repository:
     path: packages/user_stats_repository
   very_good_analysis: ^3.0.1
+  workouts_repository:
+    path: packages/workouts_repository
 
 dev_dependencies:
   build_runner: ^2.1.7

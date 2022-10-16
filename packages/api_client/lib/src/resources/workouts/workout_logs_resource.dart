@@ -49,6 +49,31 @@ class WorkoutLogsResource {
     }
   }
 
+  /// Get recent workout log.
+  Future<WorkoutLog?> getRecentWorkoutLog(String userId) async {
+    try {
+      final snapshot = await _firebaseFirestore
+          .collection(_collectionName)
+          .doc(userId)
+          .collection(_userLogsCollectionName)
+          .orderBy('datePerformed', descending: true)
+          .limit(1)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        try {
+          return WorkoutLog.fromJson(snapshot.docs.first.data());
+        } catch (e, st) {
+          throw DeserializationException(e, st);
+        }
+      } else {
+        return null;
+      }
+    } on Exception catch (e, st) {
+      throw ApiException(e, st);
+    }
+  }
+
   /// Get workout log by id.
   Stream<WorkoutLog?> getUserWorkoutLogById({
     required String userId,
