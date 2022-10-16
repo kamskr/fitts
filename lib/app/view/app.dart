@@ -24,11 +24,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AppBloc(
-        authenticationClient: context.read<AuthenticationClient>(),
-        userProfileRepository: context.read<UserProfileRepository>(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AppBloc>(
+          create: (_) => AppBloc(
+            authenticationClient: context.read<AuthenticationClient>(),
+            userProfileRepository: context.read<UserProfileRepository>(),
+          ),
+        ),
+      ],
       child: AppView(lightThemeData: lightThemeData),
     );
   }

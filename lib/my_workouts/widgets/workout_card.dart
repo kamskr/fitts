@@ -12,10 +12,14 @@ class WorkoutCard extends StatelessWidget {
   const WorkoutCard({
     Key? key,
     required this.workoutTemplate,
+    this.footer,
   }) : super(key: key);
 
   /// Workout template to display.
   final WorkoutTemplate workoutTemplate;
+
+  /// Whether to display the button in full width.
+  final Widget? footer;
 
   @override
   Widget build(BuildContext context) {
@@ -71,40 +75,47 @@ class WorkoutCard extends StatelessWidget {
           tonnageLifted[5],
           // 5, 5, 5, 5, 5, 5
         ],
-        footer: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Text(
-                      workoutTemplate.workoutsCompleted.toString(),
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
+        footer: footer ??
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          workoutTemplate.workoutsCompleted.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                        ),
+                        Text(
+                          l10n.homePageNextWorkoutTimesCompleted,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      l10n.homePageNextWorkoutTimesCompleted,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: 46,
-                  child: AppButton.gradient(
-                    child: Text(l10n.homePageStartWorkoutButtonText),
-                    onPressed: () {},
                   ),
-                ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 46,
+                      child: AppButton.gradient(
+                        child: Text(l10n.homePageStartWorkoutButtonText),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }

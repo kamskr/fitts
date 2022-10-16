@@ -17,7 +17,10 @@ class MyWorkoutsState extends Equatable {
   final DataLoadingStatus status;
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [
+        status,
+        workoutTemplates,
+      ];
 
   /// Copy method
   MyWorkoutsState copyWith({

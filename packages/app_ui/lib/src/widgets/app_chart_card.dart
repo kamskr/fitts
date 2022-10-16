@@ -131,6 +131,7 @@ class AppChartCard extends StatelessWidget {
     ];
 
     return Card(
+      margin: EdgeInsets.zero,
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       color: Colors.transparent,
