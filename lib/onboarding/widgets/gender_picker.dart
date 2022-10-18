@@ -1,4 +1,4 @@
-import 'package:api_models/api_models.dart';
+import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -86,7 +86,10 @@ class _FemaleOption extends StatelessWidget {
     final mainColors = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: () => onChange(Gender.female),
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onChange(Gender.female);
+      },
       child: _GenderCircle(
         isSelected: isSelected,
         child: Assets.icons.female.svg(

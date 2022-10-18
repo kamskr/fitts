@@ -23,4 +23,20 @@ class ApiClient {
   late final UserStatsResource userStatsResource = UserStatsResource(
     _firebaseFirestore,
   );
+
+  /// {@macro user_stats_resource}
+  late final ExerciseResource exerciseResource = ExerciseResource(
+    _firebaseFirestore,
+  );
+
+  /// {@macro workout_templates_resource}
+  late final WorkoutTemplatesResource workoutTemplatesResource =
+      WorkoutTemplatesResource(
+    _firebaseFirestore,
+  );
+
+  /// {@macro workout_logs_resource}
+  late final WorkoutLogsResource workoutLogsResource = WorkoutLogsResource(
+    _firebaseFirestore,
+  );
 }

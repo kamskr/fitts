@@ -65,11 +65,12 @@ class AppButton extends StatelessWidget {
     VoidCallback? onPressed,
     required Widget child,
     bool? isLoading,
+    double height = 64,
   }) : this._(
           key: key,
           child: child,
           onPressed: onPressed,
-          height: 64,
+          height: height,
           linearGradient: AppColors.primaryGradient1,
           isLoading: isLoading,
         );

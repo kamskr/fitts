@@ -15,6 +15,14 @@ abstract class HomeEvent extends Equatable {
 /// The event of the [HomeBloc] when you want to start subscription.
 /// {@endtemplate}
 class UserStatsSubscriptionRequested extends HomeEvent {
-  /// {@macro home_loading_started}
+  /// {@macro user_stats_subscription_requested_changed}
   const UserStatsSubscriptionRequested();
+}
+
+/// {@template workout_templates_subscription_requested}
+/// The event of the [HomeBloc] when you want to start subscription.
+/// {@endtemplate}
+class WorkoutTemplatesSubscriptionRequested extends HomeEvent {
+  /// {@macro workout_templates_subscription_requested}
+  const WorkoutTemplatesSubscriptionRequested();
 }

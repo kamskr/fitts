@@ -1,6 +1,7 @@
 name: fitts
 
 packages:
+  - .
   - packages/**
 
 scripts:

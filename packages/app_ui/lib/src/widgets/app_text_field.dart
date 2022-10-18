@@ -74,23 +74,23 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    var _obscureText = false;
-    var _enableSuggestions = true;
-    var _autocorrect = true;
-    var _keyboardType = TextInputType.text;
+    var obscureText = false;
+    var enableSuggestions = true;
+    var autocorrect = true;
+    var keyboardType = TextInputType.text;
 
     if (widget.inputType == AppTextFieldType.name) {
-      _keyboardType = TextInputType.name;
+      keyboardType = TextInputType.name;
     }
 
     if (widget.inputType == AppTextFieldType.email) {
-      _keyboardType = TextInputType.emailAddress;
+      keyboardType = TextInputType.emailAddress;
     }
 
     if (widget.inputType == AppTextFieldType.password) {
-      _obscureText = true;
-      _enableSuggestions = false;
-      _autocorrect = false;
+      obscureText = true;
+      enableSuggestions = false;
+      autocorrect = false;
     }
 
     return DecoratedBox(
@@ -125,13 +125,13 @@ class _AppTextFieldState extends State<AppTextField> {
               focusedBorder: InputBorder.none,
               errorText: widget.errorText,
             ),
-            obscureText: _obscureText,
-            enableSuggestions: _enableSuggestions,
-            autocorrect: _autocorrect,
+            obscureText: obscureText,
+            enableSuggestions: enableSuggestions,
+            autocorrect: autocorrect,
             initialValue: widget.initialValue,
             focusNode: _focus,
             cursorColor: AppColors.white,
-            keyboardType: _keyboardType,
+            keyboardType: keyboardType,
             style: AppTypography.body1.copyWith(color: AppColors.white),
             onChanged: widget.onChanged,
           ),
