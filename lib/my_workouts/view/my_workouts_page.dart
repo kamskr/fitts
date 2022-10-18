@@ -4,6 +4,7 @@ import 'package:fitts/my_workouts/my_workouts.dart';
 import 'package:fitts/my_workouts/view/workout_details_page.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:workouts_repository/workouts_repository.dart';
 
@@ -99,6 +100,7 @@ class _MyWorkoutsBody extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: () {
+                      HapticFeedback.lightImpact();
                       Navigator.of(context).push(
                         WorkoutDetailsPage.route(workoutTemplate.id),
                       );
