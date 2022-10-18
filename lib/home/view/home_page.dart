@@ -4,8 +4,10 @@ import 'package:fitts/app/bloc/app_bloc.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:fitts/my_workouts/my_workouts.dart';
+import 'package:fitts/my_workouts/view/workout_details_page.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:user_stats_repository/user_stats_repository.dart';
@@ -327,13 +329,13 @@ class _PreviousWorkout extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        DateFormatters.day(workoutLog.datePerformed),
+                        DateTimeFormatters.day(workoutLog.datePerformed),
                         style: theme.textTheme.headline6!.copyWith(
                           color: Colors.white,
                         ),
                       ),
                       Text(
-                        DateFormatters.month(workoutLog.datePerformed),
+                        DateTimeFormatters.month(workoutLog.datePerformed),
                         style: theme.textTheme.overline!.copyWith(
                           color: Colors.white.withOpacity(.6),
                         ),
@@ -483,8 +485,16 @@ class _NextWorkout extends StatelessWidget {
               ),
             ],
           ),
-          WorkoutCard(
-            workoutTemplate: workoutTemplate,
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              Navigator.of(context).push(
+                WorkoutDetailsPage.route(workoutTemplate.id),
+              );
+            },
+            child: WorkoutCard(
+              workoutTemplate: workoutTemplate,
+            ),
           ),
         ],
       ),

@@ -142,6 +142,52 @@ class _TempPlansWidget extends StatelessWidget {
             ),
           ],
         ),
+        WorkoutExercise(
+          exerciseId: 'band_skull_crusher',
+          notes: '5x5',
+          restTime: 180,
+          sets: [
+            ExerciseSet(
+              repetitions: 6,
+              weight: 100,
+            ),
+            ExerciseSet(
+              repetitions: 8,
+              weight: 90,
+            ),
+            ExerciseSet(
+              repetitions: 10,
+              weight: 80,
+            ),
+            ExerciseSet(
+              repetitions: 10,
+              weight: 80,
+            ),
+          ],
+        ),
+        WorkoutExercise(
+          exerciseId: 'barbell_curl',
+          notes: '5x5',
+          restTime: 90,
+          sets: [
+            ExerciseSet(
+              repetitions: 6,
+              weight: 100,
+            ),
+            ExerciseSet(
+              repetitions: 8,
+              weight: 90,
+            ),
+            ExerciseSet(
+              repetitions: 10,
+              weight: 80,
+            ),
+            ExerciseSet(
+              repetitions: 10,
+              weight: 80,
+            ),
+          ],
+        ),
       ],
     );
     return SafeArea(

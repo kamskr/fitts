@@ -128,10 +128,40 @@ class $AssetsIconsGen {
   SvgGenImage get male => const SvgGenImage('assets/icons/male.svg');
 }
 
+class $AssetsIllustrationsGen {
+  const $AssetsIllustrationsGen();
+
+  /// File path: assets/illustrations/biceps_ilustration.svg
+  SvgGenImage get bicepsIlustration =>
+      const SvgGenImage('assets/illustrations/biceps_ilustration.svg');
+
+  /// File path: assets/illustrations/chest_illustration.svg
+  SvgGenImage get chestIllustration =>
+      const SvgGenImage('assets/illustrations/chest_illustration.svg');
+
+  /// File path: assets/illustrations/last_illustration.svg
+  SvgGenImage get lastIllustration =>
+      const SvgGenImage('assets/illustrations/last_illustration.svg');
+
+  /// File path: assets/illustrations/lats_and_shoulders_ilustration.svg
+  SvgGenImage get latsAndShouldersIlustration => const SvgGenImage(
+      'assets/illustrations/lats_and_shoulders_ilustration.svg');
+
+  /// File path: assets/illustrations/legs_front_illustration.svg
+  SvgGenImage get legsFrontIllustration =>
+      const SvgGenImage('assets/illustrations/legs_front_illustration.svg');
+
+  /// File path: assets/illustrations/legs_rear_illustration.svg
+  SvgGenImage get legsRearIllustration =>
+      const SvgGenImage('assets/illustrations/legs_rear_illustration.svg');
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsIllustrationsGen illustrations =
+      $AssetsIllustrationsGen();
 }
 
 class AssetGenImage {

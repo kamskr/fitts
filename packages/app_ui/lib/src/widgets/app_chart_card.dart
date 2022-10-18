@@ -18,6 +18,7 @@ class AppChartCard extends StatelessWidget {
     this.labels,
     this.header,
     this.footer,
+    this.radius,
   })  : assert(
           values.length == 6,
           'The number of values must be 6.',
@@ -46,6 +47,9 @@ class AppChartCard extends StatelessWidget {
   ///
   /// Don't pass any labels if you don't want to display them.
   final List<String>? labels;
+
+  /// Pass to border radius of the chart.
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +135,7 @@ class AppChartCard extends StatelessWidget {
     ];
 
     return Card(
+      margin: EdgeInsets.zero,
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       color: Colors.transparent,
@@ -151,7 +156,7 @@ class AppChartCard extends StatelessWidget {
                   begin: Alignment.bottomRight,
                   end: Alignment.topLeft,
                 ),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(radius ?? 4),
               ),
             ),
           ),

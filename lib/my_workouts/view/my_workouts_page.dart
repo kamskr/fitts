@@ -1,6 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/my_workouts/bloc/my_workouts_bloc.dart';
 import 'package:fitts/my_workouts/my_workouts.dart';
+import 'package:fitts/my_workouts/view/workout_details_page.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,12 +37,6 @@ class _MyWorkoutsPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-          statusBarBrightness: Brightness.light, // For iOS (dark icons)
-        ),
-        titleSpacing: 40,
-        backgroundColor: Theme.of(context).colorScheme.background,
         scrolledUnderElevation: 1,
         actions: [
           IconButton(
@@ -85,6 +80,7 @@ class _MyWorkoutsBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const AppGap.md(),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.lg,
@@ -100,9 +96,18 @@ class _MyWorkoutsBody extends StatelessWidget {
                 (workoutTemplate) => Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.lg,
+                    vertical: AppSpacing.xs,
                   ),
-                  child: WorkoutCard(
-                    workoutTemplate: workoutTemplate,
+                  child: GestureDetector(
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                      Navigator.of(context).push(
+                        WorkoutDetailsPage.route(workoutTemplate.id),
+                      );
+                    },
+                    child: WorkoutCard(
+                      workoutTemplate: workoutTemplate,
+                    ),
                   ),
                 ),
               )
