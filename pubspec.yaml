@@ -62,7 +62,6 @@ flutter:
   assets:
     - assets/onboarding/
     - assets/home/
-    - assets/workouts/
 
 flutter_gen:
   output: lib/generated/
