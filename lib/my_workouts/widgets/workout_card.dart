@@ -13,6 +13,7 @@ class WorkoutCard extends StatelessWidget {
     Key? key,
     required this.workoutTemplate,
     this.footer,
+    this.radius,
   }) : super(key: key);
 
   /// Workout template to display.
@@ -20,6 +21,9 @@ class WorkoutCard extends StatelessWidget {
 
   /// Whether to display the button in full width.
   final Widget? footer;
+
+  /// Pass to change border radius of the card.
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +43,7 @@ class WorkoutCard extends StatelessWidget {
       height: 290,
       width: double.infinity,
       child: AppChartCard(
+        radius: radius,
         emptyText: workoutTemplate.recentTotalTonnageLifted == null ||
                 (workoutTemplate.recentTotalTonnageLifted != null &&
                     workoutTemplate.recentTotalTonnageLifted!.isEmpty)
