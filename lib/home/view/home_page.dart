@@ -327,13 +327,13 @@ class _PreviousWorkout extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        DateFormatters.day(workoutLog.datePerformed),
+                        DateTimeFormatters.day(workoutLog.datePerformed),
                         style: theme.textTheme.headline6!.copyWith(
                           color: Colors.white,
                         ),
                       ),
                       Text(
-                        DateFormatters.month(workoutLog.datePerformed),
+                        DateTimeFormatters.month(workoutLog.datePerformed),
                         style: theme.textTheme.overline!.copyWith(
                           color: Colors.white.withOpacity(.6),
                         ),

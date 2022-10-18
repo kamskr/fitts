@@ -1,7 +1,7 @@
 import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/l10n/l10n.dart';
-import 'package:fitts/utils/date_formatters.dart';
+import 'package:fitts/utils/date_time_formatters.dart';
 import 'package:flutter/material.dart';
 
 /// {@template workout_card}
@@ -61,7 +61,7 @@ class WorkoutCard extends StatelessWidget {
             if (workoutTemplate.lastPerformed != null)
               Text(
                 l10n.homePagePreviousWorkoutDate(
-                  DateFormatters.weekdayMonthDay(
+                  DateTimeFormatters.weekdayMonthDay(
                     workoutTemplate.lastPerformed!,
                   ),
                 ),

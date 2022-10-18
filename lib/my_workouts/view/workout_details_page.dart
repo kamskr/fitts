@@ -62,24 +62,37 @@ class _WorkoutDetailsView extends StatelessWidget {
           const _WorkoutChart(),
           const _StartWorkoutButton(),
           const _WorkoutStats(),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: AppSpacing.md,
+            ),
+          ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.md,
+              ),
               child: Text(
                 'EXERCISES',
                 style: Theme.of(context).textTheme.caption,
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: _ExerciseCard(),
-          ),
-          const SliverToBoxAdapter(
-            child: _ExerciseCard(),
-          ),
-          const SliverToBoxAdapter(
-            child: _ExerciseCard(),
-          ),
+          ...state.workoutTemplate!.exercises
+              .asMap()
+              .entries
+              .map((exerciseItem) {
+            final exercise = exerciseItem.value;
+            final index = exerciseItem.key;
+            return SliverToBoxAdapter(
+              child: ExerciseCard(
+                exercise: exercise,
+                exerciseIndex: index,
+                exerciseCount: state.workoutTemplate!.exercises.length,
+              ),
+            );
+          }).toList(),
           SliverToBoxAdapter(
             child: SizedBox(
               height: MediaQuery.of(context).padding.bottom,
@@ -132,196 +145,65 @@ class _StartWorkoutButton extends StatelessWidget {
 }
 
 class _WorkoutStats extends StatelessWidget {
-  const _WorkoutStats({
-    Key? key,
-  }) : super(key: key);
+  const _WorkoutStats({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const borderWidth = 1.0;
+    final workoutTemplate =
+        context.watch<WorkoutDetailsBloc>().state.workoutTemplate!;
+    final totalKg = workoutTemplate.tonnageLifted;
     final iconColor = Theme.of(context).colorScheme.primary;
     const iconHeight = 22.0;
 
-    return SliverToBoxAdapter(
-      child: ColoredBox(
-        color: Theme.of(context).extension<AppColorScheme>()!.black100,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                StatsGridItem(
-                  icon: Assets.icons.icTonnageLifted.svg(
-                    color: iconColor,
-                    height: iconHeight,
-                  ),
-                  title: '7',
-                  subtitle: 'workouts completed',
-                ),
-                const SizedBox(
-                  width: borderWidth,
-                ),
-                StatsGridItem(
-                  icon: Assets.icons.icWorkoutsCompleted.svg(
-                    color: iconColor,
-                    height: iconHeight,
-                  ),
-                  title: '10k',
-                  subtitle: 'tonnage lifted',
-                  titleSuffix: 'kg',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: borderWidth,
-            ),
-            Row(
-              children: [
-                StatsGridItem(
-                  icon: Assets.icons.icRestTime.svg(
-                    color: iconColor,
-                    height: iconHeight,
-                  ),
-                  title: '02:22',
-                  subtitle: 'avg. rest time',
-                  titleSuffix: 'min',
-                ),
-                const SizedBox(
-                  width: borderWidth,
-                ),
-                StatsGridItem(
-                  icon: Assets.icons.icDuration.svg(
-                    color: iconColor,
-                    height: iconHeight,
-                  ),
-                  title: '01:12',
-                  subtitle: 'avg. workout length',
-                  titleSuffix: 'h',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: borderWidth,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+    late String totalKgString;
 
-class _ExerciseCard extends StatelessWidget {
-  const _ExerciseCard({Key? key}) : super(key: key);
+    if (totalKg < 1000) {
+      totalKgString = totalKg.toString();
+    } else {
+      totalKgString = '${(totalKg / 1000).round()}k';
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Card(
-      color: theme.colorScheme.surface,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(AppSpacing.xxs)),
-        side: BorderSide(
-          color: Theme.of(context).extension<AppColorScheme>()!.black100,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: AppSpacing.md,
-          horizontal: AppSpacing.lg,
-        ),
-        child: Column(
-          children: const [
-            _CardTitle(),
-            AppGap.lg(),
-            _SetListItem(),
-            _SetListItem(),
-            _SetListItem(),
-            _SetListItem(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SetListItem extends StatelessWidget {
-  const _SetListItem({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.sm,
-        horizontal: AppSpacing.lg,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'SET 1',
-            style: Theme.of(context).textTheme.bodyText2,
+    return WorkoutStatsGrid(
+      workoutStats: [
+        WorkoutStatGridItem(
+          icon: Assets.icons.icTonnageLifted.svg(
+            color: iconColor,
+            height: iconHeight,
           ),
-          Column(
-            children: [
-              Text(
-                '10',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              Text(
-                'reps',
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                '100',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              Text(
-                'kg',
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CardTitle extends StatelessWidget {
-  const _CardTitle({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Row(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '1 of 3',
-              style: theme.textTheme.overline,
-            ),
-            const SizedBox(
-              height: AppSpacing.xxxs,
-            ),
-            Text(
-              'Exercise 1',
-              style: theme.textTheme.headline6,
-            ),
-          ],
+          title: workoutTemplate.workoutsCompleted.toString(),
+          subtitle: 'workouts completed',
         ),
-
-        /// Place for history button in the future.
+        WorkoutStatGridItem(
+          icon: Assets.icons.icWorkoutsCompleted.svg(
+            color: iconColor,
+            height: iconHeight,
+          ),
+          title: totalKgString,
+          subtitle: 'tonnage lifted',
+          titleSuffix: 'kg',
+        ),
+        WorkoutStatGridItem(
+          icon: Assets.icons.icRestTime.svg(
+            color: iconColor,
+            height: iconHeight,
+          ),
+          title: DateTimeFormatters.formatSeconds(
+            workoutTemplate.lastAverageRestTime ?? 0,
+          ),
+          subtitle: 'avg. rest time',
+          titleSuffix: 'min',
+        ),
+        WorkoutStatGridItem(
+          icon: Assets.icons.icDuration.svg(
+            color: iconColor,
+            height: iconHeight,
+          ),
+          title: DateTimeFormatters.formatSeconds(
+            workoutTemplate.averageWorkoutLength ?? 0,
+          ),
+          subtitle: 'avg. workout length',
+          titleSuffix: 'h',
+        ),
       ],
     );
   }

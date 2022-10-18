@@ -28,7 +28,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
-    - assets/illustrations/
   fonts:
     - family: Questrial
       fonts:
