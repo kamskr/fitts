@@ -1,7 +1,6 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:fitts/my_workouts/bloc/workout_details_bloc.dart';
-import 'package:fitts/my_workouts/widgets/widgets.dart';
 import 'package:fitts/utils/utils.dart';
+import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:workouts_repository/workouts_repository.dart';
