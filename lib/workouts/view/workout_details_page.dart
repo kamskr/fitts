@@ -1,4 +1,5 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:fitts/l10n/l10n.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _WorkoutDetailsView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Workout Details'),
+        title: Text(state.workoutTemplate!.name),
       ),
       body: CustomScrollView(
         slivers: [
@@ -110,10 +111,24 @@ class _WorkoutChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final workoutTemplate =
+        context.watch<WorkoutDetailsBloc>().state.workoutTemplate!;
     return SliverToBoxAdapter(
       child: WorkoutCard(
-        workoutTemplate:
-            context.watch<WorkoutDetailsBloc>().state.workoutTemplate!,
+        header: workoutTemplate.lastPerformed != null
+            ? Text(
+                l10n.homePagePreviousWorkoutDate(
+                  DateTimeFormatters.weekdayMonthDay(
+                    workoutTemplate.lastPerformed!,
+                  ),
+                ),
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+              )
+            : const SizedBox.shrink(),
+        workoutTemplate: workoutTemplate,
         footer: const SizedBox(),
         radius: 0,
       ),
