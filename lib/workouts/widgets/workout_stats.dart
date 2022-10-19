@@ -44,39 +44,37 @@ class WorkoutStatsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     const borderWidth = 1.0;
 
-    return SliverToBoxAdapter(
-      child: ColoredBox(
-        color: Theme.of(context).extension<AppColorScheme>()!.black100,
-        child: Column(
-          children: [
-            for (int i = 0; i < workoutStats.length; i++) ...[
-              if (i.isEven)
-                Row(
-                  children: [
-                    _StatsGridItem(
-                      icon: workoutStats[i].icon,
-                      title: workoutStats[i].title,
-                      subtitle: workoutStats[i].subtitle,
-                      titleSuffix: workoutStats[i].titleSuffix,
-                    ),
-                    const SizedBox(
-                      width: borderWidth,
-                    ),
-                    _StatsGridItem(
-                      icon: workoutStats[i + 1].icon,
-                      title: workoutStats[i + 1].title,
-                      subtitle: workoutStats[i + 1].subtitle,
-                      titleSuffix: workoutStats[i + 1].titleSuffix,
-                    ),
-                  ],
-                )
-              else
-                const SizedBox(
-                  width: borderWidth,
-                ),
-            ],
+    return ColoredBox(
+      color: Theme.of(context).extension<AppColorScheme>()!.black100,
+      child: Column(
+        children: [
+          for (int i = 0; i < workoutStats.length; i++) ...[
+            if (i.isEven)
+              Row(
+                children: [
+                  _StatsGridItem(
+                    icon: workoutStats[i].icon,
+                    title: workoutStats[i].title,
+                    subtitle: workoutStats[i].subtitle,
+                    titleSuffix: workoutStats[i].titleSuffix,
+                  ),
+                  const SizedBox(
+                    width: borderWidth,
+                  ),
+                  _StatsGridItem(
+                    icon: workoutStats[i + 1].icon,
+                    title: workoutStats[i + 1].title,
+                    subtitle: workoutStats[i + 1].subtitle,
+                    titleSuffix: workoutStats[i + 1].titleSuffix,
+                  ),
+                ],
+              )
+            else
+              const SizedBox(
+                height: borderWidth,
+              ),
           ],
-        ),
+        ],
       ),
     );
   }

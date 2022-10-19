@@ -307,7 +307,14 @@ class _PreviousWorkout extends StatelessWidget {
     final workoutLog = context.watch<HomeBloc>().state.recentWorkoutLog!;
 
     return GestureDetector(
-      onTap: () {},
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        HapticFeedback.lightImpact();
+
+        Navigator.of(context).push(
+          WorkoutLogDetails.route(workoutLog),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.lg,
@@ -317,31 +324,7 @@ class _PreviousWorkout extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
-                  height: 58,
-                  width: 39,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        DateTimeFormatters.day(workoutLog.datePerformed),
-                        style: theme.textTheme.headline6!.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        DateTimeFormatters.month(workoutLog.datePerformed),
-                        style: theme.textTheme.overline!.copyWith(
-                          color: Colors.white.withOpacity(.6),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                WorkoutDateChip(date: workoutLog.datePerformed),
                 const AppGap.md(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

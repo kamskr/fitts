@@ -162,48 +162,50 @@ class _WorkoutStats extends StatelessWidget {
       totalKgString = '${(totalKg / 1000).round()}k';
     }
 
-    return WorkoutStatsGrid(
-      workoutStats: [
-        WorkoutStatGridItem(
-          icon: Assets.icons.icTonnageLifted.svg(
-            color: iconColor,
-            height: iconHeight,
+    return SliverToBoxAdapter(
+      child: WorkoutStatsGrid(
+        workoutStats: [
+          WorkoutStatGridItem(
+            icon: Assets.icons.icTonnageLifted.svg(
+              color: iconColor,
+              height: iconHeight,
+            ),
+            title: workoutTemplate.workoutsCompleted.toString(),
+            subtitle: 'workouts completed',
           ),
-          title: workoutTemplate.workoutsCompleted.toString(),
-          subtitle: 'workouts completed',
-        ),
-        WorkoutStatGridItem(
-          icon: Assets.icons.icWorkoutsCompleted.svg(
-            color: iconColor,
-            height: iconHeight,
+          WorkoutStatGridItem(
+            icon: Assets.icons.icWorkoutsCompleted.svg(
+              color: iconColor,
+              height: iconHeight,
+            ),
+            title: totalKgString,
+            subtitle: 'tonnage lifted',
+            titleSuffix: 'kg',
           ),
-          title: totalKgString,
-          subtitle: 'tonnage lifted',
-          titleSuffix: 'kg',
-        ),
-        WorkoutStatGridItem(
-          icon: Assets.icons.icRestTime.svg(
-            color: iconColor,
-            height: iconHeight,
+          WorkoutStatGridItem(
+            icon: Assets.icons.icRestTime.svg(
+              color: iconColor,
+              height: iconHeight,
+            ),
+            title: DateTimeFormatters.formatSeconds(
+              workoutTemplate.lastAverageRestTime ?? 0,
+            ),
+            subtitle: 'avg. rest time',
+            titleSuffix: 'min',
           ),
-          title: DateTimeFormatters.formatSeconds(
-            workoutTemplate.lastAverageRestTime ?? 0,
+          WorkoutStatGridItem(
+            icon: Assets.icons.icDuration.svg(
+              color: iconColor,
+              height: iconHeight,
+            ),
+            title: DateTimeFormatters.formatSeconds(
+              workoutTemplate.averageWorkoutLength ?? 0,
+            ),
+            subtitle: 'avg. workout length',
+            titleSuffix: 'h',
           ),
-          subtitle: 'avg. rest time',
-          titleSuffix: 'min',
-        ),
-        WorkoutStatGridItem(
-          icon: Assets.icons.icDuration.svg(
-            color: iconColor,
-            height: iconHeight,
-          ),
-          title: DateTimeFormatters.formatSeconds(
-            workoutTemplate.averageWorkoutLength ?? 0,
-          ),
-          subtitle: 'avg. workout length',
-          titleSuffix: 'h',
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
