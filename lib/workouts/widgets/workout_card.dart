@@ -30,6 +30,7 @@ class WorkoutCard extends StatelessWidget {
   /// Pass to change border radius of the card.
   final double? radius;
 
+  /// Height of the card.
   final double? height;
 
   @override
