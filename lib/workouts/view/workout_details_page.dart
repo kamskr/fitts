@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:fitts/utils/utils.dart';
@@ -53,14 +55,86 @@ class _WorkoutDetailsView extends StatelessWidget {
       );
     }
 
+    return _WorkoutDetailsContent(state: state);
+  }
+}
+
+class _WorkoutDetailsContent extends StatefulWidget {
+  const _WorkoutDetailsContent({
+    Key? key,
+    required this.state,
+  }) : super(key: key);
+
+  final WorkoutDetailsState state;
+
+  @override
+  State<_WorkoutDetailsContent> createState() => _WorkoutDetailsContentState();
+}
+
+class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
+    with TickerProviderStateMixin {
+  final ScrollController _scrollController = ScrollController();
+  Color _appColor = Colors.transparent;
+
+  late AnimationController _animationController;
+  late Animation<Color?> _colorTween;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+
+    _colorTween = ColorTween(begin: Colors.white, end: Colors.black)
+        .animate(_animationController);
+
+    _scrollController.addListener(onScroll);
+    super.initState();
+  }
+
+  void onScroll() {
+    if (_scrollController.position.pixels < 50) {
+      _animationController.reverse();
+      setState(() {
+        _appColor = Colors.transparent;
+      });
+    } else if (_scrollController.position.pixels > 100) {
+      _animationController.forward();
+      setState(() {
+        _appColor = Colors.white;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _scrollController.removeListener(onScroll);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(state.workoutTemplate!.name),
+        title: AnimatedBuilder(
+          animation: _colorTween,
+          builder: (_, __) => Text(
+            widget.state.workoutTemplate?.name ?? '',
+            style: TextStyle(color: _colorTween.value),
+          ),
+        ),
+        backgroundColor: _appColor,
       ),
+      extendBodyBehindAppBar: true,
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
-          const _WorkoutChart(),
-          const _StartWorkoutButton(),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _SliverAppBarDelegate(),
+          ),
           const _WorkoutStats(),
           const SliverToBoxAdapter(
             child: SizedBox(
@@ -79,7 +153,7 @@ class _WorkoutDetailsView extends StatelessWidget {
               ),
             ),
           ),
-          ...state.workoutTemplate!.exercises
+          ...widget.state.workoutTemplate!.exercises
               .asMap()
               .entries
               .map((exerciseItem) {
@@ -89,10 +163,16 @@ class _WorkoutDetailsView extends StatelessWidget {
               child: ExerciseCard(
                 exercise: exercise,
                 exerciseIndex: index,
-                exerciseCount: state.workoutTemplate!.exercises.length,
+                exerciseCount: widget.state.workoutTemplate!.exercises.length,
               ),
             );
           }).toList(),
+          if (widget.state.workoutTemplate!.exercises.length < 2)
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 300,
+              ),
+            ),
           SliverToBoxAdapter(
             child: SizedBox(
               height: MediaQuery.of(context).padding.bottom,
@@ -104,57 +184,80 @@ class _WorkoutDetailsView extends StatelessWidget {
   }
 }
 
-class _WorkoutChart extends StatelessWidget {
-  const _WorkoutChart({
-    Key? key,
-  }) : super(key: key);
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate();
 
   @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final workoutTemplate =
         context.watch<WorkoutDetailsBloc>().state.workoutTemplate!;
-    return SliverToBoxAdapter(
-      child: WorkoutCard(
-        header: workoutTemplate.lastPerformed != null
-            ? Text(
-                l10n.homePagePreviousWorkoutDate(
-                  DateTimeFormatters.weekdayMonthDay(
-                    workoutTemplate.lastPerformed!,
-                  ),
-                ),
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-              )
-            : const SizedBox.shrink(),
-        workoutTemplate: workoutTemplate,
-        footer: const SizedBox(),
-        radius: 0,
-      ),
-    );
-  }
-}
 
-class _StartWorkoutButton extends StatelessWidget {
-  const _StartWorkoutButton({
-    Key? key,
-  }) : super(key: key);
+    final percent = shrinkOffset / maxExtent;
+    final l10n = context.l10n;
 
-  @override
-  Widget build(BuildContext context) {
-    return SliverPersistentHeader(
-      pinned: true,
-      delegate: CustomSliverHeaderDelegate(
-        minHeight: 48,
-        maxHeight: 80,
-        child: AppButton.gradient(
-          height: 80,
+    return Column(
+      children: [
+        Expanded(
+          child: Opacity(
+            opacity: max(0, 1 - 3 * percent),
+            child: WorkoutCard(
+              workoutTemplate: workoutTemplate,
+              header: shrinkOffset <= 200
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.top,
+                        ),
+                        if (workoutTemplate.lastPerformed != null)
+                          Text(
+                            l10n.homePagePreviousWorkoutDate(
+                              DateTimeFormatters.weekdayMonthDay(
+                                workoutTemplate.lastPerformed!,
+                              ),
+                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
+                          ),
+                      ],
+                    )
+                  : const SizedBox(),
+              footer: const SizedBox(),
+              radius: 0,
+              height: max(
+                370 * (1 - percent),
+                MediaQuery.of(context).padding.top,
+              ),
+            ),
+          ),
+        ),
+        AppButton.gradient(
+          height: max(52, 100 * (1 - percent)),
           child: const Text('START'),
           onPressed: () {},
-        ),
-      ),
+        )
+      ],
     );
+  }
+
+  @override
+  double get maxExtent => 460;
+
+  @override
+  double get minExtent => 164;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
 
