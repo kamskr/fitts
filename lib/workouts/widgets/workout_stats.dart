@@ -2,21 +2,17 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// {@template stats_grid_item}
-/// Item of the stats grid.
+/// {@template workout_stat_grid_item}
+///  Model used for displaying single item in WorkoutStatsGrid.
 /// {@endtemplate}
-class StatsGridItem extends StatelessWidget {
-  /// {@macro stats_grid_item}
-  const StatsGridItem({
-    Key? key,
-    required this.icon,
+class WorkoutStatGridItem {
+  /// {@macro workout_stat_grid_item}
+  const WorkoutStatGridItem({
     required this.title,
     required this.subtitle,
+    required this.icon,
     this.titleSuffix,
-  }) : super(key: key);
-
-  /// Icon of the item.
-  final SvgPicture icon;
+  });
 
   /// Title of the item.
   final String title;
@@ -24,7 +20,81 @@ class StatsGridItem extends StatelessWidget {
   /// Subtitle of the item.
   final String subtitle;
 
+  /// Icon of the item.
+  final String? titleSuffix;
+
   /// Suffix of the title.
+  final SvgPicture icon;
+}
+
+/// {@template workout_stats_grid}
+/// Widget that displays a grid of workout stats.
+/// {@endtemplate}
+class WorkoutStatsGrid extends StatelessWidget {
+  /// {@macro workout_stats_grid}
+  const WorkoutStatsGrid({
+    Key? key,
+    required this.workoutStats,
+  }) : super(key: key);
+
+  /// List of workout stats to display.
+  final List<WorkoutStatGridItem> workoutStats;
+
+  @override
+  Widget build(BuildContext context) {
+    const borderWidth = 1.0;
+
+    return ColoredBox(
+      color: Theme.of(context).extension<AppColorScheme>()!.black100,
+      child: Column(
+        children: [
+          for (int i = 0; i < workoutStats.length; i++) ...[
+            if (i.isEven)
+              Row(
+                children: [
+                  _StatsGridItem(
+                    icon: workoutStats[i].icon,
+                    title: workoutStats[i].title,
+                    subtitle: workoutStats[i].subtitle,
+                    titleSuffix: workoutStats[i].titleSuffix,
+                  ),
+                  const SizedBox(
+                    width: borderWidth,
+                  ),
+                  _StatsGridItem(
+                    icon: workoutStats[i + 1].icon,
+                    title: workoutStats[i + 1].title,
+                    subtitle: workoutStats[i + 1].subtitle,
+                    titleSuffix: workoutStats[i + 1].titleSuffix,
+                  ),
+                ],
+              )
+            else
+              const SizedBox(
+                height: borderWidth,
+              ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _StatsGridItem extends StatelessWidget {
+  const _StatsGridItem({
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    this.titleSuffix,
+  }) : super(key: key);
+
+  final SvgPicture icon;
+
+  final String title;
+
+  final String subtitle;
+
   final String? titleSuffix;
 
   @override

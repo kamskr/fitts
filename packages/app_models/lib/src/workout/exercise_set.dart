@@ -19,6 +19,7 @@ class ExerciseSet extends Equatable {
   const ExerciseSet({
     required this.repetitions,
     required this.weight,
+    this.isDone,
   });
 
   /// Factory which converts a [Map] into a [ExerciseSet].
@@ -34,20 +35,26 @@ class ExerciseSet extends Equatable {
   /// Weight used for the set.
   final double weight;
 
+  /// True if set was performed.
+  final bool? isDone;
+
   /// Creates a copy of [ExerciseSet].
   ExerciseSet copyWith({
     int? repetitions,
     double? weight,
+    bool? isDone,
   }) {
     return ExerciseSet(
       repetitions: repetitions ?? this.repetitions,
       weight: weight ?? this.weight,
+      isDone: isDone ?? this.isDone,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         repetitions,
         weight,
+        isDone,
       ];
 }

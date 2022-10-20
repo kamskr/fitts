@@ -59,6 +59,7 @@ class ExerciseCard extends StatelessWidget {
                   setNumber: index + 1,
                   repsCount: set.repetitions,
                   weight: set.weight,
+                  isDone: set.isDone,
                 );
               }).toList(),
             ],
@@ -75,28 +76,57 @@ class _SetListItem extends StatelessWidget {
     required this.setNumber,
     required this.repsCount,
     required this.weight,
+    this.isDone,
   }) : super(key: key);
 
   final int setNumber;
   final int repsCount;
   final double weight;
+  final bool? isDone;
 
   @override
   Widget build(BuildContext context) {
     const containerWidth = 80.0;
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(
         vertical: AppSpacing.sm,
         horizontal: AppSpacing.lg,
       ),
+      color: isDone == true
+          ? Theme.of(context)
+              .extension<AppColorScheme>()!
+              .black100
+              .withOpacity(0.4)
+          : Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: containerWidth,
-            child: Text(
-              'SET $setNumber',
-              style: Theme.of(context).textTheme.bodyText2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'SET $setNumber',
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                if (isDone == true)
+                  Container(
+                    height: 26,
+                    width: 26,
+                    decoration: BoxDecoration(
+                      gradient: Theme.of(context)
+                          .extension<AppColorScheme>()!
+                          .secondaryAccentGradient,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(AppSpacing.xxs),
+                      ),
+                    ),
+                    child: Assets.icons.icCheckmark.svg(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+              ],
             ),
           ),
           SizedBox(

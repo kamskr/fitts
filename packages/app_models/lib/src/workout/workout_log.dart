@@ -41,6 +41,30 @@ class WorkoutLog extends Equatable {
   /// List of exercises performed in the workout.
   final List<WorkoutExercise> exercises;
 
+  /// Get total weight performed in this exercise.
+  double get totalWeight => exercises.fold(
+        0,
+        (previousValue, element) =>
+            previousValue +
+            element.sets.fold<double>(
+              0,
+              (previousValue, element) =>
+                  previousValue + (element.weight * element.repetitions),
+            ),
+      );
+
+  /// Returns average rest time in seconds.
+  int get averageRestTime {
+    if (exercises.isEmpty) {
+      return 0;
+    }
+    return exercises.fold<int>(
+          0,
+          (previousValue, element) => previousValue + element.restTime,
+        ) ~/
+        exercises.length;
+  }
+
   /// Creates a copy of [WorkoutLog].
   WorkoutLog copyWith({
     String? id,
