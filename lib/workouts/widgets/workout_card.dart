@@ -12,18 +12,25 @@ class WorkoutCard extends StatelessWidget {
   const WorkoutCard({
     Key? key,
     required this.workoutTemplate,
+    this.header,
     this.footer,
     this.radius,
+    this.height,
   }) : super(key: key);
 
   /// Workout template to display.
   final WorkoutTemplate workoutTemplate;
 
-  /// Whether to display the button in full width.
+  /// Replace header.
+  final Widget? header;
+
+  /// Replace footer.
   final Widget? footer;
 
   /// Pass to change border radius of the card.
   final double? radius;
+
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +47,7 @@ class WorkoutCard extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 290,
+      height: height ?? 290,
       width: double.infinity,
       child: AppChartCard(
         radius: radius,
@@ -49,28 +56,29 @@ class WorkoutCard extends StatelessWidget {
                     workoutTemplate.recentTotalTonnageLifted!.isEmpty)
             ? l10n.workoutWidgetNoWorkoutsPerformedYet
             : null,
-        header: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              workoutTemplate.name,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-            ),
-            if (workoutTemplate.lastPerformed != null)
-              Text(
-                l10n.homePagePreviousWorkoutDate(
-                  DateTimeFormatters.weekdayMonthDay(
-                    workoutTemplate.lastPerformed!,
-                  ),
+        header: header ??
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  workoutTemplate.name,
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                 ),
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
+                if (workoutTemplate.lastPerformed != null)
+                  Text(
+                    l10n.homePagePreviousWorkoutDate(
+                      DateTimeFormatters.weekdayMonthDay(
+                        workoutTemplate.lastPerformed!,
+                      ),
                     ),
-              ),
-          ],
-        ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+              ],
+            ),
         values: [
           tonnageLifted[0],
           tonnageLifted[1],

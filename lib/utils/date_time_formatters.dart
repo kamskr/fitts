@@ -21,16 +21,27 @@ class DateTimeFormatters {
 
   /// Convert seconds to time format.
   /// Example: 1:30:00
-  static String formatSeconds(int seconds, {bool showSeconds = false}) {
+  static String formatSeconds(
+    int seconds, {
+    bool showSeconds = false,
+    bool showHours = true,
+  }) {
     final duration = Duration(seconds: seconds);
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     final twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     final twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
 
-    if (showSeconds) {
-      return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
-    } else {
-      return '${twoDigits(duration.inHours)}:$twoDigitMinutes';
+    var value = twoDigitMinutes;
+
+    if (showHours) {
+      final twoDigitHours = twoDigits(duration.inHours);
+      value = '$twoDigitHours:$value';
     }
+
+    if (showSeconds) {
+      value = '$value:$twoDigitSeconds';
+    }
+
+    return value;
   }
 }

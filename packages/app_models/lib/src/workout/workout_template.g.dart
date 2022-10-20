@@ -13,11 +13,11 @@ WorkoutTemplate _$WorkoutTemplateFromJson(Map<String, dynamic> json) =>
       notes: json['notes'] as String,
       tonnageLifted: json['tonnageLifted'] as int,
       workoutsCompleted: json['workoutsCompleted'] as int,
-      averageWorkoutLength: json['averageWorkoutLength'] as int?,
-      lastAverageRestTime: json['lastAverageRestTime'] as int?,
       exercises: (json['exercises'] as List<dynamic>)
           .map((e) => WorkoutExercise.fromJson(e as Map<String, dynamic>))
           .toList(),
+      averageWorkoutLength: json['averageWorkoutLength'] as int?,
+      lastAverageRestTime: json['lastAverageRestTime'] as int?,
       lastPerformed: json['lastPerformed'] == null
           ? null
           : DateTime.parse(json['lastPerformed'] as String),
