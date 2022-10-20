@@ -133,7 +133,7 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
         slivers: [
           SliverPersistentHeader(
             pinned: true,
-            delegate: _SliverAppBarDelegate(),
+            delegate: _WorkoutCardPersistentHeader(),
           ),
           const _WorkoutStats(),
           const SliverToBoxAdapter(
@@ -184,8 +184,8 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
   }
 }
 
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate();
+class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
+  _WorkoutCardPersistentHeader();
 
   @override
   Widget build(
