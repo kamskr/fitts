@@ -94,6 +94,16 @@ class WorkoutTemplate extends Equatable {
     );
   }
 
+  /// Creates empty workout
+  static const WorkoutTemplate empty = WorkoutTemplate(
+    id: '',
+    name: '',
+    notes: '',
+    tonnageLifted: 0,
+    workoutsCompleted: 0,
+    exercises: [],
+  );
+
   @override
   List<Object?> get props => [
         id,
