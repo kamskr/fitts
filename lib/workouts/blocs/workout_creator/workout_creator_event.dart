@@ -39,6 +39,29 @@ class WorkoutCreatorAddExercises extends WorkoutCreatorEvent {
   List<Object> get props => [exercises];
 }
 
+/// {@template workout_creator_exercise_changed}
+/// Event for updating exercise at given index.
+/// {@endtemplate}
+class WorkoutCreatorExerciseChanged extends WorkoutCreatorEvent {
+  /// {@macro workout_creator_exercise_changed}
+  const WorkoutCreatorExerciseChanged({
+    required this.exerciseIndex,
+    required this.exercise,
+  });
+
+  /// Index of the exercise to change.
+  final int exerciseIndex;
+
+  /// New workout template.
+  final WorkoutExercise exercise;
+
+  @override
+  List<Object> get props => [
+        exerciseIndex,
+        exercise,
+      ];
+}
+
 /// {@template workout_creator_reorder_exercises}
 /// Event for reordering exercises to the workout template.
 /// {@endtemplate}
@@ -77,6 +100,29 @@ class WorkoutCreatorDeleteExercise extends WorkoutCreatorEvent {
   @override
   List<Object> get props => [
         index,
+      ];
+}
+
+/// {@template workout_creator_delete_exercise_set}
+/// Event for deleting exercises to the workout template.
+/// {@endtemplate}
+class WorkoutCreatorDeleteExerciseSet extends WorkoutCreatorEvent {
+  /// {@macro workout_creator_delete_exercise_set}
+  const WorkoutCreatorDeleteExerciseSet({
+    required this.exerciseIndex,
+    required this.setIndex,
+  });
+
+  /// Index of the exercise.
+  final int exerciseIndex;
+
+  /// Index of the set.
+  final int setIndex;
+
+  @override
+  List<Object> get props => [
+        exerciseIndex,
+        setIndex,
       ];
 }
 

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:fitts/workouts/blocs/blocs.dart';
+import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -203,38 +203,36 @@ class _ExercisesList extends StatelessWidget {
         HapticFeedback.lightImpact();
       },
       itemBuilder: (context, index) {
-        return Dismissible(
-          direction: DismissDirection.endToStart,
+        return ExerciseCard(
           key: UniqueKey(),
-          onDismissed: (direction) => bloc.add(
-            WorkoutCreatorDeleteExercise(
-              index: index,
-            ),
-          ),
-          background: ColoredBox(
-            color: Theme.of(context).colorScheme.error,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                ),
-                AppGap.md(),
-              ],
-            ),
-          ),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            child: ListTile(
-              tileColor: Colors.white,
-              title: Text('Item ${workoutExercises[index].exerciseId}'),
-              trailing: ReorderableDragStartListener(
-                index: index,
-                child: const Icon(Icons.menu),
+          exerciseIndex: index,
+          exercise: workoutExercises[index],
+          exerciseCount: workoutExercises.length,
+          onExerciseChanged: (exerciseIndex, exercise) {
+            bloc.add(
+              WorkoutCreatorExerciseChanged(
+                exerciseIndex: exerciseIndex,
+                exercise: exercise,
               ),
-            ),
-          ),
+            );
+          },
+          onExerciseDeleted: (index) {
+            HapticFeedback.lightImpact();
+            bloc.add(
+              WorkoutCreatorDeleteExercise(
+                index: index,
+              ),
+            );
+          },
+          onExerciseSetDeleted: (exerciseIndex, setIndex) {
+            HapticFeedback.lightImpact();
+            bloc.add(
+              WorkoutCreatorDeleteExerciseSet(
+                exerciseIndex: exerciseIndex,
+                setIndex: setIndex,
+              ),
+            );
+          },
         );
       },
       itemCount: workoutExercises.length,

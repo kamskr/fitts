@@ -1,6 +1,7 @@
 import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 /// {@template exercise_card}
@@ -14,6 +15,9 @@ class ExerciseCard extends StatelessWidget {
     required this.exerciseIndex,
     required this.exerciseCount,
     required this.exercise,
+    this.onExerciseChanged,
+    this.onExerciseDeleted,
+    this.onExerciseSetDeleted,
   }) : super(key: key);
 
   /// Index of the exercise in the workout.
@@ -25,9 +29,79 @@ class ExerciseCard extends StatelessWidget {
   /// Exercise to display.
   final WorkoutExercise exercise;
 
+  /// Callback to call when the exercise is changed.
+  final void Function(int, WorkoutExercise)? onExerciseChanged;
+
+  /// Callback to call when the exercise is deleted.
+  final void Function(int)? onExerciseDeleted;
+
+  /// Callback to call when the set of exercise is deleted.
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+  )? onExerciseSetDeleted;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final child = Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.md,
+        horizontal: AppSpacing.lg,
+      ),
+      child: Column(
+        children: [
+          _CardTitle(
+            exerciseIndex: exerciseIndex,
+            exerciseCount: exerciseCount,
+            onExerciseChanged: onExerciseChanged,
+          ),
+          const AppGap.lg(),
+          if (exercise.sets.isEmpty && onExerciseChanged == null)
+            const Center(
+              child: Text('No sets'),
+            ),
+          ...exercise.sets.asMap().entries.map((setItem) {
+            final set = setItem.value;
+            final index = setItem.key;
+            return _SetListItem(
+              exerciseIndex: exerciseIndex,
+              setNumber: index + 1,
+              repsCount: set.repetitions,
+              weight: set.weight,
+              isDone: set.isDone,
+              onExerciseSetDeleted: onExerciseSetDeleted,
+            );
+          }).toList(),
+          if (onExerciseChanged != null) ...[
+            const Divider(
+              height: 1,
+            ),
+            AppTextButton(
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                const set = ExerciseSet(
+                  repetitions: 10,
+                  weight: 10,
+                );
+
+                onExerciseChanged!(
+                  exerciseIndex,
+                  exercise.copyWith(
+                    sets: [
+                      ...exercise.sets,
+                      set,
+                    ],
+                  ),
+                );
+              },
+              child: const Text('ADD SET'),
+            )
+          ],
+        ],
+      ),
+    );
 
     return Provider<WorkoutExercise>.value(
       value: exercise,
@@ -40,31 +114,27 @@ class ExerciseCard extends StatelessWidget {
             color: Theme.of(context).extension<AppColorScheme>()!.black100,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: AppSpacing.md,
-            horizontal: AppSpacing.lg,
-          ),
-          child: Column(
-            children: [
-              _CardTitle(
-                exerciseIndex: exerciseIndex,
-                exerciseCount: exerciseCount,
-              ),
-              const AppGap.lg(),
-              ...exercise.sets.asMap().entries.map((setItem) {
-                final set = setItem.value;
-                final index = setItem.key;
-                return _SetListItem(
-                  setNumber: index + 1,
-                  repsCount: set.repetitions,
-                  weight: set.weight,
-                  isDone: set.isDone,
-                );
-              }).toList(),
-            ],
-          ),
-        ),
+        child: onExerciseDeleted != null
+            ? Dismissible(
+                direction: DismissDirection.endToStart,
+                key: UniqueKey(),
+                background: ColoredBox(
+                  color: Theme.of(context).colorScheme.error,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                      AppGap.md(),
+                    ],
+                  ),
+                ),
+                onDismissed: (direction) => onExerciseDeleted!(exerciseIndex),
+                child: child,
+              )
+            : child,
       ),
     );
   }
@@ -73,21 +143,29 @@ class ExerciseCard extends StatelessWidget {
 class _SetListItem extends StatelessWidget {
   const _SetListItem({
     Key? key,
+    required this.exerciseIndex,
     required this.setNumber,
     required this.repsCount,
     required this.weight,
     this.isDone,
+    this.onExerciseSetDeleted,
   }) : super(key: key);
 
+  final int exerciseIndex;
   final int setNumber;
   final int repsCount;
   final double weight;
   final bool? isDone;
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+  )? onExerciseSetDeleted;
 
   @override
   Widget build(BuildContext context) {
     const containerWidth = 80.0;
-    return Container(
+
+    final child = Container(
       padding: const EdgeInsets.symmetric(
         vertical: AppSpacing.sm,
         horizontal: AppSpacing.lg,
@@ -162,6 +240,31 @@ class _SetListItem extends StatelessWidget {
         ],
       ),
     );
+
+    if (onExerciseSetDeleted != null) {
+      return Dismissible(
+        key: UniqueKey(),
+        onDismissed: (_) {
+          onExerciseSetDeleted!(exerciseIndex, setNumber - 1);
+        },
+        background: ColoredBox(
+          color: Theme.of(context).colorScheme.error,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+              AppGap.md(),
+            ],
+          ),
+        ),
+        child: child,
+      );
+    }
+
+    return child;
   }
 }
 
@@ -170,10 +273,12 @@ class _CardTitle extends StatelessWidget {
     Key? key,
     required this.exerciseIndex,
     required this.exerciseCount,
+    this.onExerciseChanged,
   }) : super(key: key);
 
   final int exerciseIndex;
   final int exerciseCount;
+  final void Function(int, WorkoutExercise)? onExerciseChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +288,7 @@ class _CardTitle extends StatelessWidget {
     final exerciseName = exercises[exerciseId]?.name;
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,8 +306,11 @@ class _CardTitle extends StatelessWidget {
             ),
           ],
         ),
-
-        /// Place for history button in the future.
+        if (onExerciseChanged != null)
+          ReorderableDragStartListener(
+            index: exerciseIndex,
+            child: const Icon(Icons.menu),
+          ),
       ],
     );
   }

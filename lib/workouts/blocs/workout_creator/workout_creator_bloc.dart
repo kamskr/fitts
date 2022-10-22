@@ -16,8 +16,10 @@ class WorkoutCreatorBloc
     on<WorkoutCreatorTemplateChanged>(_onWorkoutCreatorTemplateChanged);
     on<WorkoutCreatorSubmitTemplate>(_onWorkoutCreatorSubmitTemplate);
     on<WorkoutCreatorAddExercises>(_onWorkoutCreatorAddExercises);
+    on<WorkoutCreatorExerciseChanged>(_onWorkoutCreatorExerciseChanged);
     on<WorkoutCreatorReorderExercises>(_onWorkoutCreatorReorderExercises);
     on<WorkoutCreatorDeleteExercise>(_onWorkoutCreatorDeleteExercise);
+    on<WorkoutCreatorDeleteExerciseSet>(_onWorkoutCreatorDeleteExerciseSet);
   }
   Future<void> _onWorkoutCreatorTemplateChanged(
     WorkoutCreatorTemplateChanged event,
@@ -26,6 +28,23 @@ class WorkoutCreatorBloc
     emit(
       state.copyWith(
         workoutTemplate: event.workoutTemplate,
+        status: FormzStatus.valid,
+      ),
+    );
+  }
+
+  Future<void> _onWorkoutCreatorExerciseChanged(
+    WorkoutCreatorExerciseChanged event,
+    Emitter<WorkoutCreatorState> emit,
+  ) async {
+    final exercises = List.of(state.workoutTemplate.exercises);
+    exercises[event.exerciseIndex] = event.exercise;
+
+    emit(
+      state.copyWith(
+        workoutTemplate: state.workoutTemplate.copyWith(
+          exercises: exercises,
+        ),
         status: FormzStatus.valid,
       ),
     );
@@ -115,5 +134,25 @@ class WorkoutCreatorBloc
       emit(state.copyWith(status: FormzStatus.submissionFailure));
       addError(error, stackTrace);
     }
+  }
+
+  Future<void> _onWorkoutCreatorDeleteExerciseSet(
+    WorkoutCreatorDeleteExerciseSet event,
+    Emitter<WorkoutCreatorState> emit,
+  ) async {
+    final exercises = List.of(state.workoutTemplate.exercises);
+    final exercise = exercises[event.exerciseIndex];
+    final sets = List.of(exercise.sets)..removeAt(event.setIndex);
+
+    exercises[event.exerciseIndex] = exercise.copyWith(sets: sets);
+
+    emit(
+      state.copyWith(
+        workoutTemplate: state.workoutTemplate.copyWith(
+          exercises: exercises,
+        ),
+        status: FormzStatus.valid,
+      ),
+    );
   }
 }
