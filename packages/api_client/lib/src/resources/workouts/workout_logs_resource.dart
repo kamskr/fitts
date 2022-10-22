@@ -24,6 +24,7 @@ class WorkoutLogsResource {
           .collection(_collectionName)
           .doc(userId)
           .collection(_userLogsCollectionName)
+          .orderBy('datePerformed', descending: true)
           .snapshots()
           .map((snapshot) {
         if (snapshot.docs.isNotEmpty) {

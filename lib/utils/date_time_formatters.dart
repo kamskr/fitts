@@ -9,6 +9,11 @@ class DateTimeFormatters {
     return DateFormat('EEE, MMM d').format(date);
   }
 
+  /// Example: 5/8/2021
+  static String monthDayYear(DateTime date) {
+    return DateFormat('M/d/yyyy').format(date);
+  }
+
   /// Example: 22
   static String day(DateTime date) {
     return DateFormat('d').format(date);
