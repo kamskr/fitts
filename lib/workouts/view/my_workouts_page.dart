@@ -28,13 +28,60 @@ class MyWorkoutsPage extends StatelessWidget {
   }
 }
 
-class _MyWorkoutsPageView extends StatelessWidget {
+class _MyWorkoutsPageView extends StatefulWidget {
   const _MyWorkoutsPageView({Key? key}) : super(key: key);
+
+  @override
+  State<_MyWorkoutsPageView> createState() => _MyWorkoutsPageViewState();
+}
+
+class _MyWorkoutsPageViewState extends State<_MyWorkoutsPageView>
+    with TickerProviderStateMixin {
+  final ScrollController _scrollController = ScrollController();
+
+  late AnimationController _animationController;
+  late Animation<Color?> _colorTween;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+
+    _colorTween = ColorTween(begin: Colors.white, end: Colors.black)
+        .animate(_animationController);
+
+    _scrollController.addListener(onScroll);
+    super.initState();
+  }
+
+  void onScroll() {
+    if (_scrollController.position.pixels < 50) {
+      _animationController.reverse();
+    } else if (_scrollController.position.pixels > 50) {
+      _animationController.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _scrollController.removeListener(onScroll);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: AnimatedBuilder(
+          animation: _colorTween,
+          builder: (_, __) => Text(
+            'My Workouts',
+            style: TextStyle(color: _colorTween.value),
+          ),
+        ),
         scrolledUnderElevation: 1,
         actions: [
           IconButton(
@@ -43,7 +90,10 @@ class _MyWorkoutsPageView extends StatelessWidget {
           ),
         ],
       ),
-      body: const _MyWorkoutsBody(),
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: const _MyWorkoutsBody(),
+      ),
     );
   }
 }
@@ -59,62 +109,56 @@ class _MyWorkoutsBody extends StatelessWidget {
 
     if (state.status == DataLoadingStatus.loading ||
         state.status == DataLoadingStatus.initial) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
+      return const Center(
+        child: CircularProgressIndicator(),
       );
     }
 
     if (state.status == DataLoadingStatus.error) {
-      return const Scaffold(
-        body: Center(
-          child: Text('Placeholder for error screen.'),
-        ),
+      return const Center(
+        child: CircularProgressIndicator(),
       );
     }
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const AppGap.md(),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg,
-            ),
-            child: Text(
-              'My Workouts',
-              style: Theme.of(context).textTheme.headline3,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const AppGap.md(),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
           ),
-          const AppGap.md(),
-          ...state.workoutTemplates!
-              .map(
-                (workoutTemplate) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.lg,
-                    vertical: AppSpacing.xs,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      HapticFeedback.lightImpact();
-                      Navigator.of(context).push(
-                        WorkoutDetailsPage.route(workoutTemplate.id),
-                      );
-                    },
-                    child: WorkoutCard(
-                      workoutTemplate: workoutTemplate,
-                    ),
+          child: Text(
+            'My Workouts',
+            style: Theme.of(context).textTheme.headline3,
+          ),
+        ),
+        const AppGap.md(),
+        ...state.workoutTemplates!
+            .map(
+              (workoutTemplate) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
+                  vertical: AppSpacing.xs,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    HapticFeedback.lightImpact();
+                    Navigator.of(context).push(
+                      WorkoutDetailsPage.route(workoutTemplate.id),
+                    );
+                  },
+                  child: WorkoutCard(
+                    workoutTemplate: workoutTemplate,
                   ),
                 ),
-              )
-              .toList(),
-          SizedBox(
-            height: MediaQuery.of(context).padding.bottom,
-          ),
-        ],
-      ),
+              ),
+            )
+            .toList(),
+        SizedBox(
+          height: MediaQuery.of(context).padding.bottom,
+        ),
+      ],
     );
   }
 }
