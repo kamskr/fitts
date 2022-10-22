@@ -62,6 +62,24 @@ class WorkoutCreatorReorderExercises extends WorkoutCreatorEvent {
       ];
 }
 
+/// {@template workout_creator_delete_exercise}
+/// Event for deleting exercises to the workout template.
+/// {@endtemplate}
+class WorkoutCreatorDeleteExercise extends WorkoutCreatorEvent {
+  /// {@macro workout_creator_delete_exercise}
+  const WorkoutCreatorDeleteExercise({
+    required this.index,
+  });
+
+  /// Index of the exercise to delete.
+  final int index;
+
+  @override
+  List<Object> get props => [
+        index,
+      ];
+}
+
 /// {@template workout_creator_submit_template}
 /// Event for when the workout template is submitted.
 /// {@endtemplate}

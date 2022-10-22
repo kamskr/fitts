@@ -17,7 +17,7 @@ class WorkoutCreatorState extends Equatable {
   final FormzStatus status;
 
   @override
-  List<Object> get props => [workoutTemplate];
+  List<Object> get props => [workoutTemplate, status];
 
   /// Creates a copy of [WorkoutCreatorState].
   WorkoutCreatorState copyWith({

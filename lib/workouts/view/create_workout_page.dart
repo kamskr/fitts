@@ -35,15 +35,18 @@ class _CreateWorkoutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _AppBar(),
-          _WorkoutBuilder(),
-          SliverToBoxAdapter(
+          const _AppBar(),
+          const _WorkoutBuilder(),
+          const SliverToBoxAdapter(
             child: SizedBox(height: AppSpacing.md),
           ),
-          _AddExerciseButton(),
+          const _AddExerciseButton(),
+          SliverToBoxAdapter(
+            child: SizedBox(height: MediaQuery.of(context).padding.bottom),
+          ),
         ],
       ),
     );
@@ -193,10 +196,21 @@ class _ExercisesList extends StatelessWidget {
 
     return SliverReorderableList(
       proxyDecorator: proxyDecorator,
+      onReorderStart: (_) {
+        HapticFeedback.lightImpact();
+      },
+      onReorderEnd: (_) {
+        HapticFeedback.lightImpact();
+      },
       itemBuilder: (context, index) {
         return Dismissible(
           direction: DismissDirection.endToStart,
-          key: ValueKey(workoutExercises[index]),
+          key: UniqueKey(),
+          onDismissed: (direction) => bloc.add(
+            WorkoutCreatorDeleteExercise(
+              index: index,
+            ),
+          ),
           background: ColoredBox(
             color: Theme.of(context).colorScheme.error,
             child: Row(
@@ -210,12 +224,15 @@ class _ExercisesList extends StatelessWidget {
               ],
             ),
           ),
-          child: ListTile(
-            tileColor: Colors.white,
-            title: Text('Item ${workoutExercises[index].exerciseId}'),
-            trailing: ReorderableDragStartListener(
-              index: index,
-              child: const Icon(Icons.menu),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            child: ListTile(
+              tileColor: Colors.white,
+              title: Text('Item ${workoutExercises[index].exerciseId}'),
+              trailing: ReorderableDragStartListener(
+                index: index,
+                child: const Icon(Icons.menu),
+              ),
             ),
           ),
         );

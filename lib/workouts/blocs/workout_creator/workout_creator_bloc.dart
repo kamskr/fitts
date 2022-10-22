@@ -17,6 +17,7 @@ class WorkoutCreatorBloc
     on<WorkoutCreatorSubmitTemplate>(_onWorkoutCreatorSubmitTemplate);
     on<WorkoutCreatorAddExercises>(_onWorkoutCreatorAddExercises);
     on<WorkoutCreatorReorderExercises>(_onWorkoutCreatorReorderExercises);
+    on<WorkoutCreatorDeleteExercise>(_onWorkoutCreatorDeleteExercise);
   }
   Future<void> _onWorkoutCreatorTemplateChanged(
     WorkoutCreatorTemplateChanged event,
@@ -67,7 +68,7 @@ class WorkoutCreatorBloc
     var newIndex = event.newIndex;
     final oldIndex = event.oldIndex;
 
-    final exercises = state.workoutTemplate.exercises;
+    final exercises = List.of(state.workoutTemplate.exercises);
 
     if (oldIndex < newIndex) {
       newIndex -= 1;
@@ -81,6 +82,23 @@ class WorkoutCreatorBloc
           exercises: exercises,
         ),
         status: FormzStatus.valid,
+      ),
+    );
+  }
+
+  Future<void> _onWorkoutCreatorDeleteExercise(
+    WorkoutCreatorDeleteExercise event,
+    Emitter<WorkoutCreatorState> emit,
+  ) async {
+    final exercises = List.of(state.workoutTemplate.exercises)
+      ..removeAt(event.index);
+
+    emit(
+      state.copyWith(
+        workoutTemplate: state.workoutTemplate.copyWith(
+          exercises: List.of(exercises),
+        ),
+        status: FormzStatus.invalid,
       ),
     );
   }
