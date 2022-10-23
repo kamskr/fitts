@@ -111,31 +111,63 @@ class _AppBar extends StatelessWidget {
                 bottom: 8,
               ),
               centerTitle: false,
-              background: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.lg,
-                      vertical: AppSpacing.sm,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('search'),
-                        AppButton.outlined(
-                          child: const Text('test'),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              background: const _AppBarExpandedActions(),
             );
           },
         ),
       ),
+    );
+  }
+}
+
+class _AppBarExpandedActions extends StatelessWidget {
+  const _AppBarExpandedActions({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: AppSpacing.lg,
+            right: AppSpacing.xxs,
+            bottom: AppSpacing.sm,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Assets.icons.icSearch.svg(
+                    color: Colors.white,
+                    height: 20,
+                  ),
+                  const AppGap.xs(),
+                  const Text(
+                    'search',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                child: AppTextButton(
+                  onPressed: () {},
+                  child: Assets.icons.icFilter.svg(
+                    color: Colors.white,
+                    height: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
