@@ -2,6 +2,7 @@ import 'package:app_models/app_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:workouts_repository/workouts_repository.dart';
 
 part 'workout_creator_event.dart';
 part 'workout_creator_state.dart';
@@ -12,7 +13,10 @@ part 'workout_creator_state.dart';
 class WorkoutCreatorBloc
     extends Bloc<WorkoutCreatorEvent, WorkoutCreatorState> {
   /// {@macro workout_creator_bloc}
-  WorkoutCreatorBloc() : super(const WorkoutCreatorState()) {
+  WorkoutCreatorBloc({
+    required WorkoutsRepository workoutsRepository,
+  })  : _workoutsRepository = workoutsRepository,
+        super(const WorkoutCreatorState()) {
     on<WorkoutCreatorTemplateChanged>(_onWorkoutCreatorTemplateChanged);
     on<WorkoutCreatorSubmitTemplate>(_onWorkoutCreatorSubmitTemplate);
     on<WorkoutCreatorAddExercises>(_onWorkoutCreatorAddExercises);
@@ -22,6 +26,9 @@ class WorkoutCreatorBloc
     on<WorkoutCreatorDeleteExerciseSet>(_onWorkoutCreatorDeleteExerciseSet);
     on<WorkoutCreatorExerciseSetChanged>(_onWorkoutCreatorExerciseSetChanged);
   }
+
+  final WorkoutsRepository _workoutsRepository;
+
   Future<void> _onWorkoutCreatorTemplateChanged(
     WorkoutCreatorTemplateChanged event,
     Emitter<WorkoutCreatorState> emit,
@@ -169,7 +176,11 @@ class WorkoutCreatorBloc
   ) async {
     try {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      // perform async operation
+      await _workoutsRepository.createWorkoutTemplate(
+        workoutTemplate: state.workoutTemplate.copyWith(
+          id: DateTime.now().toIso8601String() + state.workoutTemplate.name,
+        ),
+      );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (error, stackTrace) {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:formz/formz.dart';
+import 'package:workouts_repository/workouts_repository.dart';
 
 /// {@template create_workout_page}
 /// Page for creating a WorkoutTemplate.
@@ -22,7 +24,9 @@ class CreateWorkoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WorkoutCreatorBloc>(
-      create: (_) => WorkoutCreatorBloc(),
+      create: (_) => WorkoutCreatorBloc(
+        workoutsRepository: context.read<WorkoutsRepository>(),
+      ),
       child: const _CreateWorkoutView(),
     );
   }
@@ -37,28 +41,59 @@ class _CreateWorkoutView extends StatelessWidget {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            const _AppBar(),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: AppSpacing.md),
-            ),
-            const _BasicInfo(),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: AppSpacing.lg),
-            ),
-            const _WorkoutBuilder(),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: AppSpacing.md),
-            ),
-            const _AddExerciseButton(),
-            SliverToBoxAdapter(
-              child: SizedBox(height: MediaQuery.of(context).padding.bottom),
-            ),
-          ],
+      child: _BlocStateListener(
+        child: Scaffold(
+          body: CustomScrollView(
+            slivers: [
+              const _AppBar(),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: AppSpacing.md),
+              ),
+              const _BasicInfo(),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: AppSpacing.lg),
+              ),
+              const _WorkoutBuilder(),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: AppSpacing.md),
+              ),
+              const _AddExerciseButton(),
+              SliverToBoxAdapter(
+                child: SizedBox(height: MediaQuery.of(context).padding.bottom),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _BlocStateListener extends StatelessWidget {
+  const _BlocStateListener({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<WorkoutCreatorBloc, WorkoutCreatorState>(
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) {
+        if (state.status == FormzStatus.submissionFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to create workout'),
+            ),
+          );
+        }
+        if (state.status == FormzStatus.submissionSuccess) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: child,
     );
   }
 }
