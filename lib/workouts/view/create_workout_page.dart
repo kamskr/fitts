@@ -89,9 +89,9 @@ class _BlocStateListener extends StatelessWidget {
             ),
           );
         }
-        if (state.status == FormzStatus.submissionSuccess) {
-          Navigator.of(context).pop();
-        }
+        // if (state.status == FormzStatus.submissionSuccess) {
+        //   Navigator.of(context).pop();
+        // }
       },
       child: child,
     );
@@ -110,19 +110,36 @@ class _AppBar extends StatelessWidget {
         color: Colors.white,
       ),
       actions: [
-        AppTextButton(
-          textStyle: Theme.of(context).textTheme.bodyText1,
-          textColor: Theme.of(context).colorScheme.onPrimary,
-          child: const Text('Save'),
-          // ignore: unnecessary_lambdas
-          onPressed: () {
-            FocusScope.of(context).unfocus();
-            HapticFeedback.lightImpact();
-            context
-                .read<WorkoutCreatorBloc>()
-                .add(const WorkoutCreatorSubmitTemplate());
-          },
-        ),
+        if (context
+            .watch<WorkoutCreatorBloc>()
+            .state
+            .status
+            .isSubmissionInProgress)
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+            child: SizedBox(
+              height: 16,
+              width: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Colors.white,
+              ),
+            ),
+          )
+        else
+          AppTextButton(
+            textStyle: Theme.of(context).textTheme.bodyText1,
+            textColor: Theme.of(context).colorScheme.onPrimary,
+            child: const Text('Save'),
+            // ignore: unnecessary_lambdas
+            onPressed: () {
+              FocusScope.of(context).hasFocus
+                  ? FocusScope.of(context).unfocus()
+                  : context.read<WorkoutCreatorBloc>().add(
+                        const WorkoutCreatorSubmitTemplate(),
+                      );
+            },
+          ),
       ],
       backgroundColor: Colors.transparent,
       pinned: true,

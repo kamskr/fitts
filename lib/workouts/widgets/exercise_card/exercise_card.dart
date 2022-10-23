@@ -4,7 +4,6 @@ import 'package:fitts/utils/utils.dart';
 import 'package:fitts/workouts/workouts.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 part '_exercise_notes.dart';
@@ -52,21 +51,22 @@ class ExerciseCard extends StatelessWidget {
             ),
             AppTextButton(
               onPressed: () {
-                HapticFeedback.lightImpact();
                 const set = ExerciseSet(
                   repetitions: 10,
                   weight: 10,
                 );
 
-                exerciseCardData.onExerciseChanged!(
-                  exerciseCardData.exerciseIndex,
-                  exerciseCardData.exercise.copyWith(
-                    sets: [
-                      ...exerciseCardData.exercise.sets,
-                      set,
-                    ],
-                  ),
-                );
+                FocusScope.of(context).hasFocus
+                    ? FocusScope.of(context).unfocus()
+                    : exerciseCardData.onExerciseChanged!(
+                        exerciseCardData.exerciseIndex,
+                        exerciseCardData.exercise.copyWith(
+                          sets: [
+                            ...exerciseCardData.exercise.sets,
+                            set,
+                          ],
+                        ),
+                      );
               },
               child: const Text('ADD SET'),
             )
