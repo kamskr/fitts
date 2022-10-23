@@ -86,7 +86,13 @@ class _MyWorkoutsPageViewState extends State<_MyWorkoutsPageView>
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              HapticFeedback.lightImpact();
+
+              Navigator.of(context).push(
+                CreateWorkoutPage.route(),
+              );
+            },
           ),
         ],
       ),

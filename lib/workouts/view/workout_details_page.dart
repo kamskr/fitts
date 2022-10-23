@@ -161,9 +161,11 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
             final index = exerciseItem.key;
             return SliverToBoxAdapter(
               child: ExerciseCard(
-                exercise: exercise,
-                exerciseIndex: index,
-                exerciseCount: widget.state.workoutTemplate!.exercises.length,
+                exerciseCardData: ExerciseCardData(
+                  exercise: exercise,
+                  exerciseIndex: index,
+                  exerciseCount: widget.state.workoutTemplate!.exercises.length,
+                ),
               ),
             );
           }).toList(),
