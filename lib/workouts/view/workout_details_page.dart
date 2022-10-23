@@ -161,9 +161,11 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
             final index = exerciseItem.key;
             return SliverToBoxAdapter(
               child: ExerciseCard(
-                exercise: exercise,
-                exerciseIndex: index,
-                exerciseCount: widget.state.workoutTemplate!.exercises.length,
+                exerciseCardData: ExerciseCardData(
+                  exercise: exercise,
+                  exerciseIndex: index,
+                  exerciseCount: widget.state.workoutTemplate!.exercises.length,
+                ),
               ),
             );
           }).toList(),
@@ -241,7 +243,7 @@ class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
           ),
         ),
         AppButton.gradient(
-          height: max(52, 100 * (1 - percent)),
+          height: max(60, 100 * (1 - percent)),
           child: const Text('START'),
           onPressed: () {},
         )

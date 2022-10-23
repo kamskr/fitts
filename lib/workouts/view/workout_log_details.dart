@@ -92,8 +92,10 @@ class _LogTitle extends StatelessWidget {
             workoutLog.workoutTemplate.name,
             style: Theme.of(context).textTheme.headline3,
           ),
-          const Text(
-            'Previous Workout',
+          Text(
+            'Previous Workout: ${DateTimeFormatters.monthDayYear(
+              workoutLog.datePerformed,
+            )}',
           ),
         ],
       ),
@@ -261,9 +263,11 @@ class _ExercisesList extends StatelessWidget {
           final exercise = exerciseItem.value;
           final index = exerciseItem.key;
           return ExerciseCard(
-            exercise: exercise,
-            exerciseIndex: index,
-            exerciseCount: workoutLog.exercises.length,
+            exerciseCardData: ExerciseCardData(
+              exercise: exercise,
+              exerciseIndex: index,
+              exerciseCount: workoutLog.exercises.length,
+            ),
           );
         }).toList(),
       ],

@@ -5,6 +5,7 @@ import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/workouts/view/workout_history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:workouts_repository/workouts_repository.dart';
@@ -33,9 +34,7 @@ class _NavigationState extends State<Navigation> {
     const Scaffold(
       body: Center(child: Text('Stats')),
     ),
-    const Scaffold(
-      body: Center(child: Text('Calendar')),
-    ),
+    const WorkoutHistoryPage(),
     const Scaffold(
       body: _TempPlansWidget(),
     ),
@@ -84,10 +83,10 @@ class _NavigationState extends State<Navigation> {
             label: l10n.menuItemStats,
           ),
           AppMenuItem(
-            icon: Assets.icons.icMenuHistory.svg(
+            icon: Assets.icons.icHistory.svg(
               color: iconColor(2),
             ),
-            label: l10n.menuItemCalendar,
+            label: 'History',
           ),
           AppMenuItem(
             icon: Assets.icons.icMenuPlans.svg(
@@ -210,9 +209,9 @@ class _TempPlansWidget extends StatelessWidget {
               onPressed: () {
                 context.read<WorkoutsRepository>().createWorkoutLog(
                       workoutLog: WorkoutLog(
-                        id: 'id',
+                        id: 'id3',
                         duration: 3600,
-                        datePerformed: DateTime(2020),
+                        datePerformed: DateTime(2022, 6, 22),
                         workoutTemplate: workoutTemplate,
                         exercises: const [
                           WorkoutExercise(
