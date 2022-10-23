@@ -6,13 +6,17 @@ part of 'exercises_bloc.dart';
 class ExercisesState extends Equatable {
   /// {@macro exercises_state}
   const ExercisesState({
-    required this.exercises,
-    required this.visibleExercises,
+    this.status = DataLoadingStatus.initial,
+    this.exercises = const {},
+    this.visibleExercises = const [],
     this.searchPhrase = '',
     this.selectedKeys = const [],
     this.muscleFilter = const [],
     this.equipmentFilter = const [],
   });
+
+  /// The loading status of the exercises.
+  final DataLoadingStatus status;
 
   /// Map of all exercises.
   final Map<String, Exercise> exercises;
@@ -34,6 +38,7 @@ class ExercisesState extends Equatable {
 
   @override
   List<Object> get props => [
+        status,
         exercises,
         searchPhrase,
         muscleFilter,
@@ -43,6 +48,7 @@ class ExercisesState extends Equatable {
 
   /// Returns a copy of the state.
   ExercisesState copyWith({
+    DataLoadingStatus? status,
     Map<String, Exercise>? exercises,
     List<Exercise>? visibleExercises,
     String? searchPhrase,
@@ -51,6 +57,7 @@ class ExercisesState extends Equatable {
     List<Equipment>? equipmentFilter,
   }) {
     return ExercisesState(
+      status: status ?? this.status,
       exercises: exercises ?? this.exercises,
       visibleExercises: visibleExercises ?? this.visibleExercises,
       searchPhrase: searchPhrase ?? this.searchPhrase,

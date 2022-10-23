@@ -1,6 +1,8 @@
 import 'package:app_models/app_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:exercises_repository/exercises_repository.dart';
+import 'package:fitts/utils/utils.dart';
 
 part 'exercises_event.dart';
 part 'exercises_state.dart';
@@ -11,17 +13,45 @@ part 'exercises_state.dart';
 class ExercisesBloc extends Bloc<ExercisesEvent, ExercisesState> {
   /// {@macro exercises_bloc}
   ExercisesBloc({
-    required Map<String, Exercise> exercises,
-  }) : super(
-          ExercisesState(
-            exercises: exercises,
-            visibleExercises: exercises.values.toList(),
-          ),
+    required ExercisesRepository exercisesRepository,
+  })  : _exercisesRepository = exercisesRepository,
+        super(
+          const ExercisesState(),
         ) {
+    on<ExercisesInitialized>(_onExercisesInitialized);
     on<ExercisesSearchPhraseChanged>(_onExercisesSearchPhraseChanged);
     on<ExercisesSelectionKeyAdded>(_onExercisesSelectionKeyAdded);
     on<ExercisesSelectionKeyRemoved>(_onExercisesSelectionKeyRemoved);
     on<ExercisesFiltersChanged>(_onExercisesFiltersChanged);
+  }
+
+  final ExercisesRepository _exercisesRepository;
+
+  Future<void> _onExercisesInitialized(
+    ExercisesInitialized event,
+    Emitter<ExercisesState> emit,
+  ) async {
+    try {
+      emit(
+        state.copyWith(
+          status: DataLoadingStatus.loading,
+        ),
+      );
+      final exercises = await _exercisesRepository.getExercises();
+      emit(
+        state.copyWith(
+          status: DataLoadingStatus.success,
+          exercises: exercises,
+          visibleExercises: exercises.values.toList(),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: DataLoadingStatus.error,
+        ),
+      );
+    }
   }
 
   void _onExercisesSearchPhraseChanged(

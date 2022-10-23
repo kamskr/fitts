@@ -11,6 +11,14 @@ abstract class ExercisesEvent extends Equatable {
   List<Object> get props => [];
 }
 
+/// {@template exercises_initialized}
+///  Event for initializing exercises.
+/// {@endtemplate}
+class ExercisesInitialized extends ExercisesEvent {
+  /// {@macro exercises_initialized}
+  const ExercisesInitialized();
+}
+
 /// {@template exercises_search_phrase_changed}
 ///  Event for changing search phrase.
 /// {@endtemplate}
