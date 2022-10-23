@@ -15,6 +15,7 @@ class AppNumberPicker extends StatelessWidget {
     required this.onChanged,
     this.isHorizontal = false,
     this.textMapper,
+    this.step,
   }) : super(key: key);
 
   /// Current value of the picker.
@@ -35,6 +36,9 @@ class AppNumberPicker extends StatelessWidget {
   /// Function that maps the value to a string.
   final TextMapper? textMapper;
 
+  /// Step of the picker.
+  final int? step;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -48,6 +52,7 @@ class AppNumberPicker extends StatelessWidget {
             minValue: minValue,
             maxValue: maxValue,
             onChanged: onChanged,
+            step: step ?? 1,
             axis: isHorizontal ? Axis.horizontal : Axis.vertical,
             textStyle: TextStyle(
               fontSize: 20,

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/workouts/workouts.dart';
@@ -35,19 +33,31 @@ class _CreateWorkoutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          const _AppBar(),
-          const _WorkoutBuilder(),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: AppSpacing.md),
-          ),
-          const _AddExerciseButton(),
-          SliverToBoxAdapter(
-            child: SizedBox(height: MediaQuery.of(context).padding.bottom),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            const _AppBar(),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: AppSpacing.md),
+            ),
+            const _BasicInfo(),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: AppSpacing.lg),
+            ),
+            const _WorkoutBuilder(),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: AppSpacing.md),
+            ),
+            const _AddExerciseButton(),
+            SliverToBoxAdapter(
+              child: SizedBox(height: MediaQuery.of(context).padding.bottom),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -71,7 +81,11 @@ class _AppBar extends StatelessWidget {
           child: const Text('Save'),
           // ignore: unnecessary_lambdas
           onPressed: () {
+            FocusScope.of(context).unfocus();
             HapticFeedback.lightImpact();
+            context
+                .read<WorkoutCreatorBloc>()
+                .add(const WorkoutCreatorSubmitTemplate());
           },
         ),
       ],
@@ -84,6 +98,58 @@ class _AppBar extends StatelessWidget {
         ),
         child: FlexibleSpaceBar(
           title: Text('Create Workout'),
+        ),
+      ),
+    );
+  }
+}
+
+class _BasicInfo extends StatelessWidget {
+  const _BasicInfo({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(
+                // border: InputBorder.none,
+                hintText: 'Workout Template Name',
+              ),
+              style: Theme.of(context).textTheme.headline5,
+              onChanged: (value) {
+                final bloc = context.read<WorkoutCreatorBloc>();
+                bloc.add(
+                  WorkoutCreatorTemplateChanged(
+                    bloc.state.workoutTemplate.copyWith(
+                      name: value,
+                    ),
+                  ),
+                );
+              },
+            ),
+            TextFormField(
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Notes',
+              ),
+              onChanged: (value) {
+                final bloc = context.read<WorkoutCreatorBloc>();
+                bloc.add(
+                  WorkoutCreatorTemplateChanged(
+                    bloc.state.workoutTemplate.copyWith(
+                      notes: value,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -182,13 +248,7 @@ class _ExercisesList extends StatelessWidget {
       return AnimatedBuilder(
         animation: animation,
         builder: (BuildContext context, Widget? child) {
-          final animValue = Curves.easeInOut.transform(animation.value);
-          final elevation = lerpDouble(0, 6, animValue)!;
-          return Material(
-            elevation: elevation,
-            shadowColor: Colors.black,
-            child: child,
-          );
+          return child!;
         },
         child: child,
       );
@@ -204,35 +264,44 @@ class _ExercisesList extends StatelessWidget {
       },
       itemBuilder: (context, index) {
         return ExerciseCard(
-          key: UniqueKey(),
-          exerciseIndex: index,
-          exercise: workoutExercises[index],
-          exerciseCount: workoutExercises.length,
-          onExerciseChanged: (exerciseIndex, exercise) {
-            bloc.add(
-              WorkoutCreatorExerciseChanged(
-                exerciseIndex: exerciseIndex,
-                exercise: exercise,
-              ),
-            );
-          },
-          onExerciseDeleted: (index) {
-            HapticFeedback.lightImpact();
-            bloc.add(
-              WorkoutCreatorDeleteExercise(
-                index: index,
-              ),
-            );
-          },
-          onExerciseSetDeleted: (exerciseIndex, setIndex) {
-            HapticFeedback.lightImpact();
-            bloc.add(
-              WorkoutCreatorDeleteExerciseSet(
-                exerciseIndex: exerciseIndex,
-                setIndex: setIndex,
-              ),
-            );
-          },
+          key: ValueKey(workoutExercises[index]),
+          exerciseCardData: ExerciseCardData(
+            exerciseIndex: index,
+            exercise: workoutExercises[index],
+            exerciseCount: workoutExercises.length,
+            onExerciseChanged: (exerciseIndex, exercise) {
+              bloc.add(
+                WorkoutCreatorExerciseChanged(
+                  exerciseIndex: exerciseIndex,
+                  exercise: exercise,
+                ),
+              );
+            },
+            onExerciseDeleted: (index) {
+              bloc.add(
+                WorkoutCreatorDeleteExercise(
+                  index: index,
+                ),
+              );
+            },
+            onExerciseSetDeleted: (exerciseIndex, setIndex) {
+              bloc.add(
+                WorkoutCreatorDeleteExerciseSet(
+                  exerciseIndex: exerciseIndex,
+                  setIndex: setIndex,
+                ),
+              );
+            },
+            onExerciseSetChanged: (exerciseIndex, setIndex, set) {
+              bloc.add(
+                WorkoutCreatorExerciseSetChanged(
+                  exerciseIndex: exerciseIndex,
+                  setIndex: setIndex,
+                  set: set,
+                ),
+              );
+            },
+          ),
         );
       },
       itemCount: workoutExercises.length,

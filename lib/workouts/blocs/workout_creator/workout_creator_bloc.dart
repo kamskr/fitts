@@ -20,6 +20,7 @@ class WorkoutCreatorBloc
     on<WorkoutCreatorReorderExercises>(_onWorkoutCreatorReorderExercises);
     on<WorkoutCreatorDeleteExercise>(_onWorkoutCreatorDeleteExercise);
     on<WorkoutCreatorDeleteExerciseSet>(_onWorkoutCreatorDeleteExerciseSet);
+    on<WorkoutCreatorExerciseSetChanged>(_onWorkoutCreatorExerciseSetChanged);
   }
   Future<void> _onWorkoutCreatorTemplateChanged(
     WorkoutCreatorTemplateChanged event,
@@ -122,18 +123,24 @@ class WorkoutCreatorBloc
     );
   }
 
-  Future<void> _onWorkoutCreatorSubmitTemplate(
-    WorkoutCreatorSubmitTemplate event,
+  Future<void> _onWorkoutCreatorExerciseSetChanged(
+    WorkoutCreatorExerciseSetChanged event,
     Emitter<WorkoutCreatorState> emit,
   ) async {
-    try {
-      emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      // perform async operation
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } catch (error, stackTrace) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-      addError(error, stackTrace);
-    }
+    final exercises = List.of(state.workoutTemplate.exercises);
+    final exercise = exercises[event.exerciseIndex];
+    final sets = List.of(exercise.sets);
+    sets[event.setIndex] = event.set;
+    exercises[event.exerciseIndex] = exercise.copyWith(sets: sets);
+
+    emit(
+      state.copyWith(
+        workoutTemplate: state.workoutTemplate.copyWith(
+          exercises: List.of(exercises),
+        ),
+        status: FormzStatus.invalid,
+      ),
+    );
   }
 
   Future<void> _onWorkoutCreatorDeleteExerciseSet(
@@ -154,5 +161,19 @@ class WorkoutCreatorBloc
         status: FormzStatus.valid,
       ),
     );
+  }
+
+  Future<void> _onWorkoutCreatorSubmitTemplate(
+    WorkoutCreatorSubmitTemplate event,
+    Emitter<WorkoutCreatorState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(status: FormzStatus.submissionInProgress));
+      // perform async operation
+      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+    } catch (error, stackTrace) {
+      emit(state.copyWith(status: FormzStatus.submissionFailure));
+      addError(error, stackTrace);
+    }
   }
 }

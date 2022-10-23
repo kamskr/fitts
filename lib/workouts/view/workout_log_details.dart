@@ -263,9 +263,11 @@ class _ExercisesList extends StatelessWidget {
           final exercise = exerciseItem.value;
           final index = exerciseItem.key;
           return ExerciseCard(
-            exercise: exercise,
-            exerciseIndex: index,
-            exerciseCount: workoutLog.exercises.length,
+            exerciseCardData: ExerciseCardData(
+              exercise: exercise,
+              exerciseIndex: index,
+              exerciseCount: workoutLog.exercises.length,
+            ),
           );
         }).toList(),
       ],
