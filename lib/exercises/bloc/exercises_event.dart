@@ -59,66 +59,22 @@ class ExercisesSelectionKeyRemoved extends ExercisesEvent {
   List<Object> get props => [key];
 }
 
-/// {@template exercises_muscle_filter_added}
-/// Event for adding muscle filter.
+/// {@template exercises_filters_changed}
+/// Event for changing exercises filters.
 /// {@endtemplate}
-class ExercisesMuscleFilterAdded extends ExercisesEvent {
-  /// {@macro exercises_muscle_filter_added}
-  const ExercisesMuscleFilterAdded(
-    this.muscle,
-  );
+class ExercisesFiltersChanged extends ExercisesEvent {
+  /// {@macro exercises_filters_changed}
+  const ExercisesFiltersChanged(this.muscleFilter, this.equipmentFilter);
 
-  /// Muscle to add to filters.
-  final Muscle muscle;
+  /// The muscle filter to filter the exercises by.
+  final List<Muscle> muscleFilter;
+
+  /// The equipment filter to filter the exercises by.
+  final List<Equipment> equipmentFilter;
 
   @override
-  List<Object> get props => [muscle];
-}
-
-/// {@template exercises_muscle_filter_removed}
-///  Event for removing muscle selection.
-/// {@endtemplate}
-class ExercisesMuscleFilterRemoved extends ExercisesEvent {
-  /// {@macro exercises_muscle_filter_removed}
-  const ExercisesMuscleFilterRemoved(
-    this.muscle,
-  );
-
-  /// Muscle to remove from filters.
-  final Muscle muscle;
-
-  @override
-  List<Object> get props => [muscle];
-}
-
-/// {@template exercises_equipment_filter_added}
-/// Event for adding equipment filter.
-/// {@endtemplate}
-class ExercisesEquipmentFilterAdded extends ExercisesEvent {
-  /// {@macro exercises_equipment_filter_added}
-  const ExercisesEquipmentFilterAdded(
-    this.equipment,
-  );
-
-  /// Equipment to add to filters.
-  final Equipment equipment;
-
-  @override
-  List<Object> get props => [equipment];
-}
-
-/// {@template exercises_equipment_filter_removed}
-/// Event for removing equipment selection.
-/// {@endtemplate}
-class ExercisesEquipmentFilterRemoved extends ExercisesEvent {
-  /// {@macro exercises_equipment_filter_removed}
-  const ExercisesEquipmentFilterRemoved(
-    this.equipment,
-  );
-
-  /// Equipment to remove from filters.
-  final Equipment equipment;
-
-  @override
-  List<Object> get props => [equipment];
+  List<Object> get props => [
+        muscleFilter,
+        equipmentFilter,
+      ];
 }

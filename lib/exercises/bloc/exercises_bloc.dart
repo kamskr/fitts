@@ -21,10 +21,7 @@ class ExercisesBloc extends Bloc<ExercisesEvent, ExercisesState> {
     on<ExercisesSearchPhraseChanged>(_onExercisesSearchPhraseChanged);
     on<ExercisesSelectionKeyAdded>(_onExercisesSelectionKeyAdded);
     on<ExercisesSelectionKeyRemoved>(_onExercisesSelectionKeyRemoved);
-    on<ExercisesMuscleFilterAdded>(_onExercisesMuscleFilterAdded);
-    on<ExercisesMuscleFilterRemoved>(_onExercisesMuscleFilterRemoved);
-    on<ExercisesEquipmentFilterAdded>(_onExercisesEquipmentFilterAdded);
-    on<ExercisesEquipmentFilterRemoved>(_onExercisesEquipmentFilterRemoved);
+    on<ExercisesFiltersChanged>(_onExercisesFiltersChanged);
   }
 
   void _onExercisesSearchPhraseChanged(
@@ -69,71 +66,19 @@ class ExercisesBloc extends Bloc<ExercisesEvent, ExercisesState> {
     );
   }
 
-  void _onExercisesMuscleFilterAdded(
-    ExercisesMuscleFilterAdded event,
+  void _onExercisesFiltersChanged(
+    ExercisesFiltersChanged event,
     Emitter<ExercisesState> emit,
   ) {
-    final muscleFilter = List<Muscle>.from(state.muscleFilter)
-      ..add(event.muscle);
-
-    final filteredExercises = _getFilteredExercises(muscleFilter: muscleFilter);
-
-    emit(
-      state.copyWith(
-        muscleFilter: muscleFilter,
-        visibleExercises: filteredExercises,
-      ),
+    final filteredExercises = _getFilteredExercises(
+      muscleFilter: event.muscleFilter,
+      equipmentFilter: event.equipmentFilter,
     );
-  }
-
-  void _onExercisesMuscleFilterRemoved(
-    ExercisesMuscleFilterRemoved event,
-    Emitter<ExercisesState> emit,
-  ) {
-    final muscleFilter = List<Muscle>.from(state.muscleFilter)
-      ..removeWhere((muscle) => muscle == event.muscle);
-
-    final filteredExercises = _getFilteredExercises(muscleFilter: muscleFilter);
 
     emit(
       state.copyWith(
-        muscleFilter: muscleFilter,
-        visibleExercises: filteredExercises,
-      ),
-    );
-  }
-
-  void _onExercisesEquipmentFilterAdded(
-    ExercisesEquipmentFilterAdded event,
-    Emitter<ExercisesState> emit,
-  ) {
-    final equipmentFilter = List<Equipment>.from(state.equipmentFilter)
-      ..add(event.equipment);
-
-    final filteredExercises =
-        _getFilteredExercises(equipmentFilter: equipmentFilter);
-
-    emit(
-      state.copyWith(
-        equipmentFilter: equipmentFilter,
-        visibleExercises: filteredExercises,
-      ),
-    );
-  }
-
-  void _onExercisesEquipmentFilterRemoved(
-    ExercisesEquipmentFilterRemoved event,
-    Emitter<ExercisesState> emit,
-  ) {
-    final equipmentFilter = List<Equipment>.from(state.equipmentFilter)
-      ..removeWhere((equipment) => equipment == event.equipment);
-
-    final filteredExercises =
-        _getFilteredExercises(equipmentFilter: equipmentFilter);
-
-    emit(
-      state.copyWith(
-        equipmentFilter: equipmentFilter,
+        muscleFilter: event.muscleFilter,
+        equipmentFilter: event.equipmentFilter,
         visibleExercises: filteredExercises,
       ),
     );
