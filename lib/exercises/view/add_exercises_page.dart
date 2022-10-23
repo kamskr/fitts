@@ -66,16 +66,20 @@ class _AppBar extends StatelessWidget {
       pinned: true,
       expandedHeight: 240,
       flexibleSpace: DecoratedBox(
-        decoration: const BoxDecoration(
-          gradient: AppColors.primaryGradient1,
+        decoration: BoxDecoration(
+          gradient:
+              Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
             final toolbarHeight = MediaQuery.of(context).padding.top;
             final percent = (constraints.maxHeight - toolbarHeight) / 240;
 
-            final paddingLeft =
-                lerpDouble(AppSpacing.lg, AppSpacing.xxxlg, 1 - percent);
+            final paddingLeft = lerpDouble(
+              AppSpacing.lg,
+              AppSpacing.lg + AppSpacing.lg + AppSpacing.md,
+              1 - percent,
+            );
 
             return FlexibleSpaceBar(
               title: SafeArea(

@@ -52,9 +52,12 @@ abstract class AppColors {
 
   /// Primary gradient color variant 2.
   static const primaryGradient2 = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: <Color>[AppColors.primary, AppColors.black],
+    colors: [
+      Color(0xff23253A),
+      Color.fromARGB(255, 64, 71, 147),
+    ],
+    begin: Alignment.bottomRight,
+    end: Alignment.topLeft,
   );
 
   /// Primary gradient color variant 3.

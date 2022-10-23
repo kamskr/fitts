@@ -144,11 +144,12 @@ class _AppBar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       pinned: true,
       expandedHeight: 150,
-      flexibleSpace: const DecoratedBox(
+      flexibleSpace: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient1,
+          gradient:
+              Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
         ),
-        child: FlexibleSpaceBar(
+        child: const FlexibleSpaceBar(
           title: Text('Create Workout'),
         ),
       ),
