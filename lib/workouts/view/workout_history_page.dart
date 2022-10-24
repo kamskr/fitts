@@ -146,9 +146,8 @@ class _WorkoutLogs extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.md,
+          padding: const EdgeInsets.all(
+            AppSpacing.md,
           ),
           child: Text(
             'Workout History',

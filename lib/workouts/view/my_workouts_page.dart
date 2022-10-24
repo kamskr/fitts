@@ -140,27 +140,28 @@ class _MyWorkoutsBody extends StatelessWidget {
           ),
         ),
         const AppGap.md(),
-        ...state.workoutTemplates!
-            .map(
-              (workoutTemplate) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.lg,
-                  vertical: AppSpacing.xs,
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    HapticFeedback.lightImpact();
-                    Navigator.of(context).push(
-                      WorkoutDetailsPage.route(workoutTemplate.id),
-                    );
-                  },
-                  child: WorkoutCard(
-                    workoutTemplate: workoutTemplate,
+        if (state.workoutTemplates != null)
+          ...state.workoutTemplates!
+              .map(
+                (workoutTemplate) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                    vertical: AppSpacing.xs,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                      Navigator.of(context).push(
+                        WorkoutDetailsPage.route(workoutTemplate.id),
+                      );
+                    },
+                    child: WorkoutCard(
+                      workoutTemplate: workoutTemplate,
+                    ),
                   ),
                 ),
-              ),
-            )
-            .toList(),
+              )
+              .toList(),
         SizedBox(
           height: MediaQuery.of(context).padding.bottom,
         ),

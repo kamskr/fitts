@@ -1,5 +1,6 @@
 import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
+import 'package:fitts/exercises/exercises.dart';
 import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -110,28 +111,46 @@ class _AppBar extends StatelessWidget {
         color: Colors.white,
       ),
       actions: [
-        AppTextButton(
-          textStyle: Theme.of(context).textTheme.bodyText1,
-          textColor: Theme.of(context).colorScheme.onPrimary,
-          child: const Text('Save'),
-          // ignore: unnecessary_lambdas
-          onPressed: () {
-            FocusScope.of(context).unfocus();
-            HapticFeedback.lightImpact();
-            context
-                .read<WorkoutCreatorBloc>()
-                .add(const WorkoutCreatorSubmitTemplate());
-          },
-        ),
+        if (context
+            .watch<WorkoutCreatorBloc>()
+            .state
+            .status
+            .isSubmissionInProgress)
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+            child: SizedBox(
+              height: 16,
+              width: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Colors.white,
+              ),
+            ),
+          )
+        else
+          AppTextButton(
+            textStyle: Theme.of(context).textTheme.bodyText1,
+            textColor: Theme.of(context).colorScheme.onPrimary,
+            child: const Text('Save'),
+            // ignore: unnecessary_lambdas
+            onPressed: () {
+              FocusScope.of(context).hasFocus
+                  ? FocusScope.of(context).unfocus()
+                  : context.read<WorkoutCreatorBloc>().add(
+                        const WorkoutCreatorSubmitTemplate(),
+                      );
+            },
+          ),
       ],
       backgroundColor: Colors.transparent,
       pinned: true,
       expandedHeight: 150,
-      flexibleSpace: const DecoratedBox(
+      flexibleSpace: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient1,
+          gradient:
+              Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
         ),
-        child: FlexibleSpaceBar(
+        child: const FlexibleSpaceBar(
           title: Text('Create Workout'),
         ),
       ),
@@ -366,12 +385,22 @@ class _AddExerciseButton extends StatelessWidget {
           child: AppButton.gradient(
             onPressed: () {
               HapticFeedback.lightImpact();
-              context.read<WorkoutCreatorBloc>().add(
-                    WorkoutCreatorAddExercises([
-                      exercises['3_4_sit_up']!,
-                      exercises['ab_roller']!,
-                    ]),
-                  );
+              Navigator.of(context)
+                  .push(
+                AddExercisesPage.route(),
+              )
+                  .then((selectedExercisesKeys) {
+                if (selectedExercisesKeys != null &&
+                    selectedExercisesKeys.isNotEmpty) {
+                  final exercisesToAdd = selectedExercisesKeys
+                      .map((key) => exercises[key]!)
+                      .toList();
+
+                  context.read<WorkoutCreatorBloc>().add(
+                        WorkoutCreatorAddExercises(exercisesToAdd),
+                      );
+                }
+              });
             },
             child: const Text('Add exercise'),
           ),

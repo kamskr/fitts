@@ -413,7 +413,11 @@ class _EmptyWorkouts extends StatelessWidget {
           height: 48,
           width: 210,
           child: AppButton.gradient(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                CreateWorkoutPage.route(),
+              );
+            },
             child: Text(l10n.homePageCreateWorkoutButtonText),
           ),
         ),
