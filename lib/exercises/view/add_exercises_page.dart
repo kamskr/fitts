@@ -4,7 +4,6 @@ import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:exercises_repository/exercises_repository.dart';
 import 'package:fitts/exercises/exercises.dart';
-import 'package:fitts/exercises/view/exercise_details_page.dart';
 import 'package:fitts/exercises/view/exercise_filters.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:flutter/material.dart';
