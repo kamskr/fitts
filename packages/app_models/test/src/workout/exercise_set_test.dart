@@ -28,7 +28,7 @@ void main() {
         repetitions: 10,
         weight: 100,
       );
-      expect(exerciseSet.props, [10, 100]);
+      expect(exerciseSet.props, [10, 100, null]);
     });
 
     test('can be copyWith with changed properties', () {

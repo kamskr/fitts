@@ -243,7 +243,7 @@ class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
           ),
         ),
         AppButton.gradient(
-          height: max(60, 100 * (1 - percent)),
+          height: max(64, 100 * (1 - percent)),
           child: const Text('START'),
           onPressed: () {},
         )

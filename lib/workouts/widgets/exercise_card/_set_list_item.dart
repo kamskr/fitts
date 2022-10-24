@@ -229,13 +229,14 @@ class _SetInfoState extends State<_SetInfo> with TickerProviderStateMixin {
                     }
                   });
 
-                  exerciseCardData.onExerciseSetChanged?.call(
-                    exerciseCardData.exerciseIndex,
-                    setData.setIndex,
-                    _set,
-                  );
-
-                  onSetFinished?.call();
+                  Future.delayed(const Duration(milliseconds: 300), () {
+                    exerciseCardData.onExerciseSetChanged?.call(
+                      exerciseCardData.exerciseIndex,
+                      setData.setIndex,
+                      _set,
+                    );
+                    onSetFinished?.call();
+                  });
                 },
                 child: context.read<ExerciseCardData>().onSetFinished != null
                     ? const Text('FINISH SET')
