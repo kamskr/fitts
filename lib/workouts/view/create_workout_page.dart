@@ -90,9 +90,9 @@ class _BlocStateListener extends StatelessWidget {
             ),
           );
         }
-        // if (state.status == FormzStatus.submissionSuccess) {
-        //   Navigator.of(context).pop();
-        // }
+        if (state.status == FormzStatus.submissionSuccess) {
+          Navigator.of(context).pop();
+        }
       },
       child: child,
     );

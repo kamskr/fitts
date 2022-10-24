@@ -4,7 +4,9 @@ import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:exercises_repository/exercises_repository.dart';
 import 'package:fitts/exercises/exercises.dart';
-
+import 'package:fitts/exercises/view/exercise_details_page.dart';
+import 'package:fitts/exercises/view/exercise_filters.dart';
+import 'package:fitts/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -105,6 +107,18 @@ class _ExerciseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => BlocProvider.value(
+              value: context.read<ExercisesBloc>(),
+              child: ExerciseDetailsPage(
+                exercise: exercise,
+              ),
+            ),
+          ),
+        );
+      },
       title: Text(exercise.name, style: Theme.of(context).textTheme.headline6),
       subtitle: Padding(
         padding: const EdgeInsets.only(top: AppSpacing.sm),
@@ -112,26 +126,9 @@ class _ExerciseTile extends StatelessWidget {
           runSpacing: 2,
           children: [
             for (Muscle muscle in exercise.primaryMuscles)
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.sm,
-                      vertical: AppSpacing.xs,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).dividerColor),
-                    ),
-                    child: Center(
-                      child: Text(
-                        muscle.name.toUpperCase(),
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              _ExerciseMuscleChip(muscle: muscle),
+            for (Muscle muscle in exercise.secondaryMuscles)
+              _ExerciseMuscleChip(muscle: muscle),
           ],
         ),
       ),
@@ -141,7 +138,7 @@ class _ExerciseTile extends StatelessWidget {
         builder: (context, state) {
           final isSelected = state.selectedKeys.contains(exercise.id);
 
-          return _ExerciseSelectButton(
+          return ExerciseSelectButton(
             isSelected: isSelected,
             onPressed: () {
               if (isSelected) {
@@ -161,35 +158,38 @@ class _ExerciseTile extends StatelessWidget {
   }
 }
 
-class _ExerciseSelectButton extends StatelessWidget {
-  const _ExerciseSelectButton({
+class _ExerciseMuscleChip extends StatelessWidget {
+  const _ExerciseMuscleChip({
     Key? key,
-    required this.isSelected,
-    required this.onPressed,
+    required this.muscle,
   }) : super(key: key);
 
-  final bool isSelected;
-  final VoidCallback onPressed;
+  final Muscle muscle;
 
   @override
   Widget build(BuildContext context) {
-    return AppTextButton(
-      onPressed: onPressed,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color: isSelected ? Theme.of(context).colorScheme.primary : null,
-          border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
-            width: 2,
+    return Padding(
+      padding:
+          const EdgeInsets.only(right: AppSpacing.xs, bottom: AppSpacing.xxxs),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.sm,
+              vertical: AppSpacing.xs,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: Theme.of(context).dividerColor),
+            ),
+            child: Center(
+              child: Text(
+                TextFormatters.camelToSentence(muscle.name),
+                style: Theme.of(context).textTheme.caption,
+              ),
+            ),
           ),
-        ),
-        child: isSelected
-            ? Icon(
-                Icons.check,
-                color: Theme.of(context).colorScheme.onPrimary,
-              )
-            : const Icon(Icons.add),
+        ],
       ),
     );
   }
@@ -304,12 +304,30 @@ class _AppBarExpandedActions extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                child: AppTextButton(
-                  onPressed: () {},
-                  child: Assets.icons.icFilter.svg(
-                    color: Colors.white,
-                    height: 20,
+              AppTextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => BlocProvider.value(
+                        value: context.read<ExercisesBloc>(),
+                        child: const ExerciseFilters(),
+                      ),
+                    ),
+                  );
+                },
+                child: SizedBox(
+                  height: 36,
+                  width: 40,
+                  child: Stack(
+                    children: [
+                      Align(
+                        child: Assets.icons.icFilter.svg(
+                          color: Colors.white,
+                          height: 20,
+                        ),
+                      ),
+                      const _FilterCountBadge()
+                    ],
                   ),
                 ),
               ),
@@ -317,6 +335,47 @@ class _AppBarExpandedActions extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _FilterCountBadge extends StatelessWidget {
+  const _FilterCountBadge({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final activeMuscleFiltersCount = context.select<ExercisesBloc, int>(
+      (bloc) => bloc.state.muscleFilter.length,
+    );
+    final activeEquipmentFiltersCount = context.select<ExercisesBloc, int>(
+      (bloc) => bloc.state.equipmentFilter.length,
+    );
+
+    final count = activeMuscleFiltersCount + activeEquipmentFiltersCount;
+
+    if (count == 0) {
+      return const SizedBox();
+    }
+
+    return Positioned(
+      top: 0,
+      right: 0,
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          shape: BoxShape.circle,
+        ),
+        child: Text(
+          '$count',
+          style: TextStyle(
+            fontSize: 12,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
+      ),
     );
   }
 }

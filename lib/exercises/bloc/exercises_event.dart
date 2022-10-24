@@ -72,7 +72,10 @@ class ExercisesSelectionKeyRemoved extends ExercisesEvent {
 /// {@endtemplate}
 class ExercisesFiltersChanged extends ExercisesEvent {
   /// {@macro exercises_filters_changed}
-  const ExercisesFiltersChanged(this.muscleFilter, this.equipmentFilter);
+  const ExercisesFiltersChanged({
+    required this.muscleFilter,
+    required this.equipmentFilter,
+  });
 
   /// The muscle filter to filter the exercises by.
   final List<Muscle> muscleFilter;

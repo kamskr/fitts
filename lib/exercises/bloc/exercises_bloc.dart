@@ -140,7 +140,7 @@ class ExercisesBloc extends Bloc<ExercisesEvent, ExercisesState> {
         );
       }
 
-      if (_muscleFilter.isEmpty) {
+      if (_equipmentFilter.isEmpty) {
         equipmentFilterMatches = true;
       } else if (exercise.equipment == null) {
         equipmentFilterMatches = false;
