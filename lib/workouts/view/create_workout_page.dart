@@ -1,3 +1,4 @@
+import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/exercises/exercises.dart';
 import 'package:fitts/workouts/workouts.dart';
@@ -375,6 +376,7 @@ class _AddExerciseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final exercises = context.read<Map<String, Exercise>>();
     return SliverToBoxAdapter(
       child: Center(
         child: SizedBox(
@@ -383,15 +385,22 @@ class _AddExerciseButton extends StatelessWidget {
           child: AppButton.gradient(
             onPressed: () {
               HapticFeedback.lightImpact();
-              Navigator.of(context).push(
+              Navigator.of(context)
+                  .push(
                 AddExercisesPage.route(),
-              );
-              // context.read<WorkoutCreatorBloc>().add(
-              //       WorkoutCreatorAddExercises([
-              //         exercises['3_4_sit_up']!,
-              //         exercises['ab_roller']!,
-              //       ]),
-              //     );
+              )
+                  .then((selectedExercisesKeys) {
+                if (selectedExercisesKeys != null &&
+                    selectedExercisesKeys.isNotEmpty) {
+                  final exercisesToAdd = selectedExercisesKeys
+                      .map((key) => exercises[key]!)
+                      .toList();
+
+                  context.read<WorkoutCreatorBloc>().add(
+                        WorkoutCreatorAddExercises(exercisesToAdd),
+                      );
+                }
+              });
             },
             child: const Text('Add exercise'),
           ),

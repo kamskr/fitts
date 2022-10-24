@@ -30,6 +30,7 @@ Future<Widget> bootstrap() async {
   return MultiRepositoryProvider(
     providers: [
       RepositoryProvider.value(value: _authenticationClient),
+      RepositoryProvider.value(value: _exercisesRepository),
       RepositoryProvider(
         create: (_) => UserProfileRepository(_apiClient),
       ),
