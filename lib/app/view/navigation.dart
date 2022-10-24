@@ -88,10 +88,10 @@ class _NavigationState extends State<Navigation> {
             label: 'History',
           ),
           AppMenuItem(
-            icon: Assets.icons.icMenuPlans.svg(
+            icon: Assets.icons.dragIcon.svg(
               color: iconColor(3),
             ),
-            label: l10n.menuItemPlans,
+            label: 'Other',
           ),
         ],
       ),
