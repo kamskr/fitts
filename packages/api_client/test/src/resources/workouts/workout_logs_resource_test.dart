@@ -116,6 +116,8 @@ void main() {
       when(() => documentReference.collection(userLogsCollectionName))
           .thenReturn(userLogsCollectionReference);
 
+      when(() => userLogsCollectionReference.orderBy(any(), descending: true))
+          .thenReturn(userLogsCollectionReference);
       when(() => userLogsCollectionReference.doc(logId))
           .thenReturn(documentReference);
 
