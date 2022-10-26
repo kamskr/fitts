@@ -40,7 +40,9 @@ class AppTextButton extends StatelessWidget {
             }
           : null,
       style: ButtonStyle(
-        textStyle: MaterialStateProperty.all(_textStyle),
+        textStyle: MaterialStateProperty.all(
+          _textStyle ?? Theme.of(context).textTheme.bodyText1,
+        ),
         foregroundColor: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.disabled)) {
             return _textColor.withOpacity(0.5);

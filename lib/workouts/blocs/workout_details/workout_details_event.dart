@@ -18,3 +18,11 @@ class WorkoutTemplateSubscriptionRequested extends WorkoutDetailsEvent {
   /// {@macro workout_template_subscription_requested}
   const WorkoutTemplateSubscriptionRequested();
 }
+
+/// {@template workout_template_delete_template}
+/// Event to delete a [WorkoutTemplate].
+/// {@endtemplate}
+class WorkoutTemplateDeleteTemplate extends WorkoutDetailsEvent {
+  /// {@macro workout_template_delete_template}
+  const WorkoutTemplateDeleteTemplate();
+}

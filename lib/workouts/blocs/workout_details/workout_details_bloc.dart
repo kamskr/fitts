@@ -2,6 +2,7 @@ import 'package:app_models/app_models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fitts/utils/data_loading_status.dart';
+import 'package:formz/formz.dart';
 import 'package:workouts_repository/workouts_repository.dart';
 
 part 'workout_details_event.dart';
@@ -21,6 +22,9 @@ class WorkoutDetailsBloc
         super(const WorkoutDetailsState()) {
     on<WorkoutTemplateSubscriptionRequested>(
       _onWorkoutTemplatesSubscriptionRequested,
+    );
+    on<WorkoutTemplateDeleteTemplate>(
+      _onWorkoutTemplateDeleteTemplate,
     );
   }
 
@@ -45,5 +49,21 @@ class WorkoutDetailsBloc
         status: DataLoadingStatus.error,
       ),
     );
+  }
+
+  Future<void> _onWorkoutTemplateDeleteTemplate(
+    WorkoutTemplateDeleteTemplate event,
+    Emitter<WorkoutDetailsState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(deleteStatus: FormzStatus.submissionInProgress));
+      await _workoutsRepository.deleteWorkoutTemplate(
+        workoutTemplateId: _workoutTemplateId,
+      );
+      emit(state.copyWith(deleteStatus: FormzStatus.submissionSuccess));
+    } catch (e, st) {
+      emit(state.copyWith(deleteStatus: FormzStatus.submissionFailure));
+      addError(e, st);
+    }
   }
 }

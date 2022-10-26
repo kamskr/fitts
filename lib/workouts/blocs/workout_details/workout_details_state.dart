@@ -7,6 +7,7 @@ class WorkoutDetailsState extends Equatable {
   /// {@macro workout_details_state}
   const WorkoutDetailsState({
     this.status = DataLoadingStatus.initial,
+    this.deleteStatus = FormzStatus.pure,
     this.workoutTemplate,
   });
 
@@ -16,20 +17,22 @@ class WorkoutDetailsState extends Equatable {
   /// Loading status.
   final DataLoadingStatus status;
 
+  /// Delete status.
+  final FormzStatus deleteStatus;
+
   @override
-  List<Object?> get props => [
-        status,
-        workoutTemplate,
-      ];
+  List<Object?> get props => [status, workoutTemplate, deleteStatus];
 
   /// Copy method
   WorkoutDetailsState copyWith({
     DataLoadingStatus? status,
     WorkoutTemplate? workoutTemplate,
+    FormzStatus? deleteStatus,
   }) {
     return WorkoutDetailsState(
       status: status ?? this.status,
       workoutTemplate: workoutTemplate ?? this.workoutTemplate,
+      deleteStatus: deleteStatus ?? this.deleteStatus,
     );
   }
 }
