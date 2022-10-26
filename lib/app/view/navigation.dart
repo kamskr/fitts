@@ -71,37 +71,75 @@ class _NavigationState extends State<Navigation> {
           const WorkoutTraining(),
         ],
       ),
-      bottomNavigationBar: AppBottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-        menuItems: [
-          AppMenuItem(
-            icon: Assets.icons.icMenuHome.svg(
-              color: iconColor(0),
+      bottomNavigationBar: ValueListenableBuilder(
+        valueListenable: context.watch<ValueNotifier<double>>(),
+        builder: (BuildContext context, double height, Widget? child) {
+          final bottomNavBarHeight = kBottomNavigationBarHeight +
+              MediaQuery.of(context).padding.bottom;
+          final value = percentageFromValueInRange(
+            min: kMinMiniplayerHeight,
+            max: maxMiniplayerHeight(context),
+            value: height,
+          );
+
+          var opacity = 1 - value;
+          if (opacity < 0) opacity = 0;
+          if (opacity > 1) opacity = 1;
+
+          return SizedBox(
+            height: bottomNavBarHeight - bottomNavBarHeight * value,
+            child: Transform.translate(
+              offset: Offset(0, bottomNavBarHeight * value * 0.5),
+              child: Opacity(
+                opacity: opacity,
+                child: OverflowBox(
+                  maxHeight: bottomNavBarHeight,
+                  child: child,
+                ),
+              ),
             ),
-            label: l10n.menuItemDashboard,
-          ),
-          AppMenuItem(
-            icon: Assets.icons.icMenuStats.svg(
-              color: iconColor(1),
+          );
+        },
+        child: AppBottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: _onItemTapped,
+          menuItems: [
+            AppMenuItem(
+              icon: Assets.icons.icMenuHome.svg(
+                color: iconColor(0),
+              ),
+              label: l10n.menuItemDashboard,
             ),
-            label: l10n.menuItemStats,
-          ),
-          AppMenuItem(
-            icon: Assets.icons.icHistory.svg(
-              color: iconColor(2),
+            AppMenuItem(
+              icon: Assets.icons.icMenuStats.svg(
+                color: iconColor(1),
+              ),
+              label: l10n.menuItemStats,
             ),
-            label: 'History',
-          ),
-          AppMenuItem(
-            icon: Assets.icons.dragIcon.svg(
-              color: iconColor(3),
+            AppMenuItem(
+              icon: Assets.icons.icHistory.svg(
+                color: iconColor(2),
+              ),
+              label: 'History',
             ),
-            label: 'Other',
-          ),
-        ],
+            AppMenuItem(
+              icon: Assets.icons.dragIcon.svg(
+                color: iconColor(3),
+              ),
+              label: 'Other',
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  double percentageFromValueInRange({
+    required double min,
+    required double max,
+    required double value,
+  }) {
+    return (value - min) / (max - min);
   }
 }
 

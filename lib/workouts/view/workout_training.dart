@@ -4,8 +4,15 @@ import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:miniplayer/miniplayer.dart';
+import 'package:workouts_repository/workouts_repository.dart';
 
-/// {@template workout_training}
+/// Min height of the miniplayer.
+const kMinMiniplayerHeight = 68.0;
+
+/// Max height of the miniplayer.
+double maxMiniplayerHeight(BuildContext context) =>
+    MediaQuery.of(context).size.height - kToolbarHeight;
+
 /// A view used for workout in progress.
 /// It is visible globally and is used to display the current workout.
 /// {@endtemplate}
@@ -41,15 +48,22 @@ class _WorkoutTrainingView extends StatelessWidget {
               );
         });
 
-        return SafeArea(
-          child: Miniplayer(
-            controller: context.read<MiniplayerController>(),
-            minHeight: 68,
-            maxHeight: MediaQuery.of(context).size.height,
-            backgroundColor: Colors.white,
-            builder: (height, percentage) {
-              return const _MiniplayerBody();
-            },
+        return BlocProvider(
+          create: (context) => WorkoutCreatorBloc(
+            workoutTemplate: state.workoutTemplate,
+            workoutsRepository: context.read<WorkoutsRepository>(),
+          ),
+          child: SafeArea(
+            child: Miniplayer(
+              valueNotifier: context.read<ValueNotifier<double>>(),
+              controller: context.read<MiniplayerController>(),
+              minHeight: kMinMiniplayerHeight,
+              maxHeight: maxMiniplayerHeight(context),
+              backgroundColor: Colors.white,
+              builder: (height, percentage) {
+                return const _MiniplayerBody();
+              },
+            ),
           ),
         );
       },
@@ -64,21 +78,36 @@ class _MiniplayerBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contentHeight = maxMiniplayerHeight(context) - kMinMiniplayerHeight;
+
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(10),
         topRight: Radius.circular(10),
       ),
-      child: Column(
-        children: const [
-          _AppBar(),
-        ],
+      child: Scaffold(
+        appBar: const _AppBar(),
+        body: GestureDetector(
+          onTap: () {},
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: contentHeight.toDouble(),
+                  child: const WorkoutCreatorBody(
+                    hideAppBar: true,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
-class _AppBar extends StatelessWidget {
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
     Key? key,
   }) : super(key: key);
@@ -188,4 +217,7 @@ class _AppBar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kMinMiniplayerHeight);
 }

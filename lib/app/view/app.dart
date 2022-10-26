@@ -40,8 +40,11 @@ class App extends StatelessWidget {
         ),
       ],
       child: ChangeNotifierProvider(
-        create: (context) => MiniplayerController(),
-        child: AppView(lightThemeData: lightThemeData),
+        create: (context) => ValueNotifier(kMinMiniplayerHeight),
+        child: ChangeNotifierProvider(
+          create: (context) => MiniplayerController(),
+          child: AppView(lightThemeData: lightThemeData),
+        ),
       ),
     );
   }
