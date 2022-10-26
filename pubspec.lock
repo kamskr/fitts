@@ -658,6 +658,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  miniplayer:
+    dependency: "direct main"
+    description:
+      name: miniplayer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   mocktail:
     dependency: "direct main"
     description:

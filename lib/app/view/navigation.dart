@@ -6,6 +6,7 @@ import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:fitts/workouts/view/workout_history_page.dart';
+import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,17 +54,22 @@ class _NavigationState extends State<Navigation> {
         AppColors.black.withOpacity(_currentIndex == index ? 1 : 0.5);
 
     return Scaffold(
-      body: PageTransitionSwitcher(
-        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
-          return SharedAxisTransition(
-            animation: primaryAnimation,
-            secondaryAnimation: secondaryAnimation,
-            transitionType: SharedAxisTransitionType.horizontal,
-            // fillColor: Colors.black,
-            child: child,
-          );
-        },
-        child: _pages[_currentIndex],
+      body: Stack(
+        children: [
+          PageTransitionSwitcher(
+            transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+              return SharedAxisTransition(
+                animation: primaryAnimation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: SharedAxisTransitionType.horizontal,
+                // fillColor: Colors.black,
+                child: child,
+              );
+            },
+            child: _pages[_currentIndex],
+          ),
+          const WorkoutTraining(),
+        ],
       ),
       bottomNavigationBar: AppBottomNavigationBar(
         currentIndex: _currentIndex,
