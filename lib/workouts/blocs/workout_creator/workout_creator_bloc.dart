@@ -15,8 +15,13 @@ class WorkoutCreatorBloc
   /// {@macro workout_creator_bloc}
   WorkoutCreatorBloc({
     required WorkoutsRepository workoutsRepository,
+    WorkoutTemplate? workoutTemplate,
   })  : _workoutsRepository = workoutsRepository,
-        super(const WorkoutCreatorState()) {
+        super(
+          WorkoutCreatorState(
+            workoutTemplate: workoutTemplate ?? WorkoutTemplate.empty,
+          ),
+        ) {
     on<WorkoutCreatorTemplateChanged>(_onWorkoutCreatorTemplateChanged);
     on<WorkoutCreatorSubmitTemplate>(_onWorkoutCreatorSubmitTemplate);
     on<WorkoutCreatorAddExercises>(_onWorkoutCreatorAddExercises);
@@ -176,11 +181,18 @@ class WorkoutCreatorBloc
   ) async {
     try {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      await _workoutsRepository.createWorkoutTemplate(
-        workoutTemplate: state.workoutTemplate.copyWith(
-          id: DateTime.now().toIso8601String() + state.workoutTemplate.name,
-        ),
-      );
+      if (state.workoutTemplate.id.isEmpty) {
+        await _workoutsRepository.createWorkoutTemplate(
+          workoutTemplate: state.workoutTemplate.copyWith(
+            id: DateTime.now().toIso8601String() + state.workoutTemplate.name,
+          ),
+        );
+      } else {
+        await _workoutsRepository.updateWorkoutTemplate(
+          workoutTemplateId: state.workoutTemplate.id,
+          workoutTemplate: state.workoutTemplate,
+        );
+      }
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } catch (error, stackTrace) {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

@@ -32,7 +32,7 @@ class ExerciseCard extends StatelessWidget {
     final child = Padding(
       padding: const EdgeInsets.symmetric(
         vertical: AppSpacing.md,
-        horizontal: AppSpacing.lg,
+        horizontal: AppSpacing.md,
       ),
       child: Column(
         children: [
