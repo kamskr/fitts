@@ -1,10 +1,13 @@
 import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/workouts/workouts.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:miniplayer/miniplayer.dart';
+import 'package:provider/provider.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
 
 /// {@template app}
@@ -32,8 +35,14 @@ class App extends StatelessWidget {
             userProfileRepository: context.read<UserProfileRepository>(),
           ),
         ),
+        BlocProvider<WorkoutTrainingBloc>(
+          create: (_) => WorkoutTrainingBloc(),
+        ),
       ],
-      child: AppView(lightThemeData: lightThemeData),
+      child: ChangeNotifierProvider(
+        create: (context) => MiniplayerController(),
+        child: AppView(lightThemeData: lightThemeData),
+      ),
     );
   }
 }
