@@ -9,16 +9,31 @@ import 'package:flutter_svg/svg.dart';
 import 'package:formz/formz.dart';
 import 'package:workouts_repository/workouts_repository.dart';
 
-/// {@template create_workout_page}
-/// Page for creating a WorkoutTemplate.
+/// {@template workout_creator_page}
+/// Page for creating and editing a WorkoutTemplate.
+///
+/// If workoutTemplate is passed to this page, it will be used to update this
+/// existing template.
 /// {@endtemplate}
-class CreateWorkoutPage extends StatelessWidget {
-  /// {@macro create_workout_page}
-  const CreateWorkoutPage({Key? key}) : super(key: key);
+class WorkoutCreatorPage extends StatelessWidget {
+  /// {@macro workout_creator_page}
+  const WorkoutCreatorPage({
+    Key? key,
+    this.workoutTemplate,
+  }) : super(key: key);
+
+  /// WorkoutTemplate to update (Optional).
+  /// Creates new one if not passed.
+  final WorkoutTemplate? workoutTemplate;
 
   /// Route helper
-  static Route<void> route() => MaterialPageRoute<void>(
-        builder: (_) => const CreateWorkoutPage(),
+  static Route<void> route({
+    WorkoutTemplate? workoutTemplate,
+  }) =>
+      MaterialPageRoute<void>(
+        builder: (_) => WorkoutCreatorPage(
+          workoutTemplate: workoutTemplate,
+        ),
         fullscreenDialog: true,
       );
 
@@ -26,15 +41,16 @@ class CreateWorkoutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<WorkoutCreatorBloc>(
       create: (_) => WorkoutCreatorBloc(
+        workoutTemplate: workoutTemplate,
         workoutsRepository: context.read<WorkoutsRepository>(),
       ),
-      child: const _CreateWorkoutView(),
+      child: const _WorkoutCreatorView(),
     );
   }
 }
 
-class _CreateWorkoutView extends StatelessWidget {
-  const _CreateWorkoutView({Key? key}) : super(key: key);
+class _WorkoutCreatorView extends StatelessWidget {
+  const _WorkoutCreatorView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +102,7 @@ class _BlocStateListener extends StatelessWidget {
         if (state.status == FormzStatus.submissionFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Failed to create workout'),
+              content: Text('Failed to save workout template!'),
             ),
           );
         }
@@ -150,8 +166,20 @@ class _AppBar extends StatelessWidget {
           gradient:
               Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
         ),
-        child: const FlexibleSpaceBar(
-          title: Text('Create Workout'),
+        child: FlexibleSpaceBar(
+          title: BlocBuilder<WorkoutCreatorBloc, WorkoutCreatorState>(
+            buildWhen: (previous, current) =>
+                previous.workoutTemplate.id != current.workoutTemplate.id,
+            builder: (context, state) {
+              final isNewWorkout = state.workoutTemplate.id.isEmpty;
+
+              return Text(
+                isNewWorkout
+                    ? 'Create Workout Template'
+                    : 'Edit Workout Template',
+              );
+            },
+          ),
         ),
       ),
     );
@@ -170,9 +198,10 @@ class _BasicInfo extends StatelessWidget {
           children: [
             TextFormField(
               decoration: const InputDecoration(
-                // border: InputBorder.none,
                 hintText: 'Workout Template Name',
               ),
+              initialValue:
+                  context.read<WorkoutCreatorBloc>().state.workoutTemplate.name,
               style: Theme.of(context).textTheme.headline5,
               onChanged: (value) {
                 final bloc = context.read<WorkoutCreatorBloc>();
@@ -188,6 +217,11 @@ class _BasicInfo extends StatelessWidget {
             TextFormField(
               maxLines: null,
               keyboardType: TextInputType.multiline,
+              initialValue: context
+                  .read<WorkoutCreatorBloc>()
+                  .state
+                  .workoutTemplate
+                  .notes,
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Notes',
