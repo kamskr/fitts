@@ -90,4 +90,13 @@ class WorkoutLog extends Equatable {
         workoutTemplate,
         exercises,
       ];
+
+  /// empty workout log
+  static WorkoutLog empty = WorkoutLog(
+    id: '',
+    duration: 0,
+    datePerformed: DateTime(0),
+    workoutTemplate: WorkoutTemplate.empty,
+    exercises: const [],
+  );
 }

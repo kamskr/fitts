@@ -90,7 +90,7 @@ class _MyWorkoutsPageViewState extends State<_MyWorkoutsPageView>
               HapticFeedback.lightImpact();
 
               Navigator.of(context).push(
-                CreateWorkoutPage.route(),
+                WorkoutCreatorPage.route(),
               );
             },
           ),

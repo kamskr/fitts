@@ -112,15 +112,17 @@ class _SetInfoState extends State<_SetInfo> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {
-        if (!_isEditingSet) {
-          _controller.forward();
-          setState(() {
-            _isEditingSet = true;
-          });
-        }
-        FocusScope.of(context).unfocus();
-      },
+      onTap: context.read<ExerciseCardData>().onExerciseSetChanged == null
+          ? () {}
+          : () {
+              if (!_isEditingSet) {
+                _controller.forward();
+                setState(() {
+                  _isEditingSet = true;
+                });
+              }
+              FocusScope.of(context).unfocus();
+            },
       child: Column(
         children: [
           SizedBox(
@@ -235,7 +237,11 @@ class _SetInfoState extends State<_SetInfo> with TickerProviderStateMixin {
                       setData.setIndex,
                       _set,
                     );
-                    onSetFinished?.call();
+                    onSetFinished?.call(
+                      exerciseCardData.exerciseIndex,
+                      setData.setIndex,
+                      _set,
+                    );
                   });
                 },
                 child: context.read<ExerciseCardData>().onSetFinished != null

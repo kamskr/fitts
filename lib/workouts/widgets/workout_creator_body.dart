@@ -5,96 +5,59 @@ import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-import 'package:workouts_repository/workouts_repository.dart';
 
-/// {@template create_workout_page}
-/// Page for creating a WorkoutTemplate.
+/// {@template workout_creator_body}
+/// Body used for updating the workout template.
 /// {@endtemplate}
-class CreateWorkoutPage extends StatelessWidget {
-  /// {@macro create_workout_page}
-  const CreateWorkoutPage({Key? key}) : super(key: key);
-
-  /// Route helper
-  static Route<void> route() => MaterialPageRoute<void>(
-        builder: (_) => const CreateWorkoutPage(),
-        fullscreenDialog: true,
-      );
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<WorkoutCreatorBloc>(
-      create: (_) => WorkoutCreatorBloc(
-        workoutsRepository: context.read<WorkoutsRepository>(),
-      ),
-      child: const _CreateWorkoutView(),
-    );
-  }
-}
-
-class _CreateWorkoutView extends StatelessWidget {
-  const _CreateWorkoutView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: _BlocStateListener(
-        child: Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              const _AppBar(),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: AppSpacing.md),
-              ),
-              const _BasicInfo(),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: AppSpacing.lg),
-              ),
-              const _WorkoutBuilder(),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: AppSpacing.md),
-              ),
-              const _AddExerciseButton(),
-              SliverToBoxAdapter(
-                child: SizedBox(height: MediaQuery.of(context).padding.bottom),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _BlocStateListener extends StatelessWidget {
-  const _BlocStateListener({
+class WorkoutCreatorBody extends StatelessWidget {
+  /// {@macro workout_creator_body}
+  const WorkoutCreatorBody({
     Key? key,
-    required this.child,
+    this.hideAppBar = false,
+    this.onSetFinished,
   }) : super(key: key);
 
-  final Widget child;
+  /// Whether to hide the app bar.
+  final bool hideAppBar;
+
+  /// Action to perform when the set is finished.
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+    ExerciseSet set,
+  )? onSetFinished;
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<WorkoutCreatorBloc, WorkoutCreatorState>(
-      listenWhen: (previous, current) => previous.status != current.status,
-      listener: (context, state) {
-        if (state.status == FormzStatus.submissionFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Failed to create workout'),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          if (!hideAppBar) const _AppBar(),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: AppSpacing.md),
+          ),
+          const _BasicInfo(),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: AppSpacing.lg),
+          ),
+          _WorkoutBuilder(onSetFinished: onSetFinished),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: AppSpacing.md),
+          ),
+          const _AddExerciseButton(),
+          SliverToBoxAdapter(
+            child: SizedBox(height: MediaQuery.of(context).padding.bottom),
+          ),
+          if (hideAppBar)
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 100,
+              ),
             ),
-          );
-        }
-        if (state.status == FormzStatus.submissionSuccess) {
-          Navigator.of(context).pop();
-        }
-      },
-      child: child,
+        ],
+      ),
     );
   }
 }
@@ -150,8 +113,20 @@ class _AppBar extends StatelessWidget {
           gradient:
               Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
         ),
-        child: const FlexibleSpaceBar(
-          title: Text('Create Workout'),
+        child: FlexibleSpaceBar(
+          title: BlocBuilder<WorkoutCreatorBloc, WorkoutCreatorState>(
+            buildWhen: (previous, current) =>
+                previous.workoutTemplate.id != current.workoutTemplate.id,
+            builder: (context, state) {
+              final isNewWorkout = state.workoutTemplate.id.isEmpty;
+
+              return Text(
+                isNewWorkout
+                    ? 'Create Workout Template'
+                    : 'Edit Workout Template',
+              );
+            },
+          ),
         ),
       ),
     );
@@ -170,9 +145,10 @@ class _BasicInfo extends StatelessWidget {
           children: [
             TextFormField(
               decoration: const InputDecoration(
-                // border: InputBorder.none,
                 hintText: 'Workout Template Name',
               ),
+              initialValue:
+                  context.read<WorkoutCreatorBloc>().state.workoutTemplate.name,
               style: Theme.of(context).textTheme.headline5,
               onChanged: (value) {
                 final bloc = context.read<WorkoutCreatorBloc>();
@@ -188,6 +164,11 @@ class _BasicInfo extends StatelessWidget {
             TextFormField(
               maxLines: null,
               keyboardType: TextInputType.multiline,
+              initialValue: context
+                  .read<WorkoutCreatorBloc>()
+                  .state
+                  .workoutTemplate
+                  .notes,
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Notes',
@@ -211,7 +192,13 @@ class _BasicInfo extends StatelessWidget {
 }
 
 class _WorkoutBuilder extends StatelessWidget {
-  const _WorkoutBuilder({Key? key}) : super(key: key);
+  const _WorkoutBuilder({Key? key, this.onSetFinished}) : super(key: key);
+
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+    ExerciseSet set,
+  )? onSetFinished;
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +211,7 @@ class _WorkoutBuilder extends StatelessWidget {
       );
     }
 
-    return const _ExercisesList();
+    return _ExercisesList(onSetFinished: onSetFinished);
   }
 }
 
@@ -287,7 +274,16 @@ class _NoExercisesAdded extends StatelessWidget {
 }
 
 class _ExercisesList extends StatelessWidget {
-  const _ExercisesList({Key? key}) : super(key: key);
+  const _ExercisesList({
+    Key? key,
+    this.onSetFinished,
+  }) : super(key: key);
+
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+    ExerciseSet set,
+  )? onSetFinished;
 
   @override
   Widget build(BuildContext context) {
@@ -355,6 +351,7 @@ class _ExercisesList extends StatelessWidget {
                 ),
               );
             },
+            onSetFinished: onSetFinished,
           ),
         );
       },

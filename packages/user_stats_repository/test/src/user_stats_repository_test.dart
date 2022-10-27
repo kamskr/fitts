@@ -104,7 +104,6 @@ void main() {
 
         expect(
           () => repository.updateUserStats(
-            userId: 'userId',
             payload: userStats,
           ),
           throwsA(isA<UpdateUserStatsFailure>()),
@@ -118,7 +117,6 @@ void main() {
         );
         expect(
           () => repository.updateUserStats(
-            userId: 'userId',
             payload: userStats,
           ),
           isNot(isException),

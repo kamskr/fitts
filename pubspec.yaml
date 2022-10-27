@@ -39,6 +39,7 @@ dependencies:
   form_validators:
     path: packages/form_validators
   formz: ^0.4.1
+  miniplayer: ^1.0.1
   mocktail: ^0.3.0
   rxdart: ^0.27.3
   user_profile_repository:
