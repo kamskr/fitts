@@ -49,14 +49,13 @@ class UserStatsRepository {
   /// Updates the user stats.
   /// User ID is equal to the user email.
   Future<void> updateUserStats({
-    required String userId,
     required UserStats payload,
   }) async {
     try {
       final userStatsResource = _apiClient.userStatsResource;
 
       await userStatsResource.updateUserStats(
-        userId: userId,
+        userId: (await _authenticationClient.user.first).email!,
         payload: payload,
       );
     } catch (error, stackTrace) {

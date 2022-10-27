@@ -6,6 +6,7 @@ import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:fitts/workouts/view/workout_history_page.dart';
+import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,49 +54,85 @@ class _NavigationState extends State<Navigation> {
         AppColors.black.withOpacity(_currentIndex == index ? 1 : 0.5);
 
     return Scaffold(
-      body: PageTransitionSwitcher(
-        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
-          return SharedAxisTransition(
-            animation: primaryAnimation,
-            secondaryAnimation: secondaryAnimation,
-            transitionType: SharedAxisTransitionType.horizontal,
-            // fillColor: Colors.black,
-            child: child,
-          );
-        },
-        child: _pages[_currentIndex],
-      ),
-      bottomNavigationBar: AppBottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-        menuItems: [
-          AppMenuItem(
-            icon: Assets.icons.icMenuHome.svg(
-              color: iconColor(0),
-            ),
-            label: l10n.menuItemDashboard,
+      body: Stack(
+        children: [
+          PageTransitionSwitcher(
+            transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+              return SharedAxisTransition(
+                animation: primaryAnimation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: SharedAxisTransitionType.horizontal,
+                // fillColor: Colors.black,
+                child: child,
+              );
+            },
+            child: _pages[_currentIndex],
           ),
-          AppMenuItem(
-            icon: Assets.icons.icMenuStats.svg(
-              color: iconColor(1),
-            ),
-            label: l10n.menuItemStats,
-          ),
-          AppMenuItem(
-            icon: Assets.icons.icHistory.svg(
-              color: iconColor(2),
-            ),
-            label: 'History',
-          ),
-          AppMenuItem(
-            icon: Assets.icons.dragIcon.svg(
-              color: iconColor(3),
-            ),
-            label: 'Other',
-          ),
+          const WorkoutTraining(),
         ],
       ),
+      bottomNavigationBar: ValueListenableBuilder(
+        valueListenable: context.watch<ValueNotifier<double>>(),
+        builder: (BuildContext context, double height, Widget? child) {
+          final bottomNavBarHeight = kBottomNavigationBarHeight +
+              MediaQuery.of(context).padding.bottom;
+          final value = percentageFromValueInRange(
+            min: kMinMiniplayerHeight,
+            max: maxMiniplayerHeight(context),
+            value: height,
+          );
+
+          return SizedBox(
+            height: bottomNavBarHeight - bottomNavBarHeight * value,
+            child: Transform.translate(
+              offset: Offset(0, bottomNavBarHeight * value * 0.5),
+              child: OverflowBox(
+                maxHeight: bottomNavBarHeight,
+                child: child,
+              ),
+            ),
+          );
+        },
+        child: AppBottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: _onItemTapped,
+          menuItems: [
+            AppMenuItem(
+              icon: Assets.icons.icMenuHome.svg(
+                color: iconColor(0),
+              ),
+              label: l10n.menuItemDashboard,
+            ),
+            AppMenuItem(
+              icon: Assets.icons.icMenuStats.svg(
+                color: iconColor(1),
+              ),
+              label: l10n.menuItemStats,
+            ),
+            AppMenuItem(
+              icon: Assets.icons.icHistory.svg(
+                color: iconColor(2),
+              ),
+              label: 'History',
+            ),
+            AppMenuItem(
+              icon: Assets.icons.dragIcon.svg(
+                color: iconColor(3),
+              ),
+              label: 'Other',
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  double percentageFromValueInRange({
+    required double min,
+    required double max,
+    required double value,
+  }) {
+    return (value - min) / (max - min);
   }
 }
 

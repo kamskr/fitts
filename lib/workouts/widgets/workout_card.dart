@@ -2,7 +2,9 @@ import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/l10n/l10n.dart';
 import 'package:fitts/utils/date_time_formatters.dart';
+import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// {@template workout_card}
 /// Widget displaying workout template information.
@@ -123,7 +125,13 @@ class WorkoutCard extends StatelessWidget {
                       height: 46,
                       child: AppButton.gradient(
                         child: Text(l10n.homePageStartWorkoutButtonText),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<WorkoutTrainingBloc>().add(
+                                WorkoutTrainingStart(
+                                  workoutTemplate: workoutTemplate,
+                                ),
+                              );
+                        },
                       ),
                     ),
                   ),

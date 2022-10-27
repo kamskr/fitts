@@ -102,7 +102,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         );
 
         await _userStatsRepository.updateUserStats(
-          userId: email,
           payload: UserStats.empty,
         );
 
