@@ -32,12 +32,24 @@ class _WorkoutTrainingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WorkoutTrainingBloc, WorkoutTrainingState>(
+    return BlocConsumer<WorkoutTrainingBloc, WorkoutTrainingState>(
       buildWhen: (previous, current) =>
           (previous is WorkoutTrainingInitial &&
               current is WorkoutTrainingInProgress) ||
           (previous is WorkoutTrainingInProgress &&
               current is WorkoutTrainingInitial),
+      listenWhen: (previous, current) =>
+          (previous is WorkoutTrainingInitial &&
+              current is WorkoutTrainingInProgress) ||
+          (previous is WorkoutTrainingInProgress &&
+              current is WorkoutTrainingInitial),
+      listener: (context, state) {
+        if (state is WorkoutTrainingInitial && state.newLog != null) {
+          Navigator.of(context).push(
+            WorkoutLogDetails.route(state.newLog!),
+          );
+        }
+      },
       builder: (context, state) {
         if (state is! WorkoutTrainingInProgress) {
           return const SizedBox.shrink();
@@ -196,6 +208,10 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                 const AppGap.xxs(),
                 BlocBuilder<WorkoutTrainingBloc, WorkoutTrainingState>(
                   builder: (context, state) {
+                    if (state is WorkoutTrainingInitial) {
+                      return const SizedBox();
+                    }
+
                     return Text(
                       DateTimeFormatters.formatSeconds(
                         (state as WorkoutTrainingInProgress).duration,
@@ -258,12 +274,27 @@ class _ConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WorkoutTrainingBloc, WorkoutTrainingState>(
+      buildWhen: (previous, current) =>
+          current is WorkoutTrainingInProgress &&
+          (previous as WorkoutTrainingInProgress).status != current.status,
+      listenWhen: (previous, current) =>
+          current is WorkoutTrainingInProgress &&
+          (previous as WorkoutTrainingInProgress).status != current.status,
       listener: (context, state) {
+        if (state is WorkoutTrainingInitial) {
+          return;
+        }
         if ((state as WorkoutTrainingInProgress).status.isSubmissionSuccess) {
           Navigator.of(context).pop();
+          context.read<MiniplayerController>().animateToHeight(
+                state: PanelState.MIN,
+              );
         }
       },
       builder: (context, state) {
+        if (state is WorkoutTrainingInitial) {
+          return const SizedBox();
+        }
         return AlertDialog(
           title: const Text('Finish Workout'),
           content: const Text(

@@ -28,7 +28,7 @@ class WorkoutTrainingBloc
     required WorkoutsRepository workoutsRepository,
   })  : _userStatsRepository = userStatsRepository,
         _workoutsRepository = workoutsRepository,
-        super(WorkoutTrainingInitial()) {
+        super(const WorkoutTrainingInitial()) {
     on<WorkoutTrainingStart>(_onWorkoutTrainingStart);
     on<WorkoutTrainingFinish>(_onWorkoutTrainingFinish);
     on<WorkoutTrainingStartRestTimer>(_onWorkoutTrainingStartRestTimer);
@@ -104,9 +104,6 @@ class WorkoutTrainingBloc
     _tickerSubscription = null;
     try {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      // Update user stats
-      final currentStats =
-          (await _userStatsRepository.userStats.first) ?? UserStats.empty;
 
       var updatedWorkoutLog = state.workoutLog.copyWith(
         duration: state.duration,
@@ -146,6 +143,10 @@ class WorkoutTrainingBloc
       updatedWorkoutLog = updatedWorkoutLog.copyWith(
         workoutTemplate: updatedTemplate,
       );
+
+      // Update user stats
+      final currentStats =
+          (await _userStatsRepository.userStats.first) ?? UserStats.empty;
 
       final updatedGlobalStats = currentStats.globalStats.copyWith(
         liftingTimeSpent: currentStats.globalStats.liftingTimeSpent +
@@ -222,10 +223,10 @@ class WorkoutTrainingBloc
         ),
       );
 
-      Future.delayed(
-        const Duration(seconds: 300),
+      await Future.delayed(
+        const Duration(milliseconds: 300),
         () => emit(
-          WorkoutTrainingInitial(),
+          WorkoutTrainingInitial(newLog: updatedWorkoutLog),
         ),
       );
 

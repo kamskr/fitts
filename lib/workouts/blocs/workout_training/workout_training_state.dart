@@ -8,13 +8,31 @@ abstract class WorkoutTrainingState extends Equatable {
   const WorkoutTrainingState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 /// {@template workout_training_initial}
 /// Initial state, no workout in progress.
 /// {@endtemplate}
-class WorkoutTrainingInitial extends WorkoutTrainingState {}
+class WorkoutTrainingInitial extends WorkoutTrainingState {
+  /// {@macro workout_training_initial}
+  const WorkoutTrainingInitial({this.newLog});
+
+  /// Whether the new log was created.
+  final WorkoutLog? newLog;
+
+  @override
+  List<Object?> get props => [newLog];
+
+  /// Copy method
+  WorkoutTrainingInitial copyWith({
+    WorkoutLog? newLog,
+  }) {
+    return WorkoutTrainingInitial(
+      newLog: newLog ?? this.newLog,
+    );
+  }
+}
 
 /// {@template workout_training_in_progress}
 /// State used when workout is in progress.
