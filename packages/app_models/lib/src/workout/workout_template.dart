@@ -59,7 +59,7 @@ class WorkoutTemplate extends Equatable {
   /// When this workout was last performed.
   final DateTime? lastPerformed;
 
-  /// Recent total tonnage lifted in this workout.
+  /// Recent total tonnage lifted in this workout. (from oldest to newest)
   final List<int>? recentTotalTonnageLifted;
 
   /// List of exercises in the workout. Order is important, it defines the order

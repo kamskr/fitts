@@ -3,6 +3,7 @@ import 'package:fitts/utils/utils.dart';
 import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:workouts_repository/workouts_repository.dart';
 
@@ -88,14 +89,29 @@ class _MiniplayerBody extends StatelessWidget {
       child: Scaffold(
         appBar: const _AppBar(),
         body: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
           child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(
-                  height: contentHeight.toDouble(),
-                  child: const WorkoutCreatorBody(
+                  height: contentHeight,
+                  child: WorkoutCreatorBody(
                     hideAppBar: true,
+                    onSetFinished: (exerciseIndex, setIndex, set) {
+                      final exercise = context
+                          .read<WorkoutCreatorBloc>()
+                          .state
+                          .workoutTemplate
+                          .exercises[exerciseIndex];
+
+                      context.read<WorkoutTrainingBloc>().add(
+                            WorkoutTrainingStartRestTimer(
+                              restTime: exercise.restTime,
+                            ),
+                          );
+                    },
                   ),
                 ),
               ],
@@ -193,22 +209,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ],
             ),
-            actions: [
-              AppTextButton(
-                textStyle: Theme.of(context).textTheme.bodyText1,
-                textColor: Theme.of(context).colorScheme.onPrimary,
-                child: const Text('Finish'),
-                onPressed: () {
-                  context
-                      .read<MiniplayerController>()
-                      .animateToHeight(state: PanelState.MIN);
-                  Future.delayed(const Duration(milliseconds: 300), () {
-                    context.read<WorkoutTrainingBloc>().add(
-                          const WorkoutTrainingFinish(),
-                        );
-                  });
-                },
-              ),
+            actions: const [
+              _FinishWorkoutButton(),
             ],
             surfaceTintColor: Colors.white,
             backgroundColor: Colors.transparent,
@@ -220,4 +222,104 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kMinMiniplayerHeight);
+}
+
+class _FinishWorkoutButton extends StatelessWidget {
+  const _FinishWorkoutButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppTextButton(
+      textStyle: Theme.of(context).textTheme.bodyText1,
+      textColor: Theme.of(context).colorScheme.onPrimary,
+      child: const Text('Finish'),
+      onPressed: () {
+        showDialog<void>(
+          context: context,
+          builder: (BuildContext _) {
+            return BlocProvider.value(
+              value: context.read<WorkoutCreatorBloc>(),
+              child: const _ConfirmDialog(),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _ConfirmDialog extends StatelessWidget {
+  const _ConfirmDialog({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<WorkoutTrainingBloc, WorkoutTrainingState>(
+      listener: (context, state) {
+        if ((state as WorkoutTrainingInProgress).status.isSubmissionSuccess) {
+          Navigator.of(context).pop();
+        }
+      },
+      builder: (context, state) {
+        return AlertDialog(
+          title: const Text('Finish Workout'),
+          content: const Text(
+            'Do you want to update the workout template?',
+          ),
+          actions:
+              (state as WorkoutTrainingInProgress).status.isSubmissionInProgress
+                  ? [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppSpacing.lg,
+                          vertical: AppSpacing.md,
+                        ),
+                        child: SizedBox(
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                          ),
+                        ),
+                      )
+                    ]
+                  : [
+                      AppTextButton(
+                        child: const Text('No'),
+                        onPressed: () {
+                          final workoutTemplate = context
+                              .read<WorkoutCreatorBloc>()
+                              .state
+                              .workoutTemplate;
+                          context.read<WorkoutTrainingBloc>().add(
+                                WorkoutTrainingFinish(
+                                  updateTemplate: false,
+                                  workoutTemplate: workoutTemplate,
+                                ),
+                              );
+                        },
+                      ),
+                      AppTextButton(
+                        child: const Text('Yes'),
+                        onPressed: () {
+                          final workoutTemplate = context
+                              .read<WorkoutCreatorBloc>()
+                              .state
+                              .workoutTemplate;
+                          context.read<WorkoutTrainingBloc>().add(
+                                WorkoutTrainingFinish(
+                                  updateTemplate: true,
+                                  workoutTemplate: workoutTemplate,
+                                ),
+                              );
+                        },
+                      ),
+                    ],
+        );
+      },
+    );
+  }
 }

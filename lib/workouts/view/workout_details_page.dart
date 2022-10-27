@@ -187,7 +187,11 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
         slivers: [
           SliverPersistentHeader(
             pinned: true,
-            delegate: _WorkoutCardPersistentHeader(),
+            delegate: _WorkoutCardPersistentHeader(
+              minHeight: kToolbarHeight +
+                  MediaQuery.of(context).padding.top +
+                  _minStartButtonHeight,
+            ),
           ),
           const _WorkoutStats(),
           const SliverToBoxAdapter(
@@ -249,8 +253,13 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
   }
 }
 
+const _minStartButtonHeight = 64.0;
+const _maxContentHeight = 370.0;
+
 class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
-  _WorkoutCardPersistentHeader();
+  _WorkoutCardPersistentHeader({required this.minHeight});
+
+  final double minHeight;
 
   @override
   Widget build(
@@ -299,14 +308,14 @@ class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
               footer: const SizedBox(),
               radius: 0,
               height: max(
-                370 * (1 - percent),
+                _maxContentHeight * (1 - percent),
                 MediaQuery.of(context).padding.top,
               ),
             ),
           ),
         ),
         AppButton.gradient(
-          height: max(64, 100 * (1 - percent)),
+          height: max(_minStartButtonHeight, 100 * (1 - percent)),
           child: const Text('START'),
           onPressed: () {},
         )
@@ -318,7 +327,7 @@ class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
   double get maxExtent => 460;
 
   @override
-  double get minExtent => 164;
+  double get minExtent => minHeight;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
@@ -466,12 +475,6 @@ class _ConfirmDeleteWorkoutTemplateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context
-        .watch<WorkoutDetailsBloc>()
-        .state
-        .deleteStatus
-        .isSubmissionInProgress;
-
     return BlocConsumer<WorkoutDetailsBloc, WorkoutDetailsState>(
       listener: (context, state) {
         if (state.deleteStatus.isSubmissionSuccess) {

@@ -1,5 +1,4 @@
 import 'package:app_models/app_models.dart';
-import 'package:flutter/material.dart';
 
 /// {@template exercise_card_data}
 /// Helper class for managing ExerciseCard state.
@@ -46,5 +45,9 @@ class ExerciseCardData {
   )? onExerciseSetChanged;
 
   /// Callback called when the set is finished.
-  final VoidCallback? onSetFinished;
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+    ExerciseSet set,
+  )? onSetFinished;
 }

@@ -28,6 +28,7 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
     this.remainingRestTime = 0,
     this.currentExerciseIndex = 0,
     this.currentSetIndex = 0,
+    this.status = FormzStatus.pure,
   });
 
   /// Workout template used for this workout.
@@ -49,6 +50,9 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
   /// Index of current set in focus.
   final int currentSetIndex;
 
+  /// Status of the workout submission.
+  final FormzStatus status;
+
   @override
   List<Object> get props => [
         workoutTemplate,
@@ -57,6 +61,7 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
         remainingRestTime,
         currentExerciseIndex,
         currentSetIndex,
+        status
       ];
 
   /// Returns copy of this state.
@@ -67,6 +72,7 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
     int? remainingRestTime,
     int? currentExerciseIndex,
     int? currentSetIndex,
+    FormzStatus? status,
   }) {
     return WorkoutTrainingInProgress(
       workoutTemplate: workoutTemplate ?? this.workoutTemplate,
@@ -75,6 +81,7 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
       remainingRestTime: remainingRestTime ?? this.remainingRestTime,
       currentExerciseIndex: currentExerciseIndex ?? this.currentExerciseIndex,
       currentSetIndex: currentSetIndex ?? this.currentSetIndex,
+      status: status ?? this.status,
     );
   }
 }

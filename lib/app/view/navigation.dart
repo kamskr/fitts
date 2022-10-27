@@ -82,20 +82,13 @@ class _NavigationState extends State<Navigation> {
             value: height,
           );
 
-          var opacity = 1 - value;
-          if (opacity < 0) opacity = 0;
-          if (opacity > 1) opacity = 1;
-
           return SizedBox(
             height: bottomNavBarHeight - bottomNavBarHeight * value,
             child: Transform.translate(
               offset: Offset(0, bottomNavBarHeight * value * 0.5),
-              child: Opacity(
-                opacity: opacity,
-                child: OverflowBox(
-                  maxHeight: bottomNavBarHeight,
-                  child: child,
-                ),
+              child: OverflowBox(
+                maxHeight: bottomNavBarHeight,
+                child: child,
               ),
             ),
           );

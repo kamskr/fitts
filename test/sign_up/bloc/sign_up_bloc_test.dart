@@ -68,7 +68,6 @@ void main() {
 
       when(
         () => userStatsRepository.updateUserStats(
-          userId: validEmailString,
           payload: UserStats.empty,
         ),
       ).thenAnswer((_) async {});

@@ -9,6 +9,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:provider/provider.dart';
 import 'package:user_profile_repository/user_profile_repository.dart';
+import 'package:user_stats_repository/user_stats_repository.dart';
+import 'package:workouts_repository/workouts_repository.dart';
 
 /// {@template app}
 /// Root app widget.
@@ -36,7 +38,10 @@ class App extends StatelessWidget {
           ),
         ),
         BlocProvider<WorkoutTrainingBloc>(
-          create: (_) => WorkoutTrainingBloc(),
+          create: (_) => WorkoutTrainingBloc(
+            userStatsRepository: context.read<UserStatsRepository>(),
+            workoutsRepository: context.read<WorkoutsRepository>(),
+          ),
         ),
       ],
       child: ChangeNotifierProvider(

@@ -16,10 +16,18 @@ class WorkoutCreatorBody extends StatelessWidget {
   const WorkoutCreatorBody({
     Key? key,
     this.hideAppBar = false,
+    this.onSetFinished,
   }) : super(key: key);
 
   /// Whether to hide the app bar.
   final bool hideAppBar;
+
+  /// Action to perform when the set is finished.
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+    ExerciseSet set,
+  )? onSetFinished;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,7 @@ class WorkoutCreatorBody extends StatelessWidget {
           const SliverToBoxAdapter(
             child: SizedBox(height: AppSpacing.lg),
           ),
-          const _WorkoutBuilder(),
+          _WorkoutBuilder(onSetFinished: onSetFinished),
           const SliverToBoxAdapter(
             child: SizedBox(height: AppSpacing.md),
           ),
@@ -184,7 +192,13 @@ class _BasicInfo extends StatelessWidget {
 }
 
 class _WorkoutBuilder extends StatelessWidget {
-  const _WorkoutBuilder({Key? key}) : super(key: key);
+  const _WorkoutBuilder({Key? key, this.onSetFinished}) : super(key: key);
+
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+    ExerciseSet set,
+  )? onSetFinished;
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +211,7 @@ class _WorkoutBuilder extends StatelessWidget {
       );
     }
 
-    return const _ExercisesList();
+    return _ExercisesList(onSetFinished: onSetFinished);
   }
 }
 
@@ -260,7 +274,16 @@ class _NoExercisesAdded extends StatelessWidget {
 }
 
 class _ExercisesList extends StatelessWidget {
-  const _ExercisesList({Key? key}) : super(key: key);
+  const _ExercisesList({
+    Key? key,
+    this.onSetFinished,
+  }) : super(key: key);
+
+  final void Function(
+    int exerciseIndex,
+    int setIndex,
+    ExerciseSet set,
+  )? onSetFinished;
 
   @override
   Widget build(BuildContext context) {
@@ -328,6 +351,7 @@ class _ExercisesList extends StatelessWidget {
                 ),
               );
             },
+            onSetFinished: onSetFinished,
           ),
         );
       },

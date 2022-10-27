@@ -34,10 +34,22 @@ class WorkoutTrainingStart extends WorkoutTrainingEvent {
 /// {@endtemplate}
 class WorkoutTrainingFinish extends WorkoutTrainingEvent {
   /// {@macro workout_training_finish}
-  const WorkoutTrainingFinish();
+  const WorkoutTrainingFinish({
+    required this.updateTemplate,
+    required this.workoutTemplate,
+  });
+
+  /// Whether to update existing template with the changes from this workout.
+  final bool updateTemplate;
+
+  /// Current workout template state for this workout.
+  final WorkoutTemplate workoutTemplate;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        updateTemplate,
+        workoutTemplate,
+      ];
 }
 
 /// {@template workout_training_start_rest_timer}
