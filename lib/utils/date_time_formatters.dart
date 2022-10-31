@@ -9,9 +9,19 @@ class DateTimeFormatters {
     return DateFormat('EEE, MMM d').format(date);
   }
 
+  /// Example: Monday, May 8, 15:30
+  static String weekdayMonthDayHour(DateTime date) {
+    return DateFormat('EEEE, MMM d, HH:mm').format(date);
+  }
+
   /// Example: 5/8/2021
   static String monthDayYear(DateTime date) {
     return DateFormat('M/d/yyyy').format(date);
+  }
+
+  /// Example: 5/8/2021 15:30
+  static String monthDayYearTime(DateTime date) {
+    return DateFormat('M/d/yyyy HH:mm').format(date);
   }
 
   /// Example: 22

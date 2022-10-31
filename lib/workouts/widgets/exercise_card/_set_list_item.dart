@@ -217,6 +217,7 @@ class _SetInfoState extends State<_SetInfo> with TickerProviderStateMixin {
               opacity: _opacityAnimation.value,
               child: AppButton.accentGradient(
                 onPressed: () {
+                  FocusScope.of(context).unfocus();
                   _controller.reverse();
 
                   final exerciseCardData = context.read<ExerciseCardData>();

@@ -152,7 +152,7 @@ class AppButton extends StatelessWidget {
             ? null
             : () {
                 HapticFeedback.lightImpact();
-                onPressed!.call();
+                onPressed?.call();
               },
         style: ButtonStyle(
           shape: MaterialStateProperty.all(

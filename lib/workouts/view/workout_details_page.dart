@@ -290,7 +290,7 @@ class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
                         if (workoutTemplate.lastPerformed != null)
                           Text(
                             l10n.homePagePreviousWorkoutDate(
-                              DateTimeFormatters.weekdayMonthDay(
+                              DateTimeFormatters.weekdayMonthDayHour(
                                 workoutTemplate.lastPerformed!,
                               ),
                             ),
@@ -316,8 +316,18 @@ class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
         ),
         AppButton.gradient(
           height: max(_minStartButtonHeight, 100 * (1 - percent)),
+          onPressed: context.watch<WorkoutTrainingBloc>().state
+                  is! WorkoutTrainingInProgress
+              ? () {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  context.read<WorkoutTrainingBloc>().add(
+                        WorkoutTrainingStart(
+                          workoutTemplate: workoutTemplate,
+                        ),
+                      );
+                }
+              : null,
           child: const Text('START'),
-          onPressed: () {},
         )
       ],
     );
@@ -381,6 +391,8 @@ class _WorkoutStats extends StatelessWidget {
             ),
             title: DateTimeFormatters.formatSeconds(
               workoutTemplate.lastAverageRestTime ?? 0,
+              showHours: false,
+              showSeconds: true,
             ),
             subtitle: 'avg. rest time',
             titleSuffix: 'min',

@@ -72,7 +72,7 @@ class _WorkoutTrainingView extends StatelessWidget {
               controller: context.read<MiniplayerController>(),
               minHeight: kMinMiniplayerHeight,
               maxHeight: maxMiniplayerHeight(context),
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.background,
               builder: (height, percentage) {
                 return const _MiniplayerBody();
               },
@@ -93,40 +93,57 @@ class _MiniplayerBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final contentHeight = maxMiniplayerHeight(context) - kMinMiniplayerHeight;
 
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(10),
-        topRight: Radius.circular(10),
-      ),
-      child: Scaffold(
-        appBar: const _AppBar(),
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: contentHeight,
-                  child: WorkoutCreatorBody(
-                    hideAppBar: true,
-                    onSetFinished: (exerciseIndex, setIndex, set) {
-                      final exercise = context
-                          .read<WorkoutCreatorBloc>()
-                          .state
-                          .workoutTemplate
-                          .exercises[exerciseIndex];
+    return GestureDetector(
+      onTap: FocusScope.of(context).hasFocus
+          ? () {
+              FocusScope.of(context).unfocus();
+            }
+          : null,
+      onLongPress: FocusScope.of(context).hasFocus
+          ? () {
+              FocusScope.of(context).unfocus();
+            }
+          : null,
+      onVerticalDragDown: FocusScope.of(context).hasFocus
+          ? (_) {
+              FocusScope.of(context).unfocus();
+            }
+          : null,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+        child: Scaffold(
+          appBar: const _AppBar(),
+          body: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: contentHeight,
+                    child: WorkoutCreatorBody(
+                      hideAppBar: true,
+                      onSetFinished: (exerciseIndex, setIndex, set) {
+                        final exercise = context
+                            .read<WorkoutCreatorBloc>()
+                            .state
+                            .workoutTemplate
+                            .exercises[exerciseIndex];
 
-                      context.read<WorkoutTrainingBloc>().add(
-                            WorkoutTrainingStartRestTimer(
-                              restTime: exercise.restTime,
-                            ),
-                          );
-                    },
+                        context.read<WorkoutTrainingBloc>().add(
+                              WorkoutTrainingStartRestTimer(
+                                restTime: exercise.restTime,
+                              ),
+                            );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -252,7 +269,7 @@ class _FinishWorkoutButton extends StatelessWidget {
       textColor: Theme.of(context).colorScheme.onPrimary,
       child: const Text('Finish'),
       onPressed: () {
-        showDialog<void>(
+        showDialog<bool>(
           context: context,
           builder: (BuildContext _) {
             return BlocProvider.value(
@@ -260,7 +277,19 @@ class _FinishWorkoutButton extends StatelessWidget {
               child: const _ConfirmDialog(),
             );
           },
-        );
+        ).then((value) {
+          if (value == true) {
+            showDialog<bool>(
+              context: context,
+              builder: (BuildContext _) {
+                return BlocProvider.value(
+                  value: context.read<WorkoutCreatorBloc>(),
+                  child: const _CancelWorkoutDialog(),
+                );
+              },
+            );
+          }
+        });
       },
     );
   }
@@ -300,6 +329,10 @@ class _ConfirmDialog extends StatelessWidget {
           content: const Text(
             'Do you want to update the workout template?',
           ),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actionsPadding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+          ),
           actions:
               (state as WorkoutTrainingInProgress).status.isSubmissionInProgress
                   ? [
@@ -319,38 +352,85 @@ class _ConfirmDialog extends StatelessWidget {
                     ]
                   : [
                       AppTextButton(
-                        child: const Text('No'),
+                        textColor: Theme.of(context).colorScheme.error,
                         onPressed: () {
-                          final workoutTemplate = context
-                              .read<WorkoutCreatorBloc>()
-                              .state
-                              .workoutTemplate;
-                          context.read<WorkoutTrainingBloc>().add(
-                                WorkoutTrainingFinish(
-                                  updateTemplate: false,
-                                  workoutTemplate: workoutTemplate,
-                                ),
-                              );
+                          Navigator.of(context).pop(true);
                         },
+                        child: const Text('Cancel Workout'),
                       ),
-                      AppTextButton(
-                        child: const Text('Yes'),
-                        onPressed: () {
-                          final workoutTemplate = context
-                              .read<WorkoutCreatorBloc>()
-                              .state
-                              .workoutTemplate;
-                          context.read<WorkoutTrainingBloc>().add(
-                                WorkoutTrainingFinish(
-                                  updateTemplate: true,
-                                  workoutTemplate: workoutTemplate,
-                                ),
-                              );
-                        },
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppTextButton(
+                            child: const Text('No'),
+                            onPressed: () {
+                              final workoutTemplate = context
+                                  .read<WorkoutCreatorBloc>()
+                                  .state
+                                  .workoutTemplate;
+                              context.read<WorkoutTrainingBloc>().add(
+                                    WorkoutTrainingFinish(
+                                      updateTemplate: false,
+                                      workoutTemplate: workoutTemplate,
+                                    ),
+                                  );
+                            },
+                          ),
+                          AppTextButton(
+                            child: const Text('Yes'),
+                            onPressed: () {
+                              final workoutTemplate = context
+                                  .read<WorkoutCreatorBloc>()
+                                  .state
+                                  .workoutTemplate;
+                              context.read<WorkoutTrainingBloc>().add(
+                                    WorkoutTrainingFinish(
+                                      updateTemplate: true,
+                                      workoutTemplate: workoutTemplate,
+                                    ),
+                                  );
+                            },
+                          ),
+                        ],
                       ),
                     ],
         );
       },
+    );
+  }
+}
+
+class _CancelWorkoutDialog extends StatelessWidget {
+  const _CancelWorkoutDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Cancel Workout'),
+      content: const Text(
+        'Are you sure you want to cancel this workout?'
+        ' All progress will be lost.',
+      ),
+      actionsPadding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+      ),
+      actions: [
+        AppTextButton(
+          child: const Text('No'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        AppTextButton(
+          child: const Text('Yes'),
+          onPressed: () {
+            Navigator.of(context).pop();
+            context.read<WorkoutTrainingBloc>().add(
+                  const WorkoutTrainingCancelWorkout(),
+                );
+          },
+        ),
+      ],
     );
   }
 }

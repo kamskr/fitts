@@ -93,7 +93,7 @@ class _LogTitle extends StatelessWidget {
             style: Theme.of(context).textTheme.headline3,
           ),
           Text(
-            'Previous Workout: ${DateTimeFormatters.monthDayYear(
+            'Previous Workout: ${DateTimeFormatters.monthDayYearTime(
               workoutLog.datePerformed,
             )}',
           ),

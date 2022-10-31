@@ -1,5 +1,61 @@
 part of 'exercise_card.dart';
 
+class _SetIndicator extends StatelessWidget {
+  const _SetIndicator({
+    Key? key,
+    required this.isEditingSet,
+  }) : super(key: key);
+
+  final bool isEditingSet;
+
+  @override
+  Widget build(BuildContext context) {
+    final exerciseCardData = context.read<ExerciseCardData>();
+    final setData = context.watch<ExerciseSetData>();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'SET ${setData.setIndex + 1}',
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          if (setData.set.isDone == true && isEditingSet == false) ...[
+            const AppGap.md(),
+            GestureDetector(
+              onTap: () {
+                exerciseCardData.onExerciseSetChanged?.call(
+                  exerciseCardData.exerciseIndex,
+                  setData.setIndex,
+                  setData.set.copyWith(isDone: false),
+                );
+              },
+              child: Container(
+                height: 26,
+                width: 26,
+                decoration: BoxDecoration(
+                  gradient: Theme.of(context)
+                      .extension<AppColorScheme>()!
+                      .secondaryAccentGradient,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(AppSpacing.xxs),
+                  ),
+                ),
+                child: Assets.icons.icCheckmark.svg(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class _WeightIndicator extends StatefulWidget {
   const _WeightIndicator({
     Key? key,

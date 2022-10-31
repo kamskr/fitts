@@ -124,14 +124,19 @@ class WorkoutCard extends StatelessWidget {
                     child: SizedBox(
                       height: 46,
                       child: AppButton.gradient(
+                        onPressed: context.watch<WorkoutTrainingBloc>().state
+                                is! WorkoutTrainingInProgress
+                            ? () {
+                                Navigator.of(context)
+                                    .popUntil((route) => route.isFirst);
+                                context.read<WorkoutTrainingBloc>().add(
+                                      WorkoutTrainingStart(
+                                        workoutTemplate: workoutTemplate,
+                                      ),
+                                    );
+                              }
+                            : null,
                         child: Text(l10n.homePageStartWorkoutButtonText),
-                        onPressed: () {
-                          context.read<WorkoutTrainingBloc>().add(
-                                WorkoutTrainingStart(
-                                  workoutTemplate: workoutTemplate,
-                                ),
-                              );
-                        },
                       ),
                     ),
                   ),

@@ -44,8 +44,6 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
     required this.workoutLog,
     this.duration = 0,
     this.remainingRestTime = 0,
-    this.currentExerciseIndex = 0,
-    this.currentSetIndex = 0,
     this.status = FormzStatus.pure,
   });
 
@@ -62,12 +60,6 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
   /// (if rest time is 0, no rest time is needed).
   final int remainingRestTime;
 
-  /// Index of current exercise in focus.
-  final int currentExerciseIndex;
-
-  /// Index of current set in focus.
-  final int currentSetIndex;
-
   /// Status of the workout submission.
   final FormzStatus status;
 
@@ -77,9 +69,7 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
         workoutLog,
         duration,
         remainingRestTime,
-        currentExerciseIndex,
-        currentSetIndex,
-        status
+        status,
       ];
 
   /// Returns copy of this state.
@@ -88,8 +78,6 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
     WorkoutLog? workoutLog,
     int? duration,
     int? remainingRestTime,
-    int? currentExerciseIndex,
-    int? currentSetIndex,
     FormzStatus? status,
   }) {
     return WorkoutTrainingInProgress(
@@ -97,8 +85,6 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
       workoutLog: workoutLog ?? this.workoutLog,
       duration: duration ?? this.duration,
       remainingRestTime: remainingRestTime ?? this.remainingRestTime,
-      currentExerciseIndex: currentExerciseIndex ?? this.currentExerciseIndex,
-      currentSetIndex: currentSetIndex ?? this.currentSetIndex,
       status: status ?? this.status,
     );
   }
