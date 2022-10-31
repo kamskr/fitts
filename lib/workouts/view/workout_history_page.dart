@@ -201,7 +201,7 @@ class _WorkoutLogItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          DateTimeFormatters.monthDayYear(
+                          DateTimeFormatters.monthDayYearTime(
                             workoutLog.datePerformed,
                           ),
                           style: theme.textTheme.bodyText2,
