@@ -532,6 +532,7 @@ class _RestTimerDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const AppGap.md(),
           SizedBox(
             height: 300,
             width: 300,
@@ -555,6 +556,7 @@ class _RestTimerDialog extends StatelessWidget {
               ],
             ),
           ),
+          const AppGap.md(),
         ],
       ),
     );
