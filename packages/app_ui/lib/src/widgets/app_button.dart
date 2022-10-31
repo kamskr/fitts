@@ -55,7 +55,6 @@ class AppButton extends StatelessWidget {
           backgroundColor: AppColors.white,
           foregroundColor: AppColors.primary,
           borderSide: const BorderSide(color: AppColors.primary),
-          height: 64,
           isLoading: isLoading,
         );
 
@@ -152,7 +151,7 @@ class AppButton extends StatelessWidget {
             ? null
             : () {
                 HapticFeedback.lightImpact();
-                onPressed!.call();
+                onPressed?.call();
               },
         style: ButtonStyle(
           shape: MaterialStateProperty.all(

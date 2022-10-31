@@ -33,6 +33,7 @@ class WorkoutTrainingBloc
     on<WorkoutTrainingFinish>(_onWorkoutTrainingFinish);
     on<WorkoutTrainingStartRestTimer>(_onWorkoutTrainingStartRestTimer);
     on<WorkoutTrainingTickerEvent>(_onWorkoutTrainingTickerEvent);
+    on<WorkoutTrainingCancelWorkout>(_onWorkoutTrainingCancelWorkout);
   }
 
   final UserStatsRepository _userStatsRepository;
@@ -50,9 +51,25 @@ class WorkoutTrainingBloc
       datePerformed: DateTime.now(),
     );
 
+    final exercisesWithoutSetDone = event.workoutTemplate.exercises
+        .map(
+          (exercise) => exercise.copyWith(
+            sets: exercise.sets
+                .map(
+                  (set) => set.copyWith(
+                    isDone: false,
+                  ),
+                )
+                .toList(),
+          ),
+        )
+        .toList();
+
     emit(
       WorkoutTrainingInProgress(
-        workoutTemplate: event.workoutTemplate,
+        workoutTemplate: event.workoutTemplate.copyWith(
+          exercises: exercisesWithoutSetDone,
+        ),
         workoutLog: workoutLog,
       ),
     );
@@ -65,7 +82,9 @@ class WorkoutTrainingBloc
     if (state is WorkoutTrainingInProgress) {
       emit(
         (state as WorkoutTrainingInProgress).copyWith(
+          restStartTime: DateTime.now(),
           remainingRestTime: event.restTime,
+          totalRestTime: event.restTime,
         ),
       );
     }
@@ -83,10 +102,21 @@ class WorkoutTrainingBloc
       currentState.workoutLog.datePerformed,
     );
 
+    var remainingRestTime = 0;
+
+    if (currentState.restStartTime != null) {
+      final restDuration = DateTime.now().difference(
+        currentState.restStartTime!,
+      );
+
+      remainingRestTime = currentState.totalRestTime - restDuration.inSeconds;
+    }
+
     emit(
       currentState.copyWith(
         duration: currentDuration.inSeconds,
-        remainingRestTime: max(currentState.remainingRestTime - 1, 0),
+        remainingRestTime: max(remainingRestTime, 0),
+        totalRestTime: remainingRestTime <= 0 ? 0 : currentState.totalRestTime,
       ),
     );
   }
@@ -133,8 +163,22 @@ class WorkoutTrainingBloc
       );
 
       if (event.updateTemplate) {
+        final exercisesWithoutSetDone = event.workoutTemplate.exercises
+            .map(
+              (exercise) => exercise.copyWith(
+                sets: exercise.sets
+                    .map(
+                      (set) => set.copyWith(
+                        isDone: false,
+                      ),
+                    )
+                    .toList(),
+              ),
+            )
+            .toList();
+
         updatedTemplate = updatedTemplate.copyWith(
-          exercises: event.workoutTemplate.exercises,
+          exercises: exercisesWithoutSetDone,
           name: event.workoutTemplate.name,
           notes: event.workoutTemplate.notes,
         );
@@ -235,6 +279,15 @@ class WorkoutTrainingBloc
       emit(state.copyWith(status: FormzStatus.submissionFailure));
       addError(e, st);
     }
+  }
+
+  Future<void> _onWorkoutTrainingCancelWorkout(
+    WorkoutTrainingCancelWorkout event,
+    Emitter<WorkoutTrainingState> emit,
+  ) async {
+    emit(
+      const WorkoutTrainingInitial(),
+    );
   }
 
   @override

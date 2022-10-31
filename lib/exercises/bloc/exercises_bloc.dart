@@ -133,10 +133,12 @@ class ExercisesBloc extends Bloc<ExercisesEvent, ExercisesState> {
       if (_muscleFilter.isEmpty) {
         muscleFilterMatches = true;
       } else {
-        muscleFilterMatches = _muscleFilter.any(
-          (muscle) =>
-              exercise.primaryMuscles.contains(muscle) ||
-              exercise.secondaryMuscles.contains(muscle),
+        muscleFilterMatches = _muscleFilter.every(
+          (muscle) {
+            final matches = exercise.primaryMuscles.contains(muscle) ||
+                exercise.secondaryMuscles.contains(muscle);
+            return matches;
+          },
         );
       }
 
@@ -145,7 +147,7 @@ class ExercisesBloc extends Bloc<ExercisesEvent, ExercisesState> {
       } else if (exercise.equipment == null) {
         equipmentFilterMatches = false;
       } else {
-        equipmentFilterMatches = _equipmentFilter.any(
+        equipmentFilterMatches = _equipmentFilter.every(
           (equipment) => exercise.equipment == equipment,
         );
       }

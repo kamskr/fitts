@@ -80,3 +80,14 @@ class WorkoutTrainingTickerEvent extends WorkoutTrainingEvent {
   @override
   List<Object> get props => [];
 }
+
+/// {@template workout_training_cancel_workout}
+/// Event used to cancel workout.
+/// {@endtemplate}
+class WorkoutTrainingCancelWorkout extends WorkoutTrainingEvent {
+  /// {@macro workout_training_cancel_workout}
+  const WorkoutTrainingCancelWorkout();
+
+  @override
+  List<Object> get props => [];
+}

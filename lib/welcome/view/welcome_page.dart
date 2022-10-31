@@ -164,12 +164,15 @@ class SignUpWithGoogleButton extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxlg),
-      child: AppButton.outlined(
-        key: const Key('welcomePage_signInWithGoogle'),
-        child: Text(l10n.signInWithGoogleButton),
-        onPressed: () {
-          context.read<WelcomeCubit>().signInWithGoogle();
-        },
+      child: SizedBox(
+        height: 64,
+        child: AppButton.outlined(
+          key: const Key('welcomePage_signInWithGoogle'),
+          child: Text(l10n.signInWithGoogleButton),
+          onPressed: () {
+            context.read<WelcomeCubit>().signInWithGoogle();
+          },
+        ),
       ),
     );
   }
