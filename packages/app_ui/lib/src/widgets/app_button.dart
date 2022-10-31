@@ -55,7 +55,6 @@ class AppButton extends StatelessWidget {
           backgroundColor: AppColors.white,
           foregroundColor: AppColors.primary,
           borderSide: const BorderSide(color: AppColors.primary),
-          height: 64,
           isLoading: isLoading,
         );
 

@@ -82,7 +82,9 @@ class WorkoutTrainingBloc
     if (state is WorkoutTrainingInProgress) {
       emit(
         (state as WorkoutTrainingInProgress).copyWith(
+          restStartTime: DateTime.now(),
           remainingRestTime: event.restTime,
+          totalRestTime: event.restTime,
         ),
       );
     }
@@ -100,10 +102,21 @@ class WorkoutTrainingBloc
       currentState.workoutLog.datePerformed,
     );
 
+    var remainingRestTime = 0;
+
+    if (currentState.restStartTime != null) {
+      final restDuration = DateTime.now().difference(
+        currentState.restStartTime!,
+      );
+
+      remainingRestTime = currentState.totalRestTime - restDuration.inSeconds;
+    }
+
     emit(
       currentState.copyWith(
         duration: currentDuration.inSeconds,
-        remainingRestTime: max(currentState.remainingRestTime - 1, 0),
+        remainingRestTime: max(remainingRestTime, 0),
+        totalRestTime: remainingRestTime <= 0 ? 0 : currentState.totalRestTime,
       ),
     );
   }

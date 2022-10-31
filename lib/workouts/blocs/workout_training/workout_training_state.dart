@@ -42,8 +42,10 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
   const WorkoutTrainingInProgress({
     required this.workoutTemplate,
     required this.workoutLog,
+    this.restStartTime,
     this.duration = 0,
     this.remainingRestTime = 0,
+    this.totalRestTime = 0,
     this.status = FormzStatus.pure,
   });
 
@@ -56,9 +58,16 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
   /// Workout duration in seconds (updates every second).
   final int duration;
 
+  /// When rest timer was started.
+  final DateTime? restStartTime;
+
   /// Remaining rest time in seconds.
   /// (if rest time is 0, no rest time is needed).
   final int remainingRestTime;
+
+  /// Total rest time in seconds.
+  /// (if total rest time is 0, no rest time is counting).
+  final int totalRestTime;
 
   /// Status of the workout submission.
   final FormzStatus status;
@@ -69,6 +78,7 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
         workoutLog,
         duration,
         remainingRestTime,
+        totalRestTime,
         status,
       ];
 
@@ -76,15 +86,19 @@ class WorkoutTrainingInProgress extends WorkoutTrainingState {
   WorkoutTrainingInProgress copyWith({
     WorkoutTemplate? workoutTemplate,
     WorkoutLog? workoutLog,
+    DateTime? restStartTime,
     int? duration,
     int? remainingRestTime,
+    int? totalRestTime,
     FormzStatus? status,
   }) {
     return WorkoutTrainingInProgress(
       workoutTemplate: workoutTemplate ?? this.workoutTemplate,
       workoutLog: workoutLog ?? this.workoutLog,
+      restStartTime: restStartTime ?? this.restStartTime,
       duration: duration ?? this.duration,
       remainingRestTime: remainingRestTime ?? this.remainingRestTime,
+      totalRestTime: totalRestTime ?? this.totalRestTime,
       status: status ?? this.status,
     );
   }

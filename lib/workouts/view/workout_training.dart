@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:miniplayer/miniplayer.dart';
@@ -134,11 +137,19 @@ class _MiniplayerBody extends StatelessWidget {
                             .workoutTemplate
                             .exercises[exerciseIndex];
 
-                        context.read<WorkoutTrainingBloc>().add(
-                              WorkoutTrainingStartRestTimer(
-                                restTime: exercise.restTime,
-                              ),
-                            );
+                        if (exercise.restTime != 0) {
+                          context.read<WorkoutTrainingBloc>().add(
+                                WorkoutTrainingStartRestTimer(
+                                  restTime: exercise.restTime,
+                                ),
+                              );
+                          showDialog<bool>(
+                            context: context,
+                            builder: (_) {
+                              return const _RestTimerDialog();
+                            },
+                          );
+                        }
                       },
                     ),
                   ),
@@ -184,7 +195,31 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           AppBar(
             leadingWidth: 120,
-            leading: BlocBuilder<WorkoutTrainingBloc, WorkoutTrainingState>(
+            leading: BlocConsumer<WorkoutTrainingBloc, WorkoutTrainingState>(
+              listenWhen: (previous, current) =>
+                  previous is WorkoutTrainingInProgress &&
+                  current is WorkoutTrainingInProgress &&
+                  previous.remainingRestTime != current.remainingRestTime,
+              buildWhen: (previous, current) =>
+                  previous is WorkoutTrainingInProgress &&
+                  current is WorkoutTrainingInProgress &&
+                  previous.remainingRestTime != current.remainingRestTime,
+              listener: (context, state) {
+                final currentState = state as WorkoutTrainingInProgress;
+                if (currentState.remainingRestTime == 0) {
+                  HapticFeedback.vibrate();
+
+                  showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext _) {
+                      return const AlertDialog(
+                        title: Text('Rest time finished 🎉'),
+                        content: Text('Get back to work!'),
+                      );
+                    },
+                  );
+                }
+              },
               builder: (context, state) {
                 final remainingRestTime = state is WorkoutTrainingInProgress
                     ? state.remainingRestTime
@@ -192,9 +227,12 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
                 return AppTextButton(
                   onPressed: () {
-                    context.read<WorkoutTrainingBloc>().add(
-                          const WorkoutTrainingStartRestTimer(restTime: 70),
-                        );
+                    showDialog<bool>(
+                      context: context,
+                      builder: (_) {
+                        return const _RestTimerDialog();
+                      },
+                    );
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -431,6 +469,164 @@ class _CancelWorkoutDialog extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+class _RestTimerDialog extends StatelessWidget {
+  const _RestTimerDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final state =
+        context.watch<WorkoutTrainingBloc>().state as WorkoutTrainingInProgress;
+
+    return AlertDialog(
+      alignment: Alignment.center,
+      title: const Text('Rest Timer'),
+      actions: [
+        Row(
+          children: [
+            Expanded(
+              child: AppButton.outlined(
+                child: const Text('-10s'),
+                onPressed: () {
+                  context.read<WorkoutTrainingBloc>().add(
+                        WorkoutTrainingStartRestTimer(
+                          restTime: max(state.remainingRestTime - 10, 0),
+                        ),
+                      );
+                },
+              ),
+            ),
+            const AppGap.md(),
+            Expanded(
+              child: AppButton.outlined(
+                child: const Text('+10s'),
+                onPressed: () {
+                  context.read<WorkoutTrainingBloc>().add(
+                        WorkoutTrainingStartRestTimer(
+                          restTime: state.remainingRestTime + 10,
+                        ),
+                      );
+                },
+              ),
+            ),
+            const AppGap.md(),
+            Expanded(
+              child: AppButton.primary(
+                child: const Text('Skip'),
+                onPressed: () {
+                  context.read<WorkoutTrainingBloc>().add(
+                        const WorkoutTrainingStartRestTimer(
+                          restTime: 0,
+                        ),
+                      );
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 300,
+            width: 300,
+            child: Stack(
+              children: [
+                const SizedBox(
+                  height: 300,
+                  width: 300,
+                  child: _RestProgressIndicator(),
+                ),
+                Center(
+                  child: Text(
+                    DateTimeFormatters.formatSeconds(
+                      state.remainingRestTime,
+                      showHours: false,
+                      showSeconds: true,
+                    ),
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RestProgressIndicator extends StatefulWidget {
+  const _RestProgressIndicator({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<_RestProgressIndicator> createState() => _RestProgressIndicatorState();
+}
+
+class _RestProgressIndicatorState extends State<_RestProgressIndicator>
+    with TickerProviderStateMixin {
+  late final AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<WorkoutTrainingBloc, WorkoutTrainingState>(
+      buildWhen: (previous, current) =>
+          (previous as WorkoutTrainingInProgress).restStartTime !=
+          (current as WorkoutTrainingInProgress).restStartTime,
+      builder: (context, state) {
+        final currentState = state as WorkoutTrainingInProgress;
+
+        if (currentState.remainingRestTime == 0 ||
+            currentState.restStartTime == null) {
+          _animationController.stop();
+        } else {
+          _animationController.duration =
+              Duration(seconds: currentState.totalRestTime);
+
+          final difference =
+              DateTime.now().difference(currentState.restStartTime!).inSeconds;
+
+          _animationController.forward(
+            from: difference / currentState.totalRestTime,
+          );
+        }
+
+        return AnimatedBuilder(
+          animation: _animationController,
+          builder: (_, __) {
+            return CircularProgressIndicator(
+              backgroundColor:
+                  Theme.of(context).extension<AppColorScheme>()!.primary50,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Theme.of(context).extension<AppColorScheme>()!.primary500,
+              ),
+              value: 1 - _animationController.value,
+              strokeWidth: 8,
+            );
+          },
+        );
+      },
     );
   }
 }
