@@ -50,8 +50,10 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    Color iconColor(int index) =>
-        AppColors.black.withOpacity(_currentIndex == index ? 1 : 0.5);
+    Color iconColor(int index) => Theme.of(context)
+        .colorScheme
+        .onBackground
+        .withOpacity(_currentIndex == index ? 1 : 0.5);
 
     return Scaffold(
       body: Stack(
