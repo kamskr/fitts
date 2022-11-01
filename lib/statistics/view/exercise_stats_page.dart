@@ -1,43 +1,57 @@
 import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:fitts/exercises/exercises.dart';
+import 'package:fitts/utils/text_formatters.dart';
 import 'package:fitts/utils/utils.dart';
+import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-/// {@template exercise_details_page}
-/// Page that displays the details of an Exercise.
+/// {@template exercise_stats_page}
+/// Page used to display statistics for an exercise.
 /// {@endtemplate}
-class ExerciseDetailsPage extends StatelessWidget {
-  /// {@macro exercise_details_page}
-  const ExerciseDetailsPage({
+class ExerciseStatsPage extends StatelessWidget {
+  /// {@macro exercise_stats_page}
+  const ExerciseStatsPage({
     Key? key,
     required this.exercise,
-    this.viewOnly = false,
+    required this.exerciseStats,
   }) : super(key: key);
 
-  /// Exercise to display.
+  /// Exercise for which the statistics are displayed.
   final Exercise exercise;
 
-  /// Whether the page is in view only mode.
-  final bool viewOnly;
+  /// Statistics for the exercise.
+  final ExerciseStats exerciseStats;
+
+  /// Route helper.
+  static Route<dynamic> route({
+    required Exercise exercise,
+    required ExerciseStats exerciseStats,
+  }) {
+    return MaterialPageRoute<dynamic>(
+      builder: (_) => ExerciseStatsPage(
+        exercise: exercise,
+        exerciseStats: exerciseStats,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Provider.value(
-      value: exercise,
-      child: _ExerciseDetailsView(viewOnly: viewOnly),
+      value: exerciseStats,
+      child: Provider.value(
+        value: exercise,
+        child: const _ExerciseDetailsView(),
+      ),
     );
   }
 }
 
 class _ExerciseDetailsView extends StatefulWidget {
   const _ExerciseDetailsView({
-    required this.viewOnly,
     Key? key,
   }) : super(key: key);
-
-  final bool viewOnly;
 
   @override
   State<_ExerciseDetailsView> createState() => _ExerciseDetailsViewState();
@@ -85,9 +99,6 @@ class _ExerciseDetailsViewState extends State<_ExerciseDetailsView>
       appBar: AppBar(
         scrolledUnderElevation: 1,
         backgroundColor: Theme.of(context).colorScheme.background,
-        actions: [
-          if (!widget.viewOnly) const _AddExerciseButton(),
-        ],
         title: AnimatedBuilder(
           animation: _colorTween,
           builder: (_, __) => Text(
@@ -100,35 +111,6 @@ class _ExerciseDetailsViewState extends State<_ExerciseDetailsView>
         controller: _scrollController,
         child: const _ExerciseContent(),
       ),
-    );
-  }
-}
-
-class _AddExerciseButton extends StatelessWidget {
-  const _AddExerciseButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final bloc = context.watch<ExercisesBloc>();
-    final exercise = context.watch<Exercise>();
-
-    final isSelected = bloc.state.selectedKeys.contains(exercise.id);
-
-    return ExerciseSelectButton(
-      isSelected: isSelected,
-      onPressed: () {
-        if (isSelected) {
-          bloc.add(
-            ExercisesSelectionKeyRemoved(exercise.id),
-          );
-        } else {
-          bloc.add(
-            ExercisesSelectionKeyAdded(exercise.id),
-          );
-        }
-      },
     );
   }
 }
@@ -166,6 +148,7 @@ class _ExerciseContent extends StatelessWidget {
         ),
         const AppGap.md(),
         const Divider(height: 1),
+        const _Stats(),
         const AppGap.md(),
         const _LevelIndicator(),
         const AppGap.md(),
@@ -184,6 +167,56 @@ class _ExerciseContent extends StatelessWidget {
         SizedBox(
           height: MediaQuery.of(context).padding.bottom,
         )
+      ],
+    );
+  }
+}
+
+class _Stats extends StatelessWidget {
+  const _Stats({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final stats = context.watch<ExerciseStats>();
+
+    final iconColor = Theme.of(context).colorScheme.primary;
+    const iconHeight = 22.0;
+
+    return WorkoutStatsGrid(
+      workoutStats: [
+        WorkoutStatGridItem(
+          icon: Assets.icons.icWeigh.svg(
+            color: iconColor,
+            height: iconHeight,
+          ),
+          title: stats.highestWeight.toString(),
+          subtitle: 'highest weight',
+          titleSuffix: 'kg',
+        ),
+        WorkoutStatGridItem(
+          icon: Assets.icons.icCheckmark.svg(
+            color: iconColor,
+            height: iconHeight,
+          ),
+          title: stats.repetitionsDone.toString(),
+          subtitle: 'repetitions done',
+        ),
+        WorkoutStatGridItem(
+          icon: Assets.icons.icWorkoutsCompleted.svg(
+            color: iconColor,
+            height: iconHeight,
+          ),
+          title: stats.timesPerformed.toString(),
+          subtitle: 'times performed',
+        ),
+        WorkoutStatGridItem(
+          icon: Assets.icons.icHistory.svg(
+            color: iconColor,
+            height: iconHeight,
+          ),
+          title: '${stats.overallBest.weight}*${stats.overallBest.repetitions}',
+          subtitle: 'best lift, kg * reps',
+        ),
       ],
     );
   }

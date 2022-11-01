@@ -5,6 +5,7 @@ import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/statistics/statistics.dart';
 import 'package:fitts/workouts/view/workout_history_page.dart';
 import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,8 @@ class _NavigationState extends State<Navigation> {
   int _currentIndex = 0;
   final _pages = [
     const HomePage(key: PageStorageKey('homePage')),
-    const Scaffold(
-      body: Center(child: Text('Stats')),
-    ),
-    const WorkoutHistoryPage(),
+    const UserStatsPage(key: PageStorageKey('userStatsPage')),
+    const WorkoutHistoryPage(key: PageStorageKey('workoutHistoryPage')),
     const Scaffold(
       body: _TempPlansWidget(),
     ),
@@ -50,8 +49,10 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    Color iconColor(int index) =>
-        AppColors.black.withOpacity(_currentIndex == index ? 1 : 0.5);
+    Color iconColor(int index) => Theme.of(context)
+        .colorScheme
+        .onBackground
+        .withOpacity(_currentIndex == index ? 1 : 0.5);
 
     return Scaffold(
       body: Stack(
@@ -74,13 +75,18 @@ class _NavigationState extends State<Navigation> {
       bottomNavigationBar: ValueListenableBuilder(
         valueListenable: context.watch<ValueNotifier<double>>(),
         builder: (BuildContext context, double height, Widget? child) {
+          final isTraining = context.watch<WorkoutTrainingBloc>().state
+              is WorkoutTrainingInProgress;
           final bottomNavBarHeight = kBottomNavigationBarHeight +
               MediaQuery.of(context).padding.bottom;
-          final value = percentageFromValueInRange(
-            min: kMinMiniplayerHeight,
-            max: maxMiniplayerHeight(context),
-            value: height,
-          );
+
+          final value = isTraining
+              ? percentageFromValueInRange(
+                  min: kMinMiniplayerHeight,
+                  max: maxMiniplayerHeight(context),
+                  value: height,
+                )
+              : 0;
 
           return SizedBox(
             height: bottomNavBarHeight - bottomNavBarHeight * value,

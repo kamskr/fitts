@@ -134,10 +134,10 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
       setState(() {
         _appColor = Colors.transparent;
       });
-    } else if (_scrollController.position.pixels > 100) {
+    } else if (_scrollController.position.pixels > 130) {
       _animationController.forward();
       setState(() {
-        _appColor = Colors.white;
+        _appColor = Theme.of(context).colorScheme.background;
       });
     }
   }
@@ -368,7 +368,7 @@ class _WorkoutStats extends StatelessWidget {
       child: WorkoutStatsGrid(
         workoutStats: [
           WorkoutStatGridItem(
-            icon: Assets.icons.icTonnageLifted.svg(
+            icon: Assets.icons.icWorkoutsCompleted.svg(
               color: iconColor,
               height: iconHeight,
             ),
@@ -376,7 +376,7 @@ class _WorkoutStats extends StatelessWidget {
             subtitle: 'workouts completed',
           ),
           WorkoutStatGridItem(
-            icon: Assets.icons.icWorkoutsCompleted.svg(
+            icon: Assets.icons.icTonnageLifted.svg(
               color: iconColor,
               height: iconHeight,
             ),
@@ -454,6 +454,9 @@ class _DeleteWorkoutButton extends StatelessWidget {
             context: context,
             builder: (BuildContext dialogContext) {
               final alert = AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                ),
                 title: const Text('Delete Workout Template'),
                 content: const Text(
                   'Are you sure you want to delete this workout?'

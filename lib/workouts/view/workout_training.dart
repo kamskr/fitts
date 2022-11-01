@@ -213,6 +213,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                     context: context,
                     builder: (BuildContext _) {
                       return const AlertDialog(
+                        insetPadding: EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md,
+                        ),
                         title: Text('Rest time finished 🎉'),
                         content: Text('Get back to work!'),
                       );
@@ -363,6 +366,9 @@ class _ConfirmDialog extends StatelessWidget {
           return const SizedBox();
         }
         return AlertDialog(
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+          ),
           title: const Text('Finish Workout'),
           content: const Text(
             'Do you want to update the workout template?',
@@ -444,6 +450,9 @@ class _CancelWorkoutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+      ),
       title: const Text('Cancel Workout'),
       content: const Text(
         'Are you sure you want to cancel this workout?'
@@ -463,6 +472,7 @@ class _CancelWorkoutDialog extends StatelessWidget {
           child: const Text('Yes'),
           onPressed: () {
             Navigator.of(context).pop();
+
             context.read<WorkoutTrainingBloc>().add(
                   const WorkoutTrainingCancelWorkout(),
                 );
@@ -482,6 +492,9 @@ class _RestTimerDialog extends StatelessWidget {
         context.watch<WorkoutTrainingBloc>().state as WorkoutTrainingInProgress;
 
     return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+      ),
       alignment: Alignment.center,
       title: const Text('Rest Timer'),
       actions: [
