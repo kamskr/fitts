@@ -5,6 +5,7 @@ import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/statistics/statistics.dart';
 import 'package:fitts/workouts/view/workout_history_page.dart';
 import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,8 @@ class _NavigationState extends State<Navigation> {
   int _currentIndex = 0;
   final _pages = [
     const HomePage(key: PageStorageKey('homePage')),
-    const Scaffold(
-      body: Center(child: Text('Stats')),
-    ),
-    const WorkoutHistoryPage(),
+    const UserStatsPage(key: PageStorageKey('userStatsPage')),
+    const WorkoutHistoryPage(key: PageStorageKey('workoutHistoryPage')),
     const Scaffold(
       body: _TempPlansWidget(),
     ),

@@ -42,6 +42,7 @@ dependencies:
   miniplayer: ^1.0.1
   mocktail: ^0.3.0
   rxdart: ^0.27.3
+  sliver_tools: ^0.2.8
   user_profile_repository:
     path: packages/user_profile_repository
   user_stats_repository:

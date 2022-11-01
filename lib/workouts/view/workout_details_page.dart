@@ -368,7 +368,7 @@ class _WorkoutStats extends StatelessWidget {
       child: WorkoutStatsGrid(
         workoutStats: [
           WorkoutStatGridItem(
-            icon: Assets.icons.icTonnageLifted.svg(
+            icon: Assets.icons.icWorkoutsCompleted.svg(
               color: iconColor,
               height: iconHeight,
             ),
@@ -376,7 +376,7 @@ class _WorkoutStats extends StatelessWidget {
             subtitle: 'workouts completed',
           ),
           WorkoutStatGridItem(
-            icon: Assets.icons.icWorkoutsCompleted.svg(
+            icon: Assets.icons.icTonnageLifted.svg(
               color: iconColor,
               height: iconHeight,
             ),

@@ -232,7 +232,7 @@ class WorkoutTrainingBloc
         for (final set in exercise.sets) {
           final value = set.repetitions * set.weight;
 
-          if (value > prevOverallBestValue) {
+          if (value >= prevOverallBestValue) {
             currentOverallBest = OverallBest(
               repetitions: set.repetitions,
               weight: set.weight,
