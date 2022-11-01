@@ -8,6 +8,9 @@ class StatisticsState extends Equatable {
   const StatisticsState({
     this.status = DataLoadingStatus.initial,
     this.userStats,
+    this.visibleExerciseKeys = const [],
+    this.searchPhrase = '',
+    this.exercises = const {},
   });
 
   /// The current [UserStats].
@@ -16,17 +19,37 @@ class StatisticsState extends Equatable {
   /// The current [DataLoadingStatus].
   final DataLoadingStatus status;
 
+  /// The keys of the exercises that are visible. (filtered)
+  final List<String> visibleExerciseKeys;
+
+  /// The current search phrase used for filtering exercise stats.
+  final String searchPhrase;
+
+  /// Map of all exercises.
+  final Map<String, Exercise> exercises;
+
   @override
-  List<Object?> get props => [userStats, status];
+  List<Object?> get props => [
+        status,
+        userStats,
+        visibleExerciseKeys,
+        searchPhrase,
+      ];
 
   /// Creates a copy of [StatisticsState].
   StatisticsState copyWith({
-    UserStats? userStats,
     DataLoadingStatus? status,
+    UserStats? userStats,
+    List<String>? visibleExerciseKeys,
+    String? searchPhrase,
+    Map<String, Exercise>? exercises,
   }) {
     return StatisticsState(
-      userStats: userStats ?? this.userStats,
       status: status ?? this.status,
+      userStats: userStats ?? this.userStats,
+      visibleExerciseKeys: visibleExerciseKeys ?? this.visibleExerciseKeys,
+      searchPhrase: searchPhrase ?? this.searchPhrase,
+      exercises: exercises ?? this.exercises,
     );
   }
 }

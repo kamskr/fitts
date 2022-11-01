@@ -38,3 +38,17 @@ class StatisticsLoadingError extends StatisticsEvent {
   @override
   List<Object?> get props => [exception];
 }
+
+/// {@template statistics_search_phrase_changed}
+/// Event that is fired when the search phrase changes.
+/// {@endtemplate}
+class StatisticsSearchPhraseChanged extends StatisticsEvent {
+  /// {@macro statistics_search_phrase_changed}
+  const StatisticsSearchPhraseChanged(this.searchPhrase);
+
+  /// The new search phrase.
+  final String searchPhrase;
+
+  @override
+  List<Object?> get props => [searchPhrase];
+}

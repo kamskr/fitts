@@ -1,5 +1,5 @@
-import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
+import 'package:exercises_repository/exercises_repository.dart';
 import 'package:fitts/app/bloc/app_bloc.dart';
 import 'package:fitts/statistics/statistics.dart';
 import 'package:fitts/utils/utils.dart';
@@ -24,6 +24,7 @@ class UserStatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<StatisticsBloc>(
       create: (_) => StatisticsBloc(
+        exercisesRepository: context.read<ExercisesRepository>(),
         userStatsRepository: context.read<UserStatsRepository>(),
       ),
       child: const _UserStatsView(),
@@ -66,6 +67,9 @@ class _UserStatsContentState extends State<_UserStatsContent>
 
   late AnimationController _animationController;
   late Animation<Color?> _colorTween;
+  late TabController _tabController;
+
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -73,11 +77,12 @@ class _UserStatsContentState extends State<_UserStatsContent>
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
-
     _colorTween = ColorTween(begin: Colors.transparent, end: Colors.black)
         .animate(_animationController);
-
     _scrollController.addListener(onScroll);
+    _tabController = TabController(length: 2, vsync: this)
+      ..addListener(onTabChanged);
+
     super.initState();
   }
 
@@ -89,10 +94,21 @@ class _UserStatsContentState extends State<_UserStatsContent>
     }
   }
 
+  void onTabChanged() {
+    if (_tabController.index != _currentIndex) {
+      setState(() {
+        _currentIndex = _tabController.index;
+      });
+    }
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
     _scrollController.removeListener(onScroll);
+    _tabController
+      ..removeListener(onTabChanged)
+      ..dispose();
     super.dispose();
   }
 
@@ -100,8 +116,8 @@ class _UserStatsContentState extends State<_UserStatsContent>
   Widget build(BuildContext context) {
     final userStats = context.watch<StatisticsBloc>().state.userStats;
 
-    return DefaultTabController(
-      length: 2,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 1,
@@ -144,6 +160,7 @@ class _UserStatsContentState extends State<_UserStatsContent>
                           ),
                         ),
                         child: TabBar(
+                          controller: _tabController,
                           labelColor:
                               Theme.of(context).colorScheme.onBackground,
                           indicatorColor: Theme.of(context).colorScheme.primary,
@@ -158,15 +175,18 @@ class _UserStatsContentState extends State<_UserStatsContent>
                         ),
                       ),
                     ),
+                    if (_currentIndex == 1)
+                      const SliverPinnedHeader(
+                        child: _ExercisesSearch(),
+                      ),
                   ];
                 },
-                body: const SizedBox(
+                body: SizedBox(
                   child: TabBarView(
-                    children: [
+                    controller: _tabController,
+                    children: const [
                       _UserStats(),
-                      Center(
-                        child: Text('Exercise specific'),
-                      ),
+                      _ExerciseSpecific(),
                     ],
                   ),
                 ),
@@ -298,9 +318,10 @@ class _KeyLiftCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userStats = context.watch<StatisticsBloc>().state.userStats!;
+    final state = context.watch<StatisticsBloc>().state;
+    final userStats = state.userStats!;
     final exerciseStats = userStats.exercisesStats[exerciseKey];
-    final exercise = context.read<Map<String, Exercise>>()[exerciseKey];
+    final exercise = state.exercises[exerciseKey];
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -382,6 +403,180 @@ class _KeyLiftCard extends StatelessWidget {
               ),
             )
         ],
+      ),
+    );
+  }
+}
+
+class _ExercisesSearch extends StatelessWidget {
+  const _ExercisesSearch({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 54,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.background,
+        border: Border(
+          bottom: BorderSide(
+            color: Theme.of(context).dividerColor,
+          ),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+      child: Row(
+        children: [
+          Assets.icons.icSearch.svg(
+            color: Theme.of(context).colorScheme.primary,
+            height: 20,
+          ),
+          const AppGap.xs(),
+          Expanded(
+            child: TextFormField(
+              decoration: InputDecoration(
+                hintText: 'search',
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                contentPadding: EdgeInsets.zero,
+                isDense: true,
+                border: InputBorder.none,
+                hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withOpacity(0.5),
+                    ),
+              ),
+              enableSuggestions: false,
+              autocorrect: false,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+              textAlign: TextAlign.left,
+              onChanged: (value) {
+                context
+                    .read<StatisticsBloc>()
+                    .add(StatisticsSearchPhraseChanged(value));
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExerciseSpecific extends StatelessWidget {
+  const _ExerciseSpecific({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final visibleExerciseKeys =
+        context.watch<StatisticsBloc>().state.visibleExerciseKeys;
+
+    if (visibleExerciseKeys.isEmpty) {
+      return const Center(
+        child: Text('No exercises'),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.md),
+      child: ListView.separated(
+        itemCount: visibleExerciseKeys.length,
+        separatorBuilder: (context, index) => const AppGap.xxs(),
+        itemBuilder: (context, index) {
+          final exerciseKey = visibleExerciseKeys[index];
+
+          return _ExerciseSpecificCard(
+            exerciseKey: exerciseKey,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _ExerciseSpecificCard extends StatelessWidget {
+  const _ExerciseSpecificCard({
+    Key? key,
+    required this.exerciseKey,
+  }) : super(key: key);
+
+  final String exerciseKey;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.watch<StatisticsBloc>().state;
+
+    final exerciseStats = state.userStats!.exercisesStats[exerciseKey];
+
+    final exercise = state.exercises[exerciseKey];
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              exercise?.name ?? 'This exercise does not exist',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            const AppGap.md(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Assets.icons.icWorkoutsCompleted.svg(
+                      color: Theme.of(context).colorScheme.primary,
+                      height: 20,
+                    ),
+                    const AppGap.xs(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          exerciseStats!.timesPerformed.toString(),
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(
+                          'times performed',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Assets.icons.icTonnageLifted.svg(
+                      color: Theme.of(context).colorScheme.primary,
+                      height: 20,
+                    ),
+                    const AppGap.xs(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          exerciseStats.timesPerformed.toString(),
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(
+                          'overall best',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
