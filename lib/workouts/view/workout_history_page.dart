@@ -82,7 +82,7 @@ class _WorkoutHistoryContentState extends State<_WorkoutHistoryContent>
       duration: const Duration(milliseconds: 200),
     );
 
-    _colorTween = ColorTween(begin: Colors.white, end: Colors.black)
+    _colorTween = ColorTween(begin: Colors.transparent, end: Colors.black)
         .animate(_animationController);
 
     _scrollController.addListener(onScroll);
@@ -112,6 +112,7 @@ class _WorkoutHistoryContentState extends State<_WorkoutHistoryContent>
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 1,
+        backgroundColor: Theme.of(context).colorScheme.background,
         title: AnimatedBuilder(
           animation: _colorTween,
           builder: (_, __) => Text(
@@ -146,14 +147,32 @@ class _WorkoutLogs extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(
-            AppSpacing.md,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
           ),
           child: Text(
             'Workout History',
             style: Theme.of(context).textTheme.headline3,
           ),
         ),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
+        for (final workoutLog in workoutLogsHistory)
+          _WorkoutLogItem(workoutLog: workoutLog),
         for (final workoutLog in workoutLogsHistory)
           _WorkoutLogItem(workoutLog: workoutLog),
       ],

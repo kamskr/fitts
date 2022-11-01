@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs,
 
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -37,8 +36,9 @@ class AppBottomNavigationBar extends StatelessWidget {
             ),
           )
           .toList(),
-      selectedItemColor: AppColors.black,
-      unselectedItemColor: AppColors.black[100],
+      selectedItemColor: Theme.of(context).colorScheme.onBackground,
+      unselectedItemColor:
+          Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
       currentIndex: currentIndex,
       onTap: (index) {
         HapticFeedback.lightImpact();

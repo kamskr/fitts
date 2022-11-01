@@ -16,7 +16,8 @@ class _CardTitle extends StatelessWidget {
     final theme = Theme.of(context);
     final exerciseId = exerciseData.exercise.exerciseId;
     final exercises = context.read<Map<String, Exercise>>();
-    final exerciseName = exercises[exerciseId]?.name;
+    final exercise = exercises[exerciseId];
+    final exerciseName = exercise?.name;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,9 +33,23 @@ class _CardTitle extends StatelessWidget {
             const SizedBox(
               height: AppSpacing.xxxs,
             ),
-            Text(
-              exerciseName ?? 'exercise not found',
-              style: theme.textTheme.headline6,
+            GestureDetector(
+              onTap: () {
+                if (exercise != null) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => ExerciseDetailsPage(
+                        exercise: exercise,
+                        viewOnly: true,
+                      ),
+                    ),
+                  );
+                }
+              },
+              child: Text(
+                exerciseName ?? 'exercise not found',
+                style: theme.textTheme.headline6,
+              ),
             ),
           ],
         ),

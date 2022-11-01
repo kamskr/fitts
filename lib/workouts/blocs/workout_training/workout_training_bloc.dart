@@ -230,9 +230,9 @@ class WorkoutTrainingBloc
             const OverallBest(weight: 0, repetitions: 0);
 
         for (final set in exercise.sets) {
-          final value = set.repetitions * set.weight;
+          final value = set.repetitions * max(set.weight, 1);
 
-          if (value > prevOverallBestValue) {
+          if (value >= prevOverallBestValue) {
             currentOverallBest = OverallBest(
               repetitions: set.repetitions,
               weight: set.weight,
