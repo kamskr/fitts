@@ -1,5 +1,6 @@
 import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
+import 'package:fitts/exercises/exercises.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:fitts/workouts/workouts.dart';
 

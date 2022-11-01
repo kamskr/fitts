@@ -13,24 +13,31 @@ class ExerciseDetailsPage extends StatelessWidget {
   const ExerciseDetailsPage({
     Key? key,
     required this.exercise,
+    this.viewOnly = false,
   }) : super(key: key);
 
   /// Exercise to display.
   final Exercise exercise;
 
+  /// Whether the page is in view only mode.
+  final bool viewOnly;
+
   @override
   Widget build(BuildContext context) {
     return Provider.value(
       value: exercise,
-      child: const _ExerciseDetailsView(),
+      child: _ExerciseDetailsView(viewOnly: viewOnly),
     );
   }
 }
 
 class _ExerciseDetailsView extends StatefulWidget {
   const _ExerciseDetailsView({
+    required this.viewOnly,
     Key? key,
   }) : super(key: key);
+
+  final bool viewOnly;
 
   @override
   State<_ExerciseDetailsView> createState() => _ExerciseDetailsViewState();
@@ -77,8 +84,8 @@ class _ExerciseDetailsViewState extends State<_ExerciseDetailsView>
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 1,
-        actions: const [
-          _AddExerciseButton(),
+        actions: [
+          if (!widget.viewOnly) const _AddExerciseButton(),
         ],
         title: AnimatedBuilder(
           animation: _colorTween,
@@ -173,6 +180,9 @@ class _ExerciseContent extends StatelessWidget {
         const AppGap.md(),
         const _About(),
         const AppGap.md(),
+        SizedBox(
+          height: MediaQuery.of(context).padding.bottom,
+        )
       ],
     );
   }

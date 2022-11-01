@@ -454,6 +454,9 @@ class _DeleteWorkoutButton extends StatelessWidget {
             context: context,
             builder: (BuildContext dialogContext) {
               final alert = AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                ),
                 title: const Text('Delete Workout Template'),
                 content: const Text(
                   'Are you sure you want to delete this workout?'
