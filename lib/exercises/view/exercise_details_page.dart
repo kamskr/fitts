@@ -57,7 +57,7 @@ class _ExerciseDetailsViewState extends State<_ExerciseDetailsView>
       duration: const Duration(milliseconds: 200),
     );
 
-    _colorTween = ColorTween(begin: Colors.white, end: Colors.black)
+    _colorTween = ColorTween(begin: Colors.transparent, end: Colors.black)
         .animate(_animationController);
 
     _scrollController.addListener(onScroll);
@@ -84,6 +84,7 @@ class _ExerciseDetailsViewState extends State<_ExerciseDetailsView>
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 1,
+        backgroundColor: Theme.of(context).colorScheme.background,
         actions: [
           if (!widget.viewOnly) const _AddExerciseButton(),
         ],

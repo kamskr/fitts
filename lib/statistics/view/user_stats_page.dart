@@ -513,69 +513,84 @@ class _ExerciseSpecificCard extends StatelessWidget {
 
     final exercise = state.exercises[exerciseKey];
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              exercise?.name ?? 'This exercise does not exist',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            const AppGap.md(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Assets.icons.icWorkoutsCompleted.svg(
-                      color: Theme.of(context).colorScheme.primary,
-                      height: 20,
-                    ),
-                    const AppGap.xs(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          exerciseStats!.timesPerformed.toString(),
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Text(
-                          'times performed',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Assets.icons.icTonnageLifted.svg(
-                      color: Theme.of(context).colorScheme.primary,
-                      height: 20,
-                    ),
-                    const AppGap.xs(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          exerciseStats.timesPerformed.toString(),
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Text(
-                          'overall best',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+    if (exercise == null || exerciseStats == null) {
+      return const SizedBox.shrink();
+    }
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          ExerciseStatsPage.route(
+            exercise: exercise,
+            exerciseStats: exerciseStats,
+          ),
+        );
+      },
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                exercise.name,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              const AppGap.md(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Assets.icons.icWorkoutsCompleted.svg(
+                        color: Theme.of(context).colorScheme.primary,
+                        height: 20,
+                      ),
+                      const AppGap.xs(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            exerciseStats.timesPerformed.toString(),
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          Text(
+                            'times performed',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Assets.icons.icTonnageLifted.svg(
+                        color: Theme.of(context).colorScheme.primary,
+                        height: 20,
+                      ),
+                      const AppGap.xs(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${exerciseStats.overallBest.weight}*'
+                            '${exerciseStats.overallBest.repetitions}',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          Text(
+                            'overall best',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

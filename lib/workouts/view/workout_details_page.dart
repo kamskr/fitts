@@ -134,10 +134,10 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
       setState(() {
         _appColor = Colors.transparent;
       });
-    } else if (_scrollController.position.pixels > 100) {
+    } else if (_scrollController.position.pixels > 130) {
       _animationController.forward();
       setState(() {
-        _appColor = Colors.white;
+        _appColor = Theme.of(context).colorScheme.background;
       });
     }
   }
