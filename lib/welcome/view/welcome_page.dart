@@ -5,7 +5,6 @@ import 'package:fitts/sign_in/sign_in.dart';
 import 'package:fitts/sign_up/sign_up.dart';
 import 'package:fitts/welcome/welcome.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
@@ -41,41 +40,38 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
-      child: Scaffold(
-        body: BlocBuilder<WelcomeCubit, WelcomeState>(
-          buildWhen: (previous, current) => previous.status != current.status,
-          builder: (context, state) {
-            if (state.status.isSubmissionInProgress) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: const [
-                    SizedBox(height: 70),
-                    _WelcomeAppLogo(),
-                    AppGap.xlg(),
-                    _WelcomeTitle(),
-                    AppGap.xxs(),
-                    _WelcomeSubtitle(),
-                    SizedBox(height: 120),
-                    SignUpButton(),
-                    AppGap.sm(),
-                    SignUpWithGoogleButton(),
-                    AppGap.xxxlg(),
-                    _AlreadyHaveAccountText(),
-                    AppGap.md(),
-                    SignInButton(),
-                    AppGap.md(),
-                  ],
-                ),
+    return Scaffold(
+      body: BlocBuilder<WelcomeCubit, WelcomeState>(
+        buildWhen: (previous, current) => previous.status != current.status,
+        builder: (context, state) {
+          if (state.status.isSubmissionInProgress) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: const [
+                  SizedBox(height: 70),
+                  _WelcomeAppLogo(),
+                  AppGap.xlg(),
+                  _WelcomeTitle(),
+                  AppGap.xxs(),
+                  _WelcomeSubtitle(),
+                  SizedBox(height: 120),
+                  SignUpButton(),
+                  AppGap.sm(),
+                  SignUpWithGoogleButton(),
+                  AppGap.xxxlg(),
+                  _AlreadyHaveAccountText(),
+                  AppGap.md(),
+                  SignInButton(),
+                  AppGap.md(),
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
