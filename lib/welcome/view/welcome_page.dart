@@ -41,10 +41,6 @@ class WelcomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white.withOpacity(0),
-      ),
-      extendBodyBehindAppBar: true,
       body: BlocBuilder<WelcomeCubit, WelcomeState>(
         buildWhen: (previous, current) => previous.status != current.status,
         builder: (context, state) {

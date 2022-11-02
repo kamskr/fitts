@@ -157,24 +157,6 @@ class _WorkoutLogs extends StatelessWidget {
         ),
         for (final workoutLog in workoutLogsHistory)
           _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
-        for (final workoutLog in workoutLogsHistory)
-          _WorkoutLogItem(workoutLog: workoutLog),
       ],
     );
   }
