@@ -13,7 +13,7 @@ class _CardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exerciseData = context.watch<ExerciseCardData>();
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final exerciseId = exerciseData.exercise.exerciseId;
     final exercises = context.read<Map<String, Exercise>>();
     final exercise = exercises[exerciseId];
@@ -107,7 +107,7 @@ class _MiniMenu extends StatelessWidget {
           value: _MenuActions.delete,
           child: Text(
             'Remove exercise',
-            style: TextStyle(color: Theme.of(context).colorScheme.error),
+            style: TextStyle(color: context.colorScheme.error),
           ),
         ),
       ],

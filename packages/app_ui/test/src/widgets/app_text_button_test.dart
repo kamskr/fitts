@@ -17,7 +17,7 @@ void main() {
       await tester.pumpIt(
         Builder(
           builder: (context) => AppTextButton(
-            textColor: Theme.of(context).extension<AppColorScheme>()!.black100,
+            textColor: context.appColorScheme.black100,
             child: const Text('T'),
             onPressed: () {},
           ),

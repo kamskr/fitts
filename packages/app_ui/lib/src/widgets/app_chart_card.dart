@@ -75,9 +75,9 @@ class AppChartCard extends StatelessWidget {
         space: 0,
         child: Text(
           text,
-          style: Theme.of(context).textTheme.overline!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary.withOpacity(.8),
-              ),
+          style: context.textTheme.overline!.copyWith(
+            color: context.colorScheme.onPrimary.withOpacity(.8),
+          ),
         ),
       );
     }
@@ -90,9 +90,9 @@ class AppChartCard extends StatelessWidget {
 
       final Widget text = Text(
         labels![value.toInt()],
-        style: Theme.of(context).textTheme.overline!.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary.withOpacity(.8),
-            ),
+        style: context.textTheme.overline!.copyWith(
+          color: context.colorScheme.onPrimary.withOpacity(.8),
+        ),
       );
 
       return SideTitleWidget(
@@ -176,13 +176,12 @@ class AppChartCard extends StatelessWidget {
                       child: Center(
                         child: Text(
                           emptyText!,
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary
-                                        .withOpacity(.8),
-                                  ),
+                          style: context.textTheme.bodyText1!.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary
+                                .withOpacity(.8),
+                          ),
                         ),
                       ),
                     ),

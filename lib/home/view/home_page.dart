@@ -43,7 +43,7 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: context.colorScheme.background,
       ),
       body: const SafeArea(
         child: _HomeBody(),
@@ -204,7 +204,7 @@ class _DashboardStatsItem extends StatelessWidget {
                   children: [
                     Text(
                       count,
-                      style: Theme.of(context).textTheme.headline4,
+                      style: context.textTheme.headline4,
                     ),
                     if (suffix != null)
                       Padding(
@@ -214,7 +214,7 @@ class _DashboardStatsItem extends StatelessWidget {
                         ),
                         child: Text(
                           suffix!,
-                          style: Theme.of(context).textTheme.subtitle2,
+                          style: context.textTheme.subtitle2,
                         ),
                       ),
                   ],
@@ -222,11 +222,11 @@ class _DashboardStatsItem extends StatelessWidget {
                 const AppGap.xxxs(),
                 Text(
                   titlePart1,
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: context.textTheme.subtitle2,
                 ),
                 Text(
                   titlePart2,
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: context.textTheme.subtitle2,
                 ),
               ],
             ),
@@ -243,7 +243,7 @@ class _HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final userProfile = context.watch<AppBloc>().state.userProfile;
 
     return Padding(
@@ -302,7 +302,7 @@ class _PreviousWorkout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     final l10n = context.l10n;
     final workoutLog = context.watch<HomeBloc>().state.recentWorkoutLog!;
 
@@ -387,7 +387,7 @@ class _EmptyWorkouts extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         const Color.fromARGB(0, 255, 255, 255),
-                        Theme.of(context).colorScheme.background,
+                        context.colorScheme.background,
                       ],
                       stops: const [.1, .8],
                     ),
@@ -404,7 +404,7 @@ class _EmptyWorkouts extends StatelessWidget {
           ),
           child: Text(
             l10n.homePageNoWorkoutsMessage,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: context.textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
         ),
@@ -458,15 +458,15 @@ class _NextWorkout extends StatelessWidget {
             children: [
               Text(
                 l10n.homePageNextWorkoutLabel,
-                style: Theme.of(context).textTheme.subtitle2,
+                style: context.textTheme.subtitle2,
               ),
               AppTextButton(
                 onPressed: () {
                   Navigator.of(context).push(MyWorkoutsPage.route());
                 },
-                textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                textStyle: context.textTheme.bodyText1!.copyWith(
+                  color: context.colorScheme.primary,
+                ),
                 child: Text(l10n.homePageShowAllWorkouts),
               ),
             ],

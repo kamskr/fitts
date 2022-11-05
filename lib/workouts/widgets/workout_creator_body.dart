@@ -92,8 +92,8 @@ class _AppBar extends StatelessWidget {
           )
         else
           AppTextButton(
-            textStyle: Theme.of(context).textTheme.bodyText1,
-            textColor: Theme.of(context).colorScheme.onPrimary,
+            textStyle: context.textTheme.bodyText1,
+            textColor: context.colorScheme.onPrimary,
             child: const Text('Save'),
             // ignore: unnecessary_lambdas
             onPressed: () {
@@ -110,8 +110,7 @@ class _AppBar extends StatelessWidget {
       expandedHeight: 150,
       flexibleSpace: DecoratedBox(
         decoration: BoxDecoration(
-          gradient:
-              Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
+          gradient: context.appColorScheme.primaryGradient2,
         ),
         child: FlexibleSpaceBar(
           title: BlocBuilder<WorkoutCreatorBloc, WorkoutCreatorState>(
@@ -149,7 +148,7 @@ class _BasicInfo extends StatelessWidget {
               ),
               initialValue:
                   context.read<WorkoutCreatorBloc>().state.workoutTemplate.name,
-              style: Theme.of(context).textTheme.headline5,
+              style: context.textTheme.headline5,
               onChanged: (value) {
                 final bloc = context.read<WorkoutCreatorBloc>();
                 bloc.add(
@@ -247,7 +246,7 @@ class _NoExercisesAdded extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         const Color.fromARGB(0, 255, 255, 255),
-                        Theme.of(context).colorScheme.background,
+                        context.colorScheme.background,
                       ],
                       stops: const [.1, .8],
                     ),
@@ -264,7 +263,7 @@ class _NoExercisesAdded extends StatelessWidget {
           ),
           child: Text(
             'No exercises added yet',
-            style: Theme.of(context).textTheme.bodyText1,
+            style: context.textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
         ),

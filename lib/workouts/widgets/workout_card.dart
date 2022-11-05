@@ -65,9 +65,9 @@ class WorkoutCard extends StatelessWidget {
               children: [
                 Text(
                   workoutTemplate.name,
-                  style: Theme.of(context).textTheme.headline5!.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
+                  style: context.textTheme.headline5!.copyWith(
+                    color: context.colorScheme.onPrimary,
+                  ),
                 ),
                 if (workoutTemplate.lastPerformed != null)
                   Text(
@@ -76,9 +76,9 @@ class WorkoutCard extends StatelessWidget {
                         workoutTemplate.lastPerformed!,
                       ),
                     ),
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
+                    style: context.textTheme.bodyText2!.copyWith(
+                      color: context.colorScheme.onPrimary,
+                    ),
                   ),
               ],
             ),
@@ -101,21 +101,15 @@ class WorkoutCard extends StatelessWidget {
                       children: [
                         Text(
                           workoutTemplate.workoutsCompleted.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
+                          style: context.textTheme.headline5!.copyWith(
+                            color: context.colorScheme.onPrimary,
+                          ),
                         ),
                         Text(
                           l10n.homePageNextWorkoutTimesCompleted,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
+                          style: context.textTheme.bodyText2!.copyWith(
+                            color: context.colorScheme.onPrimary,
+                          ),
                         ),
                       ],
                     ),

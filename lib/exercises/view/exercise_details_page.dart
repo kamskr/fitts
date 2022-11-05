@@ -84,7 +84,7 @@ class _ExerciseDetailsViewState extends State<_ExerciseDetailsView>
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 1,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: context.colorScheme.background,
         actions: [
           if (!widget.viewOnly) const _AddExerciseButton(),
         ],
@@ -152,7 +152,7 @@ class _ExerciseContent extends StatelessWidget {
           ),
           child: Text(
             context.read<Exercise>().name,
-            style: Theme.of(context).textTheme.headline3,
+            style: context.textTheme.headline3,
           ),
         ),
         Padding(
@@ -161,7 +161,7 @@ class _ExerciseContent extends StatelessWidget {
           ),
           child: Text(
             TextFormatters.camelToSentence(exercise.category.name),
-            style: Theme.of(context).textTheme.headline5,
+            style: context.textTheme.headline5,
           ),
         ),
         const AppGap.md(),
@@ -204,7 +204,7 @@ class _MusclesInvolved extends StatelessWidget {
         children: [
           Text(
             'MUSCLES INVOLVED',
-            style: Theme.of(context).textTheme.caption,
+            style: context.textTheme.caption,
           ),
           const AppGap.md(),
           Wrap(
@@ -250,16 +250,16 @@ class _ExerciseMuscleChip extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: isPrimary
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).extension<AppColorScheme>()!.primary400,
+                  ? context.colorScheme.primary
+                  : context.appColorScheme.primary400,
               borderRadius: BorderRadius.circular(AppSpacing.xxs),
             ),
             child: Center(
               child: Text(
                 TextFormatters.camelToSentence(muscle.name),
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
+                style: context.textTheme.bodyText1!.copyWith(
+                  color: context.colorScheme.onPrimary,
+                ),
               ),
             ),
           ),
@@ -285,7 +285,7 @@ class _About extends StatelessWidget {
         children: [
           Text(
             'ABOUT',
-            style: Theme.of(context).textTheme.caption,
+            style: context.textTheme.caption,
           ),
           if (equipmentType != null) ...[
             const AppGap.md(),
@@ -295,7 +295,7 @@ class _About extends StatelessWidget {
                 const AppGap.xs(),
                 Text(
                   TextFormatters.camelToSentence(equipmentType.name),
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: context.textTheme.bodyText1,
                 ),
               ],
             ),
@@ -308,7 +308,7 @@ class _About extends StatelessWidget {
                 const AppGap.xs(),
                 Text(
                   TextFormatters.camelToSentence(mechanicType.name),
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: context.textTheme.bodyText1,
                 ),
               ],
             ),
@@ -338,7 +338,7 @@ class _Aliases extends StatelessWidget {
         children: [
           Text(
             'ALIASES',
-            style: Theme.of(context).textTheme.caption,
+            style: context.textTheme.caption,
           ),
           const AppGap.sm(),
           for (String alias in aliases) ...[
@@ -363,16 +363,16 @@ class _LevelIndicator extends StatelessWidget {
 
     switch (level) {
       case Level.beginner:
-        color = Theme.of(context).extension<AppColorScheme>()!.secondaryAccent;
+        color = context.appColorScheme.secondaryAccent;
         break;
       case Level.intermediate:
-        color = Theme.of(context).extension<AppColorScheme>()!.primary500;
+        color = context.appColorScheme.primary500;
         break;
       case Level.advanced:
-        color = Theme.of(context).extension<AppColorScheme>()!.accent500;
+        color = context.appColorScheme.accent500;
         break;
       case Level.expert:
-        color = Theme.of(context).colorScheme.error;
+        color = context.colorScheme.error;
         break;
     }
 
@@ -383,7 +383,7 @@ class _LevelIndicator extends StatelessWidget {
         children: [
           Text(
             'LEVEL',
-            style: Theme.of(context).textTheme.caption,
+            style: context.textTheme.caption,
           ),
           const AppGap.md(),
           Container(
@@ -400,7 +400,7 @@ class _LevelIndicator extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
-                  .copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                  .copyWith(color: context.colorScheme.onPrimary),
             ),
           ),
         ],

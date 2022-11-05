@@ -112,7 +112,7 @@ class _WorkoutHistoryContentState extends State<_WorkoutHistoryContent>
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 1,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: context.colorScheme.background,
         title: AnimatedBuilder(
           animation: _colorTween,
           builder: (_, __) => Text(
@@ -152,7 +152,7 @@ class _WorkoutLogs extends StatelessWidget {
           ),
           child: Text(
             'Workout History',
-            style: Theme.of(context).textTheme.headline3,
+            style: context.textTheme.headline3,
           ),
         ),
         for (final workoutLog in workoutLogsHistory)
@@ -172,7 +172,7 @@ class _WorkoutLogItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.xxs,

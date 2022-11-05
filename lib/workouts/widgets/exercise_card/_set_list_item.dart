@@ -39,7 +39,7 @@ class _SetListItem extends StatelessWidget {
         },
         direction: DismissDirection.endToStart,
         background: ColoredBox(
-          color: Theme.of(context).colorScheme.error,
+          color: context.colorScheme.error,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: const [
@@ -272,7 +272,7 @@ class _AddRepButton extends StatelessWidget {
       width: 44,
       decoration: BoxDecoration(
         border: Border.all(
-          color: Theme.of(context).extension<AppColorScheme>()!.black100,
+          color: context.appColorScheme.black100,
         ),
       ),
       child: AppTextButton(
@@ -298,7 +298,7 @@ class _RemoveRepButton extends StatelessWidget {
       width: 44,
       decoration: BoxDecoration(
         border: Border.all(
-          color: Theme.of(context).extension<AppColorScheme>()!.black100,
+          color: context.appColorScheme.black100,
         ),
       ),
       child: AppTextButton(
