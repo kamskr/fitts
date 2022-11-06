@@ -48,6 +48,7 @@ void main() {
           exerciseStats.repetitionsDone,
           exerciseStats.timesPerformed,
           exerciseStats.overallBest,
+          null,
         ]),
       );
     });

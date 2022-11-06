@@ -100,6 +100,7 @@ void main() {
             'highestWeight': 130,
             'repetitionsDone': 10,
             'timesPerformed': 50,
+            'history': [],
             'overallBest': {
               'repetitions': 10,
               'weight': 130,

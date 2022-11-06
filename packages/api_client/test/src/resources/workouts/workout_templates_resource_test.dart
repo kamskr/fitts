@@ -54,7 +54,12 @@ void main() {
       'averageWorkoutLength': 1,
       'lastAverageRestTime': 1,
       'lastPerformed': DateTime(2020).toIso8601String(),
-      'recentTotalTonnageLifted': [1],
+      'recentTotalTonnageLifted': [
+        {
+          'timePerformed': DateTime(2020).toIso8601String(),
+          'weight': 1,
+        }
+      ],
       'exercises': [
         {
           'exerciseId': 'Squat',
@@ -252,7 +257,9 @@ void main() {
               averageWorkoutLength: 3,
               lastAverageRestTime: 4,
               lastPerformed: DateTime(2020),
-              recentTotalTonnageLifted: const [1],
+              recentTotalTonnageLifted: [
+                RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+              ],
               exercises: const [
                 WorkoutExercise(
                   exerciseId: 'exerciseId',
@@ -293,7 +300,9 @@ void main() {
                 averageWorkoutLength: 3,
                 lastAverageRestTime: 4,
                 lastPerformed: DateTime(2020),
-                recentTotalTonnageLifted: const [1],
+                recentTotalTonnageLifted: [
+                  RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+                ],
                 exercises: const [
                   WorkoutExercise(
                     exerciseId: 'exerciseId',
@@ -330,7 +339,9 @@ void main() {
               averageWorkoutLength: 3,
               lastAverageRestTime: 4,
               lastPerformed: DateTime(2020),
-              recentTotalTonnageLifted: const [1],
+              recentTotalTonnageLifted: [
+                RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+              ],
               exercises: const [
                 WorkoutExercise(
                   exerciseId: 'exerciseId',
@@ -370,7 +381,9 @@ void main() {
                 averageWorkoutLength: 3,
                 lastAverageRestTime: 4,
                 lastPerformed: DateTime(2020),
-                recentTotalTonnageLifted: const [1],
+                recentTotalTonnageLifted: [
+                  RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+                ],
                 exercises: const [
                   WorkoutExercise(
                     exerciseId: 'exerciseId',
