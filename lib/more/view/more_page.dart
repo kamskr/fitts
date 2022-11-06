@@ -64,7 +64,7 @@ class MorePage extends StatelessWidget {
               ],
             ),
           ),
-          const _ActiveRoutine(),
+          const _ActivePlan(),
           const _Redirects(),
           const _SignOutButton(),
         ],
@@ -73,8 +73,8 @@ class MorePage extends StatelessWidget {
   }
 }
 
-class _ActiveRoutine extends StatelessWidget {
-  const _ActiveRoutine({
+class _ActivePlan extends StatelessWidget {
+  const _ActivePlan({
     Key? key,
   }) : super(key: key);
 
