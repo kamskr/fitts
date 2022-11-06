@@ -79,14 +79,14 @@ class _AppBar extends StatelessWidget {
             .state
             .status
             .isSubmissionInProgress)
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
             child: SizedBox(
               height: 16,
               width: 16,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: Colors.white,
+                color: context.colorScheme.onPrimary,
               ),
             ),
           )

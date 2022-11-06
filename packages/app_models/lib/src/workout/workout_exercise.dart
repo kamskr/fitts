@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app_models/app_models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -37,6 +39,43 @@ class WorkoutExercise extends Equatable {
 
   /// Rest time in seconds.
   final int restTime;
+
+  /// Get total reps in this exercise.
+  int get totalReps {
+    return sets.fold<int>(
+      0,
+      (previousValue, element) => previousValue + element.repetitions,
+    );
+  }
+
+  /// Get highest weight in this exercise.
+  double get highestWeight {
+    return sets.fold<double>(
+      0,
+      (previousValue, element) => max(previousValue, element.weight),
+    );
+  }
+
+  /// Get overall best set in this exercise.
+  OverallBest get overallBest {
+    const currentOverallBest = OverallBest(weight: 0, repetitions: 0);
+
+    return sets.fold<OverallBest>(
+      currentOverallBest,
+      (previousValue, element) {
+        final currentOverallBest = element.weight * element.repetitions;
+        final previousOverallBest =
+            previousValue.weight * previousValue.repetitions;
+
+        return currentOverallBest > previousOverallBest
+            ? OverallBest(
+                weight: element.weight,
+                repetitions: element.repetitions,
+              )
+            : previousValue;
+      },
+    );
+  }
 
   /// Creates a copy of [WorkoutExercise].
   WorkoutExercise copyWith({

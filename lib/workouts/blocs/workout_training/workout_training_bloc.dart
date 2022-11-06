@@ -152,10 +152,18 @@ class WorkoutTrainingBloc
         lastAverageRestTime: updatedWorkoutLog.averageRestTime,
         recentTotalTonnageLifted:
             state.workoutTemplate.recentTotalTonnageLifted == null
-                ? [updatedWorkoutLog.totalWeight.toInt()]
+                ? [
+                    RecentTonnage(
+                      timePerformed: updatedWorkoutLog.datePerformed,
+                      weight: updatedWorkoutLog.totalWeight,
+                    )
+                  ]
                 : [
                     ...state.workoutTemplate.recentTotalTonnageLifted!,
-                    updatedWorkoutLog.totalWeight.toInt()
+                    RecentTonnage(
+                      timePerformed: updatedWorkoutLog.datePerformed,
+                      weight: updatedWorkoutLog.totalWeight,
+                    )
                   ],
         tonnageLifted: state.workoutTemplate.tonnageLifted +
             updatedWorkoutLog.totalWeight.toInt(),
@@ -210,15 +218,11 @@ class WorkoutTrainingBloc
       for (final exercise in updatedWorkoutLog.exercises) {
         final previousStats = currentStats.exercisesStats[exercise.exerciseId];
 
-        final totalReps = exercise.sets.fold<int>(
-          previousStats?.repetitionsDone ?? 0,
-          (previousValue, element) => previousValue + element.repetitions,
-        );
+        final totalReps =
+            (previousStats?.repetitionsDone ?? 0) + exercise.totalReps;
 
-        final highestWeight = exercise.sets.fold<double>(
-          previousStats?.highestWeight ?? 0,
-          (previousValue, element) => max(previousValue, element.weight),
-        );
+        final highestWeight =
+            max(previousStats?.highestWeight ?? 0, exercise.highestWeight);
 
         final timesPerformed = (previousStats?.timesPerformed ?? 0) + 1;
 
@@ -226,25 +230,27 @@ class WorkoutTrainingBloc
             (previousStats?.overallBest.repetitions ?? 0) *
                 (previousStats?.overallBest.weight ?? 0.0);
 
-        var currentOverallBest = previousStats?.overallBest ??
-            const OverallBest(weight: 0, repetitions: 0);
+        var currentOverallBest = exercise.overallBest;
 
-        for (final set in exercise.sets) {
-          final value = set.repetitions * max(set.weight, 1);
-
-          if (value >= prevOverallBestValue) {
-            currentOverallBest = OverallBest(
-              repetitions: set.repetitions,
-              weight: set.weight,
-            );
-          }
+        if (currentOverallBest.repetitions * currentOverallBest.weight <
+            prevOverallBestValue) {
+          currentOverallBest = previousStats?.overallBest ??
+              const OverallBest(weight: 0, repetitions: 0);
         }
+
+        final exerciseHistory = ExercisePerformHistory(
+          datePerformed: updatedWorkoutLog.datePerformed,
+          details: exercise,
+        );
 
         final newExerciseStats = ExerciseStats(
           timesPerformed: timesPerformed,
           repetitionsDone: totalReps,
           highestWeight: highestWeight,
           overallBest: currentOverallBest,
+          history: previousStats?.history == null
+              ? [exerciseHistory]
+              : [...previousStats!.history!, exerciseHistory],
         );
 
         updatedUserStats.exercisesStats[exercise.exerciseId] = newExerciseStats;

@@ -435,7 +435,7 @@ class _NextWorkout extends StatelessWidget {
           workoutTemplate.recentTotalTonnageLifted!.asMap().entries;
 
       for (final entry in tonnageEntries) {
-        tonnageLifted[entry.key] = entry.value.toDouble();
+        tonnageLifted[entry.key] = entry.value.weight;
       }
     }
 

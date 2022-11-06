@@ -56,6 +56,8 @@ class UserStatsResource {
     required UserStats payload,
   }) async {
     try {
+      final json = payload.toJson();
+
       await _firebaseFirestore
           .collection(_collectionName)
           .doc(userId)

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:fitts/l10n/l10n.dart';
@@ -40,13 +42,18 @@ class WorkoutCard extends StatelessWidget {
     final l10n = context.l10n;
     final tonnageLifted = List<double>.filled(6, 0);
 
-    if (workoutTemplate.recentTotalTonnageLifted != null) {
-      final tonnageEntries =
-          workoutTemplate.recentTotalTonnageLifted!.asMap().entries;
+    if (workoutTemplate.recentTotalTonnageLifted != null &&
+        workoutTemplate.recentTotalTonnageLifted!.isNotEmpty) {
+      final sortedRecentTonnage = [...workoutTemplate.recentTotalTonnageLifted!]
+        ..sort((a, b) => a.timePerformed.compareTo(b.timePerformed));
 
-      for (final entry in tonnageEntries) {
-        tonnageLifted[entry.key] = entry.value.toDouble();
+      for (var i = 0; i < min(sortedRecentTonnage.length, 6); i++) {
+        tonnageLifted[i] = sortedRecentTonnage[i].weight;
       }
+
+      // for (final entry in tonnageEntries) {
+      //   tonnageLifted[entry.key] = entry.value.;
+      // }
     }
 
     return SizedBox(
