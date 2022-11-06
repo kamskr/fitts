@@ -632,7 +632,7 @@ class _RestProgressIndicatorState extends State<_RestProgressIndicator>
             return CircularProgressIndicator(
               backgroundColor: context.appColorScheme.primary50,
               valueColor: AlwaysStoppedAnimation<Color>(
-                context.appColorScheme.primary500,
+                context.appColorScheme.primary,
               ),
               value: 1 - _animationController.value,
               strokeWidth: 8,

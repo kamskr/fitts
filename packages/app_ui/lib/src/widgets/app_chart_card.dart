@@ -110,7 +110,9 @@ class AppChartCard extends StatelessWidget {
         barRods: [
           BarChartRodData(
             toY: y / 1000,
-            color: x.isEven ? AppColors.primary[100] : AppColors.primary[400],
+            color: x.isEven
+                ? context.appColorScheme.primary100
+                : context.appColorScheme.primary400,
             width: 25,
             borderRadius: BorderRadius.zero,
           ),

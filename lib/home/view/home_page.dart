@@ -84,10 +84,10 @@ class _HomeBody extends StatelessWidget {
           const Divider(height: 1),
           const _DashboardStats(),
           const Divider(height: 1),
-          const AppGap.md(),
+          const AppGap.sm(),
           if (state.recentWorkoutLog != null) ...[
             const _PreviousWorkout(),
-            const AppGap.md(),
+            const AppGap.sm(),
             const Divider(height: 1),
           ],
           if (state.workoutTemplates != null &&
@@ -302,8 +302,6 @@ class _PreviousWorkout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme;
-    final l10n = context.l10n;
     final workoutLog = context.watch<HomeBloc>().state.recentWorkoutLog!;
 
     return GestureDetector(
@@ -316,40 +314,32 @@ class _PreviousWorkout extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                WorkoutDateChip(date: workoutLog.datePerformed),
-                const AppGap.md(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.homePagePreviousWorkoutLabel,
-                      style: theme.textTheme.bodyText2,
-                    ),
-                    const AppGap.xxs(),
-                    Text(
-                      workoutLog.workoutTemplate.name,
-                      style: theme.textTheme.headline6,
-                    ),
-                    Text(
-                      l10n.homePagePreviousWorkoutExercisesCount(
-                        workoutLog.exercises.length,
-                      ),
-                      style: theme.textTheme.bodyText1,
-                    ),
-                  ],
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+        child: ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: WorkoutDateChip(date: workoutLog.datePerformed),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DateTimeFormatters.monthDayYearTime(
+                  workoutLog.datePerformed,
                 ),
-              ],
-            ),
-            Assets.icons.icChevronRight.svg(),
-          ],
+                style: context.theme.textTheme.bodyText2,
+              ),
+              const AppGap.xxs(),
+              Text(
+                workoutLog.workoutTemplate.name,
+                style: context.theme.textTheme.headline6,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                'Exercises completed: ${workoutLog.exercises.length}',
+                style: context.theme.textTheme.bodyText1,
+              ),
+            ],
+          ),
+          trailing: const Icon(Icons.chevron_right),
         ),
       ),
     );

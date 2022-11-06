@@ -191,37 +191,33 @@ class _WorkoutLogItem extends StatelessWidget {
           elevation: 0,
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.xs),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    WorkoutDateChip(date: workoutLog.datePerformed),
-                    const AppGap.md(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          DateTimeFormatters.monthDayYearTime(
-                            workoutLog.datePerformed,
-                          ),
-                          style: theme.textTheme.bodyText2,
-                        ),
-                        const AppGap.xxs(),
-                        Text(
-                          workoutLog.workoutTemplate.name,
-                          style: theme.textTheme.headline6,
-                        ),
-                        Text(
-                          'Exercises completed: ${workoutLog.exercises.length}',
-                          style: theme.textTheme.bodyText1,
-                        ),
-                      ],
+            child: ListTile(
+              contentPadding: const EdgeInsets.only(
+                right: AppSpacing.xs,
+              ),
+              leading: WorkoutDateChip(date: workoutLog.datePerformed),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    DateTimeFormatters.monthDayYearTime(
+                      workoutLog.datePerformed,
                     ),
-                  ],
-                ),
-                Assets.icons.icChevronRight.svg(),
-              ],
+                    style: theme.textTheme.bodyText2,
+                  ),
+                  const AppGap.xxs(),
+                  Text(
+                    workoutLog.workoutTemplate.name,
+                    style: theme.textTheme.headline6,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    'Exercises completed: ${workoutLog.exercises.length}',
+                    style: theme.textTheme.bodyText1,
+                  ),
+                ],
+              ),
+              trailing: const Icon(Icons.chevron_right),
             ),
           ),
         ),

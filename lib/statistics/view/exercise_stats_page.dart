@@ -399,10 +399,10 @@ class _LevelIndicator extends StatelessWidget {
         color = context.appColorScheme.secondaryAccent;
         break;
       case Level.intermediate:
-        color = context.appColorScheme.primary500;
+        color = context.appColorScheme.primary;
         break;
       case Level.advanced:
-        color = context.appColorScheme.accent500;
+        color = context.appColorScheme.accent;
         break;
       case Level.expert:
         color = context.colorScheme.error;
