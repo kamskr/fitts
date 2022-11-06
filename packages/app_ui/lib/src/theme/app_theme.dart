@@ -41,6 +41,7 @@ abstract class AppTheme {
     primary400: AppColors.primary[400]!,
     primary: AppColors.primary,
     primary900: AppColors.primary[900]!,
+    primary1000: AppColors.primary[1000]!,
     accent300: AppColors.accent[300]!,
     accent: AppColors.accent,
     accent900: AppColors.accent[900]!,

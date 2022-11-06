@@ -11,6 +11,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.primary400,
     required this.primary,
     required this.primary900,
+    required this.primary1000,
     required this.accent300,
     required this.accent,
     required this.accent900,
@@ -39,6 +40,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color primary100;
   final Color primary400;
   final Color primary900;
+  final Color primary1000;
 
   final Color accent;
   final Color accent300;
@@ -73,6 +75,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? primary400,
     Color? primary,
     Color? primary900,
+    Color? primary1000,
     Color? accent300,
     Color? accent,
     Color? accent900,
@@ -100,6 +103,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       primary400: primary400 ?? this.primary400,
       primary: primary ?? this.primary,
       primary900: primary900 ?? this.primary900,
+      primary1000: primary1000 ?? this.primary1000,
       accent300: accent300 ?? this.accent300,
       accent: accent ?? this.accent,
       accent900: accent900 ?? this.accent900,
@@ -140,6 +144,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       primary400: Color.lerp(primary400, other.primary400, t)!,
       primary: Color.lerp(primary, other.primary, t)!,
       primary900: Color.lerp(primary900, other.primary900, t)!,
+      primary1000: Color.lerp(primary1000, other.primary1000, t)!,
       accent300: Color.lerp(accent300, other.accent300, t)!,
       accent: Color.lerp(accent, other.accent, t)!,
       accent900: Color.lerp(accent900, other.accent900, t)!,
