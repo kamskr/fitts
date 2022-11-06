@@ -54,7 +54,7 @@ class _MaleOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainColors = Theme.of(context).colorScheme;
+    final mainColors = context.colorScheme;
 
     return GestureDetector(
       onTap: () {
@@ -83,7 +83,7 @@ class _FemaleOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainColors = Theme.of(context).colorScheme;
+    final mainColors = context.colorScheme;
 
     return GestureDetector(
       onTap: () {
@@ -112,7 +112,7 @@ class _GenderCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainColors = Theme.of(context).colorScheme;
+    final mainColors = context.colorScheme;
 
     return SizedBox(
       height: 110,

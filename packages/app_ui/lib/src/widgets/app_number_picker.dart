@@ -56,14 +56,14 @@ class AppNumberPicker extends StatelessWidget {
             axis: isHorizontal ? Axis.horizontal : Axis.vertical,
             textStyle: TextStyle(
               fontSize: 20,
-              color: AppColors.black[500]!.withOpacity(0.5),
+              color: context.appColorScheme.black500.withOpacity(0.5),
             ),
             selectedTextStyle: const TextStyle(
               fontSize: 28,
             ),
           ),
         ),
-        const Positioned.fill(
+        Positioned.fill(
           child: Align(
             child: IgnorePointer(
               child: SizedBox(
@@ -73,10 +73,10 @@ class AppNumberPicker extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        color: AppColors.primary,
+                        color: context.appColorScheme.primary,
                       ),
                       bottom: BorderSide(
-                        color: AppColors.primary,
+                        color: context.appColorScheme.primary,
                       ),
                     ),
                   ),

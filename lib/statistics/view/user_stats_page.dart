@@ -121,7 +121,7 @@ class _UserStatsContentState extends State<_UserStatsContent>
       child: Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 1,
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: context.colorScheme.background,
           title: AnimatedBuilder(
             animation: _colorTween,
             builder: (_, __) => Text(
@@ -145,14 +145,14 @@ class _UserStatsContentState extends State<_UserStatsContent>
                         ),
                         child: Text(
                           'Statistics',
-                          style: Theme.of(context).textTheme.headline3,
+                          style: context.textTheme.headline3,
                         ),
                       ),
                     ),
                     SliverPinnedHeader(
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.background,
+                          color: context.colorScheme.background,
                           border: Border(
                             bottom: BorderSide(
                               color: Theme.of(context).dividerColor,
@@ -161,9 +161,8 @@ class _UserStatsContentState extends State<_UserStatsContent>
                         ),
                         child: TabBar(
                           controller: _tabController,
-                          labelColor:
-                              Theme.of(context).colorScheme.onBackground,
-                          indicatorColor: Theme.of(context).colorScheme.primary,
+                          labelColor: context.colorScheme.onBackground,
+                          indicatorColor: context.colorScheme.primary,
                           tabs: const [
                             Tab(
                               text: 'Global stats',
@@ -225,7 +224,7 @@ class _GeneralStats extends StatelessWidget {
     final userProfile = context.watch<AppBloc>().state.userProfile;
     final userStats = context.watch<StatisticsBloc>().state.userStats!;
     final totalKg = userStats.globalStats.totalKgLifted;
-    final iconColor = Theme.of(context).colorScheme.primary;
+    final iconColor = context.colorScheme.primary;
     const iconHeight = 22.0;
 
     late String totalKgString;
@@ -294,7 +293,7 @@ class _KeyLifts extends StatelessWidget {
         children: [
           Text(
             'KEY LIFTS OVERALL BEST',
-            style: Theme.of(context).textTheme.caption,
+            style: context.textTheme.caption,
           ),
           for (String exerciseKey in userStats.globalStats.keyLifts) ...[
             const AppGap.md(),
@@ -327,17 +326,16 @@ class _KeyLiftCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSpacing.xxxs),
-        gradient:
-            Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
+        gradient: context.appColorScheme.primaryGradient2,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             exercise?.name ?? 'This exercise does not exist',
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+            style: context.textTheme.labelLarge!.copyWith(
+              color: context.colorScheme.onPrimary,
+            ),
           ),
           const AppGap.md(),
           if (exerciseStats == null)
@@ -346,7 +344,7 @@ class _KeyLiftCard extends StatelessWidget {
                 'no data',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: context.colorScheme.onPrimary,
                 ),
               ),
             )
@@ -359,43 +357,43 @@ class _KeyLiftCard extends StatelessWidget {
                     children: [
                       Text(
                         exerciseStats.overallBest.weight.toString(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
+                        style: context.textTheme.headline1!.copyWith(
+                          color: context.colorScheme.onPrimary,
+                        ),
                       ),
                       Text(
                         'kg',
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary
-                                  .withOpacity(0.8),
-                            ),
+                        style: context.textTheme.subtitle1!.copyWith(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary
+                              .withOpacity(0.8),
+                        ),
                       ),
                     ],
                   ),
                   Text(
                     '*',
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
+                    style: context.textTheme.headline1!.copyWith(
+                      color: context.colorScheme.onPrimary,
+                    ),
                   ),
                   Column(
                     children: [
                       Text(
                         exerciseStats.overallBest.repetitions.toString(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
+                        style: context.textTheme.headline1!.copyWith(
+                          color: context.colorScheme.onPrimary,
+                        ),
                       ),
                       Text(
                         'reps',
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onPrimary
-                                  .withOpacity(0.8),
-                            ),
+                        style: context.textTheme.subtitle1!.copyWith(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary
+                              .withOpacity(0.8),
+                        ),
                       ),
                     ],
                   ),
@@ -416,7 +414,7 @@ class _ExercisesSearch extends StatelessWidget {
     return Container(
       height: 54,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: context.colorScheme.background,
         border: Border(
           bottom: BorderSide(
             color: Theme.of(context).dividerColor,
@@ -427,7 +425,7 @@ class _ExercisesSearch extends StatelessWidget {
       child: Row(
         children: [
           Assets.icons.icSearch.svg(
-            color: Theme.of(context).colorScheme.primary,
+            color: context.colorScheme.primary,
             height: 20,
           ),
           const AppGap.xs(),
@@ -440,18 +438,18 @@ class _ExercisesSearch extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 isDense: true,
                 border: InputBorder.none,
-                hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withOpacity(0.5),
-                    ),
+                hintStyle: context.textTheme.bodyText1!.copyWith(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onBackground
+                      .withOpacity(0.5),
+                ),
               ),
               enableSuggestions: false,
               autocorrect: false,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
+              style: context.textTheme.bodyText1!.copyWith(
+                color: context.colorScheme.onBackground,
+              ),
               textAlign: TextAlign.left,
               onChanged: (value) {
                 context
@@ -534,7 +532,7 @@ class _ExerciseSpecificCard extends StatelessWidget {
             children: [
               Text(
                 exercise.name,
-                style: Theme.of(context).textTheme.headline6,
+                style: context.textTheme.headline6,
               ),
               const AppGap.md(),
               Row(
@@ -544,7 +542,7 @@ class _ExerciseSpecificCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Assets.icons.icWorkoutsCompleted.svg(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: context.colorScheme.primary,
                         height: 20,
                       ),
                       const AppGap.xs(),
@@ -553,11 +551,11 @@ class _ExerciseSpecificCard extends StatelessWidget {
                         children: [
                           Text(
                             exerciseStats.timesPerformed.toString(),
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: context.textTheme.bodyLarge,
                           ),
                           Text(
                             'times performed',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: context.textTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -567,7 +565,7 @@ class _ExerciseSpecificCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Assets.icons.icTonnageLifted.svg(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: context.colorScheme.primary,
                         height: 20,
                       ),
                       const AppGap.xs(),
@@ -577,11 +575,11 @@ class _ExerciseSpecificCard extends StatelessWidget {
                           Text(
                             '${exerciseStats.overallBest.weight}*'
                             '${exerciseStats.overallBest.repetitions}',
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: context.textTheme.bodyLarge,
                           ),
                           Text(
                             'overall best',
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: context.textTheme.bodySmall,
                           ),
                         ],
                       ),

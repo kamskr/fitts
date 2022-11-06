@@ -21,7 +21,7 @@ class _SetIndicator extends StatelessWidget {
         children: [
           Text(
             'SET ${setData.setIndex + 1}',
-            style: Theme.of(context).textTheme.bodyText2,
+            style: context.textTheme.bodyText2,
           ),
           if (setData.set.isDone == true && isEditingSet == false) ...[
             const AppGap.md(),
@@ -45,7 +45,7 @@ class _SetIndicator extends StatelessWidget {
                   ),
                 ),
                 child: Assets.icons.icCheckmark.svg(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: context.colorScheme.onPrimary,
                 ),
               ),
             ),
@@ -119,7 +119,7 @@ class _WeightIndicatorState extends State<_WeightIndicator> {
         const AppGap.xxs(),
         Text(
           'kg',
-          style: Theme.of(context).textTheme.bodyText2,
+          style: context.textTheme.bodyText2,
         ),
         const AppGap.xs(),
       ],
@@ -188,7 +188,7 @@ class _RepsCountState extends State<_RepsCount> {
         const AppGap.xxs(),
         Text(
           'reps',
-          style: Theme.of(context).textTheme.bodyText2,
+          style: context.textTheme.bodyText2,
         ),
         const AppGap.xs(),
       ],
@@ -233,9 +233,9 @@ class _SetTextInput extends StatelessWidget {
         keyboardType: TextInputType.numberWithOptions(
           decimal: decimal,
         ),
-        style: Theme.of(context).textTheme.headline4!.copyWith(
-              overflow: TextOverflow.ellipsis,
-            ),
+        style: context.textTheme.headline4!.copyWith(
+          overflow: TextOverflow.ellipsis,
+        ),
         textAlign: TextAlign.center,
         textAlignVertical: TextAlignVertical.center,
         onChanged: onChanged,

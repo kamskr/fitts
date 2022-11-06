@@ -22,8 +22,8 @@ class FlowButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainColors = Theme.of(context).colorScheme;
-    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
+    final mainColors = context.colorScheme;
+    final additionalColors = context.appColorScheme;
 
     const buttonPadding = AppSpacing.md;
     const height = _buttonHeight + 2 * buttonPadding;

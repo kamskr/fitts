@@ -60,7 +60,7 @@ class _WorkoutLogDetailsView extends StatelessWidget {
               ),
               child: Text(
                 'EXERCISES',
-                style: Theme.of(context).textTheme.caption,
+                style: context.textTheme.caption,
               ),
             ),
             const _ExercisesList(),
@@ -90,7 +90,7 @@ class _LogTitle extends StatelessWidget {
         children: [
           Text(
             workoutLog.workoutTemplate.name,
-            style: Theme.of(context).textTheme.headline3,
+            style: context.textTheme.headline3,
           ),
           Text(
             'Previous Workout: ${DateTimeFormatters.monthDayYearTime(
@@ -159,7 +159,7 @@ class _MusclesInvolved extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
-                color: Theme.of(context).colorScheme.primary,
+                color: context.colorScheme.primary,
               ),
               child: Center(
                 child: Text(
@@ -167,7 +167,7 @@ class _MusclesInvolved extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .caption!
-                      .copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                      .copyWith(color: context.colorScheme.onPrimary),
                 ),
               ),
             ),
@@ -184,7 +184,7 @@ class _Stats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final workoutLog = Provider.of<WorkoutLog>(context);
-    final iconColor = Theme.of(context).colorScheme.primary;
+    final iconColor = context.colorScheme.primary;
     const iconHeight = 22.0;
 
     final totalKg = workoutLog.totalWeight;

@@ -14,7 +14,7 @@ class AppFormFields extends StatelessWidget {
       body: DecoratedBox(
         // ignore: prefer_const_constructors
         decoration: BoxDecoration(
-          gradient: AppColors.primaryGradient2,
+          gradient: context.appColorScheme.primaryGradient2,
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
