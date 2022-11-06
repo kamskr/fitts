@@ -13,7 +13,9 @@ void main() {
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
         lastPerformed: DateTime(2020),
-        recentTotalTonnageLifted: const [1],
+        recentTotalTonnageLifted: [
+          RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+        ],
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -41,7 +43,9 @@ void main() {
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
         lastPerformed: DateTime(2020),
-        recentTotalTonnageLifted: const [1],
+        recentTotalTonnageLifted: [
+          RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+        ],
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -65,7 +69,9 @@ void main() {
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
         lastPerformed: DateTime(2020),
-        recentTotalTonnageLifted: const [1],
+        recentTotalTonnageLifted: [
+          RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+        ],
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -93,7 +99,9 @@ void main() {
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
         lastPerformed: DateTime(2020),
-        recentTotalTonnageLifted: const [1],
+        recentTotalTonnageLifted: [
+          RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+        ],
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -130,7 +138,9 @@ void main() {
           ),
         ],
         DateTime(2020),
-        const [1]
+        [
+          RecentTonnage(timePerformed: DateTime(2020), weight: 1),
+        ],
       ]);
     });
 
@@ -144,7 +154,9 @@ void main() {
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
         lastPerformed: DateTime(2020),
-        recentTotalTonnageLifted: const [1],
+        recentTotalTonnageLifted: [
+          RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+        ],
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',
@@ -168,7 +180,9 @@ void main() {
         averageWorkoutLength: 2,
         lastAverageRestTime: 2,
         lastPerformed: DateTime(2020),
-        recentTotalTonnageLifted: const [1],
+        recentTotalTonnageLifted: [
+          RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+        ],
         exercises: const [
           WorkoutExercise(
             exerciseId: 'new-bench-press',
@@ -192,7 +206,9 @@ void main() {
           averageWorkoutLength: 2,
           lastAverageRestTime: 2,
           lastPerformed: DateTime(2020),
-          recentTotalTonnageLifted: const [1],
+          recentTotalTonnageLifted: [
+            RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+          ],
           exercises: [
             const WorkoutExercise(
               exerciseId: 'new-bench-press',
@@ -220,7 +236,9 @@ void main() {
         averageWorkoutLength: 1,
         lastAverageRestTime: 1,
         lastPerformed: DateTime(2020),
-        recentTotalTonnageLifted: const [1],
+        recentTotalTonnageLifted: [
+          RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+        ],
         exercises: const [
           WorkoutExercise(
             exerciseId: 'bench-press',

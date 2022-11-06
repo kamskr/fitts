@@ -15,6 +15,7 @@ class ExerciseStats extends Equatable {
     required this.repetitionsDone,
     required this.timesPerformed,
     required this.overallBest,
+    this.history,
   });
 
   /// Factory which converts a [Map] into a [ExerciseStats].
@@ -40,9 +41,18 @@ class ExerciseStats extends Equatable {
   @JsonKey(name: 'overallBest')
   final OverallBest overallBest;
 
+  /// History of this exercise performance.
+  @JsonKey(name: 'history')
+  final List<ExercisePerformHistory>? history;
+
   @override
-  List<Object> get props =>
-      [highestWeight, repetitionsDone, timesPerformed, overallBest];
+  List<Object?> get props => [
+        highestWeight,
+        repetitionsDone,
+        timesPerformed,
+        overallBest,
+        history,
+      ];
 
   /// Creates a copy of [ExerciseStats].
   ExerciseStats copyWith({
@@ -50,12 +60,14 @@ class ExerciseStats extends Equatable {
     int? repetitionsDone,
     int? timesPerformed,
     OverallBest? overallBest,
+    List<ExercisePerformHistory>? history,
   }) {
     return ExerciseStats(
       highestWeight: highestWeight ?? this.highestWeight,
       repetitionsDone: repetitionsDone ?? this.repetitionsDone,
       timesPerformed: timesPerformed ?? this.timesPerformed,
       overallBest: overallBest ?? this.overallBest,
+      history: history ?? this.history,
     );
   }
 }

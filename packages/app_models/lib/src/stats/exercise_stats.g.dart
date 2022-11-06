@@ -13,6 +13,10 @@ ExerciseStats _$ExerciseStatsFromJson(Map<String, dynamic> json) =>
       timesPerformed: json['timesPerformed'] as int,
       overallBest:
           OverallBest.fromJson(json['overallBest'] as Map<String, dynamic>),
+      history: (json['history'] as List<dynamic>?)
+          ?.map(
+              (e) => ExercisePerformHistory.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ExerciseStatsToJson(ExerciseStats instance) =>
@@ -21,4 +25,5 @@ Map<String, dynamic> _$ExerciseStatsToJson(ExerciseStats instance) =>
       'repetitionsDone': instance.repetitionsDone,
       'timesPerformed': instance.timesPerformed,
       'overallBest': instance.overallBest.toJson(),
+      'history': instance.history?.map((e) => e.toJson()).toList(),
     };
