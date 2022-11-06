@@ -1,5 +1,6 @@
 import 'package:app_models/app_models.dart';
 import 'package:fitts/app/app.dart';
+import 'package:fitts/navigation/navigation.dart';
 import 'package:fitts/onboarding/onboarding.dart';
 import 'package:fitts/welcome/view/view.dart';
 import 'package:flutter/material.dart';

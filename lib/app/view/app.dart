@@ -1,6 +1,7 @@
 import 'package:authentication_client/authentication_client.dart';
 import 'package:fitts/app/app.dart';
 import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/navigation/navigation.dart';
 import 'package:fitts/workouts/workouts.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';

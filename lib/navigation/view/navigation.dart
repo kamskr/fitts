@@ -1,10 +1,8 @@
 import 'package:animations/animations.dart';
-import 'package:app_models/app_models.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:authentication_client/authentication_client.dart';
-import 'package:fitts/app/app.dart';
 import 'package:fitts/home/home.dart';
 import 'package:fitts/l10n/l10n.dart';
+import 'package:fitts/more/more.dart';
 import 'package:fitts/statistics/statistics.dart';
 import 'package:fitts/workouts/view/workout_history_page.dart';
 import 'package:fitts/workouts/workouts.dart';
@@ -34,9 +32,7 @@ class _NavigationState extends State<Navigation> {
     const HomePage(key: PageStorageKey('homePage')),
     const UserStatsPage(key: PageStorageKey('userStatsPage')),
     const WorkoutHistoryPage(key: PageStorageKey('workoutHistoryPage')),
-    const Scaffold(
-      body: _TempPlansWidget(),
-    ),
+    const MorePage(key: PageStorageKey('morePage')),
   ];
 
   void _onItemTapped(int index) {
@@ -139,40 +135,5 @@ class _NavigationState extends State<Navigation> {
     required double value,
   }) {
     return (value - min) / (max - min);
-  }
-}
-
-class _TempPlansWidget extends StatelessWidget {
-  const _TempPlansWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final state = context.watch<AppBloc>().state;
-
-    return SafeArea(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              state.userProfile.profileStatus == ProfileStatus.active
-                  ? 'User active'
-                  : 'User not active',
-            ),
-            Text(state.userProfile.email),
-            Text(state.userProfile.displayName),
-            Text(state.userProfile.gender == Gender.male ? 'Male' : 'Female'),
-            Text(state.userProfile.height.toString()),
-            Text(state.userProfile.weight.toString()),
-            Center(
-              child: AppButton.primary(
-                child: const Text('Sign out'),
-                onPressed: () => context.read<AuthenticationClient>().signOut(),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

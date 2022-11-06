@@ -1,4 +1,4 @@
-import 'package:fitts/app/app.dart';
+import 'package:fitts/navigation/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
