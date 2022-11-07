@@ -11,6 +11,7 @@ abstract class AppColors {
     400: Color(0xff808DED),
     500: Color(0xff5063EE),
     900: Color(0xff3346D4),
+    1000: Color(0xff16192E),
   });
 
   /// Accent color with different shades.

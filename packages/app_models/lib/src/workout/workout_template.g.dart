@@ -23,7 +23,7 @@ WorkoutTemplate _$WorkoutTemplateFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['lastPerformed'] as String),
       recentTotalTonnageLifted:
           (json['recentTotalTonnageLifted'] as List<dynamic>?)
-              ?.map((e) => e as int)
+              ?.map((e) => RecentTonnage.fromJson(e as Map<String, dynamic>))
               .toList(),
     );
 
@@ -37,6 +37,7 @@ Map<String, dynamic> _$WorkoutTemplateToJson(WorkoutTemplate instance) =>
       'averageWorkoutLength': instance.averageWorkoutLength,
       'lastAverageRestTime': instance.lastAverageRestTime,
       'lastPerformed': instance.lastPerformed?.toIso8601String(),
-      'recentTotalTonnageLifted': instance.recentTotalTonnageLifted,
+      'recentTotalTonnageLifted':
+          instance.recentTotalTonnageLifted?.map((e) => e.toJson()).toList(),
       'exercises': instance.exercises.map((e) => e.toJson()).toList(),
     };

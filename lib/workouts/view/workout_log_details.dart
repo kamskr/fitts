@@ -3,7 +3,10 @@ import 'package:app_ui/app_ui.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:fitts/workouts/workouts.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
+import 'package:user_stats_repository/user_stats_repository.dart';
+import 'package:workouts_repository/workouts_repository.dart';
 
 /// {@template workout_log_details}
 /// Page to display the details of a [WorkoutLog].
@@ -26,8 +29,12 @@ class WorkoutLogDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.value(
-      value: workoutLog,
+    return BlocProvider(
+      create: (context) => WorkoutLogDetailsBloc(
+        workoutLog: workoutLog,
+        userStatsRepository: context.read<UserStatsRepository>(),
+        workoutsRepository: context.read<WorkoutsRepository>(),
+      ),
       child: const _WorkoutLogDetailsView(),
     );
   }
@@ -38,33 +45,82 @@ class _WorkoutLogDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workoutLog = Provider.of<WorkoutLog>(context);
+    final workoutLog = context.select(
+      (WorkoutLogDetailsBloc bloc) => bloc.state.workoutLog,
+    );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: WorkoutDateChip(date: workoutLog.datePerformed),
-      ),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: ListView(
-          children: [
-            const _LogTitle(),
-            const _MusclesInvolved(),
-            const AppGap.lg(),
-            const _Stats(),
-            const AppGap.md(),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.lg,
-                vertical: AppSpacing.md,
+    final status = context.select(
+      (WorkoutLogDetailsBloc bloc) => bloc.state.status,
+    );
+
+    return BlocListener<WorkoutLogDetailsBloc, WorkoutLogDetailsState>(
+      listener: (context, state) {
+        if (state.status.isSubmissionSuccess) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: WorkoutDateChip(date: workoutLog.datePerformed),
+          actions: [
+            if (status.isSubmissionInProgress)
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                child: SizedBox(
+                  height: 16,
+                  width: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: context.colorScheme.primary,
+                  ),
+                ),
+              )
+            else
+              IconButton(
+                icon: const Icon(Icons.delete),
+                color: context.colorScheme.error,
+                onPressed: () {
+                  showDialog<bool>(
+                    context: context,
+                    builder: (_) {
+                      return const _DeleteLogDialog();
+                    },
+                  ).then(
+                    (shouldDelete) {
+                      if (shouldDelete == true) {
+                        context
+                            .read<WorkoutLogDetailsBloc>()
+                            .add(WorkoutLogDeleted());
+                      }
+                    },
+                  );
+                },
               ),
-              child: Text(
-                'EXERCISES',
-                style: Theme.of(context).textTheme.caption,
-              ),
-            ),
-            const _ExercisesList(),
           ],
+        ),
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: ListView(
+            children: [
+              const _LogTitle(),
+              const _MusclesInvolved(),
+              const AppGap.lg(),
+              const _Stats(),
+              const AppGap.md(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
+                  vertical: AppSpacing.md,
+                ),
+                child: Text(
+                  'EXERCISES',
+                  style: context.textTheme.caption,
+                ),
+              ),
+              const _ExercisesList(),
+            ],
+          ),
         ),
       ),
     );
@@ -78,7 +134,9 @@ class _LogTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workoutLog = Provider.of<WorkoutLog>(context);
+    final workoutLog = context.select(
+      (WorkoutLogDetailsBloc bloc) => bloc.state.workoutLog,
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -90,7 +148,7 @@ class _LogTitle extends StatelessWidget {
         children: [
           Text(
             workoutLog.workoutTemplate.name,
-            style: Theme.of(context).textTheme.headline3,
+            style: context.textTheme.headline3,
           ),
           Text(
             'Previous Workout: ${DateTimeFormatters.monthDayYearTime(
@@ -108,7 +166,9 @@ class _MusclesInvolved extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workoutLog = Provider.of<WorkoutLog>(context);
+    final workoutLog = context.select(
+      (WorkoutLogDetailsBloc bloc) => bloc.state.workoutLog,
+    );
 
     final exerciseIds =
         workoutLog.exercises.map((exercise) => exercise.exerciseId);
@@ -159,7 +219,7 @@ class _MusclesInvolved extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
-                color: Theme.of(context).colorScheme.primary,
+                color: context.colorScheme.primary,
               ),
               child: Center(
                 child: Text(
@@ -167,7 +227,7 @@ class _MusclesInvolved extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .caption!
-                      .copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                      .copyWith(color: context.colorScheme.onPrimary),
                 ),
               ),
             ),
@@ -183,8 +243,10 @@ class _Stats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workoutLog = Provider.of<WorkoutLog>(context);
-    final iconColor = Theme.of(context).colorScheme.primary;
+    final workoutLog = context.select(
+      (WorkoutLogDetailsBloc bloc) => bloc.state.workoutLog,
+    );
+    final iconColor = context.colorScheme.primary;
     const iconHeight = 22.0;
 
     final totalKg = workoutLog.totalWeight;
@@ -255,7 +317,9 @@ class _ExercisesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final workoutLog = Provider.of<WorkoutLog>(context);
+    final workoutLog = context.select(
+      (WorkoutLogDetailsBloc bloc) => bloc.state.workoutLog,
+    );
 
     return Column(
       children: [
@@ -270,6 +334,39 @@ class _ExercisesList extends StatelessWidget {
             ),
           );
         }).toList(),
+      ],
+    );
+  }
+}
+
+class _DeleteLogDialog extends StatelessWidget {
+  const _DeleteLogDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+      ),
+      alignment: Alignment.center,
+      title: const Text('Delete Workout Log'),
+      content: const Text(
+        'Are you sure you want to delete this workout log?'
+        ' This action cannot be undone.',
+      ),
+      actions: [
+        AppTextButton(
+          child: const Text('No'),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
+        AppTextButton(
+          child: const Text('Yes'),
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        ),
       ],
     );
   }

@@ -96,12 +96,12 @@ class _AppTextFieldState extends State<AppTextField> {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: _isFocused
-            ? AppColors.primary[50]!.withOpacity(0.1)
+            ? context.appColorScheme.primary50.withOpacity(0.1)
             : Colors.transparent,
         border: !_isFocused
             ? Border(
                 bottom: BorderSide(
-                  color: AppColors.primary[50]!,
+                  color: context.appColorScheme.primary50,
                   width: 0.2,
                 ),
               )
@@ -118,7 +118,7 @@ class _AppTextFieldState extends State<AppTextField> {
             decoration: InputDecoration(
               labelText: widget.labelText,
               labelStyle: AppTypography.body1.copyWith(
-                color: AppColors.white.withOpacity(0.8),
+                color: context.appColorScheme.white.withOpacity(0.8),
               ),
               hintText: widget.hintText,
               enabledBorder: InputBorder.none,
@@ -130,9 +130,10 @@ class _AppTextFieldState extends State<AppTextField> {
             autocorrect: autocorrect,
             initialValue: widget.initialValue,
             focusNode: _focus,
-            cursorColor: AppColors.white,
+            cursorColor: context.appColorScheme.white,
             keyboardType: keyboardType,
-            style: AppTypography.body1.copyWith(color: AppColors.white),
+            style: AppTypography.body1
+                .copyWith(color: context.appColorScheme.white),
             onChanged: widget.onChanged,
           ),
         ),

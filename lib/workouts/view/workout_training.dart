@@ -75,7 +75,7 @@ class _WorkoutTrainingView extends StatelessWidget {
               controller: context.read<MiniplayerController>(),
               minHeight: kMinMiniplayerHeight,
               maxHeight: maxMiniplayerHeight(context),
-              backgroundColor: Theme.of(context).colorScheme.background,
+              backgroundColor: context.colorScheme.background,
               builder: (height, percentage) {
                 return const _MiniplayerBody();
               },
@@ -172,8 +172,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        gradient:
-            Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
+        gradient: context.appColorScheme.primaryGradient2,
       ),
       child: Column(
         children: [
@@ -275,9 +274,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                         (state as WorkoutTrainingInProgress).duration,
                         showSeconds: true,
                       ),
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: Colors.white,
-                          ),
+                      style: context.textTheme.caption!.copyWith(
+                        color: Colors.white,
+                      ),
                     );
                   },
                 ),
@@ -306,8 +305,8 @@ class _FinishWorkoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTextButton(
-      textStyle: Theme.of(context).textTheme.bodyText1,
-      textColor: Theme.of(context).colorScheme.onPrimary,
+      textStyle: context.textTheme.bodyText1,
+      textColor: context.colorScheme.onPrimary,
       child: const Text('Finish'),
       onPressed: () {
         showDialog<bool>(
@@ -396,7 +395,7 @@ class _ConfirmDialog extends StatelessWidget {
                     ]
                   : [
                       AppTextButton(
-                        textColor: Theme.of(context).colorScheme.error,
+                        textColor: context.colorScheme.error,
                         onPressed: () {
                           Navigator.of(context).pop(true);
                         },
@@ -563,7 +562,7 @@ class _RestTimerDialog extends StatelessWidget {
                       showHours: false,
                       showSeconds: true,
                     ),
-                    style: Theme.of(context).textTheme.headline1,
+                    style: context.textTheme.headline1,
                   ),
                 )
               ],
@@ -631,10 +630,9 @@ class _RestProgressIndicatorState extends State<_RestProgressIndicator>
           animation: _animationController,
           builder: (_, __) {
             return CircularProgressIndicator(
-              backgroundColor:
-                  Theme.of(context).extension<AppColorScheme>()!.primary50,
+              backgroundColor: context.appColorScheme.primary50,
               valueColor: AlwaysStoppedAnimation<Color>(
-                Theme.of(context).extension<AppColorScheme>()!.primary500,
+                context.appColorScheme.primary,
               ),
               value: 1 - _animationController.value,
               strokeWidth: 8,

@@ -45,7 +45,7 @@ class WorkoutStatsGrid extends StatelessWidget {
     const borderWidth = 1.0;
 
     return ColoredBox(
-      color: Theme.of(context).extension<AppColorScheme>()!.black100,
+      color: context.appColorScheme.black100,
       child: Column(
         children: [
           for (int i = 0; i < workoutStats.length; i++) ...[
@@ -102,7 +102,7 @@ class _StatsGridItem extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 94,
-        color: Theme.of(context).colorScheme.background,
+        color: context.colorScheme.background,
         // height: 94,
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.sm),
@@ -126,7 +126,7 @@ class _StatsGridItem extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: Theme.of(context).textTheme.headline5,
+                            style: context.textTheme.headline5,
                           ),
                           if (titleSuffix != null) ...[
                             const AppGap.xxxs(),
@@ -134,7 +134,7 @@ class _StatsGridItem extends StatelessWidget {
                               padding: const EdgeInsets.only(bottom: 3),
                               child: Text(
                                 titleSuffix!,
-                                style: Theme.of(context).textTheme.subtitle2,
+                                style: context.textTheme.subtitle2,
                               ),
                             )
                           ],
@@ -143,7 +143,7 @@ class _StatsGridItem extends StatelessWidget {
                       const AppGap.xxs(),
                       Text(
                         subtitle,
-                        style: Theme.of(context).textTheme.subtitle2,
+                        style: context.textTheme.subtitle2,
                       ),
                     ],
                   ),

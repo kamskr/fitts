@@ -53,7 +53,9 @@ void main() {
       averageWorkoutLength: 1,
       lastAverageRestTime: 1,
       lastPerformed: DateTime(2020),
-      recentTotalTonnageLifted: const [1],
+      recentTotalTonnageLifted: [
+        RecentTonnage(timePerformed: DateTime(2020), weight: 1)
+      ],
       exercises: const [
         WorkoutExercise(
           exerciseId: 'bench-press',

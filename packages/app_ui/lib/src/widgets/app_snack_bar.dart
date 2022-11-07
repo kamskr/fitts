@@ -13,7 +13,7 @@ abstract class AppSnackBar {
         SnackBar(
           content: content,
           behavior: SnackBarBehavior.floating,
-          backgroundColor: AppColors.black,
+          backgroundColor: context.appColorScheme.black,
         ),
       );
   }

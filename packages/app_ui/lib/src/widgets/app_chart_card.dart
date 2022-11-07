@@ -75,9 +75,9 @@ class AppChartCard extends StatelessWidget {
         space: 0,
         child: Text(
           text,
-          style: Theme.of(context).textTheme.overline!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary.withOpacity(.8),
-              ),
+          style: context.textTheme.overline!.copyWith(
+            color: context.colorScheme.onPrimary.withOpacity(.8),
+          ),
         ),
       );
     }
@@ -90,9 +90,9 @@ class AppChartCard extends StatelessWidget {
 
       final Widget text = Text(
         labels![value.toInt()],
-        style: Theme.of(context).textTheme.overline!.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary.withOpacity(.8),
-            ),
+        style: context.textTheme.overline!.copyWith(
+          color: context.colorScheme.onPrimary.withOpacity(.8),
+        ),
       );
 
       return SideTitleWidget(
@@ -110,7 +110,9 @@ class AppChartCard extends StatelessWidget {
         barRods: [
           BarChartRodData(
             toY: y / 1000,
-            color: x.isEven ? AppColors.primary[100] : AppColors.primary[400],
+            color: x.isEven
+                ? context.appColorScheme.primary100
+                : context.appColorScheme.primary400,
             width: 25,
             borderRadius: BorderRadius.zero,
           ),
@@ -176,13 +178,12 @@ class AppChartCard extends StatelessWidget {
                       child: Center(
                         child: Text(
                           emptyText!,
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimary
-                                        .withOpacity(.8),
-                                  ),
+                          style: context.textTheme.bodyText1!.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary
+                                .withOpacity(.8),
+                          ),
                         ),
                       ),
                     ),

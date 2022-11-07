@@ -118,7 +118,7 @@ class _ExerciseTile extends StatelessWidget {
           ),
         );
       },
-      title: Text(exercise.name, style: Theme.of(context).textTheme.headline6),
+      title: Text(exercise.name, style: context.textTheme.headline6),
       subtitle: Padding(
         padding: const EdgeInsets.only(top: AppSpacing.sm),
         child: Wrap(
@@ -184,7 +184,7 @@ class _ExerciseMuscleChip extends StatelessWidget {
             child: Center(
               child: Text(
                 TextFormatters.camelToSentence(muscle.name),
-                style: Theme.of(context).textTheme.caption,
+                style: context.textTheme.caption,
               ),
             ),
           ),
@@ -206,8 +206,8 @@ class _AppBar extends StatelessWidget {
       ),
       actions: [
         AppTextButton(
-          textStyle: Theme.of(context).textTheme.bodyText1,
-          textColor: Theme.of(context).colorScheme.onPrimary,
+          textStyle: context.textTheme.bodyText1,
+          textColor: context.colorScheme.onPrimary,
           child: const Text('Add'),
           onPressed: () {
             Navigator.of(context)
@@ -219,8 +219,7 @@ class _AppBar extends StatelessWidget {
       expandedHeight: 240,
       flexibleSpace: DecoratedBox(
         decoration: BoxDecoration(
-          gradient:
-              Theme.of(context).extension<AppColorScheme>()!.primaryGradient2,
+          gradient: context.appColorScheme.primaryGradient2,
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -244,12 +243,12 @@ class _AppBar extends StatelessWidget {
                     const Text('Add Exercises'),
                     Text(
                       'Workout creation',
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimary
-                                .withOpacity(0.7),
-                          ),
+                      style: context.textTheme.bodyText2!.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimary
+                            .withOpacity(0.7),
+                      ),
                     ),
                     const Spacer(),
                     const Flexible(
@@ -364,14 +363,14 @@ class _FilterCountBadge extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: context.colorScheme.primary,
           shape: BoxShape.circle,
         ),
         child: Text(
           '$count',
           style: TextStyle(
             fontSize: 12,
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: context.colorScheme.onPrimary,
           ),
         ),
       ),
@@ -400,16 +399,15 @@ class _SearchInput extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             isDense: true,
             border: InputBorder.none,
-            hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
-                ),
+            hintStyle: context.textTheme.bodyText1!.copyWith(
+              color: context.colorScheme.onPrimary.withOpacity(0.5),
+            ),
           ),
           enableSuggestions: false,
           autocorrect: false,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+          style: context.textTheme.bodyText1!.copyWith(
+            color: context.colorScheme.onPrimary,
+          ),
           textAlign: TextAlign.left,
           onChanged: (value) {
             context

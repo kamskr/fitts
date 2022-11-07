@@ -31,13 +31,11 @@ class _ExerciseFiltersView extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        iconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+        iconTheme: IconThemeData(color: context.colorScheme.onPrimary),
       ),
       body: DecoratedBox(
         decoration: BoxDecoration(
-          gradient:
-              Theme.of(context).extension<AppColorScheme>()!.primaryGradient1,
+          gradient: context.appColorScheme.primaryGradient1,
         ),
         child: Center(
           child: Padding(
@@ -52,9 +50,9 @@ class _ExerciseFiltersView extends StatelessWidget {
                   children: [
                     Text(
                       'Filter',
-                      style: Theme.of(context).textTheme.headline3!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
+                      style: context.textTheme.headline3!.copyWith(
+                        color: context.colorScheme.onPrimary,
+                      ),
                     ),
                     const _MuscleFilters(),
                     const _EquipmentFilters(),
@@ -81,9 +79,9 @@ class _MuscleFilters extends StatelessWidget {
         const AppGap.lg(),
         Text(
           'MUSCLE GROUP',
-          style: Theme.of(context).textTheme.caption!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
-              ),
+          style: context.textTheme.caption!.copyWith(
+            color: context.colorScheme.onPrimary.withOpacity(0.7),
+          ),
         ),
         const AppGap.md(),
         Wrap(
@@ -143,9 +141,9 @@ class _EquipmentFilters extends StatelessWidget {
         const AppGap.lg(),
         Text(
           'EQUIPMENT TYPE',
-          style: Theme.of(context).textTheme.caption!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
-              ),
+          style: context.textTheme.caption!.copyWith(
+            color: context.colorScheme.onPrimary.withOpacity(0.7),
+          ),
         ),
         const AppGap.md(),
         Wrap(
@@ -220,7 +218,7 @@ class _FilterChip extends StatelessWidget {
             .extension<AppColorScheme>()!
             .primary50
             .withOpacity(0.2),
-        selectedColor: Theme.of(context).extension<AppColorScheme>()!.primary50,
+        selectedColor: context.appColorScheme.primary50,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
         ),
@@ -229,8 +227,8 @@ class _FilterChip extends StatelessWidget {
           text,
           style: TextStyle(
             color: isSelected
-                ? Theme.of(context).colorScheme.onBackground
-                : Theme.of(context).colorScheme.onPrimary,
+                ? context.colorScheme.onBackground
+                : context.colorScheme.onPrimary,
           ),
         ),
         onSelected: onPressed,

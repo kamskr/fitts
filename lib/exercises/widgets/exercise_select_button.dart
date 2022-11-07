@@ -25,16 +25,16 @@ class ExerciseSelectButton extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
-          color: isSelected ? Theme.of(context).colorScheme.primary : null,
+          color: isSelected ? context.colorScheme.primary : null,
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
+            color: context.colorScheme.primary,
             width: 2,
           ),
         ),
         child: isSelected
             ? Icon(
                 Icons.check,
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: context.colorScheme.onPrimary,
               )
             : const Icon(Icons.add),
       ),

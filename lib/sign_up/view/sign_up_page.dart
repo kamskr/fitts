@@ -74,7 +74,7 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
+    final additionalColors = context.appColorScheme;
 
     return _SignUpBlocListener(
       child: DecoratedBox(
@@ -143,7 +143,7 @@ class _SignUpTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
+    final additionalColors = context.appColorScheme;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -241,7 +241,7 @@ class _LegalNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
+    final additionalColors = context.appColorScheme;
 
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),

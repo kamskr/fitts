@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 class AppColorScheme extends ThemeExtension<AppColorScheme> {
   const AppColorScheme({
     required this.primary50,
+    required this.primary100,
     required this.primary400,
-    required this.primary500,
+    required this.primary,
     required this.primary900,
+    required this.primary1000,
     required this.accent300,
-    required this.accent500,
+    required this.accent,
     required this.accent900,
     required this.secondaryAccent,
     required this.secondaryAccent400,
@@ -33,13 +35,15 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   });
 
   // Extra colors here
+  final Color primary;
   final Color primary50;
+  final Color primary100;
   final Color primary400;
-  final Color primary500;
   final Color primary900;
+  final Color primary1000;
 
+  final Color accent;
   final Color accent300;
-  final Color accent500;
   final Color accent900;
 
   final Color secondaryAccent;
@@ -67,11 +71,13 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   @override
   ThemeExtension<AppColorScheme> copyWith({
     Color? primary50,
+    Color? primary100,
     Color? primary400,
-    Color? primary500,
+    Color? primary,
     Color? primary900,
+    Color? primary1000,
     Color? accent300,
-    Color? accent500,
+    Color? accent,
     Color? accent900,
     Color? secondaryAccent,
     Color? secondaryAccent400,
@@ -93,11 +99,13 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   }) {
     return AppColorScheme(
       primary50: primary50 ?? this.primary50,
+      primary100: primary100 ?? this.primary100,
       primary400: primary400 ?? this.primary400,
-      primary500: primary500 ?? this.primary500,
+      primary: primary ?? this.primary,
       primary900: primary900 ?? this.primary900,
+      primary1000: primary1000 ?? this.primary1000,
       accent300: accent300 ?? this.accent300,
-      accent500: accent500 ?? this.accent500,
+      accent: accent ?? this.accent,
       accent900: accent900 ?? this.accent900,
       secondaryAccent: secondaryAccent ?? this.secondaryAccent,
       secondaryAccent400: secondaryAccent400 ?? this.secondaryAccent400,
@@ -132,11 +140,13 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     // Generate constructor with lerp function for each field
     return AppColorScheme(
       primary50: Color.lerp(primary50, other.primary50, t)!,
+      primary100: Color.lerp(primary100, other.primary100, t)!,
       primary400: Color.lerp(primary400, other.primary400, t)!,
-      primary500: Color.lerp(primary500, other.primary500, t)!,
+      primary: Color.lerp(primary, other.primary, t)!,
       primary900: Color.lerp(primary900, other.primary900, t)!,
+      primary1000: Color.lerp(primary1000, other.primary1000, t)!,
       accent300: Color.lerp(accent300, other.accent300, t)!,
-      accent500: Color.lerp(accent500, other.accent500, t)!,
+      accent: Color.lerp(accent, other.accent, t)!,
       accent900: Color.lerp(accent900, other.accent900, t)!,
       secondaryAccent: Color.lerp(secondaryAccent, other.secondaryAccent, t)!,
       secondaryAccent400:

@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:fitts/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class WorkoutDateChip extends StatelessWidget {
       height: 58,
       width: 39,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
+        color: context.colorScheme.primary,
         borderRadius: BorderRadius.circular(2),
       ),
       child: Column(
@@ -28,15 +29,15 @@ class WorkoutDateChip extends StatelessWidget {
         children: [
           Text(
             DateTimeFormatters.day(date),
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: Colors.white,
-                ),
+            style: context.textTheme.headline6!.copyWith(
+              color: Colors.white,
+            ),
           ),
           Text(
             DateTimeFormatters.month(date),
-            style: Theme.of(context).textTheme.overline!.copyWith(
-                  color: Colors.white.withOpacity(.6),
-                ),
+            style: context.textTheme.overline!.copyWith(
+              color: Colors.white.withOpacity(.6),
+            ),
           ),
         ],
       ),

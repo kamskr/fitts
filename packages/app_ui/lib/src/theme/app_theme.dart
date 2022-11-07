@@ -37,11 +37,13 @@ abstract class AppTheme {
 
   static final _lightAppColorsExtension = AppColorScheme(
     primary50: AppColors.primary[50]!,
+    primary100: AppColors.primary[100]!,
     primary400: AppColors.primary[400]!,
-    primary500: AppColors.primary[500]!,
+    primary: AppColors.primary,
     primary900: AppColors.primary[900]!,
+    primary1000: AppColors.primary[1000]!,
     accent300: AppColors.accent[300]!,
-    accent500: AppColors.accent[500]!,
+    accent: AppColors.accent,
     accent900: AppColors.accent[900]!,
     secondaryAccent: AppColors.secondaryAccent,
     secondaryAccent400: AppColors.secondaryAccent[400]!,

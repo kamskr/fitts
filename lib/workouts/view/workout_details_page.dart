@@ -116,13 +116,13 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
     );
 
     _textColorTween = ColorTween(
-      begin: Theme.of(context).colorScheme.onPrimary,
-      end: Theme.of(context).colorScheme.onBackground,
+      begin: context.colorScheme.onPrimary,
+      end: context.colorScheme.onBackground,
     ).animate(_animationController);
 
     _actionsColorTween = ColorTween(
-      begin: Theme.of(context).colorScheme.onPrimary,
-      end: Theme.of(context).colorScheme.primary,
+      begin: context.colorScheme.onPrimary,
+      end: context.colorScheme.primary,
     ).animate(_animationController);
 
     _scrollController.addListener(onScroll);
@@ -137,7 +137,7 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
     } else if (_scrollController.position.pixels > 130) {
       _animationController.forward();
       setState(() {
-        _appColor = Theme.of(context).colorScheme.background;
+        _appColor = context.colorScheme.background;
       });
     }
   }
@@ -165,7 +165,7 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
         backgroundColor: _appColor,
         actions: [
           AppTextButton(
-            textStyle: Theme.of(context).textTheme.bodyText1,
+            textStyle: context.textTheme.bodyText1,
             textColor: _actionsColorTween.value,
             child: const Text(
               'Edit',
@@ -210,7 +210,7 @@ class _WorkoutDetailsContentState extends State<_WorkoutDetailsContent>
               ),
               child: Text(
                 'EXERCISES',
-                style: Theme.of(context).textTheme.caption,
+                style: context.textTheme.caption,
               ),
             ),
           ),
@@ -294,13 +294,9 @@ class _WorkoutCardPersistentHeader extends SliverPersistentHeaderDelegate {
                                 workoutTemplate.lastPerformed!,
                               ),
                             ),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
+                            style: context.textTheme.bodyText2!.copyWith(
+                              color: context.colorScheme.onPrimary,
+                            ),
                           ),
                       ],
                     )
@@ -353,7 +349,7 @@ class _WorkoutStats extends StatelessWidget {
     final workoutTemplate =
         context.watch<WorkoutDetailsBloc>().state.workoutTemplate!;
     final totalKg = workoutTemplate.tonnageLifted;
-    final iconColor = Theme.of(context).colorScheme.primary;
+    final iconColor = context.colorScheme.primary;
     const iconHeight = 22.0;
 
     late String totalKgString;
@@ -430,7 +426,7 @@ class _WorkoutNotes extends StatelessWidget {
         children: [
           Text(
             'NOTES',
-            style: Theme.of(context).textTheme.caption,
+            style: context.textTheme.caption,
           ),
           const AppGap.sm(),
           Text(workoutTemplate.notes),
@@ -447,7 +443,7 @@ class _DeleteWorkoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: AppTextButton(
-        textColor: Theme.of(context).colorScheme.error,
+        textColor: context.colorScheme.error,
         child: const Text('Delete Workout'),
         onPressed: () {
           showDialog<void>(
@@ -505,13 +501,13 @@ class _ConfirmDeleteWorkoutTemplateButton extends StatelessWidget {
               width: 16,
               child: CircularProgressIndicator(
                 strokeWidth: 3,
-                color: Theme.of(context).colorScheme.error,
+                color: context.colorScheme.error,
               ),
             ),
           );
         }
         return AppTextButton(
-          textColor: Theme.of(context).colorScheme.error,
+          textColor: context.colorScheme.error,
           onPressed: () {
             context.read<WorkoutDetailsBloc>().add(
                   const WorkoutTemplateDeleteTemplate(),

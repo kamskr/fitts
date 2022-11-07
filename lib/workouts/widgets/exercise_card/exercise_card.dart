@@ -28,7 +28,7 @@ class ExerciseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = context.theme;
 
     final child = Padding(
       padding: const EdgeInsets.symmetric(
@@ -85,7 +85,7 @@ class ExerciseCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(Radius.circular(AppSpacing.xxs)),
           side: BorderSide(
-            color: Theme.of(context).extension<AppColorScheme>()!.black100,
+            color: context.appColorScheme.black100,
           ),
         ),
         child: child,

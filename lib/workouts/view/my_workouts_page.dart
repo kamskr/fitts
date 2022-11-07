@@ -136,7 +136,7 @@ class _MyWorkoutsBody extends StatelessWidget {
           ),
           child: Text(
             'My Workouts',
-            style: Theme.of(context).textTheme.headline3,
+            style: context.textTheme.headline3,
           ),
         ),
         const AppGap.md(),

@@ -68,7 +68,7 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
+    final additionalColors = context.appColorScheme;
 
     return _SignInBlocListener(
       child: DecoratedBox(
@@ -135,7 +135,7 @@ class _SignInTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final additionalColors = Theme.of(context).extension<AppColorScheme>()!;
+    final additionalColors = context.appColorScheme;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
