@@ -15,8 +15,6 @@ class MorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<AppBloc>().state;
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [

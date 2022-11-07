@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_collection_literal
+
 import 'package:app_models/app_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
