@@ -1,0 +1,158 @@
+{
+  "UserProfiles": {
+    "email@mail.com": {
+      "email": "email@mail.com",
+      "displayName": "Name Surname",
+      "profileStatus": "active",
+      "dateOfBirth": "1990-01-01T00:00:00.000",
+      "gender": "male",
+      "height": 180,
+      "weight": 93,
+      "goal": "improve health"
+    }
+  },
+  "WorkoutTemplates": {
+    "email@mail.com": {
+      "UserTemplates": {
+        "TEMPLATE_ID": {
+          "id": "TEMPLATE_ID",
+          "name": "Chest & Biceps",
+          "averageWorkoutLength": 3000,
+          "lastAverageRestTime": 75,
+          "lastPerformed": "2022-11-15T18:08:04.644810",
+          "notes": "notes for the template",
+          "recentTotalTonnageLifted": [
+            {
+              "timePerformed": "2022-11-15T18:08:04.644810",
+              "weight": 4000
+            }
+          ],
+          "tonnageLifted": 4000,
+          "workoutsCompleted": 1,
+          "exercises": [
+            {
+              "exerciseId": "barbell_bench_press",
+              "notes": "notes for exercise",
+              "restTime": 180,
+              "sets": [
+                {
+                  "repetitions": 5,
+                  "weight": 90,
+                  "isDone": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "WorkoutLogs": {
+    "UserLogs": {
+      "LOG_ID": {
+        "id": "LOG_ID",
+        "datePerformed": "2022-11-15T18:08:04.644810",
+        "duration": 3000,
+        "exercises": [
+          {
+            "exerciseId": "barbell_bench_press",
+            "notes": "notes for exercise",
+            "restTime": 180,
+            "sets": [
+              {
+                "repetitions": 5,
+                "weight": 90,
+                "isDone": true
+              }
+            ]
+          }
+        ],
+        "workoutTemplate": {
+          "id": "TEMPLATE_ID",
+          "name": "Chest & Biceps",
+          "averageWorkoutLength": 3000,
+          "lastAverageRestTime": 75,
+          "lastPerformed": "2022-11-15T18:08:04.644810",
+          "notes": "notes for the template",
+          "recentTotalTonnageLifted": [
+            {
+              "timePerformed": "2022-11-15T18:08:04.644810",
+              "weight": 4000
+            }
+          ],
+          "tonnageLifted": 4000,
+          "workoutsCompleted": 1,
+          "exercises": [
+            {
+              "exerciseId": "barbell_bench_press",
+              "notes": "notes for exercise",
+              "restTime": 180,
+              "sets": [
+                {
+                  "repetitions": 5,
+                  "weight": 90,
+                  "isDone": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "UserStats": {
+    "email@mail.com": {
+      "exercises": {
+        "barbell_bench_press": {
+          "highestWeight": 100,
+          "repetitionsDone": 20,
+          "timesPerformed": 1,
+          "overallBest": {
+            "repetitions": 8,
+            "weight": 80
+          },
+          "history": [
+            {
+              "datePerformed": "2022-11-15T18:08:04.644810",
+              "details": {
+                "exerciseId": "barbell_bench_press",
+                "notes": "notes for exercise",
+                "restTime": 180,
+                "sets": [
+                  {
+                    "repetitions": 5,
+                    "weight": 90,
+                    "isDone": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "global": {
+        "liftingTimeSpent": 2978,
+        "totalKgLifted": 4000,
+        "workoutsCompleted": 1,
+        "keyLifts": ["barbell_bench_press"]
+      }
+    },
+    "Exercises": {
+      "barbell_bench_press": {
+        "id": "barbell_bench_press",
+        "name": "Barbell Bench Press",
+        "category": "strength",
+        "equipment": "barbell",
+        "force": "push",
+        "level": "begginer",
+        "mechanic": "compound",
+        "instructions": [
+          "instructions on how to perfrom the exercise",
+          "part n of instruction"
+        ],
+        "primaryMuscles": ["chest"],
+        "secondaryMuscles": ["shoulders"]
+      }
+    }
+  }
+}

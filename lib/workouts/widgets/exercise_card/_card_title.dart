@@ -22,36 +22,43 @@ class _CardTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${exerciseData.exerciseIndex + 1} of '
-              '${exerciseData.exerciseCount}',
-              style: theme.textTheme.overline,
-            ),
-            const SizedBox(
-              height: AppSpacing.xxxs,
-            ),
-            GestureDetector(
-              onTap: () {
-                if (exercise != null) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => ExerciseDetailsPage(
-                        exercise: exercise,
-                        viewOnly: true,
-                      ),
-                    ),
-                  );
-                }
-              },
-              child: Text(
-                exerciseName ?? 'exercise not found',
-                style: theme.textTheme.headline6,
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${exerciseData.exerciseIndex + 1} of '
+                '${exerciseData.exerciseCount}',
+                style: theme.textTheme.overline,
               ),
-            ),
-          ],
+              const SizedBox(
+                height: AppSpacing.xxxs,
+              ),
+              LayoutBuilder(
+                builder: (context, constraints) => SizedBox(
+                  width: constraints.maxWidth * 0.8,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (exercise != null) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => ExerciseDetailsPage(
+                              exercise: exercise,
+                              viewOnly: true,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(
+                      exerciseName ?? 'exercise not found',
+                      style: theme.textTheme.headline6,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         if (exerciseData.onExerciseChanged != null)
           ReorderableDragStartListener(

@@ -188,7 +188,7 @@ class _Redirects extends StatelessWidget {
             color: context.colorScheme.onPrimary,
             child: ListTile(
               title: Text(
-                'Routines',
+                'Plans & Routines',
                 style: context.textTheme.bodyText1,
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -236,10 +236,13 @@ class _SignOutButton extends StatelessWidget {
       hasScrollBody: false,
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: AppTextButton(
-          textColor: context.colorScheme.error,
-          child: const Text('Sign out'),
-          onPressed: () => context.read<AuthenticationClient>().signOut(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+          child: AppTextButton(
+            textColor: context.colorScheme.error,
+            child: const Text('Sign out'),
+            onPressed: () => context.read<AuthenticationClient>().signOut(),
+          ),
         ),
       ),
     );
