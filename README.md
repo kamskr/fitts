@@ -1,6 +1,7 @@
-# Fitts
+# Fitts - Workout tracking app
+Fully working demo: https://fitts-eceb5.web.app/
 
-Workout tracking app
+## Design
 https://vimeo.com/292332057
 
 https://www.figma.com/file/CEo4uF9xm2QRbAk2hlhv43/kenko-ui-kit-update-1?node-id=0%3A1 
