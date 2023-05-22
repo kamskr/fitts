@@ -2,14 +2,7 @@
 Fully working demo: https://fitts-eceb5.web.app/
 
 ## Design
-https://vimeo.com/292332057
-
-https://www.figma.com/file/CEo4uF9xm2QRbAk2hlhv43/kenko-ui-kit-update-1?node-id=0%3A1 
-
-- Repo: https://github.com/kamskr/pr_fit
-- Designs: https://www.figma.com/file/CEo4uF9xm2QRbAk2hlhv43/kenko-ui-kit-update-1?node-id=0%3A1 
-- Data Structure: https://lucid.app/lucidchart/db2eff98-f4d0-4b82-8fda-f05caf99ecc7/edit?invitationId=inv_3cce9fae-8170-4816-adec-382ac579c0e3
-- Deployed app for web: https://fitts-eceb5.web.app/
+https://ui8.net/vitaly-rubtsov/products/kenko-ui-kit
   
 ## Getting Started
 
